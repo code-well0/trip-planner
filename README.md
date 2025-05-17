@@ -9,6 +9,7 @@ Emojis for Destinations:
 Each city card includes a relevant emoji that instantly conveys the essence or cultural significance of the place, making the interface more intuitive and visually appealing.
 
 Technology Stack
+
 React.js: Utilized for building a modular, component-based UI with efficient state management and seamless user interactions.
 
 CSS Flexbox: Employed for responsive and flexible layout of destination cards ensuring consistent alignment and spacing.
@@ -18,6 +19,7 @@ JavaScript (ES6+): Used extensively for modern syntax, dynamic filtering logic, 
 Netlify: Hosting platform enabling easy deployment and fast, reliable website access.
 
 Live Demo & Source Code
+
 Live Site: https://yourtripplanner.netlify.app/
 
 GitHub Repo: https://github.com/code-well0/trip-planner
