@@ -1,4 +1,4 @@
-YourTripPlanner is a vibrant travel discovery website designed to help users explore popular Indian tourist destinations with ease. The site features an interactive list of cities, each displayed with a matching emoji that reflects its unique culture or vibe, adding a fun and engaging visual element.
+YourTripPlanner is a vibrant travel discovery website (with working frontend only) designed to help users explore popular Indian tourist destinations with ease. The site features an interactive list of cities, each displayed with a matching emoji that reflects its unique culture or vibe, adding a fun and engaging visual element.
 
 Key Features
 Filterable Regions:
