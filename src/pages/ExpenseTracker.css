@@ -1,0 +1,151 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+:root {
+  --green: #388e3c;
+  --light-green: #a5d6a7;
+  --bg: #e8f5e9;
+  --red: #e53935;
+}
+
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background-color: var(--bg);
+  overflow: hidden;
+}
+
+.navbar {
+  background-color: var(--green);
+  color: white;
+  padding: 20px 0;
+  text-align: center;
+  font-size: 22px;
+  font-weight: 600;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 10;
+}
+
+.main {
+  display: flex;
+  height: calc(100vh - 80px);
+  padding-top: 80px;
+}
+
+.left-panel {
+  width: 50%;
+  padding: 30px 40px;
+  overflow-y: auto;
+}
+
+.right-panel {
+  width: 50%;
+  padding: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 0.3s ease;
+}
+
+.right-panel.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.expense-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.expense-form input,
+.expense-form select {
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 15px;
+  width: 170px;
+}
+
+.expense-form button {
+  padding: 10px 20px;
+  background-color: var(--green);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+h2 {
+  margin-top: 20px;
+  color: var(--green);
+}
+
+.expense-list {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+}
+
+.expense-list li {
+  background-color: white;
+  margin-bottom: 12px;
+  padding: 12px 15px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 14px;
+  color: #2e7d32;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+}
+
+.item {
+  width: 30%;
+  font-weight: 500;
+}
+
+.amount {
+  width: 20%;
+  text-align: right;
+}
+
+.tag {
+  padding: 4px 10px;
+  font-size: 12px;
+  border-radius: 8px;
+  background-color: #dcedc8;
+  width: 20%;
+  text-align: center;
+}
+
+.tag.travel { background-color: #a5d6a7; }
+.tag.food { background-color: #ffe082; }
+.tag.stay { background-color: #80cbc4; }
+.tag.misc { background-color: #ef9a9a; }
+
+.expense-list button {
+  background: none;
+  border: none;
+  color: var(--red);
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.analysis-btn {
+  margin-top: 10px;
+  padding: 10px 25px;
+  background-color: #81c784;
+  color: #1b5e20;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.active-link {
+  color: #ffeb3b; /* Material Yellow 400 */
+  font-weight: 700;
+}

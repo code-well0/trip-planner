@@ -54,15 +54,6 @@ const data = [
 		price: "68,595",
 	},
 	{
-		id: 7,
-		name: "Kochi",
-		region: "South",
-		emoji: "⛵",
-		info: "Kochi is a port city in the Indian state of Kerala, known for its historic connections to trade and commerce. The city is home to several stunning churches, synagogues, and mosques, as well as a rich culinary tradition that blends Indian, Portuguese, and other influences.",
-		image: "https://cdn.thecodehelp.in/Kochi.jpeg",
-		price: "68,595",
-	},
-	{
 	id: 7,
 	name: "Udaipur",
 	region: "North",

@@ -6,6 +6,11 @@
   box-sizing: border-box;
 }
 
+.main-content {
+  padding-top: 80px;
+}
+
+
 body {
   font-family: "Poppins", sans-serif;
   overflow-y: auto;
@@ -22,7 +27,7 @@ body {
 }
 
 .title {
-  border: 7px dashed #0111a0;
+  border: 7px #0111a0;
   border-radius: 20px;
   font-size: 3rem;
   margin: 6vh;
@@ -30,6 +35,7 @@ body {
 }
 
 .cardsContainer {
+  font-family: "Poppins", sans-serif;
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
@@ -143,4 +149,13 @@ body {
   background-color: #000;
   color: #fff;
 }
+body, html, #root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+
+
 
