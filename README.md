@@ -16,10 +16,10 @@ CSS Flexbox: Employed for responsive and flexible layout of destination cards en
 
 JavaScript (ES6+): Used extensively for modern syntax, dynamic filtering logic, and smooth user experience.
 
-Netlify: Hosting platform enabling easy deployment and fast, reliable website access.
+Vercel: Hosting platform enabling easy deployment and fast, reliable website access.
 
 Live Demo & Source Code
 
-Live Site: https://yourtripplanner.netlify.app/
+Live Site: https://trip-planner-sable-eight.vercel.app/
 
 GitHub Repo: https://github.com/code-well0/trip-planner
