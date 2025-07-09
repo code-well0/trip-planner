@@ -1,151 +1,144 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
-
-:root {
-  --green: #388e3c;
-  --light-green: #a5d6a7;
-  --bg: #e8f5e9;
-  --red: #e53935;
-}
-
-body {
-  margin: 0;
-  font-family: 'Poppins', sans-serif;
-  background-color: var(--bg);
-  overflow: hidden;
-}
-
-.navbar {
-  background-color: var(--green);
-  color: white;
-  padding: 20px 0;
-  text-align: center;
-  font-size: 22px;
-  font-weight: 600;
-  position: fixed;
-  width: 100%;
-  top: 0;
-  z-index: 10;
-}
-
-.main {
-  display: flex;
-  height: calc(100vh - 80px);
-  padding-top: 80px;
-}
-
-.left-panel {
-  width: 50%;
-  padding: 30px 40px;
-  overflow-y: auto;
-}
-
-.right-panel {
-  width: 50%;
-  padding: 30px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: opacity 0.3s ease;
-}
-
 .right-panel.hidden {
-  opacity: 0;
-  pointer-events: none;
+  display: none;
+}
+
+.expense-form-wrapper {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  background: #f8f9fa;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 }
 
 .expense-form {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
-  margin-bottom: 20px;
+  gap: 0.75rem;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1rem;
 }
 
 .expense-form input,
 .expense-form select {
-  padding: 10px;
-  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
   border: 1px solid #ccc;
-  font-size: 15px;
-  width: 170px;
+  border-radius: 8px;
+  min-width: 120px;
+  flex: 1 1 150px;
 }
 
 .expense-form button {
-  padding: 10px 20px;
-  background-color: var(--green);
+  padding: 0.5rem 1.2rem;
+  background-color: #4caf50;
   color: white;
   border: none;
+  font-size: 1rem;
   border-radius: 8px;
-  font-weight: 600;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-h2 {
-  margin-top: 20px;
-  color: var(--green);
+.expense-form button:hover {
+  background-color: #388e3c;
+}
+
+.total-spent {
+  text-align: center;
+  font-size: 1.5rem;
+  color: #333;
+  font-weight: 600;
 }
 
 .expense-list {
   list-style: none;
   padding: 0;
-  margin: 20px 0;
+  margin-top: 1rem;
 }
 
 .expense-list li {
-  background-color: white;
-  margin-bottom: 12px;
-  padding: 12px 15px;
-  border-radius: 10px;
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  font-size: 14px;
-  color: #2e7d32;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+  align-items: center;
+  padding: 0.6rem 1rem;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  margin-bottom: 0.6rem;
 }
 
-.item {
-  width: 30%;
+.expense-list .item {
   font-weight: 500;
 }
 
-.amount {
-  width: 20%;
-  text-align: right;
+.expense-list .amount {
+  margin: 0 1rem;
 }
 
-.tag {
-  padding: 4px 10px;
-  font-size: 12px;
-  border-radius: 8px;
-  background-color: #dcedc8;
-  width: 20%;
-  text-align: center;
+.expense-list .tag {
+  padding: 0.2rem 0.5rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  color: white;
 }
 
-.tag.travel { background-color: #a5d6a7; }
-.tag.food { background-color: #ffe082; }
-.tag.stay { background-color: #80cbc4; }
-.tag.misc { background-color: #ef9a9a; }
-
-.expense-list button {
-  background: none;
-  border: none;
-  color: var(--red);
-  font-size: 18px;
-  cursor: pointer;
+.tag.travel {
+  background-color: #1e88e5;
+}
+.tag.food {
+  background-color: #d81b60;
+}
+.tag.stay {
+  background-color: #43a047;
+}
+.tag.misc {
+  background-color: #8e24aa;
 }
 
 .analysis-btn {
-  margin-top: 10px;
-  padding: 10px 25px;
-  background-color: #81c784;
-  color: #1b5e20;
+  margin-top: 1rem;
+  background: #673ab7;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
   border: none;
-  border-radius: 10px;
-  font-weight: 600;
   cursor: pointer;
 }
+
+.analysis-btn:hover {
+  background: #512da8;
+}
+
+.right-panel {
+  max-width: 500px;
+  margin: 2rem auto;
+}
+
+.hidden {
+  display: none;
+}
+
+
+.nav-links {
+  display: flex;
+  gap: 1rem;
+  list-style: none;
+}
+
+.navbar {
+  background-color:#1a7e31;
+  color: white;
+  padding: 15px;
+}
+
+.navbar a {
+  color: white;
+  text-decoration: none;
+}
+
 .active-link {
-  color: #ffeb3b; /* Material Yellow 400 */
-  font-weight: 700;
+  font-weight: bold;
+  text-decoration: underline;
 }

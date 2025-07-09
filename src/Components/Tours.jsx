@@ -10,22 +10,8 @@ const Tours = (props) => {
 
     return (
         <div className='container'>
-            <div>
-                <h2 className="title">Your Trip Planner</h2>
-            </div>
-
-            {/* 🌍 Region filter buttons */}
-            <div className="regionFilters">
-                {regions.map((region) => (
-                    <button
-                        key={region}
-                        className={`regionBtn ${props.selectedRegion === region ? "active" : ""}`}
-                        onClick={() => props.setSelectedRegion(region)}
-                    >
-                        {region}
-                    </button>
-                ))}
-            </div>
+        
+            
 
             {/* 🧳 Tour cards */}
             <div className="cardsContainer">

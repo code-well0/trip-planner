@@ -1,25 +1,25 @@
 import React, { useState } from "react";
-import data from "../data"; // use correct relative path
+import data from "../data";
 import Tours from "../Components/Tours";
 import Refresh from "../Components/Refresh";
-import "../index.css"; 
+import "../index.css";
 import "../Components/Navbar.css";
-
-
-
 
 export default function PlanTrip() {
   const [tour, setTour] = useState(data);
   const [selectedRegion, setSelectedRegion] = useState("All");
 
+  const regions = ["All", "North", "South", "East", "West"];
+
   function removeTour(id) {
-    const newTour = tour.filter(tour => tour.id !== id);
+    const newTour = tour.filter((tour) => tour.id !== id);
     setTour(newTour);
   }
 
-  const filteredTours = selectedRegion === "All"
-    ? tour
-    : tour.filter(t => t.region === selectedRegion);
+  const filteredTours =
+    selectedRegion === "All"
+      ? tour
+      : tour.filter((t) => t.region === selectedRegion);
 
   if (filteredTours.length === 0) {
     return (
@@ -32,12 +32,29 @@ export default function PlanTrip() {
   }
 
   return (
-    
+    <div className="plan-trip-container">
+        <div className="titleWrapper">
+          <h2 className="title">Your Trip Planner</h2>
+        </div>
+      {/* Region Filter Buttons */}
+      <div className="regionFilters">
+        {regions.map((region) => (
+          <button
+            key={region}
+            onClick={() => setSelectedRegion(region)}
+            className={`regionBtn ${selectedRegion === region ? "active" : ""}`}
+          >
+            {region}
+          </button>
+        ))}
+      </div>
+
+      {/* Tours List */}
       <Tours
         tours={filteredTours}
         removeTour={removeTour}
         setSelectedRegion={setSelectedRegion}
-      />   
+      />
+    </div>
   );
 }
-

@@ -12,11 +12,17 @@ export default function ExpenseTracker() {
   const chartRef = useRef(null);
   const chartInstanceRef = useRef(null);
 
+  const total = expenses.reduce((acc, curr) => acc + curr.amount, 0);
+
   const addExpense = (e) => {
     e.preventDefault();
     if (!item || !amount) return;
 
-    const newExpense = { item, amount: parseFloat(amount), category };
+    const newExpense = {
+      item,
+      amount: parseFloat(amount),
+      category,
+    };
     setExpenses([...expenses, newExpense]);
     setItem("");
     setAmount("");
@@ -27,8 +33,6 @@ export default function ExpenseTracker() {
     const updated = expenses.filter((_, i) => i !== index);
     setExpenses(updated);
   };
-
-  const total = expenses.reduce((acc, curr) => acc + curr.amount, 0);
 
   const getChartData = () => {
     const grouped = expenses.reduce((acc, exp) => {
@@ -82,17 +86,10 @@ export default function ExpenseTracker() {
 
   return (
     <>
-      <nav className="navbar">
-  <ul className="nav-links">
-    <div><a href="/">Home   </a>
-    <a href="/plan">PlanTrip      </a>
-   <a href="/expenses" className="active-link">ExpenseTracker</a></div>
-  </ul>
-</nav>
-
+      
 
       <div className="main">
-        <div className="left-panel">
+        <div className="expense-form-wrapper">
           <form onSubmit={addExpense} className="expense-form">
             <input
               type="text"
@@ -106,30 +103,38 @@ export default function ExpenseTracker() {
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
             />
-            <select value={category} onChange={(e) => setCategory(e.target.value)}>
+            <select
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+            >
               <option value="Travel">Travel</option>
               <option value="Food">Food</option>
               <option value="Stay">Stay</option>
               <option value="Misc">Misc</option>
             </select>
-            <button type="submit">Add</button>
+            <button type="submit">➕ Add</button>
           </form>
 
-          <h2>Total Spent: ₹{total}</h2>
+          <h2 className="total-spent">Total Spent: ₹{total.toFixed(2)}</h2>
 
           <ul className="expense-list">
             {expenses.map((exp, index) => (
               <li key={index}>
                 <span className="item">{exp.item}</span>
                 <span className="amount">₹{exp.amount}</span>
-                <span className={`tag ${exp.category.toLowerCase()}`}>{exp.category}</span>
+                <span className={`tag ${exp.category.toLowerCase()}`}>
+                  {exp.category}
+                </span>
                 <button onClick={() => removeExpense(index)}>❌</button>
               </li>
             ))}
           </ul>
 
           {expenses.length > 0 && (
-            <button className="analysis-btn" onClick={() => setShowChart(!showChart)}>
+            <button
+              className="analysis-btn"
+              onClick={() => setShowChart(!showChart)}
+            >
               {showChart ? "Hide Analysis" : "Show Analysis"}
             </button>
           )}

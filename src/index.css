@@ -31,7 +31,18 @@ body {
   border-radius: 20px;
   font-size: 3rem;
   margin: 6vh;
-  padding: 1vh 5vw;
+  padding: 1vh 3vw;
+}
+
+.titleWrapper {
+  text-align: center;
+  margin: 2rem 0 1.5rem 0;
+}
+
+.title {
+  font-size: 3rem;
+  font-weight: bold;
+  display: inline-block;
 }
 
 .cardsContainer {
@@ -149,6 +160,10 @@ body {
   background-color: #000;
   color: #fff;
 }
+.regionBtn.active:hover {
+  background-color: #333;
+}
+
 body, html, #root {
   margin: 0;
   padding: 0;
