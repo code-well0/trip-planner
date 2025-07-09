@@ -1,6 +1,6 @@
 /* Full-page background with image */
 .page-background {
-  background-image: url('src\pages\geojango-maps-CWbbJW_7Fsw-unsplash.jpg');
+  background-image: url('./geojango-maps-CWbbJW_7Fsw-unsplash.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
