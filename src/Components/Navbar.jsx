@@ -9,6 +9,7 @@ export default function Navbar({ isLoggedIn }) {
         <>
           <NavLink to="/plan">Plan Trip</NavLink>
           <NavLink to="/expenses">Expense Tracker</NavLink>
+          <NavLink to="/api/chat">Chatbot</NavLink>
         </>
       )}
     </nav>
