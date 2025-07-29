@@ -4,6 +4,9 @@ import Navbar from "./Components/Navbar"; // ✅ your navbar component
 import HomeSplit from "./pages/HomeSplit";
 import PlanTrip from "./pages/PlanTrip";
 import ExpenseTracker from "./pages/ExpenseTracker";
+import ChatBot from "./pages/Chatbot";
+import './index.css';
+
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false); // 🔐 login state
@@ -20,6 +23,11 @@ function App() {
         <Route
           path="/expenses"
           element={isLoggedIn ? <ExpenseTracker /> : <Navigate to="/" />}
+        />
+
+        <Route
+          path="/api/chat"
+          element={isLoggedIn ? <ChatBot /> : <Navigate to="/" />}
         />
       </Routes>
     </>
