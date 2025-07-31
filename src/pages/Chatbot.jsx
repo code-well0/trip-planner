@@ -1,3 +1,4 @@
+import React from 'react'; 
 
 import { useState, useRef, useEffect } from "react";
 
@@ -43,17 +44,17 @@ function ChatBot() {
   }, [chat, isTyping]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 p-4">
-      <div className="w-full max-w-lg bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden">
+    <div className="flex items-center justify-center min-h-screen p-4 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+      <div className="w-full max-w-lg overflow-hidden bg-white border border-gray-100 shadow-2xl rounded-2xl">
         {/* Header */}
-        <div className="bg-gradient-to-r from-blue-600 to-indigo-600 px-6 py-4">
+        <div className="px-6 py-4 bg-gradient-to-r from-blue-600 to-indigo-600">
           <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 bg-white bg-opacity-20 rounded-full flex items-center justify-center">
+            <div className="flex items-center justify-center w-10 h-10 bg-white rounded-full bg-opacity-20">
               <span className="text-xl">🤖</span>
             </div>
             <div>
               <h1 className="text-xl font-semibold text-white">AI Travel Assistant</h1>
-              <p className="text-blue-100 text-sm">Online</p>
+              <p className="text-sm text-blue-100">Online</p>
             </div>
           </div>
         </div>
@@ -61,18 +62,18 @@ function ChatBot() {
         {/* Chat Container */}
         <div
           ref={chatContainerRef}
-          className="h-96 overflow-y-auto bg-gray-50 px-4 py-4 space-y-4"
+          className="px-4 py-4 space-y-4 overflow-y-auto h-96 bg-gray-50"
           style={{
             scrollbarWidth: 'thin',
             scrollbarColor: '#cbd5e1 #f1f5f9'
           }}
         >
           {chat.length === 0 && (
-            <div className="text-center py-8">
-              <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full flex items-center justify-center mx-auto mb-4">
+            <div className="py-8 text-center">
+              <div className="flex items-center justify-center w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-r from-blue-500 to-indigo-500">
                 <span className="text-2xl">💬</span>
               </div>
-              <p className="text-gray-500 text-sm">Start a conversation with your travel assistant!</p>
+              <p className="text-sm text-gray-500">Start a conversation with your travel assistant!</p>
             </div>
           )}
           
@@ -112,21 +113,21 @@ function ChatBot() {
           {/* Typing Indicator */}
           {isTyping && (
             <div className="flex justify-start animate-fade-in">
-              <div className="flex items-start space-x-2 max-w-xs">
+              <div className="flex items-start max-w-xs space-x-2">
                 {/* Bot Avatar */}
-                <div className="w-8 h-8 rounded-full flex items-center justify-center text-xs flex-shrink-0 bg-gray-300 text-gray-700">
+                <div className="flex items-center justify-center flex-shrink-0 w-8 h-8 text-xs text-gray-700 bg-gray-300 rounded-full">
                   🤖
                 </div>
                 
                 {/* Typing Bubble */}
-                <div className="bg-white text-gray-800 border border-gray-200 rounded-2xl rounded-tl-md px-4 py-3 shadow-sm">
+                <div className="px-4 py-3 text-gray-800 bg-white border border-gray-200 shadow-sm rounded-2xl rounded-tl-md">
                   <div className="flex items-center space-x-1">
                     <div className="flex space-x-1">
                       <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{animationDelay: '0ms'}}></div>
                       <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{animationDelay: '150ms'}}></div>
                       <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{animationDelay: '300ms'}}></div>
                     </div>
-                    <span className="text-xs text-gray-500 ml-2">AI is thinking...</span>
+                    <span className="ml-2 text-xs text-gray-500">AI is thinking...</span>
                   </div>
                 </div>
               </div>
@@ -135,12 +136,12 @@ function ChatBot() {
         </div>
 
         {/* Input Area */}
-        <div className="bg-white border-t border-gray-100 px-4 py-4">
+        <div className="px-4 py-4 bg-white border-t border-gray-100">
           <div className="flex items-center space-x-3">
-            <div className="flex-1 relative">
+            <div className="relative flex-1">
               <input
                 type="text"
-                className="w-full border border-gray-300 rounded-full px-4 py-3 pr-12 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm placeholder-gray-500 transition-all duration-200"
+                className="w-full px-4 py-3 pr-12 text-sm placeholder-gray-500 transition-all duration-200 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 placeholder="Type your message..."
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
@@ -149,7 +150,7 @@ function ChatBot() {
                 }}
               />
               <button
-                className="absolute right-2 top-1/2 transform -translate-y-1/2 w-8 h-8 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-full hover:from-blue-700 hover:to-indigo-700 transition-all duration-200 flex items-center justify-center text-sm shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                className="absolute flex items-center justify-center w-8 h-8 text-sm text-white transition-all duration-200 transform -translate-y-1/2 rounded-full shadow-md right-2 top-1/2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
                 onClick={handleSend}
                 disabled={!message.trim() || isTyping}
               >
