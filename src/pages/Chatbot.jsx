@@ -1,6 +1,6 @@
-import React from 'react'; 
 
-import { useState, useRef, useEffect } from "react";
+
+import React, { useState, useRef, useEffect } from "react";
 
 function ChatBot() {
   const [message, setMessage] = useState("");
@@ -62,11 +62,7 @@ function ChatBot() {
         {/* Chat Container */}
         <div
           ref={chatContainerRef}
-          className="px-4 py-4 space-y-4 overflow-y-auto h-96 bg-gray-50"
-          style={{
-            scrollbarWidth: 'thin',
-            scrollbarColor: '#cbd5e1 #f1f5f9'
-          }}
+          className="px-4 py-4 space-y-4 overflow-y-auto h-96 bg-gray-50 chat-container"
         >
           {chat.length === 0 && (
             <div className="py-8 text-center">
@@ -82,7 +78,7 @@ function ChatBot() {
               key={index}
               className={`flex ${
                 msg.sender === "user" ? "justify-end" : "justify-start"
-              } animate-fade-in`}
+              } opacity-0 animate-fadeIn`}
             >
               <div className={`flex items-start space-x-2 max-w-xs ${
                 msg.sender === "user" ? "flex-row-reverse space-x-reverse" : ""
@@ -112,7 +108,7 @@ function ChatBot() {
           
           {/* Typing Indicator */}
           {isTyping && (
-            <div className="flex justify-start animate-fade-in">
+            <div className="flex justify-start opacity-0 animate-fadeIn">
               <div className="flex items-start max-w-xs space-x-2">
                 {/* Bot Avatar */}
                 <div className="flex items-center justify-center flex-shrink-0 w-8 h-8 text-xs text-gray-700 bg-gray-300 rounded-full">
@@ -162,42 +158,6 @@ function ChatBot() {
           </div>
         </div>
       </div>
-      
-    
-      <style jsx>{`
-        @keyframes fade-in {
-          from {
-            opacity: 0;
-            transform: translateY(10px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        
-        .animate-fade-in {
-          animation: fade-in 0.3s ease-out;
-        }
-        
-       
-        div::-webkit-scrollbar {
-          width: 6px;
-        }
-        
-        div::-webkit-scrollbar-track {
-          background: #f1f5f9;
-        }
-        
-        div::-webkit-scrollbar-thumb {
-          background: #cbd5e1;
-          border-radius: 3px;
-        }
-        
-        div::-webkit-scrollbar-thumb:hover {
-          background: #94a3b8;
-        }
-      `}</style>
     </div>
   );
 }
