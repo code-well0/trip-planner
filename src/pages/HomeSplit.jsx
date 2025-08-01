@@ -24,8 +24,6 @@ export default function HomeSplit({ setIsLoggedIn }) {
             <h1>Plan Your Next Adventure</h1>
             <p>Discover amazing places and create unforgettable memories.</p>
             <button onClick={handleStartPlanningClick}>Start Planning →</button>
-
-
           </div>
 
           {/* Signup Section */}
@@ -40,12 +38,22 @@ export default function HomeSplit({ setIsLoggedIn }) {
               }}
             >
               <h2>Sign Up</h2>
-              <input ref={nameInputRef} type="text" placeholder="Name" required />
+              <input
+                ref={nameInputRef}
+                type="text"
+                placeholder="Name"
+                required
+              />
               <input type="email" placeholder="Email" required />
               <input type="password" placeholder="Password" required />
               <button type="submit">Create Account</button>
+              <p style={{ textAlign: "center" }}>
+                Already have an account ? <a href="/login" style={{color : "blue"}}>Login</a>
+              </p>
             </form>
-            {isSignedIn && <p className="success-message">Signed in successfully!</p>}
+            {isSignedIn && (
+              <p className="success-message" >Signed in successfully!</p>
+            )}
           </div>
         </div>
       </div>

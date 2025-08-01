@@ -5,21 +5,27 @@ import HomeSplit from "./pages/HomeSplit";
 import PlanTrip from "./pages/PlanTrip";
 import ExpenseTracker from "./pages/ExpenseTracker";
 import ChatBot from "./pages/Chatbot";
-import './index.css';
-
+import "./index.css";
+import Login from "./pages/login";
+import Signup from "./pages/Signup";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false); // 🔐 login state
 
   return (
     <>
-      <Navbar isLoggedIn={isLoggedIn} /> {/* ✅ navbar now knows if logged in */}
+      <Navbar isLoggedIn={isLoggedIn} />{" "}
+      {/* ✅ navbar now knows if logged in */}
       <Routes>
         <Route path="/" element={<HomeSplit setIsLoggedIn={setIsLoggedIn} />} />
         <Route
           path="/plan"
           element={isLoggedIn ? <PlanTrip /> : <Navigate to="/" />}
         />
+        
+        <Route path="/signup" element={<Signup/>} />
+        <Route path="/login" element={<Login />} />
+
         <Route
           path="/expenses"
           element={isLoggedIn ? <ExpenseTracker /> : <Navigate to="/" />}
