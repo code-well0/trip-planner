@@ -16,7 +16,7 @@ const port = 5000;
 
 
 // Initialize Gemini AI
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "AIzaSyDeoVnzthyMicwDi5snFW9uqqsH-r_NB5Q");
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
 const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
 
