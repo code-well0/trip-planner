@@ -1,24 +1,63 @@
 import React, { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import "./HomeSplit.css";
-import { Colors } from "chart.js";
 
-export default function Login() {
-  const [form, setForm] = useState({
-    email: "",
-    password: "",
-  });
+export default function Login({ setIsLoggedIn }) {
+  const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [isLoggedInLocal, setIsLoggedInLocal] = useState(false);
 
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = (e) => {
+  const handleLogin = (e) => {
     e.preventDefault();
-    console.log("Login Data:", form);
-    alert("Login successful!");
+
+    if (email && password) {
+      console.log("Login Data:", { email, password }); // ✅ retained from add/login_page
+      setIsLoggedIn(true);
+      setIsLoggedInLocal(true);
+      navigate("/plan");
+    } else {
+      alert("Please enter email and password");
+    }
   };
 
-return (
+  return (
+    <div className="login-form-container">
+      <form onSubmit={handleLogin}>
+        <h2>Login</h2>
+        <input
+          type="email"
+          name="email"
+          placeholder="Enter your email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
+        <input
+          type="password"
+          name="password"
+          placeholder="Enter your password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
+        <button type="submit">Login</button>
+
+        <p style={{ textAlign: "center" }}>
+          Don't have an account?{" "}
+          <Link to="/signup" style={{ color: "blue" }}>
+            Signup
+          </Link>
+        </p>
+      </form>
+
+      {isLoggedInLocal && (
+        <p className="success-message">Logged in successfully!</p>
+      )}
+    </div>
+  );
+}
+
     <div className="page-background">
       <div className="overlay">
         <div className="split-content">
@@ -29,22 +68,43 @@ return (
             <button>Start Planning →</button>
           </div>
 
-          {/* Signup Section */}
-          <div className="signup-box">
-            <form
-              className="signup-form"
-            >
-              <h2>Login</h2>
-              <input type="email" placeholder="Email" required />
-              <input type="password" placeholder="Password" required />
-              <button type="submit">Create Account</button>
-              <p style={{ textAlign: "center" }}>
-                Don't have an account ? <a href="/HomeSplit" style={{color : "blue"}}>Signup</a>
-              </p>
-            </form>
-            {/* {isSignedIn && (
-              <p className="success-message">Signed in successfully!</p>
-            )} */}
+{/* Login Section */}
+<div className="signup-box">
+  <form
+    className="signup-form"
+    onSubmit={handleLogin}
+  >
+    <h2>Login</h2>
+
+    <input
+      type="email"
+      placeholder="Email"
+      value={email}
+      onChange={(e) => setEmail(e.target.value)}
+      required
+    />
+    <input
+      type="password"
+      placeholder="Password"
+      value={password}
+      onChange={(e) => setPassword(e.target.value)}
+      required
+    />
+    <button type="submit">Login</button>
+
+    <p style={{ textAlign: "center" }}>
+      Don't have an account?{" "}
+      <Link to="/signup" style={{ color: "blue" }}>
+        Sign Up
+      </Link>
+    </p>
+  </form>
+
+  {isLoggedInLocal && (
+    <p className="success-message">Logged in successfully!</p>
+  )}
+</div>
+
           </div>
         </div>
       </div>

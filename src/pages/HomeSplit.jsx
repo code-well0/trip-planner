@@ -1,6 +1,8 @@
 import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./HomeSplit.css";
+import Login from "./login";
 
 export default function HomeSplit({ setIsLoggedIn }) {
   const nameInputRef = useRef(null);
@@ -47,12 +49,18 @@ export default function HomeSplit({ setIsLoggedIn }) {
               <input type="email" placeholder="Email" required />
               <input type="password" placeholder="Password" required />
               <button type="submit">Create Account</button>
-              <p style={{ textAlign: "center" }}>
-                Already have an account ? <a href="/login" style={{color : "blue"}}>Login</a>
-              </p>
-            </form>
-            {isSignedIn && (
-              <p className="success-message" >Signed in successfully!</p>
+<p style={{ textAlign: "center" }}>
+  Already have an account?{" "}
+  <Link to="/login" style={{ color: "blue" }}>
+    Login
+  </Link>
+</p>
+</form>
+
+{isSignedIn && (
+  <p className="success-message">Signed in successfully!</p>
+)}
+
             )}
           </div>
         </div>
