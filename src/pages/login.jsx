@@ -1,17 +1,28 @@
+// const Login = () => {
+//   return (
+//     <div>
+//       <h1>Hello From Login Page</h1>
+//     </div>
+//   );
+// };
+
+// export default Login;
+
+
 import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import HomeSplit from "./HomeSplit";
 import "./HomeSplit.css";
-import Login from "./login";
 
-export default function HomeSplit({ setIsLoggedIn }) {
+export default function Login( ) {
   const nameInputRef = useRef(null);
   const navigate = useNavigate(); // ✅ use React Router for navigation
-  const [isSignedIn, setIsSignedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const handleStartPlanningClick = () => {
-    if (isSignedIn) {
-      navigate("/plan"); // ⬅️ only navigate if signed in
+    if (isLoggedIn) {
+      navigate("/HomeSplit"); // ⬅️ only navigate if signed in
     } else {
       alert("Please sign up first!");
     }
@@ -28,37 +39,30 @@ export default function HomeSplit({ setIsLoggedIn }) {
             <button onClick={handleStartPlanningClick}>Start Planning →</button>
           </div>
 
-          {/* Signup Section */}
+          {/* Login Section */}
           <div className="signup-box">
             <form
               className="signup-form"
               onSubmit={(e) => {
                 e.preventDefault();
                 setIsLoggedIn(true);
-                setIsSignedIn(true); // ✅ stays active
-                // navigate("/plan");   // ✅ no reload!
               }}
             >
-              <h2>Sign Up</h2>
-              <input
-                ref={nameInputRef}
-                type="text"
-                placeholder="Name"
-                required
-              />
+              <h2>Login</h2>
+              
               <input type="email" placeholder="Email" required />
               <input type="password" placeholder="Password" required />
-              <button type="submit">Sign Up</button>
+              <button type="submit">Create Account</button>
               {/* <br /> */}
               <p style={{ textAlign: "center" }}>
-                Don't have an Account ?{" "}
-                <Link to="/login" style={{ color: "blue" }}>
-                  Login
+                Already have an Account ?{" "}
+                <Link to="/" style={{ color: "blue" }}>
+                  Sign Up
                 </Link>
               </p>
             </form>
-            {isSignedIn && (
-              <p className="success-message">Signed in successfully!</p>
+            {isLoggedIn && (
+              <p className="success-message">LoggedIn successfully! <br />SignUp Now</p>
             )}
           </div>
         </div>

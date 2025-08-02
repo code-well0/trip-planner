@@ -6,6 +6,8 @@ import PlanTrip from "./pages/PlanTrip";
 import ExpenseTracker from "./pages/ExpenseTracker";
 import ChatBot from "./pages/Chatbot";
 import './index.css';
+import Login from "./pages/login";
+// import HomeSplit from "./pages/HomeSplit";
 
 
 function App() {
@@ -29,6 +31,9 @@ function App() {
           path="/api/chat"
           element={isLoggedIn ? <ChatBot /> : <Navigate to="/" />}
         />
+
+        <Route path="/login" element={<Login />} />
+        <Route path="/HomeSplit" element={<HomeSplit />} />
       </Routes>
     </>
   );
