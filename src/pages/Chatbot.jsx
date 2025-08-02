@@ -15,13 +15,11 @@ function ChatBot() {
     setChat(newChat);
     setMessage("");
     
-    // Show typing indicator
+  
     setIsTyping(true);
 
     try {
-      // Use environment variable for API URL, fallback to localhost for development
-      const apiUrl = process.env.REACT_APP_API_URL || "http://localhost:5000";
-      const res = await fetch(`${apiUrl}/api/chat`, {
+      const res = await fetch("http://localhost:5000/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message }),

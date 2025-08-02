@@ -10,14 +10,7 @@
     "axios": "^1.11.0",
     "chart.js": "^4.5.0",
     "cors": "^2.8.5",
-s
-
-
-
     "framer-motion": "^12.23.12",
-
-    "openai": "^5.10.2",
-
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^5.5.0",
@@ -29,10 +22,7 @@ s
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "server": "node src/server.js",
-    "dev": "concurrently \"npm run server\" \"npm start\"",
-    "deploy": "npm run build"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
@@ -54,7 +44,6 @@ s
   },
   "devDependencies": {
     "autoprefixer": "^10.4.21",
-    "concurrently": "^9.2.0",
     "postcss": "^8.5.6",
     "tailwindcss": "^3.4.1"
   }

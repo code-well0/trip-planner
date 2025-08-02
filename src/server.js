@@ -1,34 +1,19 @@
 
-
 const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const { GoogleGenerativeAI } = require('@google/generative-ai');
 
-import express from 'express';
-import cors from 'cors';
-import dotenv from 'dotenv';
-import OpenAI from 'openai';
-
-
 dotenv.config();
 const port = 5000;
 
-
 // Initialize Gemini AI
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "AIzaSyDeoVnzthyMicwDi5snFW9uqqsH-r_NB5Q");
 const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
-
-
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY || "use your own open ai api key"
-});
-
 
 const app = express();
 app.use(cors());
 app.use(express.json());
-
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
@@ -40,13 +25,10 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-
-
 app.post('/api/chat', async (req, res) => {
   const { message } = req.body;
 
   try {
-
     // Create a travel-focused prompt for better responses
     const travelPrompt = `You are an AI Travel Assistant for a trip planning application. You specialize in:
     - Destination recommendations
@@ -84,17 +66,6 @@ app.post('/api/chat', async (req, res) => {
     }
     
     res.status(500).json({ error: errorMessage });
-
-    const completion = await openai.chat.completions.create({
-      model: 'gpt-4', 
-      messages: [{ role: 'user', content: message }],
-    });
-
-    res.json({ reply: completion.choices[0].message.content });
-  } catch (error) {
-    console.error('Error:', error.message);
-    res.status(500).json({ error: 'Something went wrong.' });
-
   }
 });
 
