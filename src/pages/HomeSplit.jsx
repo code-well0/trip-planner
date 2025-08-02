@@ -1,14 +1,19 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./HomeSplit.css";
+import Login from "./login";
 
 export default function HomeSplit({ setIsLoggedIn }) {
   const nameInputRef = useRef(null);
   const navigate = useNavigate(); // ✅ use React Router for navigation
+  const [isSignedIn, setIsSignedIn] = useState(false);
 
   const handleStartPlanningClick = () => {
-    if (nameInputRef.current) {
-      nameInputRef.current.focus();
+    if (isSignedIn) {
+      navigate("/plan"); // ⬅️ only navigate if signed in
+    } else {
+      alert("Please sign up first!");
     }
   };
 
@@ -29,16 +34,32 @@ export default function HomeSplit({ setIsLoggedIn }) {
               className="signup-form"
               onSubmit={(e) => {
                 e.preventDefault();
-                setIsLoggedIn(true); // ✅ stays active
-                navigate("/plan");   // ✅ no reload!
+                setIsLoggedIn(true);
+                setIsSignedIn(true); // ✅ stays active
+                // navigate("/plan");   // ✅ no reload!
               }}
             >
               <h2>Sign Up</h2>
-              <input ref={nameInputRef} type="text" placeholder="Name" required />
+              <input
+                ref={nameInputRef}
+                type="text"
+                placeholder="Name"
+                required
+              />
               <input type="email" placeholder="Email" required />
               <input type="password" placeholder="Password" required />
               <button type="submit">Create Account</button>
+              {/* <br /> */}
+              <p style={{ textAlign: "center" }}>
+                Already have an Account ?{" "}
+                <Link to="/login" style={{ color: "blue" }}>
+                  Login
+                </Link>
+              </p>
             </form>
+            {isSignedIn && (
+              <p className="success-message">Signed in successfully!</p>
+            )}
           </div>
         </div>
       </div>

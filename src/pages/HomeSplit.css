@@ -147,3 +147,10 @@
     width: 100%;
   }
 }
+
+.success-message {
+  color: #4caf50; /* green */
+  margin-top: 10px;
+  font-weight: bold;
+  text-align: center;
+}
