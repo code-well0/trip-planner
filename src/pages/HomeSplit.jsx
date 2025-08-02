@@ -48,10 +48,10 @@ export default function HomeSplit({ setIsLoggedIn }) {
               />
               <input type="email" placeholder="Email" required />
               <input type="password" placeholder="Password" required />
-              <button type="submit">Sign Up</button>
+              <button type="submit">Create Account</button>
               {/* <br /> */}
               <p style={{ textAlign: "center" }}>
-                Don't have an Account ?{" "}
+                Already have an Account ?{" "}
                 <Link to="/login" style={{ color: "blue" }}>
                   Login
                 </Link>
