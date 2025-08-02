@@ -1,6 +1,9 @@
 
 import React, { useState } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
+
+import Navbar from "./Components/Navbar"; // ✅ your navbar component
+import HomePage from "./pages/homepage";
 import Navbar from "./Components/Navbar";
 
 import HomeSplit from "./pages/HomeSplit";
@@ -57,9 +60,6 @@ function App() {
 }
 
 export default App;
-
-
-
 // import React, { useState } from "react";
 // import { Routes, Route, Navigate } from "react-router-dom";
 // import Navbar from "./Components/Navbar"; // ✅ your navbar component
@@ -108,4 +108,3 @@ export default App;
 // }
 
 // export default App;
-
