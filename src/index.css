@@ -47,7 +47,9 @@
 .main-content {
   padding-top: 80px;
 }
-
+html{
+  witdh: 100vw;
+}
 
 body {
   font-family: "Poppins", sans-serif;
@@ -73,6 +75,11 @@ body {
 }
 
 .titleWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 40vh;
   text-align: center;
   margin: 2rem 0 1.5rem 0;
 }
@@ -88,7 +95,7 @@ body {
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
-  max-width: 1300px;
+  max-width: 100%;
   margin: 0 auto;
   align-items: stretch;  /* ADD THIS */
 }
@@ -178,6 +185,7 @@ body {
 .regionFilters {
   margin: 1rem 0;
   text-align: center;
+  width: 100%;
 }
 
 .regionBtn {

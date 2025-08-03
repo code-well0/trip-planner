@@ -5,6 +5,11 @@
   padding: 1rem 2rem;
   display: flex;
   gap: 2rem;
+  position: fixed; 
+  left: 0; 
+  top: 0;
+  width: 100%;
+
 }
 .main-content {
   padding-top: 80px;
