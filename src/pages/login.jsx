@@ -3,12 +3,12 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import "./HomeSplit.css";
 
-export default function Login({setIsLoggedIn}) {
-  // const nameInputRef = useRef(null);
+export default function Login({ setIsLoggedIn }) {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-   const [isLoggedInLocal, setIsLoggedInLocal] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [isLoggedInLocal, setIsLoggedInLocal] = useState(false);
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -34,30 +34,39 @@ export default function Login({setIsLoggedIn}) {
 
           {/* Login Section */}
           <div className="signup-box">
-            <form
-              className="signup-form"
-              onSubmit={handleLogin}
-            >
+            <form className="signup-form" onSubmit={handleLogin}>
               <h2>Login</h2>
-              
-             <input
+
+              <input
                 type="email"
                 placeholder="Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
               />
+
               <input
-                type="password"
+                type={showPassword ? "text" : "password"}
                 placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
               />
+
+              <label style={{ display: "block", marginTop: "8px" }}>
+                <input
+                  type="checkbox"
+                  checked={showPassword}
+                  onChange={() => setShowPassword(!showPassword)}
+                  style={{ marginRight: "5px" }}
+                />
+                Show Password
+              </label>
+
               <button type="submit">Login</button>
-              {/* <br /> */}
+
               <p style={{ textAlign: "center" }}>
-                Don't have an Account ?{" "}
+                Don't have an Account?{" "}
                 <Link to="/" style={{ color: "blue" }}>
                   Sign Up
                 </Link>
