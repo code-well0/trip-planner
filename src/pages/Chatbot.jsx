@@ -1,6 +1,8 @@
 
 
 import React, { useState, useRef, useEffect } from "react";
+import { Navbar, Card, Tours } from 'Components';
+
 
 function ChatBot() {
   const [message, setMessage] = useState("");

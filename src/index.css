@@ -65,7 +65,7 @@ body {
 }
 
 .title {
-  border: 7px #0111a0;
+  border: 7px solid #0111a0;
   border-radius: 20px;
   font-size: 3rem;
   margin: 6vh;
@@ -77,11 +77,7 @@ body {
   margin: 2rem 0 1.5rem 0;
 }
 
-.title {
-  font-size: 3rem;
-  font-weight: bold;
-  display: inline-block;
-}
+/* Removed duplicate .title definition */
 
 .cardsContainer {
   font-family: "Poppins", sans-serif;

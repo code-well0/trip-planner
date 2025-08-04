@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import data from "../data";
-import Tours from "../Components/Tours";
-import Refresh from "../Components/Refresh";
+import { Tours, Refresh } from "../Components";
 import "../index.css";
 import "../Components/Navbar.css";
+
 
 export default function PlanTrip() {
   const [tour, setTour] = useState(data);

@@ -3,6 +3,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { FaPlus, FaTrash, FaPlane, FaUtensils, FaHotel, FaTags, FaBroom } from "react-icons/fa";
 import Chart from "chart.js/auto";
 import "./ExpenseTracker.css";
+import { Navbar, Card, Tours } from 'Components';
+
 
 export default function ExpenseTracker() {
   const [expenses, setExpenses] = useState([]);
