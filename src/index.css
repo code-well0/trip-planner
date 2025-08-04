@@ -88,13 +88,15 @@ body {
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
-  max-width: 1300px;
+  
   margin: 0 auto;
-  align-items: stretch;  /* ADD THIS */
+  
+  width:100%;
+  align-items:stretch;  /* ADD THIS */
 }
 
 .card {
-  width: 400px;
+  width:400px;
   /* Remove height: max-content; */
   display: flex;
   flex-direction: column;
@@ -178,16 +180,18 @@ body {
 .regionFilters {
   margin: 1rem 0;
   text-align: center;
+  
 }
 
 .regionBtn {
   padding: 0.5rem 1rem;
-  margin: 0 0.5rem;
+  margin: 0 0.5rem 0.5rem;
   background-color: #eee;
   border: none;
   border-radius: 20px;
   cursor: pointer;
   transition: background-color 0.3s;
+
 }
 
 .regionBtn:hover {
