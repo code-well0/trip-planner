@@ -1,17 +1,17 @@
 import React, { useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import "./HomeSplit.css";
-import Login from "./login";
 
 export default function HomeSplit({ setIsLoggedIn }) {
   const nameInputRef = useRef(null);
-  const navigate = useNavigate(); // ✅ use React Router for navigation
+  const navigate = useNavigate();
+
   const [isSignedIn, setIsSignedIn] = useState(false);
+  const [showPassword, setShowPassword] = useState(false); // 👁️ Control password visibility
 
   const handleStartPlanningClick = () => {
     if (isSignedIn) {
-      navigate("/plan"); // ⬅️ only navigate if signed in
+      navigate("/plan");
     } else {
       alert("Please sign up first!");
     }
@@ -35,8 +35,7 @@ export default function HomeSplit({ setIsLoggedIn }) {
               onSubmit={(e) => {
                 e.preventDefault();
                 setIsLoggedIn(true);
-                setIsSignedIn(true); // ✅ stays active
-                // navigate("/plan");   // ✅ no reload!
+                setIsSignedIn(true);
               }}
             >
               <h2>Sign Up</h2>
@@ -47,16 +46,32 @@ export default function HomeSplit({ setIsLoggedIn }) {
                 required
               />
               <input type="email" placeholder="Email" required />
-              <input type="password" placeholder="Password" required />
+              <input
+                type={showPassword ? "text" : "password"}
+                placeholder="Password"
+                required
+              />
+
+              {/* ✅ Show Password Toggle */}
+              <label style={{ fontSize: "14px", marginBottom: "10px", display: "flex", alignItems: "center", gap: "8px" }}>
+                <input
+                  type="checkbox"
+                  checked={showPassword}
+                  onChange={() => setShowPassword(!showPassword)}
+                />
+                Show Password
+              </label>
+
               <button type="submit">Create Account</button>
-              {/* <br /> */}
+
               <p style={{ textAlign: "center" }}>
-                Already have an Account ?{" "}
+                Already have an Account?{" "}
                 <Link to="/login" style={{ color: "blue" }}>
                   Login
                 </Link>
               </p>
             </form>
+
             {isSignedIn && (
               <p className="success-message">Signed in successfully!</p>
             )}
