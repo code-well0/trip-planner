@@ -26,6 +26,26 @@ export default function Signup() {
   };
 
   return (
+    <div style={{ padding: "2rem", maxWidth: "400px", margin: "20px auto" }}>
+      <h2>Signup</h2>
+      <form onSubmit={handleSubmit}>
+        <label>
+          Name:
+          <input type="text" name="name" value={form.name} onChange={handleChange} required />
+        </label>
+        <br /><br />
+        <label>
+          Email:
+          <input type="email" name="email" value={form.email} onChange={handleChange} required />
+        </label>
+        <br /><br />
+        <label>
+          Password:
+          <input type="password" name="password" value={form.password} onChange={handleChange} required />
+        </label>
+        <br /><br />
+        <button type="submit">Signup</button>
+      </form>
     <div className="page-background">
       <div className="overlay">
         <div className="split-content">
@@ -90,6 +110,7 @@ export default function Signup() {
           </div>
         </div>
       </div>
+
     </div>
   );
 }

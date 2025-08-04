@@ -8,6 +8,7 @@ import PlanTrip from "./pages/PlanTrip";
 import ExpenseTracker from "./pages/ExpenseTracker";
 import ChatBot from "./pages/Chatbot";
 import Login from "./pages/login";
+import Signup from "./pages/Signup";
 
 import "./index.css";
 
@@ -30,6 +31,11 @@ function App() {
         <Route
           path="/login"
           element={<Login setIsLoggedIn={setIsLoggedIn} />}
+        />
+
+        <Route
+          path="/signup"
+          element={<Signup />}
         />
 
         {/* Protected routes */}

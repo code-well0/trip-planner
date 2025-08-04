@@ -47,7 +47,9 @@
 .main-content {
   padding-top: 80px;
 }
-
+html{
+  witdh: 100vw;
+}
 
 body {
   font-family: "Poppins", sans-serif;
@@ -55,6 +57,7 @@ body {
   overflow-x: hidden;
   height: 100vh;
   width: 100%;
+  padding-top: 60px; 
 }
 
 .container {
@@ -73,6 +76,11 @@ body {
 }
 
 .titleWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 40vh;
   text-align: center;
   margin: 2rem 0 1.5rem 0;
 }
@@ -88,7 +96,6 @@ body {
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
-  
   margin: 0 auto;
   
   width:100%;
@@ -180,7 +187,7 @@ body {
 .regionFilters {
   margin: 1rem 0;
   text-align: center;
-  
+  width: 100%;
 }
 
 .regionBtn {
