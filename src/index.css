@@ -202,6 +202,94 @@ body {
   background-color: #333;
 }
 
+/* Controls Container for Dropdowns */
+.controls-container {
+  margin: 1rem 0;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+/* Dropdown Container */
+.dropdown-container {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown Button - Same style as original regionBtn */
+.dropdown-btn {
+  padding: 0.5rem 1rem;
+  margin: 0 0.5rem;
+  background-color: #eee;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-size: inherit;
+  font-family: inherit;
+  min-width: 120px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dropdown-btn:hover {
+  background-color: #ccc;
+}
+
+/* Dropdown Menu - Clean and minimal */
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  margin-top: 4px;
+  overflow: hidden;
+}
+
+/* Dropdown Items - Same style as original regionBtn */
+.dropdown-item {
+  display: block;
+  width: 100%;
+  padding: 0.5rem 1rem;
+  background-color: transparent;
+  border: none;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-size: inherit;
+  font-family: inherit;
+}
+
+.dropdown-item:hover {
+  background-color: #ccc;
+}
+
+.dropdown-item.active {
+  background-color: #000;
+  color: #fff;
+}
+
+.dropdown-item.active:hover {
+  background-color: #333;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .controls-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+}
+
 body, html, #root {
   margin: 0;
   padding: 0;

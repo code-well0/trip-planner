@@ -95,7 +95,7 @@ const data = [
 	region: "North",
 	emoji: "🕍",
 	info: "Home to the Golden Temple, the holiest shrine of Sikhism, Amritsar is rich in history and spirituality.",
-	image: "https://upload.wikimedia.org/wikipedia/commons/a/a1/Harmandir_Sahib%2C_Amritsar%2C_India.jpg",
+	image: "/images/Amritsar.jpg",
 	price: "14,000"
 	},
 	{
