@@ -5,7 +5,7 @@ import Refresh from "../Components/Refresh";
 import "../index.css";
 import "../Components/Navbar.css";
 
-export default function PlanTrip() {
+export default function PlanTrip({searchQuery}) {
   const [tour, setTour] = useState(data);
   const [selectedRegion, setSelectedRegion] = useState("All");
 
@@ -16,10 +16,11 @@ export default function PlanTrip() {
     setTour(newTour);
   }
 
-  const filteredTours =
-    selectedRegion === "All"
-      ? tour
-      : tour.filter((t) => t.region === selectedRegion);
+  const filteredTours = tour.filter((t) => {
+    const matchRegion = selectedRegion === "All" || t.region === selectedRegion;
+    const matchSearch = t.name.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchRegion && matchSearch;
+  })
 
   if (filteredTours.length === 0) {
     return (

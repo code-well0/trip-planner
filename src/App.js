@@ -13,17 +13,18 @@ import "./index.css";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false); // 🔐 Global login state
+  const [searchQuery, setSearchQuery] = useState(""); // 🔍 Search query state
 
   return (
     <>
       {/* ✅ Navbar reacts to login status */}
-      <Navbar isLoggedIn={isLoggedIn} />
+      <Navbar isLoggedIn={isLoggedIn} searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
 
       <Routes>
         {/* Signup page */}
         <Route
           path="/"
-          element={<HomeSplit setIsLoggedIn={setIsLoggedIn} />}
+          element={<HomeSplit setIsLoggedIn={setIsLoggedIn} searchQuery={searchQuery} />}
         />
 
         {/* Login page */}
@@ -35,7 +36,7 @@ function App() {
         {/* Protected routes */}
         <Route
           path="/plan"
-          element={isLoggedIn ? <PlanTrip /> : <Navigate to="/login" />}
+          element={isLoggedIn ? <PlanTrip searchQuery={searchQuery} /> : <Navigate to="/login" />}
         />
         <Route
           path="/expenses"

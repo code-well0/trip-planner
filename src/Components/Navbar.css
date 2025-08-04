@@ -4,6 +4,8 @@
   color: rgb(124, 238, 155);
   padding: 1rem 2rem;
   display: flex;
+  align-items: center;
+  justify-content: center;
   gap: 2rem;
 }
 .main-content {
@@ -19,3 +21,14 @@
 .navbar a:hover {
   color: #ffc107;
 }
+
+.search-bar {
+  width: 300px;
+  margin-left: 20px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  color: black;
+}
+
