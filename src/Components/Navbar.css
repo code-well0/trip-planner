@@ -4,7 +4,10 @@
   color: rgb(124, 238, 155);
   padding: 1rem 2rem;
   display: flex;
+  right:0;
+
   gap: 2rem;
+
   position: fixed;
   left: 0;
   top: 0;
