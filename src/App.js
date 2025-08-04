@@ -10,6 +10,7 @@ import ChatBot from "./pages/Chatbot";
 import Login from "./pages/login";
 
 import "./index.css";
+import Footer from "./Components/Footer";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false); // 🔐 Global login state
@@ -52,6 +53,7 @@ function App() {
           element={<Navigate to="/" />}
         />
       </Routes>
+      <Footer />
     </>
   );
 }
