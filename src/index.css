@@ -1,7 +1,5 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
 
+/* Removed Tailwind directives. If you want to use Tailwind, ensure it is installed and configured in your project. */
 /* Chat animations */
 @keyframes fadeIn {
   from {
