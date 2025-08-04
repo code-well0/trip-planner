@@ -19,7 +19,7 @@ export default function Signup() {
   };
 
   return (
-    <div style={{ padding: "2rem", maxWidth: "400px", margin: "auto" }}>
+    <div style={{ padding: "2rem", maxWidth: "400px", margin: "20px auto" }}>
       <h2>Signup</h2>
       <form onSubmit={handleSubmit}>
         <label>

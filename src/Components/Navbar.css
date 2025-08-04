@@ -1,15 +1,16 @@
 /* Navbar.css */
 .navbar {
-  background:#28a745;
+  background: #28a745;
   color: rgb(124, 238, 155);
   padding: 1rem 2rem;
   display: flex;
   gap: 2rem;
-  position: fixed; 
-  left: 0; 
+  position: fixed;
+  left: 0;
   top: 0;
   width: 100%;
-
+  z-index: 1000;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 .main-content {
   padding-top: 80px;
