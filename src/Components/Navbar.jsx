@@ -1,10 +1,13 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { SignedIn, SignedOut, UserButton, SignOutButton } from "@clerk/clerk-react";
+import { Link } from "react-router-dom";
+import {
+  SignedIn,
+  SignedOut,
+  UserButton,
+  SignOutButton,
+} from "@clerk/clerk-react";
 
 const Navbar = () => {
-  const navigate = useNavigate();
-
   return (
     <nav className="flex items-center justify-between px-6 py-4 bg-white shadow-md">
       {/* 🌍 Brand */}
@@ -14,7 +17,6 @@ const Navbar = () => {
 
       {/* 🧭 Navigation Links */}
       <div className="flex space-x-6 items-center text-gray-700 font-medium">
-        {/* Only show when user is signed in */}
         <SignedIn>
           <Link to="/plan" className="hover:text-blue-600 transition duration-200">
             🧳 Plan Trip
@@ -25,9 +27,12 @@ const Navbar = () => {
           <Link to="/api/chat" className="hover:text-blue-600 transition duration-200">
             🤖 AI Assistant
           </Link>
+          <Link to="/TripRecommender" className="hover:text-blue-600 transition duration-200">
+            ✈️ TripRecommender
+          </Link>
 
           {/* Clerk UserButton + SignOut */}
-          <div className="flex items-center space-x-3">
+          <div className="flex items-center space-x-4 ml-4">
             <UserButton afterSignOutUrl="/login" />
             <SignOutButton>
               <button className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition duration-200">
@@ -37,7 +42,6 @@ const Navbar = () => {
           </div>
         </SignedIn>
 
-        {/* Only show when user is signed out */}
         <SignedOut>
           <Link
             to="/login"
