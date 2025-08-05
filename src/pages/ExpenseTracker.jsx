@@ -1,7 +1,17 @@
 import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FaPlus, FaTrash, FaPlane, FaUtensils, FaHotel, FaTags, FaBroom } from "react-icons/fa";
+import {
+  FaPlus,
+  FaTrash,
+  FaPlane,
+  FaUtensils,
+  FaHotel,
+  FaTags,
+  FaBroom,
+} from "react-icons/fa";
 import Chart from "chart.js/auto";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "./ExpenseTracker.css";
 
 export default function ExpenseTracker() {
@@ -17,13 +27,11 @@ export default function ExpenseTracker() {
 
   const total = expenses.reduce((acc, curr) => acc + curr.amount, 0);
 
-  // Load saved expenses
   useEffect(() => {
     const saved = localStorage.getItem("expenses");
     if (saved) setExpenses(JSON.parse(saved));
   }, []);
 
-  // Save expenses to localStorage
   useEffect(() => {
     localStorage.setItem("expenses", JSON.stringify(expenses));
   }, [expenses]);
@@ -38,7 +46,10 @@ export default function ExpenseTracker() {
       category,
       date,
     };
+
     setExpenses([...expenses, newExpense]);
+    toast.success("Expense added successfully!");
+
     setItem("");
     setAmount("");
     setCategory("Travel");
@@ -48,12 +59,14 @@ export default function ExpenseTracker() {
   const removeExpense = (index) => {
     const updated = expenses.filter((_, i) => i !== index);
     setExpenses(updated);
+    toast.info("Expense deleted.");
   };
 
   const clearAllExpenses = () => {
     if (window.confirm("Are you sure you want to clear all expenses?")) {
       setExpenses([]);
       setShowChart(false);
+      toast.warn("All expenses cleared!");
     }
   };
 
@@ -115,7 +128,6 @@ export default function ExpenseTracker() {
   return (
     <div className="main">
       <div className="expense-form-wrapper">
-        {/* ✅ Moved title inside the window */}
         <h2 className="page-title">💰 Expense Tracker</h2>
 
         <form onSubmit={addExpense} className="expense-form">
@@ -195,6 +207,17 @@ export default function ExpenseTracker() {
           <canvas ref={chartRef}></canvas>
         </div>
       )}
+
+      {/* Toast Container */}
+      <ToastContainer
+        position="bottom-left"
+        autoClose={3000}
+        hideProgressBar={false}
+        closeOnClick
+        pauseOnHover
+        draggable
+        theme="colored"
+      />
     </div>
   );
 }

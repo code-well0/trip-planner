@@ -2,6 +2,8 @@ import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import "./HomeSplit.css";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Login({ setIsLoggedIn }) {
   const navigate = useNavigate();
@@ -15,9 +17,11 @@ export default function Login({ setIsLoggedIn }) {
 
     if (email && password) {
       setIsLoggedIn(true);
+      setIsLoggedInLocal(true);
+      toast.success("Login successful!");
       navigate("/plan");
     } else {
-      alert("Please enter email and password");
+      toast.error("Please enter email and password");
     }
   };
 
@@ -78,6 +82,17 @@ export default function Login({ setIsLoggedIn }) {
           </div>
         </div>
       </div>
+      <ToastContainer
+        position="bottom-left"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
     </div>
   );
 }
