@@ -1,5 +1,7 @@
 import React, { useRef, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "./HomeSplit.css";
 
 export default function HomeSplit({ setIsLoggedIn }) {
@@ -7,14 +9,22 @@ export default function HomeSplit({ setIsLoggedIn }) {
   const navigate = useNavigate();
 
   const [isSignedIn, setIsSignedIn] = useState(false);
-  const [showPassword, setShowPassword] = useState(false); // 👁️ Control password visibility
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleStartPlanningClick = () => {
-    if (isSignedIn) {
-      navigate("/plan");
-    } else {
-      alert("Please sign up first!");
-    }
+  if (isSignedIn) {
+    navigate("/plan");
+  } else {
+    toast.error("Please sign up first!");
+  }
+};
+
+
+  const handleSignup = (e) => {
+    e.preventDefault();
+    setIsLoggedIn(true);
+    setIsSignedIn(true);
+    toast.success("Signed up successfully!");
   };
 
   return (
@@ -30,14 +40,7 @@ export default function HomeSplit({ setIsLoggedIn }) {
 
           {/* Signup Section */}
           <div className="signup-box">
-            <form
-              className="signup-form"
-              onSubmit={(e) => {
-                e.preventDefault();
-                setIsLoggedIn(true);
-                setIsSignedIn(true);
-              }}
-            >
+            <form className="signup-form" onSubmit={handleSignup}>
               <h2>Sign Up</h2>
               <input
                 ref={nameInputRef}
@@ -52,8 +55,15 @@ export default function HomeSplit({ setIsLoggedIn }) {
                 required
               />
 
-              {/* ✅ Show Password Toggle */}
-              <label style={{ fontSize: "14px", marginBottom: "10px", display: "flex", alignItems: "center", gap: "8px" }}>
+              <label
+                style={{
+                  fontSize: "14px",
+                  marginBottom: "10px",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "8px",
+                }}
+              >
                 <input
                   type="checkbox"
                   checked={showPassword}
@@ -71,13 +81,20 @@ export default function HomeSplit({ setIsLoggedIn }) {
                 </Link>
               </p>
             </form>
-
-            {isSignedIn && (
-              <p className="success-message">Signed in successfully!</p>
-            )}
           </div>
         </div>
       </div>
+
+      {/* ✅ Toast Container */}
+      <ToastContainer
+        position="bottom-left"
+        autoClose={3000}
+        hideProgressBar={false}
+        closeOnClick
+        pauseOnHover
+        draggable
+        theme="colored"
+      />
     </div>
   );
 }
