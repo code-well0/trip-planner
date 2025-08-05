@@ -10,6 +10,7 @@ import ChatBot from "./pages/Chatbot";
 import Login from "./pages/login";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import TripRecommender from "./pages/TripRecommender";
 
 
 import "./index.css";
@@ -36,6 +37,10 @@ function App() {
         <Route
           path="/api/chat"
           element={isLoggedIn ? <ChatBot /> : <Navigate to="/login" />}
+        />
+         <Route
+          path="/TripRecommender"
+          element={isLoggedIn ? <TripRecommender /> : <Navigate to="/login" />}
         />
 
         <Route path="*" element={<Navigate to="/" />} />

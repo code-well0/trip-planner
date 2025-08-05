@@ -1,24 +1,50 @@
-/* Navbar.css */
 .navbar {
-  background:#28a745;
+  background: #28a745;
   color: rgb(124, 238, 155);
   padding: 1rem 2rem;
   display: flex;
-  right:0;
-
   gap: 2rem;
-  
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
 }
+
+/* Push content below navbar */
 .main-content {
   padding-top: 80px;
 }
 
 .navbar a {
-  color: rgb(255, 255, 255);
+  color: #fff;
   text-decoration: none;
   font-weight: bold;
 }
 
 .navbar a:hover {
   color: #ffc107;
+}
+
+/* Highlight active page */
+.active-link {
+  border-bottom: 2px solid #ffc107;
+  padding-bottom: 2px;
+}
+
+/* Logout button */
+.logout-btn {
+  background: transparent;
+  border: 1px solid white;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.logout-btn:hover {
+  background-color: white;
+  color: #28a745;
 }
