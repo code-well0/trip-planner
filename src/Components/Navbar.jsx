@@ -39,6 +39,14 @@ const Navbar = ({ isLoggedIn }) => {
             >
               🤖 AI Assistant
             </Link>
+               <Link
+              to="/TripRecommender"
+              className="hover:text-blue-600 transition duration-200"
+            >
+             ✈️ TripRecommender
+            </Link>
+
+            
             <button
               onClick={handleLogout}
               className="ml-4 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition duration-200"
