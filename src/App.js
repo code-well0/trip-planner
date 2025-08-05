@@ -8,6 +8,7 @@ import PlanTrip from "./pages/PlanTrip";
 import ExpenseTracker from "./pages/ExpenseTracker";
 import ChatBot from "./pages/Chatbot";
 import Login from "./pages/login";
+import TripRecommender from "./pages/TripRecommender";
 
 import "./index.css";
 
@@ -44,6 +45,10 @@ function App() {
         <Route
           path="/api/chat"
           element={isLoggedIn ? <ChatBot /> : <Navigate to="/login" />}
+        />
+         <Route
+          path="/TripRecommender"
+          element={isLoggedIn ? <TripRecommender /> : <Navigate to="/login" />}
         />
 
         {/* Fallback route (optional) */}
