@@ -1,19 +1,23 @@
 import React from 'react';
 
-const Refresh = (props) => {
+const Refresh = ({ setTour, data, setSelectedRegion }) => {
+  const handleRefresh = () => {
+    setTour(data);
+    if (setSelectedRegion) setSelectedRegion("All"); // Reset filter too
+  };
+
   return (
-    <div className="refresh">
-      <h2>No tour left</h2>
+    <section className="refresh" aria-live="polite">
+      <h2>No tours left</h2>
       <button
         className="refreshBtn"
-        onClick={() => {
-          props.setTour(props.data);
-          if (props.setSelectedRegion) props.setSelectedRegion("All"); // ✅ Reset filter too
-        }}
+        type="button"
+        onClick={handleRefresh}
+        aria-label="Refresh tours"
       >
         Refresh
       </button>
-    </div>
+    </section>
   );
 };
 

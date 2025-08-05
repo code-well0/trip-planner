@@ -1,17 +1,32 @@
+
 import { NavLink } from "react-router-dom";
 
 export default function Navbar({ isLoggedIn }) {
-  return (
-    <nav className="navbar">
-      <NavLink to="/">Home</NavLink>
+  const navLinks = [
+    { to: "/", label: "Home" },
+    ...(isLoggedIn
+      ? [
+          { to: "/plan", label: "Plan Trip" },
+          { to: "/expenses", label: "Expense Tracker" },
+          { to: "/api/chat", label: "Chatbot" },
+        ]
+      : []),
+  ];
 
-      {isLoggedIn && (
-        <>
-          <NavLink to="/plan">Plan Trip</NavLink>
-          <NavLink to="/expenses">Expense Tracker</NavLink>
-          <NavLink to="/api/chat">Chatbot</NavLink>
-        </>
-      )}
+  return (
+    <nav className="navbar" aria-label="Main navigation">
+      {navLinks.map(({ to, label }) => (
+        <NavLink
+          key={to}
+          to={to}
+          className={({ isActive }) =>
+            isActive ? "active" : undefined
+          }
+          aria-label={label}
+        >
+          {label}
+        </NavLink>
+      ))}
     </nav>
   );
 }

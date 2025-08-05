@@ -1,14 +1,19 @@
 /* Navbar.css */
 .navbar {
-  background:#28a745;
-  color: rgb(124, 238, 155);
+  background: #28a745;
+  color: rgb(255, 255, 255);
   padding: 1rem 2rem;
   display: flex;
-  right:0;
-
+  align-items: center;
+  justify-content: space-between;
   gap: 2rem;
-  
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(40, 167, 69, 0.15);
+  border-bottom: 2px solid #218838;
 }
+
 .main-content {
   padding-top: 80px;
 }
@@ -17,8 +22,31 @@
   color: rgb(255, 255, 255);
   text-decoration: none;
   font-weight: bold;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  transition: background 0.2s, color 0.2s;
+}
+
+.navbar a:focus {
+  outline: 2px solid #ffc107;
+  outline-offset: 2px;
 }
 
 .navbar a:hover {
-  color: #ffc107;
+  color: #212529;
+  background: #ffc107;
+}
+
+@media (max-width: 600px) {
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1rem;
+    gap: 1rem;
+  }
+  .navbar a {
+    width: 100%;
+    text-align: left;
+    padding: 0.75rem 1rem;
+  }
 }
