@@ -1,17 +1,62 @@
-import { NavLink } from "react-router-dom";
+import React from "react";
+import { Link, useNavigate } from "react-router-dom";
 
-export default function Navbar({ isLoggedIn }) {
+const Navbar = ({ isLoggedIn }) => {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("token"); // Optional: clear token
+    navigate("/login");
+    window.location.reload(); // force reset UI
+  };
+
   return (
-    <nav className="navbar">
-      <NavLink to="/">Home</NavLink>
+    <nav className="flex items-center justify-between px-6 py-4 bg-white shadow-md">
+      {/* 🌍 Brand */}
+      <div className="text-2xl font-bold text-blue-600">
+        <Link to="/">YourTripPlanner</Link>
+      </div>
 
-      {isLoggedIn && (
-        <>
-          <NavLink to="/plan">Plan Trip</NavLink>
-          <NavLink to="/expenses">Expense Tracker</NavLink>
-          <NavLink to="/api/chat">Chatbot</NavLink>
-        </>
-      )}
+      {/* 🧭 Navigation Links */}
+      <div className="flex space-x-6 items-center text-gray-700 font-medium">
+        {isLoggedIn ? (
+          <>
+            <Link
+              to="/plan"
+              className="hover:text-blue-600 transition duration-200"
+            >
+              🧳 Plan Trip
+            </Link>
+            <Link
+              to="/expenses"
+              className="hover:text-blue-600 transition duration-200"
+            >
+              💰 Expenses
+            </Link>
+            <Link
+              to="/api/chat"
+              className="hover:text-blue-600 transition duration-200"
+            >
+              🤖 AI Assistant
+            </Link>
+            <button
+              onClick={handleLogout}
+              className="ml-4 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition duration-200"
+            >
+              Logout
+            </button>
+          </>
+        ) : (
+          <Link
+            to="/login"
+            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition duration-200"
+          >
+            Login
+          </Link>
+        )}
+      </div>
     </nav>
   );
-}
+};
+
+export default Navbar;
