@@ -1,7 +1,18 @@
 import React from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import './Footer.css';
 
-const Footer = () => {
+const Footer = ({ isLoggedIn }) => {
+  const navigate = useNavigate();
+
+  // 🔐 Intercept protected link clicks if not logged in
+  const handleProtectedClick = (e, path) => {
+    if (!isLoggedIn) {
+      e.preventDefault();
+      navigate('/login');
+    }
+  };
+
   return (
     <footer className="footer">
       <div className="footer-container">
@@ -13,16 +24,16 @@ const Footer = () => {
               <p>Your ultimate companion for exploring the incredible destinations of India. Plan smarter, travel better.</p>
             </div>
             <div className="social-links">
-              <a href="#" className="social-link">
-                <i className="fab fa-facebook-f"></i>
+              <a href="mailto:shubralijain@gmail.com" className="social-link">
+                <i className="fa-solid fa-envelope"></i>
               </a>
-              <a href="#" className="social-link">
-                <i className="fab fa-twitter"></i>
+              <a href="https://github.com/code-well0" className="social-link" target="_blank" rel="noopener noreferrer">
+                <i className="fab fa-github"></i>
               </a>
-              <a href="#" className="social-link">
+              <a href="https://www.instagram.com/_shubrali/" className="social-link" target="_blank" rel="noopener noreferrer">
                 <i className="fab fa-instagram"></i>
               </a>
-              <a href="#" className="social-link">
+              <a href="https://www.linkedin.com/in/shubrali-jain/" className="social-link" target="_blank" rel="noopener noreferrer">
                 <i className="fab fa-linkedin-in"></i>
               </a>
             </div>
@@ -32,11 +43,27 @@ const Footer = () => {
           <div className="footer-section">
             <h4>Quick Links</h4>
             <ul className="footer-links">
-              <li><a href="/">Home</a></li>
-              <li><a href="/destinations">Destinations</a></li>
-              <li><a href="/chatbot">AI Assistant</a></li>
-              <li><a href="/expenses">Expense Tracker</a></li>
-              <li><a href="/about">About Us</a></li>
+              <li>
+                <Link to="/plan" onClick={(e) => handleProtectedClick(e, '/plan')}>
+                  Destinations
+                </Link>
+              </li>
+              <li>
+                <Link to="/api/chat" onClick={(e) => handleProtectedClick(e, '/api/chat')}>
+                  AI Assistant
+                </Link>
+              </li>
+              <li>
+                <Link to="/expenses" onClick={(e) => handleProtectedClick(e, '/expenses')}>
+                  Expense Tracker
+                </Link>
+              </li>
+              <li>
+                <Link to="/TripRecommender" onClick={(e) => handleProtectedClick(e, '/TripRecommender')}>
+                  Trip Recommender
+                </Link>
+              </li>
+              <li><Link to="/about">About Us</Link></li>
             </ul>
           </div>
 
@@ -44,11 +71,11 @@ const Footer = () => {
           <div className="footer-section">
             <h4>Popular Destinations</h4>
             <ul className="footer-links">
-              <li><a href="/destinations/goa">🏖️ Goa</a></li>
-              <li><a href="/destinations/kerala">🌴 Kerala</a></li>
-              <li><a href="/destinations/rajasthan">🏰 Rajasthan</a></li>
-              <li><a href="/destinations/himachal">🏔️ Himachal Pradesh</a></li>
-              <li><a href="/destinations/kashmir">❄️ Kashmir</a></li>
+              <li><Link to="/destinations/goa">🏖️ Goa</Link></li>
+              <li><Link to="/destinations/kerala">🌴 Kerala</Link></li>
+              <li><Link to="/destinations/rajasthan">🏰 Rajasthan</Link></li>
+              <li><Link to="/destinations/himachal">🏔️ Himachal Pradesh</Link></li>
+              <li><Link to="/destinations/kashmir">❄️ Kashmir</Link></li>
             </ul>
           </div>
 
@@ -56,11 +83,11 @@ const Footer = () => {
           <div className="footer-section">
             <h4>Support</h4>
             <ul className="footer-links">
-              <li><a href="/help">Help Center</a></li>
-              <li><a href="/contact">Contact Us</a></li>
-              <li><a href="/privacy">Privacy Policy</a></li>
-              <li><a href="/terms">Terms of Service</a></li>
-              <li><a href="/faq">FAQ</a></li>
+              <li><Link to="/help">Help Center</Link></li>
+              <li><Link to="/contact">Contact Us</Link></li>
+              <li><Link to="/privacy">Privacy Policy</Link></li>
+              <li><Link to="/terms">Terms of Service</Link></li>
+              <li><Link to="/faq">FAQ</Link></li>
             </ul>
           </div>
 
@@ -86,11 +113,11 @@ const Footer = () => {
           <div className="footer-bottom-content">
             <p>&copy; 2024 YourTripPlanner. All rights reserved.</p>
             <div className="footer-bottom-links">
-              <a href="/sitemap">Sitemap</a>
+              <Link to="/sitemap">Sitemap</Link>
               <span>|</span>
-              <a href="/accessibility">Accessibility</a>
+              <Link to="/accessibility">Accessibility</Link>
               <span>|</span>
-              <a href="/cookies">Cookie Policy</a>
+              <Link to="/cookies">Cookie Policy</Link>
             </div>
           </div>
         </div>

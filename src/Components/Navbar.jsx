@@ -5,19 +5,20 @@ const Navbar = ({ isLoggedIn }) => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    localStorage.removeItem("token"); // Optional: clear token
+    localStorage.removeItem("token");
     navigate("/login");
-    window.location.reload(); // force reset UI
+    window.location.reload();
   };
 
   return (
     <nav className="navbar flex items-center justify-between px-6 py-4 bg-white shadow-md">
-      {/* 🌍 Brand */}
-      <div className=" nav-links text-2xl font-bold text-blue-600">
+      
+      {/* 🔵 Left: Brand Name */}
+      <div className="text-2xl font-bold text-blue-600">
         <Link to="/">YourTripPlanner</Link>
       </div>
 
-      {/* 🧭 Navigation Links */}
+      {/* 🔷 Right: Navigation Links */}
       <div className="flex space-x-6 items-center text-gray-700 font-medium">
         {isLoggedIn ? (
           <>
@@ -39,14 +40,13 @@ const Navbar = ({ isLoggedIn }) => {
             >
               🤖 AI Assistant
             </Link>
-               <Link
+            <Link
               to="/TripRecommender"
               className="hover:text-blue-600 transition duration-200"
             >
-             ✈️ TripRecommender
+              ✈️ TripRecommender
             </Link>
 
-            
             <button
               onClick={handleLogout}
               className="ml-4 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition duration-200"
