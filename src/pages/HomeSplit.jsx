@@ -1,20 +1,30 @@
 import React, { useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "./HomeSplit.css";
-import Login from "./login";
 
 export default function HomeSplit({ setIsLoggedIn }) {
   const nameInputRef = useRef(null);
-  const navigate = useNavigate(); // ✅ use React Router for navigation
+  const navigate = useNavigate();
+
   const [isSignedIn, setIsSignedIn] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleStartPlanningClick = () => {
-    if (isSignedIn) {
-      navigate("/plan"); // ⬅️ only navigate if signed in
-    } else {
-      alert("Please sign up first!");
-    }
+  if (isSignedIn) {
+    navigate("/plan");
+  } else {
+    toast.error("Please sign up first!");
+  }
+};
+
+
+  const handleSignup = (e) => {
+    e.preventDefault();
+    setIsLoggedIn(true);
+    setIsSignedIn(true);
+    toast.success("Signed up successfully!");
   };
 
   return (
@@ -30,15 +40,7 @@ export default function HomeSplit({ setIsLoggedIn }) {
 
           {/* Signup Section */}
           <div className="signup-box">
-            <form
-              className="signup-form"
-              onSubmit={(e) => {
-                e.preventDefault();
-                setIsLoggedIn(true);
-                setIsSignedIn(true); // ✅ stays active
-                // navigate("/plan");   // ✅ no reload!
-              }}
-            >
+            <form className="signup-form" onSubmit={handleSignup}>
               <h2>Sign Up</h2>
               <input
                 ref={nameInputRef}
@@ -47,22 +49,52 @@ export default function HomeSplit({ setIsLoggedIn }) {
                 required
               />
               <input type="email" placeholder="Email" required />
-              <input type="password" placeholder="Password" required />
+              <input
+                type={showPassword ? "text" : "password"}
+                placeholder="Password"
+                required
+              />
+
+              <label
+                style={{
+                  fontSize: "14px",
+                  marginBottom: "10px",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "8px",
+                }}
+              >
+                <input
+                  type="checkbox"
+                  checked={showPassword}
+                  onChange={() => setShowPassword(!showPassword)}
+                />
+                Show Password
+              </label>
+
               <button type="submit">Create Account</button>
-              {/* <br /> */}
+
               <p style={{ textAlign: "center" }}>
-                Already have an Account ?{" "}
+                Already have an Account?{" "}
                 <Link to="/login" style={{ color: "blue" }}>
                   Login
                 </Link>
               </p>
             </form>
-            {isSignedIn && (
-              <p className="success-message">Signed in successfully!</p>
-            )}
           </div>
         </div>
       </div>
+
+      {/* ✅ Toast Container */}
+      <ToastContainer
+        position="bottom-left"
+        autoClose={3000}
+        hideProgressBar={false}
+        closeOnClick
+        pauseOnHover
+        draggable
+        theme="colored"
+      />
     </div>
   );
 }

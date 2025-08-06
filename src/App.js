@@ -8,32 +8,25 @@ import PlanTrip from "./pages/PlanTrip";
 import ExpenseTracker from "./pages/ExpenseTracker";
 import ChatBot from "./pages/Chatbot";
 import Login from "./pages/login";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import TripRecommender from "./pages/TripRecommender";
+
 
 import "./index.css";
 import Footer from "./Components/Footer";
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // 🔐 Global login state
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   return (
     <>
-      {/* ✅ Navbar reacts to login status */}
       <Navbar isLoggedIn={isLoggedIn} />
 
       <Routes>
-        {/* Signup page */}
-        <Route
-          path="/"
-          element={<HomeSplit setIsLoggedIn={setIsLoggedIn} />}
-        />
+        <Route path="/" element={<HomeSplit setIsLoggedIn={setIsLoggedIn} />} />
+        <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
 
-        {/* Login page */}
-        <Route
-          path="/login"
-          element={<Login setIsLoggedIn={setIsLoggedIn} />}
-        />
-
-        {/* Protected routes */}
         <Route
           path="/plan"
           element={isLoggedIn ? <PlanTrip /> : <Navigate to="/login" />}
@@ -46,17 +39,26 @@ function App() {
           path="/api/chat"
           element={isLoggedIn ? <ChatBot /> : <Navigate to="/login" />}
         />
-
-        {/* Fallback route (optional) */}
-        <Route
-          path="*"
-          element={<Navigate to="/" />}
+         <Route
+          path="/TripRecommender"
+          element={isLoggedIn ? <TripRecommender /> : <Navigate to="/login" />}
         />
+
+        <Route path="*" element={<Navigate to="/" />} />
       </Routes>
       <Footer />
+
+      {/* ✅ Add this once at root level */}
+      <ToastContainer
+        position="bottom-left"
+        autoClose={3000}
+        pauseOnHover
+        theme="colored"
+      />
     </>
   );
 }
+
 
 export default App;
 

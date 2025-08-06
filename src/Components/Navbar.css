@@ -10,11 +10,28 @@
   align-items: center;
   z-index: 1000;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  color: rgb(124, 238, 155);
+  gap: 1.5rem;
 }
 
-.navbar .nav-links {
+.nav-links {
   display: flex;
-  gap: 1.5rem;
+  background: #28a745;
+  color: rgb(124, 238, 155);
+  padding: 1rem 2rem;
+  display: flex;
+  gap: 2rem;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+
+/* Push content below navbar */
+.main-content {
+  padding-top: 80px;
 }
 
 .navbar a {
@@ -30,6 +47,24 @@
   transform: scale(1.05);
 }
 
-.main-content {
-  padding-top: 80px;
+/* Highlight active page */
+.active-link {
+  border-bottom: 2px solid #ffc107;
+  padding-bottom: 2px;
+}
+
+/* Logout button */
+.logout-btn {
+  background: transparent;
+  border: 1px solid white;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.logout-btn:hover {
+  background-color: white;
+  color: #28a745;
 }

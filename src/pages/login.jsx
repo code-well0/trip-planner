@@ -2,22 +2,26 @@ import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import "./HomeSplit.css";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-export default function Login({setIsLoggedIn}) {
-  // const nameInputRef = useRef(null);
+export default function Login({ setIsLoggedIn }) {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-   const [isLoggedInLocal, setIsLoggedInLocal] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [isLoggedInLocal, setIsLoggedInLocal] = useState(false);
 
   const handleLogin = (e) => {
     e.preventDefault();
 
     if (email && password) {
       setIsLoggedIn(true);
+      setIsLoggedInLocal(true);
+      toast.success("Login successful!");
       navigate("/plan");
     } else {
-      alert("Please enter email and password");
+      toast.error("Please enter email and password");
     }
   };
 
@@ -34,30 +38,39 @@ export default function Login({setIsLoggedIn}) {
 
           {/* Login Section */}
           <div className="signup-box">
-            <form
-              className="signup-form"
-              onSubmit={handleLogin}
-            >
+            <form className="signup-form" onSubmit={handleLogin}>
               <h2>Login</h2>
-              
-             <input
+
+              <input
                 type="email"
                 placeholder="Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
               />
+
               <input
-                type="password"
+                type={showPassword ? "text" : "password"}
                 placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
               />
+
+              <label style={{ display: "block", marginTop: "8px" }}>
+                <input
+                  type="checkbox"
+                  checked={showPassword}
+                  onChange={() => setShowPassword(!showPassword)}
+                  style={{ marginRight: "5px" }}
+                />
+                Show Password
+              </label>
+
               <button type="submit">Login</button>
-              {/* <br /> */}
+
               <p style={{ textAlign: "center" }}>
-                Don't have an Account ?{" "}
+                Don't have an Account?{" "}
                 <Link to="/" style={{ color: "blue" }}>
                   Sign Up
                 </Link>
@@ -69,6 +82,17 @@ export default function Login({setIsLoggedIn}) {
           </div>
         </div>
       </div>
+      <ToastContainer
+        position="bottom-left"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
     </div>
   );
 }
