@@ -8,7 +8,6 @@ import PlanTrip from "./pages/PlanTrip";
 import ExpenseTracker from "./pages/ExpenseTracker";
 import ChatBot from "./pages/Chatbot";
 import Login from "./pages/login";
-import TripRecommender from "./pages/TripRecommender";
 
 import "./index.css";
 
@@ -33,10 +32,6 @@ function App() {
               <PlanTrip />
             </ProtectedRoute>
           }
-        />
-         <Route
-          path="/TripRecommender"
-          element={isLoggedIn ? <TripRecommender /> : <Navigate to="/login" />}
         />
 
         <Route
