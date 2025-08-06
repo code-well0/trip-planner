@@ -1,27 +1,49 @@
-import React, { useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { useSignIn } from "@clerk/clerk-react";
+import { useNavigate, Link } from "react-router-dom";
 import "./HomeSplit.css";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
-export default function Login({ setIsLoggedIn }) {
+export default function Login() {
+  const { signIn, setActive } = useSignIn();
   const navigate = useNavigate();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [isLoggedInLocal, setIsLoggedInLocal] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
 
-    if (email && password) {
-      setIsLoggedIn(true);
-      setIsLoggedInLocal(true);
-      toast.success("Login successful!");
+    if (!email || !password) {
+      alert("Please enter email and password");
+      return;
+    }
+
+    try {
+      setLoading(true);
+      const result = await signIn.create({
+        identifier: email,
+        password,
+      });
+
+      await setActive({ session: result.createdSessionId });
       navigate("/plan");
-    } else {
-      toast.error("Please enter email and password");
+    } catch (err) {
+      alert(err.errors?.[0]?.message || "Login failed");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleGoogleLogin = async () => {
+    try {
+      await signIn.authenticateWithRedirect({
+        strategy: "oauth_google",
+        redirectUrl: "/plan",
+      });
+    } catch (err) {
+      console.error("Google OAuth Error:", err);
     }
   };
 
@@ -48,7 +70,6 @@ export default function Login({ setIsLoggedIn }) {
                 onChange={(e) => setEmail(e.target.value)}
                 required
               />
-
               <input
                 type={showPassword ? "text" : "password"}
                 placeholder="Password"
@@ -67,7 +88,13 @@ export default function Login({ setIsLoggedIn }) {
                 Show Password
               </label>
 
-              <button type="submit">Login</button>
+              <button type="submit" disabled={loading}>
+                {loading ? "Logging in..." : "Login"}
+              </button>
+
+              <button type="button" onClick={handleGoogleLogin} style={{ marginTop: "10px" }}>
+                Login with Google
+              </button>
 
               <p style={{ textAlign: "center" }}>
                 Don't have an Account?{" "}
@@ -76,23 +103,9 @@ export default function Login({ setIsLoggedIn }) {
                 </Link>
               </p>
             </form>
-            {isLoggedInLocal && (
-              <p className="success-message">LoggedIn successfully</p>
-            )}
           </div>
         </div>
       </div>
-      <ToastContainer
-        position="bottom-left"
-        autoClose={3000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="colored"
-      />
     </div>
   );
 }
