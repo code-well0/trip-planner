@@ -12,6 +12,7 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   color: rgb(124, 238, 155);
   gap: 1.5rem;
+  height: 80px;
 }
 
 .nav-links {
