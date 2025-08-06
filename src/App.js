@@ -8,6 +8,10 @@ import PlanTrip from "./pages/PlanTrip";
 import ExpenseTracker from "./pages/ExpenseTracker";
 import ChatBot from "./pages/Chatbot";
 import Login from "./pages/login";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import TripRecommender from "./pages/TripRecommender";
+
 
 import "./index.css";
 
@@ -33,7 +37,6 @@ function App() {
           element={<Login setIsLoggedIn={setIsLoggedIn} />}
         />
 
-        {/* Protected routes */}
         <Route
           path="/plan"
           element={isLoggedIn ? <PlanTrip searchQuery={searchQuery} /> : <Navigate to="/login" />}
@@ -46,16 +49,25 @@ function App() {
           path="/api/chat"
           element={isLoggedIn ? <ChatBot /> : <Navigate to="/login" />}
         />
-
-        {/* Fallback route (optional) */}
-        <Route
-          path="*"
-          element={<Navigate to="/" />}
+         <Route
+          path="/TripRecommender"
+          element={isLoggedIn ? <TripRecommender /> : <Navigate to="/login" />}
         />
+
+        <Route path="*" element={<Navigate to="/" />} />
       </Routes>
+
+      {/* ✅ Add this once at root level */}
+      <ToastContainer
+        position="bottom-left"
+        autoClose={3000}
+        pauseOnHover
+        theme="colored"
+      />
     </>
   );
 }
+
 
 export default App;
 

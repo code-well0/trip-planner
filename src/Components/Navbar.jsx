@@ -4,8 +4,11 @@ import "./Navbar.css";
 
 export default function Navbar({ isLoggedIn, searchQuery, setSearchQuery }) {
   return (
-    <nav className="navbar">
-      <NavLink to="/">Home</NavLink>
+    <nav className="flex items-center justify-between px-6 py-4 bg-white shadow-md">
+      {/* 🌍 Brand */}
+      <div className="text-2xl font-bold text-blue-600">
+        <Link to="/">YourTripPlanner</Link>
+      </div>
 
       {isLoggedIn && (
         <>
@@ -22,6 +25,9 @@ export default function Navbar({ isLoggedIn, searchQuery, setSearchQuery }) {
           />
         </>
       )}
+
     </nav>
   );
-}
+};
+
+export default Navbar;

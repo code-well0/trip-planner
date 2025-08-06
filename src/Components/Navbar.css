@@ -1,20 +1,26 @@
-/* Navbar.css */
 .navbar {
-  background:#28a745;
+  background: #28a745;
   color: rgb(124, 238, 155);
   padding: 1rem 2rem;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 2rem;
-  
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
 }
+
+/* Push content below navbar */
 .main-content {
   padding-top: 80px;
 }
 
 .navbar a {
-  color: rgb(255, 255, 255);
+  color: #fff;
   text-decoration: none;
   font-weight: bold;
 }
@@ -22,14 +28,3 @@
 .navbar a:hover {
   color: #ffc107;
 }
-
-.search-bar {
-  width: 300px;
-  margin-left: 20px;
-  padding: 6px 12px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  font-size: 14px;
-  color: black;
-}
-
