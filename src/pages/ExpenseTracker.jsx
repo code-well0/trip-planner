@@ -148,7 +148,7 @@ export default function ExpenseTracker() {
         </form>
 
         <h2 className="total-spent">Total Spent: ₹{total.toFixed(2)}</h2>
-
+         
         <ul className="expense-list">
           <AnimatePresence>
             {expenses.map((exp, index) => (
@@ -159,6 +159,7 @@ export default function ExpenseTracker() {
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.3 }}
               >
+              
                 <div>
                   <strong>{exp.item}</strong> – ₹{exp.amount} <br />
                   <small>{exp.date}</small>
@@ -166,6 +167,7 @@ export default function ExpenseTracker() {
                 <div className={`tag ${exp.category.toLowerCase()}`}>
                   {getCategoryIcon(exp.category)} {exp.category}
                 </div>
+              
                 <button className="delete-btn" onClick={() => removeExpense(index)}>
                   <FaTrash />
                 </button>
