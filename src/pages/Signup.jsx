@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./HomeSplit.css";
-
+import { useNavigate } from "react-router-dom";
 export default function Signup() {
   const [form, setForm] = useState({
     name: "",
@@ -11,7 +11,7 @@ export default function Signup() {
     password: "",
   });
   const [showPassword, setShowPassword] = useState(false);
-
+  const navigate = useNavigate();
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
@@ -21,6 +21,10 @@ export default function Signup() {
 
     if (form.name && form.email && form.password) {
       toast.success("Signup successful!");
+      setTimeout(() => {
+        navigate("/login");
+      }, 1500);
+
       console.log("Signup Data:", form);
     } else {
       toast.error("Please fill all fields");

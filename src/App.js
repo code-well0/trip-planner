@@ -38,7 +38,7 @@ function App() {
           path="/api/chat"
           element={isLoggedIn ? <ChatBot /> : <Navigate to="/login" />}
         />
-         <Route
+        <Route
           path="/TripRecommender"
           element={isLoggedIn ? <TripRecommender /> : <Navigate to="/login" />}
         />
@@ -49,7 +49,7 @@ function App() {
       {/* ✅ Add this once at root level */}
       <ToastContainer
         position="bottom-left"
-        autoClose={3000}
+        autoClose={1000}
         pauseOnHover
         theme="colored"
       />
