@@ -12,14 +12,14 @@ const Navbar = ({ isLoggedIn }) => {
   };
 
   return (
-    <nav className="flex items-center justify-between px-6 py-4 bg-white shadow-md font-inter">
+    <nav className=" navbar flex items-center justify-between px-6 py-4 bg-white shadow-md font-inter">
       {/* 🔰 Brand Logo */}
       <div className="flex items-center gap-2 text-2xl font-bold text-blue-600">
         <FaMapMarkedAlt className="text-3xl" />
         <Link to="/">YourTripPlanner</Link>
       </div>
 
-      {/* 🧭 Navigation Links */}
+      {/* 🔷 Right: Navigation Links */}
       <div className="flex space-x-6 items-center text-gray-700 font-medium">
         {isLoggedIn ? (
           <>
