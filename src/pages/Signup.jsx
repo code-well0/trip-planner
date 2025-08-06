@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "./HomeSplit.css";
 
 export default function Signup() {
@@ -18,10 +20,10 @@ export default function Signup() {
     e.preventDefault();
 
     if (form.name && form.email && form.password) {
-      alert("Signup successful!");
+      toast.success("Signup successful!");
       console.log("Signup Data:", form);
     } else {
-      alert("Please fill all fields");
+      toast.error("Please fill all fields");
     }
   };
 
@@ -90,8 +92,19 @@ export default function Signup() {
           </div>
         </div>
       </div>
+
+      {/* Toast Container */}
+      <ToastContainer
+        position="bottom-left"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
     </div>
   );
 }
-
-
