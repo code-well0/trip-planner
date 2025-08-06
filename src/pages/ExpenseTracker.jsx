@@ -1,6 +1,17 @@
 import React, { useState } from 'react';
-import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Legend } from 'recharts';
-import { FaRupeeSign, FaChartPie, FaChartBar } from 'react-icons/fa';
+import {
+  PieChart,
+  Pie,
+  Cell,
+  Tooltip,
+  ResponsiveContainer,
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  Legend,
+} from 'recharts';
+import { FaChartPie, FaChartBar, FaTrash, FaBroom } from 'react-icons/fa';
 import { FaMoneyBillWave } from 'react-icons/fa';
 
 const COLORS = ['#8884d8', '#82ca9d', '#ffc658', '#ff7f50', '#ffbb28'];
@@ -16,12 +27,31 @@ const ExpenseTracker = () => {
 
   const handleAddExpense = () => {
     if (item && amount && date && category) {
-      setExpenses([...expenses, { item, amount: parseFloat(amount), date, category, label: label || category }]);
+      setExpenses([
+        ...expenses,
+        {
+          item,
+          amount: parseFloat(amount),
+          date,
+          category,
+          label: label || category,
+        },
+      ]);
       setItem('');
       setAmount('');
       setDate('');
       setCategory('Travel');
       setLabel('');
+    }
+  };
+
+  const handleDelete = (index) => {
+    setExpenses(expenses.filter((_, i) => i !== index));
+  };
+
+  const handleClearAll = () => {
+    if (window.confirm('Are you sure you want to clear all expenses?')) {
+      setExpenses([]);
     }
   };
 
@@ -43,8 +73,6 @@ const ExpenseTracker = () => {
           <FaMoneyBillWave className="text-green-600 text-4xl" />
           Expense Tracker
         </h1>
-
-
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <input
@@ -94,7 +122,9 @@ const ExpenseTracker = () => {
           </button>
         </div>
 
-        <h2 className="text-xl font-semibold mt-8 text-center">Total Spent: ₹{totalSpent.toFixed(2)}</h2>
+        <h2 className="text-xl font-semibold mt-8 text-center">
+          Total Spent: ₹{totalSpent.toFixed(2)}
+        </h2>
 
         <div className="mt-10">
           <div className="flex justify-between items-center mb-4">
@@ -119,13 +149,18 @@ const ExpenseTracker = () => {
                     data={data}
                     cx="50%"
                     cy="50%"
-                    label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
+                    label={({ name, percent }) =>
+                      `${name}: ${(percent * 100).toFixed(0)}%`
+                    }
                     outerRadius={100}
                     fill="#8884d8"
                     dataKey="value"
                   >
                     {data.map((_, index) => (
-                      <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                      <Cell
+                        key={`cell-${index}`}
+                        fill={COLORS[index % COLORS.length]}
+                      />
                     ))}
                   </Pie>
                   <Tooltip formatter={(value) => [`₹${value}`, 'Amount']} />
@@ -144,7 +179,18 @@ const ExpenseTracker = () => {
         </div>
 
         <div className="mt-10">
-          <h3 className="text-lg font-bold mb-3">Expense List</h3>
+          <div className="flex justify-between items-center mb-3">
+            <h3 className="text-lg font-bold">Expense List</h3>
+            {expenses.length > 0 && (
+              <button
+                onClick={handleClearAll}
+                className="flex items-center gap-2 bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded-md text-sm"
+              >
+                <FaBroom /> Clear All
+              </button>
+            )}
+          </div>
+
           <ul className="space-y-2">
             {expenses.map((exp, idx) => (
               <li
@@ -152,10 +198,23 @@ const ExpenseTracker = () => {
                 className="flex justify-between items-center p-3 bg-gray-50 rounded-lg shadow-sm hover:bg-gray-100"
               >
                 <div>
-                  <p className="font-medium">{exp.item} ({exp.label})</p>
+                  <p className="font-medium">
+                    {exp.item} ({exp.label})
+                  </p>
                   <p className="text-sm text-gray-500">{exp.date}</p>
                 </div>
-                <span className="font-semibold text-green-600">₹{exp.amount}</span>
+                <div className="flex items-center gap-4">
+                  <span className="font-semibold text-green-600">
+                    ₹{exp.amount}
+                  </span>
+                  <button
+                    onClick={() => handleDelete(idx)}
+                    className="text-red-500 hover:text-red-700"
+                    title="Delete"
+                  >
+                    <FaTrash />
+                  </button>
+                </div>
               </li>
             ))}
           </ul>
