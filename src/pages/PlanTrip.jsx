@@ -80,73 +80,74 @@ export default function PlanTrip() {
     );
   }
 
-  return (
-    <div className="plan-trip-container">
-        <div className="titleWrapper">
-          <h2 className="title">Your Trip Planner</h2>
-        </div>
-      
-      {/* Filter and Sort Controls */}
-      <div className="controls-container">
-        {/* Region Dropdown */}
-        <div className="dropdown-container">
-          <button 
-            className="dropdown-btn"
-            onClick={() => {
-              setShowRegionDropdown(!showRegionDropdown);
-              setShowSortDropdown(false); // Close sort dropdown
-            }}
-          >
-            Directions: {selectedRegion} ▼
-          </button>
-          {showRegionDropdown && (
-            <div className="dropdown-menu">
-              {regions.map((region) => (
-                <button
-                  key={region}
-                  onClick={() => handleRegionSelect(region)}
-                  className={`dropdown-item ${selectedRegion === region ? "active" : ""}`}
-                >
-                  {region}
-                </button>
-              ))}
-            </div>
-          )}
-        </div>
+return (
+  <div className="plan-trip-container">
+    {/* Heading */}
+    <div className="title-section">
+      <h2 className="trip-title">Your Trip Planner</h2>
+    </div>
 
-        {/* Sort Dropdown */}
-        <div className="dropdown-container">
-          <button 
-            className="dropdown-btn"
-            onClick={() => {
-              setShowSortDropdown(!showSortDropdown);
-              setShowRegionDropdown(false); // Close region dropdown
-            }}
-          >
-            Sort: {sortOptions.find(option => option.value === sortBy)?.label} ▼
-          </button>
-          {showSortDropdown && (
-            <div className="dropdown-menu">
-              {sortOptions.map((option) => (
-                <button
-                  key={option.value}
-                  onClick={() => handleSortSelect(option.value)}
-                  className={`dropdown-item ${sortBy === option.value ? "active" : ""}`}
-                >
-                  {option.label}
-                </button>
-              ))}
-            </div>
-          )}
-        </div>
+    {/* Filter and Sort Controls */}
+    <div className="dropdowns-wrapper">
+      {/* Region Dropdown */}
+      <div className="dropdown-container">
+        <button
+          className="dropdown-btn"
+          onClick={() => {
+            setShowRegionDropdown(!showRegionDropdown);
+            setShowSortDropdown(false);
+          }}
+        >
+          Region: {selectedRegion} ▼
+        </button>
+        {showRegionDropdown && (
+          <div className="dropdown-menu">
+            {regions.map((region) => (
+              <button
+                key={region}
+                onClick={() => handleRegionSelect(region)}
+                className={`dropdown-item ${selectedRegion === region ? "active" : ""}`}
+              >
+                {region}
+              </button>
+            ))}
+          </div>
+        )}
       </div>
 
-      {/* Tours List */}
-      <Tours
-        tours={sortedAndFilteredTours}
-        removeTour={removeTour}
-        setSelectedRegion={setSelectedRegion}
-      />
+      {/* Sort Dropdown */}
+      <div className="dropdown-container">
+        <button
+          className="dropdown-btn"
+          onClick={() => {
+            setShowSortDropdown(!showSortDropdown);
+            setShowRegionDropdown(false);
+          }}
+        >
+          Sort: {sortOptions.find(option => option.value === sortBy)?.label} ▼
+        </button>
+        {showSortDropdown && (
+          <div className="dropdown-menu">
+            {sortOptions.map((option) => (
+              <button
+                key={option.value}
+                onClick={() => handleSortSelect(option.value)}
+                className={`dropdown-item ${sortBy === option.value ? "active" : ""}`}
+              >
+                {option.label}
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
     </div>
-  );
+
+    {/* Tours List */}
+    <Tours
+      tours={sortedAndFilteredTours}
+      removeTour={removeTour}
+      setSelectedRegion={setSelectedRegion}
+    />
+  </div>
+);
 }
