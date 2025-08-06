@@ -1,23 +1,34 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { FaGlobeAsia, FaSearch, FaCompass } from "react-icons/fa";
 import data from "../data";
 
 export default function TripRecommender() {
   const [selectedMood, setSelectedMood] = useState("");
   const [selectedPurpose, setSelectedPurpose] = useState("");
+  const [selectedTheme, setSelectedTheme] = useState("");
   const [recommendations, setRecommendations] = useState([]);
 
   const moods = ["Relaxing", "Adventurous", "Spiritual", "Party"];
   const purposes = ["Solo detox", "Nature walk", "Family outing", "Weekend escape"];
+  const themes = [
+    "Educational Tours",
+    "Historical Places",
+    "Spiritual / Mythological Trips",
+    "Adventure / Nature Trips",
+    "Family-friendly Trips",
+    "Solo Travel Spots",
+    "Budget Travel",
+  ];
 
   const handleFilter = () => {
     const filtered = data.filter((place) => {
       const moodMatch = selectedMood ? place.moodTags.includes(selectedMood) : true;
       const purposeMatch = selectedPurpose ? place.purposeTags.includes(selectedPurpose) : true;
-      return moodMatch && purposeMatch;
+      const themeMatch = selectedTheme ? place.themeTags.includes(selectedTheme) : true;
+      return moodMatch && purposeMatch && themeMatch;
     });
 
-    setRecommendations(filtered.slice(0, 5));
+    setRecommendations(filtered.slice(0, 6));
   };
 
   return (
@@ -27,11 +38,12 @@ export default function TripRecommender() {
         Trip Recommender
       </h2>
       <p className="text-center text-gray-500 mb-10 text-lg">
-        Discover your next destination based on your mood and travel goals ✨
+        Discover your next destination based on your mood, theme, and travel goals ✨
       </p>
 
       {/* Filters */}
       <div className="flex flex-wrap justify-center gap-6 mb-14">
+        {/* Mood */}
         <div className="flex flex-col">
           <label className="mb-2 text-gray-800 font-semibold text-sm tracking-wide">Mood</label>
           <select
@@ -41,13 +53,12 @@ export default function TripRecommender() {
           >
             <option value="">Select Mood</option>
             {moods.map((mood, i) => (
-              <option key={i} value={mood}>
-                {mood}
-              </option>
+              <option key={i} value={mood}>{mood}</option>
             ))}
           </select>
         </div>
 
+        {/* Purpose */}
         <div className="flex flex-col">
           <label className="mb-2 text-gray-800 font-semibold text-sm tracking-wide">Purpose</label>
           <select
@@ -57,13 +68,27 @@ export default function TripRecommender() {
           >
             <option value="">Select Purpose</option>
             {purposes.map((purpose, i) => (
-              <option key={i} value={purpose}>
-                {purpose}
-              </option>
+              <option key={i} value={purpose}>{purpose}</option>
             ))}
           </select>
         </div>
 
+        {/* Theme */}
+        <div className="flex flex-col">
+          <label className="mb-2 text-gray-800 font-semibold text-sm tracking-wide">Theme</label>
+          <select
+            value={selectedTheme}
+            onChange={(e) => setSelectedTheme(e.target.value)}
+            className="rounded-xl border border-gray-300 px-5 py-3 shadow-sm bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 hover:shadow-md transition-all duration-200"
+          >
+            <option value="">Select Theme</option>
+            {themes.map((theme, i) => (
+              <option key={i} value={theme}>{theme}</option>
+            ))}
+          </select>
+        </div>
+
+        {/* Button */}
         <button
           onClick={handleFilter}
           className="self-end flex items-center gap-2 bg-gradient-to-r from-green-500 to-green-600 text-white px-6 py-3 rounded-xl font-semibold hover:from-green-600 hover:to-green-700 focus:ring-2 focus:ring-green-400 shadow-md hover:shadow-lg transition-all duration-200"
@@ -103,20 +128,13 @@ export default function TripRecommender() {
                 </p>
                 <div className="flex flex-wrap gap-2 text-xs font-medium">
                   {place.moodTags.map((tag, i) => (
-                    <span
-                      key={i}
-                      className="bg-blue-100 text-blue-600 px-3 py-1 rounded-full"
-                    >
-                      {tag}
-                    </span>
+                    <span key={i} className="bg-blue-100 text-blue-600 px-3 py-1 rounded-full">{tag}</span>
                   ))}
                   {place.purposeTags.map((tag, i) => (
-                    <span
-                      key={i}
-                      className="bg-green-100 text-green-600 px-3 py-1 rounded-full"
-                    >
-                      {tag}
-                    </span>
+                    <span key={i} className="bg-green-100 text-green-600 px-3 py-1 rounded-full">{tag}</span>
+                  ))}
+                  {place.themeTags && place.themeTags.map((tag, i) => (
+                    <span key={i} className="bg-purple-100 text-purple-600 px-3 py-1 rounded-full">{tag}</span>
                   ))}
                 </div>
               </div>
@@ -125,7 +143,7 @@ export default function TripRecommender() {
         ) : (
           <div className="col-span-full text-center text-gray-500 text-base">
             <FaCompass className="text-5xl text-gray-400 mb-4 mx-auto" />
-            <p>No recommendations yet. Select a mood and purpose to begin.</p>
+            <p>No recommendations yet. Select mood, purpose or theme to begin.</p>
           </div>
         )}
       </div>
