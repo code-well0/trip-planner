@@ -6,7 +6,7 @@ import { FaMapMarkedAlt, FaSearch, FaTimesCircle } from "react-icons/fa";
 import "../index.css";
 import "../Components/Navbar.css";
 
-export default function PlanTrip() {
+export default function PlanTrip({searchQuery}) {
   const [tour, setTour] = useState(data);
   const [selectedRegion, setSelectedRegion] = useState("All");
   const [sortBy, setSortBy] = useState("default");
@@ -57,6 +57,7 @@ export default function PlanTrip() {
     }
     return tours;
   };
+
 
   const filteredTours = tour.filter((t) => {
     const matchesRegion = selectedRegion === "All" || t.region === selectedRegion;

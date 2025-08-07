@@ -2,7 +2,7 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaMapMarkedAlt, FaSuitcase, FaMoneyBillWave, FaRobot, FaPlaneDeparture } from "react-icons/fa";
 
-const Navbar = ({ isLoggedIn }) => {
+const Navbar = ({ isLoggedIn, searchQuery, setSearchQuery }) => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -23,6 +23,13 @@ const Navbar = ({ isLoggedIn }) => {
       <div className="flex space-x-6 items-center text-gray-700 font-medium">
         {isLoggedIn ? (
           <>
+            <input 
+              type="text"
+              placeholder="Search by city name..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="px-4 py-2 border rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
             <Link to="/plan" className="hover:text-blue-600 transition duration-200 flex items-center gap-1">
               <FaSuitcase /> Plan Trip
             </Link>
