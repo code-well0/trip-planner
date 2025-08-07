@@ -136,24 +136,50 @@ body, html, #root {
   color: #12b0e2;
   cursor: pointer;
 }
+{/*Styling the cards */}
+
+.cardActions{
+  display: flex;
+  gap: 10px;
+  padding: 10px;
+  justify-content: space-between;
+
+}
+.intrestedBtn{
+  background-color: #47a24a;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  flex: 1;
+  font-weight: bold;
+  font-size: 15px;
+  margin-top: 18px;
+  transition: all 0.4s
+
+}
+.intrestedBtn:hover{
+  background-color: green;
+}
 
 .notIntrestedBtn {
-  color: black;
+  color: white;
   border-radius: 10px;
-  background-color: #b4161b21;
-  border: 1px solid #b4161b;
-  padding: 10px 80px;
+  background-color: #f44336;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
   /* text-align: center; */
   font-weight: bold;
-  font-size: 18px;
+  font-size: 15px;
   cursor: pointer;
   margin-top: 18px;
   transition: all 0.4s;
 }
 
 .notIntrestedBtn:hover {
-  background-color: red;
-  color: white;
+  background-color: #da190b;
 }
 
 .refresh {

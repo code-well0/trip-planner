@@ -33,7 +33,7 @@ export default function HomeSplit({ setIsLoggedIn }) {
       <div className="overlay ">
         <div className="flex flex-col  justify-center lg:flex-row  items-center split-content">
           {/* Hero Section */}
-          <HeroSection/>
+          <HeroSection />
           {/* Signup Section */}
           <div className="signup-box">
             <form className="signup-form" onSubmit={handleSignup}>
