@@ -15,6 +15,7 @@ import TripRecommender from "./pages/TripRecommender";
 
 import "./index.css";
 import Footer from "./Components/Footer";
+import Signup from "./pages/Signup";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -26,7 +27,9 @@ function App() {
       {/* 🧱 Add padding to prevent content being hidden behind navbar */}
       <div className="pt-20"> {/* Adjust based on navbar height */}
         <Routes>
-          <Route path="/" element={<HomeSplit setIsLoggedIn={setIsLoggedIn} />} />
+          {/* <Route path="/" element={<HomeSplit setIsLoggedIn={setIsLoggedIn} />} /> */}
+           {/* <Route path="/" element={<><HomeSplit setIsLoggedIn={setIsLoggedIn}/><Signup setIsLoggedIn={setIsLoggedIn} /> </>} /> */}
+           <Route path="/" element={<>< Signup setIsLoggedIn={setIsLoggedIn} /> </>} />
           <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
           <Route path="/plan" element={isLoggedIn ? <PlanTrip /> : <Navigate to="/login" />} />
           <Route path="/expenses" element={isLoggedIn ? <ExpenseTracker /> : <Navigate to="/login" />} />
