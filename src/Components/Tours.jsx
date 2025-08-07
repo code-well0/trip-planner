@@ -7,13 +7,11 @@ const Tours = ({ tours, removeTour }) => {
   }
 
   return (
-    <div className="toursWrapper">
-      <div className="cardsGrid">
-        {tours.map((tour) => (
-          <Card key={tour.id} tour={tour} getRemoveId={getId} />
-        ))}
-      </div>
-    </div>
+    <>
+      {tours.map((tour) => (
+        <Card key={tour.id} tour={tour} getRemoveId={getId} />
+      ))}
+    </>
   );
 };
 
