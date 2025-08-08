@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 const Card = (props) => {
     const [readmore, setReadmore] = useState(false);
@@ -17,17 +17,26 @@ const Card = (props) => {
                         <span style={{ fontSize: '0.8rem', color: '#888' }}> ({tour.region})</span>
                     </h4>
                 </div>
+
                 <div className="description">
                     {description}
                     <span className='readMore' onClick={() => setReadmore(!readmore)}>
                         {readmore ? " Show Less" : " Read More"}
                     </span>
                 </div>
+
+                {/* Theme tags */}
+                <div className="themeTags">
+                    {tour.themes && tour.themes.map((theme, index) => (
+                        <span className="tag" key={index}>{theme}</span>
+                    ))}
+                </div>
             </div>
-            {/*Updated button Section */}
+
+            {/* Final resolved version: both buttons inside cardActions */}
             <div className='cardActions'>
                 <button className='intrestedBtn' 
-                onClick={() => props.addToInterested && props.addToInterested(tour)}
+                    onClick={() => props.addToInterested && props.addToInterested(tour)}
                 > 
                     Interested
                 </button>
@@ -38,11 +47,9 @@ const Card = (props) => {
                 >
                     Not Interested
                 </button>
-
             </div>
         </div>
     );
 };
 
 export default Card;
-
