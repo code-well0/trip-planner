@@ -154,3 +154,10 @@
   font-weight: bold;
   text-align: center;
 }
+
+
+.error {
+  color: red;
+  font-size: 0.9rem;
+  margin: 4px 0;
+}

@@ -8,6 +8,7 @@ import PlanTrip from "./pages/PlanTrip";
 import ExpenseTracker from "./pages/ExpenseTracker";
 import ChatBot from "./pages/Chatbot";
 import Login from "./pages/login";
+import SignupForm from "./pages/Signup";
 
 import "./index.css";
 
@@ -51,6 +52,8 @@ function App() {
           path="*"
           element={<Navigate to="/" />}
         />
+
+        <Route path="/signup" element={<SignupForm/>} />
       </Routes>
     </>
   );
