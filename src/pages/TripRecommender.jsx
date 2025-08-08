@@ -8,17 +8,36 @@ export default function TripRecommender() {
   const [selectedTheme, setSelectedTheme] = useState("");
   const [recommendations, setRecommendations] = useState([]);
 
-  const moods = ["Relaxing", "Adventurous", "Spiritual", "Party"];
-  const purposes = ["Solo detox", "Nature walk", "Family outing", "Weekend escape"];
-  const themes = [
-    "Educational Tours",
-    "Historical Places",
-    "Spiritual / Mythological Trips",
-    "Adventure / Nature Trips",
-    "Family-friendly Trips",
-    "Solo Travel Spots",
-    "Budget Travel",
-  ];
+  const moods = [
+  "Relaxing",
+  "Adventurous",
+  "Spiritual",
+  "Party",
+  "Cultural",
+  "Romantic",
+  "Nature"
+];
+
+const purposes = [
+  "Solo detox",
+  "Nature walk",
+  "Family outing",
+  "Weekend escape",
+  "Spiritual journey",
+  "Couple trip",
+  "History tour"
+];
+
+const themes = [
+  "Historical Place",
+  "Family-friendly",
+  "Budget Travel",
+  "Adventure Trip",
+  "Solo Travel",
+  "Spiritual Trip",
+  "Educational Tour"
+];
+
 
   const handleFilter = () => {
     const filtered = data.filter((place) => {
