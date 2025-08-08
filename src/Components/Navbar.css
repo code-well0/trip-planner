@@ -1,24 +1,71 @@
-/* Navbar.css */
 .navbar {
-  background:#28a745;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to right, #28a745, #218838);
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 1000;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  color: rgb(124, 238, 155);
+  gap: 1.5rem;
+  height: 80px;
+}
+
+.nav-links {
+  display: flex;
+  background: #28a745;
   color: rgb(124, 238, 155);
   padding: 1rem 2rem;
   display: flex;
-  right:0;
-
   gap: 2rem;
-  
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
 }
+
+/* Push content below navbar */
 .main-content {
   padding-top: 80px;
 }
 
 .navbar a {
-  color: rgb(255, 255, 255);
+  color: #fff;
   text-decoration: none;
-  font-weight: bold;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: color 0.3s ease, transform 0.2s ease;
 }
 
 .navbar a:hover {
-  color: #ffc107;
+  color: #ffd966;
+  transform: scale(1.05);
+}
+
+/* Highlight active page */
+.active-link {
+  border-bottom: 2px solid #ffc107;
+  padding-bottom: 2px;
+}
+
+/* Logout button */
+.logout-btn {
+  background: transparent;
+  border: 1px solid white;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.logout-btn:hover {
+  background-color: white;
+  color: #28a745;
 }

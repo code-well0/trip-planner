@@ -20,6 +20,7 @@ Users can filter destinations by geographic regions (North, South, East, West) t
 
 ### 💰 **Expense Tracking**
 Monitor and manage your travel budget with built-in expense tracking tools.
+Enjoy Your Journey
 
 ## Technology Stack
 

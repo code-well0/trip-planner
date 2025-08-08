@@ -24,7 +24,22 @@ const Card = (props) => {
                     </span>
                 </div>
             </div>
-            <button className='notIntrestedBtn' onClick={() => props.getRemoveId(tour.id)}>Not Interested</button>
+            {/*Updated button Section */}
+            <div className='cardActions'>
+                <button className='intrestedBtn' 
+                onClick={() => props.addToInterested && props.addToInterested(tour)}
+                > 
+                    Interested
+                </button>
+
+                <button 
+                    className='notIntrestedBtn' 
+                    onClick={() => props.getRemoveId(tour.id)}
+                >
+                    Not Interested
+                </button>
+
+            </div>
         </div>
     );
 };
