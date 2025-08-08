@@ -1,27 +1,37 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
+import { Loader2 } from "lucide-react";  // Import the loading spinner icon
 import "react-toastify/dist/ReactToastify.css";
-import "./HomeSplit.css";
+import HeroSection from "../Components/Hero";
 
-export default function Signup() {
-  const [form, setForm] = useState({
-    name: "",
-    email: "",
-    password: "",
-  });
+
+export default function Signup({ setIsLoggedIn }) {
+  const navigate = useNavigate();
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoggedInLocal, setIsLoggedInLocal] = useState(false);
+  const [isLoading, setIsLoading] = useState(false); // Track loading state
 
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = (e) => {
+  const handleSignup = (e) => {
     e.preventDefault();
 
-    if (form.name && form.email && form.password) {
+    // Basic validation
+    if (name && email && password) {
+      setIsLoading(true); // Set loading state to true when signup is initiated
+
       toast.success("Signup successful!");
-      console.log("Signup Data:", form);
+      
+      setTimeout(() => {
+        setIsLoggedIn(true);  // Set login state to true
+        setIsLoggedInLocal(true);  // Track login state in component state
+        setIsLoading(false);  // Reset loading state
+        navigate("/plan");  // Redirect after showing the toast
+      }, 1500); // Wait for 1.5 seconds before redirecting
+
     } else {
       toast.error("Please fill all fields");
     }
@@ -32,68 +42,77 @@ export default function Signup() {
       <div className="overlay">
         <div className="split-content">
           {/* Hero Section */}
-          <div className="hero-box">
-            <h1>Start Your Journey</h1>
-            <p>Sign up and get ready to explore the world with us!</p>
-            <button>Explore Now →</button>
-          </div>
-
+         <HeroSection/>
           {/* Signup Section */}
           <div className="signup-box">
-            <form className="signup-form" onSubmit={handleSubmit}>
-              <h2>Sign Up</h2>
+            <form className="signup-form space-y-4" onSubmit={handleSignup}>
+              <h2 className="text-3xl font-bold">Sign Up</h2>
 
               <input
                 type="text"
                 placeholder="Name"
-                name="name"
-                value={form.name}
-                onChange={handleChange}
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                className="w-full p-3 rounded-md border border-gray-300"
                 required
               />
 
               <input
                 type="email"
                 placeholder="Email"
-                name="email"
-                value={form.email}
-                onChange={handleChange}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full p-3 rounded-md border border-gray-300"
                 required
               />
 
               <input
                 type={showPassword ? "text" : "password"}
                 placeholder="Password"
-                name="password"
-                value={form.password}
-                onChange={handleChange}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full p-3 rounded-md border border-gray-300"
                 required
               />
 
-              <label style={{ margin: "8px 0", fontSize: "14px" }}>
+              <label className="flex items-center space-x-2 text-sm">
                 <input
                   type="checkbox"
                   checked={showPassword}
                   onChange={() => setShowPassword(!showPassword)}
-                  style={{ marginRight: "8px" }}
+                  className="form-checkbox h-4 w-4"
                 />
-                Show Password
+                <span>Show Password</span>
               </label>
 
-              <button type="submit">Create Account</button>
+              <button 
+                type="submit" 
+                className="w-full p-3 mt-4 bg-blue-500 text-white rounded-md focus:outline-none disabled:bg-gray-300"
+                disabled={isLoading}
+              >
+                {isLoading ? (
+                  <Loader2 size={18} className="animate-spin mx-auto" />
+                ) : (
+                  "Create Account"
+                )}
+              </button>
 
-              <p style={{ textAlign: "center" }}>
+              <p className="text-center mt-4">
                 Already have an Account?{" "}
-                <Link to="/login" style={{ color: "blue" }}>
+                <Link to="/login" className="text-blue-500 hover:underline">
                   Login
                 </Link>
               </p>
             </form>
+
+            {isLoggedInLocal && (
+              <p className="success-message text-center text-green-600">Logged in successfully</p>
+            )}
           </div>
         </div>
       </div>
 
-      {/* Toast Container */}
+      {/* Toast Notification Container */}
       <ToastContainer
         position="bottom-left"
         autoClose={3000}

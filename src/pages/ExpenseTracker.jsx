@@ -1,223 +1,227 @@
-import React, { useState, useRef, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import React, { useState } from 'react';
 import {
-  FaPlus,
-  FaTrash,
-  FaPlane,
-  FaUtensils,
-  FaHotel,
-  FaTags,
-  FaBroom,
-} from "react-icons/fa";
-import Chart from "chart.js/auto";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import "./ExpenseTracker.css";
+  PieChart,
+  Pie,
+  Cell,
+  Tooltip,
+  ResponsiveContainer,
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  Legend,
+} from 'recharts';
+import { FaChartPie, FaChartBar, FaTrash, FaBroom } from 'react-icons/fa';
+import { FaMoneyBillWave } from 'react-icons/fa';
 
-export default function ExpenseTracker() {
+const COLORS = ['#8884d8', '#82ca9d', '#ffc658', '#ff7f50', '#ffbb28'];
+
+const ExpenseTracker = () => {
   const [expenses, setExpenses] = useState([]);
-  const [item, setItem] = useState("");
-  const [amount, setAmount] = useState("");
-  const [category, setCategory] = useState("Travel");
-  const [date, setDate] = useState("");
-  const [showChart, setShowChart] = useState(false);
+  const [item, setItem] = useState('');
+  const [amount, setAmount] = useState('');
+  const [date, setDate] = useState('');
+  const [category, setCategory] = useState('Travel');
+  const [label, setLabel] = useState('');
+  const [chartType, setChartType] = useState('pie');
 
-  const chartRef = useRef(null);
-  const chartInstanceRef = useRef(null);
-
-  const total = expenses.reduce((acc, curr) => acc + curr.amount, 0);
-
-  useEffect(() => {
-    const saved = localStorage.getItem("expenses");
-    if (saved) setExpenses(JSON.parse(saved));
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem("expenses", JSON.stringify(expenses));
-  }, [expenses]);
-
-  const addExpense = (e) => {
-    e.preventDefault();
-    if (!item || !amount || !date) return;
-
-    const newExpense = {
-      item,
-      amount: parseFloat(amount),
-      category,
-      date,
-    };
-
-    setExpenses([...expenses, newExpense]);
-    toast.success("Expense added successfully!");
-
-    setItem("");
-    setAmount("");
-    setCategory("Travel");
-    setDate("");
-  };
-
-  const removeExpense = (index) => {
-    const updated = expenses.filter((_, i) => i !== index);
-    setExpenses(updated);
-    toast.info("Expense deleted.");
-  };
-
-  const clearAllExpenses = () => {
-    if (window.confirm("Are you sure you want to clear all expenses?")) {
-      setExpenses([]);
-      setShowChart(false);
-      toast.warn("All expenses cleared!");
+  const handleAddExpense = () => {
+    if (item && amount && date && category) {
+      setExpenses([
+        ...expenses,
+        {
+          item,
+          amount: parseFloat(amount),
+          date,
+          category,
+          label: label || category,
+        },
+      ]);
+      setItem('');
+      setAmount('');
+      setDate('');
+      setCategory('Travel');
+      setLabel('');
     }
   };
 
-  const getChartData = () => {
-    const grouped = expenses.reduce((acc, exp) => {
-      acc[exp.category] = (acc[exp.category] || 0) + exp.amount;
+  const handleDelete = (index) => {
+    setExpenses(expenses.filter((_, i) => i !== index));
+  };
+
+  const handleClearAll = () => {
+    if (window.confirm('Are you sure you want to clear all expenses?')) {
+      setExpenses([]);
+    }
+  };
+
+  const totalSpent = expenses.reduce((acc, curr) => acc + curr.amount, 0);
+
+  const data = Object.values(
+    expenses.reduce((acc, expense) => {
+      const key = expense.label;
+      if (!acc[key]) acc[key] = { name: key, value: 0 };
+      acc[key].value += expense.amount;
       return acc;
-    }, {});
-
-    return {
-      labels: Object.keys(grouped),
-      datasets: [
-        {
-          label: "Expense by Category",
-          data: Object.values(grouped),
-          backgroundColor: ["#1e88e5", "#d81b60", "#43a047", "#8e24aa"],
-        },
-      ],
-    };
-  };
-
-  useEffect(() => {
-    if (!showChart || expenses.length === 0) return;
-
-    if (chartInstanceRef.current) chartInstanceRef.current.destroy();
-
-    const ctx = chartRef.current.getContext("2d");
-    const chartData = getChartData();
-
-    chartInstanceRef.current = new Chart(ctx, {
-      type: "doughnut",
-      data: chartData,
-      options: {
-        cutout: "60%",
-        plugins: {
-          legend: { position: "bottom" },
-          tooltip: {
-            callbacks: {
-              label: function (context) {
-                const value = context.raw;
-                const total = context.dataset.data.reduce((a, b) => a + b, 0);
-                const percent = ((value / total) * 100).toFixed(1);
-                return `₹${value} (${percent}%)`;
-              },
-            },
-          },
-        },
-      },
-    });
-  }, [showChart, expenses]);
-
-  const getCategoryIcon = (cat) => {
-    if (cat === "Travel") return <FaPlane />;
-    if (cat === "Food") return <FaUtensils />;
-    if (cat === "Stay") return <FaHotel />;
-    return <FaTags />;
-  };
+    }, {})
+  );
 
   return (
-    <div className="main">
-      <div className="expense-form-wrapper">
-        <h2 className="page-title">💰 Expense Tracker</h2>
+    <div className="min-h-screen bg-gradient-to-br from-purple-100 to-blue-100 p-4">
+      <div className="max-w-3xl mx-auto bg-white rounded-2xl shadow-xl p-8">
+        <h1 className="text-3xl font-extrabold flex items-center justify-center gap-3 text-center mb-4">
+          <FaMoneyBillWave className="text-green-600 text-4xl" />
+          Expense Tracker
+        </h1>
 
-        <form onSubmit={addExpense} className="expense-form">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <input
             type="text"
             placeholder="Expense item"
+            className="p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-400"
             value={item}
             onChange={(e) => setItem(e.target.value)}
           />
           <input
             type="number"
             placeholder="Amount (₹)"
+            className="p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-400"
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
+            min="0"
           />
           <input
             type="date"
+            className="p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-400"
             value={date}
             onChange={(e) => setDate(e.target.value)}
           />
-          <select value={category} onChange={(e) => setCategory(e.target.value)}>
+          <select
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+            className="p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-400"
+          >
             <option value="Travel">Travel</option>
             <option value="Food">Food</option>
-            <option value="Stay">Stay</option>
-            <option value="Misc">Misc</option>
+            <option value="Shopping">Shopping</option>
+            <option value="Lodging">Lodging</option>
+            <option value="Other">Other</option>
           </select>
-          <button type="submit" disabled={!item || !amount || !date}>
-            <FaPlus /> Add
+          <input
+            type="text"
+            placeholder="Label (optional)"
+            className="p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-400"
+            value={label}
+            onChange={(e) => setLabel(e.target.value)}
+          />
+          <button
+            onClick={handleAddExpense}
+            className="bg-green-500 hover:bg-green-600 text-white p-3 rounded-lg font-semibold transition"
+          >
+            + Add
           </button>
-        </form>
+        </div>
 
-        <h2 className="total-spent">Total Spent: ₹{total.toFixed(2)}</h2>
+        <h2 className="text-xl font-semibold mt-8 text-center">
+          Total Spent: ₹{totalSpent.toFixed(2)}
+        </h2>
 
-        <ul className="expense-list">
-          <AnimatePresence>
-            {expenses.map((exp, index) => (
-              <motion.li
-                key={index}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.3 }}
+        <div className="mt-10">
+          <div className="flex justify-between items-center mb-4">
+            <h3 className="text-lg font-semibold flex items-center gap-2">
+              {chartType === 'pie' ? <FaChartPie /> : <FaChartBar />} Analysis
+            </h3>
+            <select
+              value={chartType}
+              onChange={(e) => setChartType(e.target.value)}
+              className="p-2 rounded-md border border-gray-300 focus:outline-none"
+            >
+              <option value="pie">Pie Chart</option>
+              <option value="bar">Bar Chart</option>
+            </select>
+          </div>
+
+          <div className="h-80 bg-white rounded-xl shadow-md p-4">
+            <ResponsiveContainer width="100%" height="100%">
+              {chartType === 'pie' ? (
+                <PieChart>
+                  <Pie
+                    data={data}
+                    cx="50%"
+                    cy="50%"
+                    label={({ name, percent }) =>
+                      `${name}: ${(percent * 100).toFixed(0)}%`
+                    }
+                    outerRadius={100}
+                    fill="#8884d8"
+                    dataKey="value"
+                  >
+                    {data.map((_, index) => (
+                      <Cell
+                        key={`cell-${index}`}
+                        fill={COLORS[index % COLORS.length]}
+                      />
+                    ))}
+                  </Pie>
+                  <Tooltip formatter={(value) => [`₹${value}`, 'Amount']} />
+                </PieChart>
+              ) : (
+                <BarChart data={data}>
+                  <XAxis dataKey="name" />
+                  <YAxis />
+                  <Tooltip formatter={(value) => [`₹${value}`, 'Amount']} />
+                  <Legend />
+                  <Bar dataKey="value" fill="#82ca9d" />
+                </BarChart>
+              )}
+            </ResponsiveContainer>
+          </div>
+        </div>
+
+        <div className="mt-10">
+          <div className="flex justify-between items-center mb-3">
+            <h3 className="text-lg font-bold">Expense List</h3>
+            {expenses.length > 0 && (
+              <button
+                onClick={handleClearAll}
+                className="flex items-center gap-2 bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded-md text-sm"
+              >
+                <FaBroom /> Clear All
+              </button>
+            )}
+          </div>
+
+          <ul className="space-y-2">
+            {expenses.map((exp, idx) => (
+              <li
+                key={idx}
+                className="flex justify-between items-center p-3 bg-gray-50 rounded-lg shadow-sm hover:bg-gray-100"
               >
                 <div>
-                  <strong>{exp.item}</strong> – ₹{exp.amount} <br />
-                  <small>{exp.date}</small>
+                  <p className="font-medium">
+                    {exp.item} ({exp.label})
+                  </p>
+                  <p className="text-sm text-gray-500">{exp.date}</p>
                 </div>
-                <div className={`tag ${exp.category.toLowerCase()}`}>
-                  {getCategoryIcon(exp.category)} {exp.category}
+                <div className="flex items-center gap-4">
+                  <span className="font-semibold text-green-600">
+                    ₹{exp.amount}
+                  </span>
+                  <button
+                    onClick={() => handleDelete(idx)}
+                    className="text-red-500 hover:text-red-700"
+                    title="Delete"
+                  >
+                    <FaTrash />
+                  </button>
                 </div>
-                <button className="delete-btn" onClick={() => removeExpense(index)}>
-                  <FaTrash />
-                </button>
-              </motion.li>
+              </li>
             ))}
-          </AnimatePresence>
-        </ul>
-
-        {expenses.length > 0 && (
-          <div className="button-group">
-            <button
-              className="analysis-btn"
-              onClick={() => setShowChart(!showChart)}
-            >
-              {showChart ? "Hide Analysis" : "Show Analysis"}
-            </button>
-
-            <button className="clear-btn" onClick={clearAllExpenses}>
-              <FaBroom /> Clear All
-            </button>
-          </div>
-        )}
-      </div>
-
-      {expenses.length > 0 && showChart && (
-        <div className="right-panel">
-          <canvas ref={chartRef}></canvas>
+          </ul>
         </div>
-      )}
-
-      {/* Toast Container */}
-      <ToastContainer
-        position="bottom-left"
-        autoClose={3000}
-        hideProgressBar={false}
-        closeOnClick
-        pauseOnHover
-        draggable
-        theme="colored"
-      />
+      </div>
     </div>
   );
-}
+};
+
+export default ExpenseTracker;

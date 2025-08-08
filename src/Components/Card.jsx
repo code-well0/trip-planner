@@ -33,12 +33,23 @@ const Card = (props) => {
                 </div>
             </div>
 
-            <button className='notIntrestedBtn' onClick={() => props.getRemoveId(tour.id)}>
-                Not Interested
-            </button>
+            {/* Final resolved version: both buttons inside cardActions */}
+            <div className='cardActions'>
+                <button className='intrestedBtn' 
+                    onClick={() => props.addToInterested && props.addToInterested(tour)}
+                > 
+                    Interested
+                </button>
+
+                <button 
+                    className='notIntrestedBtn' 
+                    onClick={() => props.getRemoveId(tour.id)}
+                >
+                    Not Interested
+                </button>
+            </div>
         </div>
     );
 };
 
 export default Card;
-

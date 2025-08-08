@@ -3,6 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./HomeSplit.css";
+import HeroSection from "../Components/Hero";
 
 export default function HomeSplit({ setIsLoggedIn }) {
   const nameInputRef = useRef(null);
@@ -29,15 +30,10 @@ export default function HomeSplit({ setIsLoggedIn }) {
 
   return (
     <div className="page-background">
-      <div className="overlay">
-        <div className="split-content">
+      <div className="overlay ">
+        <div className="flex flex-col  justify-center lg:flex-row  items-center split-content">
           {/* Hero Section */}
-          <div className="hero-box">
-            <h1>Plan Your Next Adventure</h1>
-            <p>Discover amazing places and create unforgettable memories.</p>
-            <button onClick={handleStartPlanningClick}>Start Planning →</button>
-          </div>
-
+          <HeroSection />
           {/* Signup Section */}
           <div className="signup-box">
             <form className="signup-form" onSubmit={handleSignup}>
