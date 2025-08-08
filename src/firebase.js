@@ -2,20 +2,17 @@ import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
-// Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyCIEI_hmNqvRyRv2jlHCO25coJaYQfgOes",
-  authDomain: "trip-planner-a4e94.firebaseapp.com",
-  projectId: "trip-planner-a4e94",
-  storageBucket: "trip-planner-a4e94.appspot.com",
-  messagingSenderId: "732971362604",
-  // --- PASTE YOUR FULL APP ID HERE ---
-  appId: "1:732971362604:web:cf25cb5f78cede077f2489" 
+  apiKey: "AIzaSyCiVjM54cFxvjOf-1Egqhr3XrlCNu_I3WQ",
+  authDomain: "trip-planner-bad2b.firebaseapp.com",
+  projectId: "trip-planner-bad2b",
+  storageBucket: "trip-planner-bad2b.firebasestorage.app",
+  messagingSenderId: "731808227250",
+  appId: "1:731808227250:web:a5e9434d6148c1139b8eab",
+  measurementId: "G-L8FNY7BHSX"
 };
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
-// Export Firebase services
 export const auth = getAuth(app);
 export const db = getFirestore(app);
