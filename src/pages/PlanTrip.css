@@ -1,0 +1,129 @@
+.plan-trip-container {
+  background: linear-gradient(to bottom, #f0f8ff, #e6f2ff);
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  min-height: 100vh;
+  margin-top: 70px;
+}
+
+.title-section {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.trip-title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #004080;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.trip-icon {
+  margin-right: 10px;
+  color: #ff6600;
+}
+
+.trip-subtitle {
+  color: #666;
+  font-size: 1rem;
+  margin-top: 5px;
+}
+
+.dropdowns-wrapper {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.dropdown-container {
+  position: relative;
+}
+
+.dropdown-btn {
+  background-color: #0077cc;
+  color: white;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.dropdown-btn:hover {
+  background-color: #005fa3;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 110%;
+  left: 0;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0px 4px 12px rgba(0,0,0,0.1);
+  overflow: hidden;
+  z-index: 100;
+}
+
+.dropdown-item {
+  padding: 10px 16px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.dropdown-item:hover {
+  background: #f0f8ff;
+}
+
+.dropdown-item.active {
+  background: #e0f0ff;
+  font-weight: bold;
+}
+
+.animated-dropdown {
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Tours Grid Layout */
+.toursWrapper {
+  width: 100%;
+}
+
+.cardsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 30px;
+  padding: 20px 0;
+  justify-items: center;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .cardsGrid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 15px;
+  }
+  
+  .dropdowns-wrapper {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .trip-title {
+    font-size: 1.5rem;
+  }
+}
