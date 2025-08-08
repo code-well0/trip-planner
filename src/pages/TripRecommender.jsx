@@ -21,7 +21,7 @@ export default function TripRecommender() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-16">
+    <div className="max-w-7xl mx-auto px-4 py-16" style={{ marginTop: '70px' }}>
       <h2 className="text-4xl font-extrabold text-center mb-2 text-gray-900 flex justify-center items-center gap-2">
         <FaGlobeAsia className="text-green-600 text-4xl" />
         Trip Recommender

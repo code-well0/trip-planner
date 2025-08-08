@@ -7,7 +7,7 @@ import "../Components/Navbar.css";
 import { FaPlaneDeparture, FaGlobeAsia, FaSortAmountDownAlt } from "react-icons/fa";
 import "./PlanTrip.css"; 
 
-export default function PlanTrip({ searchQuery }) {
+export default function PlanTrip({ searchQuery = "" }) {
   const [tour, setTour] = useState(data);
   const [selectedRegion, setSelectedRegion] = useState("All");
   const [sortBy, setSortBy] = useState("default");
@@ -62,7 +62,7 @@ export default function PlanTrip({ searchQuery }) {
       selectedRegion === "All" || t.region === selectedRegion;
     const matchesSearch = t.name
       .toLowerCase()
-      .includes(searchQuery.toLowerCase());
+      .includes((searchQuery || "").toLowerCase());
     return matchesRegion && matchesSearch;
   });
 
