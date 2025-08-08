@@ -94,6 +94,7 @@ const ExpenseTracker = () => {
             type="date"
             className="p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-400"
             value={date}
+            max={new Date().toISOString().split('T')[0]} 
             onChange={(e) => setDate(e.target.value)}
           />
           <select
@@ -126,57 +127,60 @@ const ExpenseTracker = () => {
           Total Spent: ₹{totalSpent.toFixed(2)}
         </h2>
 
-        <div className="mt-10">
-          <div className="flex justify-between items-center mb-4">
-            <h3 className="text-lg font-semibold flex items-center gap-2">
-              {chartType === 'pie' ? <FaChartPie /> : <FaChartBar />} Analysis
-            </h3>
-            <select
-              value={chartType}
-              onChange={(e) => setChartType(e.target.value)}
-              className="p-2 rounded-md border border-gray-300 focus:outline-none"
-            >
-              <option value="pie">Pie Chart</option>
-              <option value="bar">Bar Chart</option>
-            </select>
-          </div>
+      {expenses.length > 0 && (
+  <div className="mt-10">
+    <div className="flex justify-between items-center mb-4">
+      <h3 className="text-lg font-semibold flex items-center gap-2">
+        {chartType === 'pie' ? <FaChartPie /> : <FaChartBar />} Analysis
+      </h3>
+      <select
+        value={chartType}
+        onChange={(e) => setChartType(e.target.value)}
+        className="p-2 rounded-md border border-gray-300 focus:outline-none"
+      >
+        <option value="pie">Pie Chart</option>
+        <option value="bar">Bar Chart</option>
+      </select>
+    </div>
 
-          <div className="h-80 bg-white rounded-xl shadow-md p-4">
-            <ResponsiveContainer width="100%" height="100%">
-              {chartType === 'pie' ? (
-                <PieChart>
-                  <Pie
-                    data={data}
-                    cx="50%"
-                    cy="50%"
-                    label={({ name, percent }) =>
-                      `${name}: ${(percent * 100).toFixed(0)}%`
-                    }
-                    outerRadius={100}
-                    fill="#8884d8"
-                    dataKey="value"
-                  >
-                    {data.map((_, index) => (
-                      <Cell
-                        key={`cell-${index}`}
-                        fill={COLORS[index % COLORS.length]}
-                      />
-                    ))}
-                  </Pie>
-                  <Tooltip formatter={(value) => [`₹${value}`, 'Amount']} />
-                </PieChart>
-              ) : (
-                <BarChart data={data}>
-                  <XAxis dataKey="name" />
-                  <YAxis />
-                  <Tooltip formatter={(value) => [`₹${value}`, 'Amount']} />
-                  <Legend />
-                  <Bar dataKey="value" fill="#82ca9d" />
-                </BarChart>
-              )}
-            </ResponsiveContainer>
-          </div>
-        </div>
+    <div className="h-80 bg-white rounded-xl shadow-md p-4">
+      <ResponsiveContainer width="100%" height="100%">
+        {chartType === 'pie' ? (
+          <PieChart>
+            <Pie
+              data={data}
+              cx="50%"
+              cy="50%"
+              label={({ name, percent }) =>
+                `${name}: ${(percent * 100).toFixed(0)}%`
+              }
+              outerRadius={100}
+              fill="#8884d8"
+              dataKey="value"
+            >
+              {data.map((_, index) => (
+                <Cell
+                  key={`cell-${index}`}
+                  fill={COLORS[index % COLORS.length]}
+                />
+              ))}
+            </Pie>
+            <Tooltip formatter={(value) => [`₹${value}`, 'Amount']} />
+          </PieChart>
+        ) : (
+          <BarChart data={data}>
+            <XAxis dataKey="name" />
+            <YAxis />
+            <Tooltip formatter={(value) => [`₹${value}`, 'Amount']} />
+            <Legend />
+            <Bar dataKey="value" fill="#82ca9d" />
+          </BarChart>
+        )}
+      </ResponsiveContainer>
+    </div>
+  </div>
+)}
+
 
         <div className="mt-10">
           <div className="flex justify-between items-center mb-3">
