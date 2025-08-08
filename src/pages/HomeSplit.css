@@ -44,11 +44,12 @@
 .hero-box {
   flex: 1;
   max-width: 500px;
+ 
 }
 
 .hero-box h1 {
+  margin-bottom:1rem;
   font-size: 3rem;
-  margin-bottom: 1rem;
   color: #fff;
 }
 
@@ -136,6 +137,8 @@
   .split-content {
     flex-direction: column;
     gap: 2rem;
+   
+
   }
 
   .hero-box, .signup-box {
@@ -146,6 +149,25 @@
   .hero-box button {
     width: 100%;
   }
+
+  
+}
+
+@media screen and (min-width:340px ) and (max-width:380px) 
+ { .hero-box{
+ margin-top:200px;
+}
+}
+
+@media screen and (min-width:320px ) and (max-width:339px)
+ { .hero-box{
+ margin-top:400px;
+}
+}
+@media screen and (min-width:390px ) and (max-width:420px)
+ { .hero-box{
+ margin-top:50px;
+}
 }
 
 .success-message {
