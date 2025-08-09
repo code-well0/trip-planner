@@ -35,17 +35,7 @@ const handleAddToInterested = (tour) => {
           />
         ))}
       </div>
-
-      <div>
-        <h3>Interested Tours</h3>
-        {interestedTours.length === 0 && <p>No tours marked as interested yet.</p>}
-        {interestedTours.map(tour => (
-          <div key={tour.id}>{tour.name}</div>
-        ))}
-      </div>
     </div>
-
-    
   );
 };
 

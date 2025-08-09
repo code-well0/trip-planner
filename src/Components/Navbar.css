@@ -1,71 +1,224 @@
+/* Modern Navbar Styles */
 .navbar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  background: linear-gradient(to right, #28a745, #218838);
-  padding: 1rem 2rem;
+  background: linear-gradient(90deg, #28a745, #218838);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+  padding: 0 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  z-index: 1000;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  color: rgb(124, 238, 155);
-  gap: 1.5rem;
-  height: 80px;
-}
-
-.nav-links {
-  display: flex;
-  background: #28a745;
-  color: rgb(124, 238, 155);
-  padding: 1rem 2rem;
-  display: flex;
-  gap: 2rem;
-
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
+  height: 70px;
   z-index: 1000;
+  transition: all 0.3s ease;
 }
 
-/* Push content below navbar */
-.main-content {
-  padding-top: 80px;
+.navbar:hover {
+  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.15);
 }
 
-.navbar a {
-  color: #fff;
+/* Logo and Brand Section */
+.navbar-brand {
+  display: flex;
+  align-items: center;
+}
+
+.brand-link {
+  display: flex;
+  align-items: center;
   text-decoration: none;
-  font-weight: 600;
-  font-size: 1rem;
-  transition: color 0.3s ease, transform 0.2s ease;
-}
-
-.navbar a:hover {
-  color: #ffd966;
-  transform: scale(1.05);
-}
-
-/* Highlight active page */
-.active-link {
-  border-bottom: 2px solid #ffc107;
-  padding-bottom: 2px;
-}
-
-/* Logout button */
-.logout-btn {
-  background: transparent;
-  border: 1px solid white;
   color: white;
-  padding: 6px 12px;
-  border-radius: 5px;
-  cursor: pointer;
   font-weight: bold;
+  font-size: 1.2rem;
+  transition: transform 0.3s ease;
 }
 
-.logout-btn:hover {
-  background-color: white;
-  color: #28a745;
+.brand-link:hover {
+  transform: scale(1.05);
+  color: white;
+}
+
+.navbar-logo {
+  font-size: 24px;
+  margin-right: 12px;
+  color: white;
+}
+
+.brand-text {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+/* Navigation Links Container */
+.navbar-nav {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Individual Navigation Links */
+.nav-link {
+  color: rgba(255, 255, 255, 0.9);
+  text-decoration: none;
+  font-weight: 500;
+  padding: 8px 16px;
+  border-radius: 20px;
+  transition: all 0.3s ease;
+  position: relative;
+  font-size: 0.95rem;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.nav-icon {
+  font-size: 16px;
+}
+
+.profile-link {
+  padding: 10px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.profile-link .nav-icon {
+  font-size: 18px;
+}
+
+.nav-link:hover {
+  color: white;
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+.nav-link.active {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.nav-link::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: #7ed321;
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
+}
+
+.nav-link:hover::before,
+.nav-link.active::before {
+  width: 80%;
+}
+
+/* Mobile Menu Button (Hidden by default) */
+.mobile-menu-btn {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+  padding: 5px;
+  transition: transform 0.3s ease;
+}
+
+.mobile-menu-btn:hover {
+  transform: scale(1.1);
+}
+
+.mobile-menu-btn span {
+  width: 25px;
+  height: 3px;
+  background: white;
+  margin: 3px 0;
+  border-radius: 2px;
+  transition: 0.3s;
+}
+
+/* Mobile Menu Animation */
+.mobile-menu-btn.active span:nth-child(1) {
+  transform: rotate(-45deg) translate(-6px, 6px);
+}
+
+.mobile-menu-btn.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.mobile-menu-btn.active span:nth-child(3) {
+  transform: rotate(45deg) translate(-6px, -6px);
+}
+
+/* Content padding to account for fixed navbar */
+.main-content {
+  padding-top: 90px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 0 1rem;
+  }
+  
+  .navbar-nav {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: linear-gradient(135deg, #2d5a27 0%, #4a7c59 100%);
+    flex-direction: column;
+    padding: 1rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  .navbar-nav.active {
+    display: flex;
+  }
+  
+  .mobile-menu-btn {
+    display: flex;
+  }
+  
+  .nav-link {
+    padding: 12px 16px;
+    width: 100%;
+    text-align: center;
+    border-radius: 8px;
+    margin: 4px 0;
+  }
+  
+  .brand-text {
+    font-size: 1rem;
+  }
+  
+  .navbar-logo {
+    width: 28px;
+    height: 28px;
+    margin-right: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar {
+    padding: 0 0.75rem;
+  }
+  
+  .brand-text {
+    display: none;
+  }
+  
+  .navbar-logo {
+    margin-right: 0;
+  }
+}
+
+/* Smooth scroll for anchor links */
+html {
+  scroll-behavior: smooth;
 }

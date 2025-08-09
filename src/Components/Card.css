@@ -4,7 +4,8 @@
     overflow: hidden;
     box-shadow: 0 4px 15px rgba(0,0,0,0.08);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
-    max-width: 320px;
+    width: 100%;
+    max-width: 380px;
     display: flex;
     flex-direction: column;
 }
@@ -38,10 +39,15 @@
     font-weight: bold;
 }
 
+.tourInfo {
+    padding: 15px;
+    flex-grow: 1;
+}
+
 .tourCityName {
     font-size: 1.2rem;
     font-weight: 600;
-    margin: 15px 0 8px;
+    margin: 0 0 8px;
 }
 
 .region {
@@ -66,7 +72,8 @@
 .cardActions {
     display: flex;
     justify-content: space-between;
-    padding: 10px 15px 15px;
+    padding: 0 15px 15px;
+    gap: 10px;
 }
 
 .interestedBtn {

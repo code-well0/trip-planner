@@ -1,66 +1,70 @@
-import React from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { FaMapMarkedAlt, FaSuitcase, FaMoneyBillWave, FaRobot, FaPlaneDeparture } from "react-icons/fa";
+import { NavLink } from "react-router-dom";
+import { useState } from "react";
+import { FaPlane, FaHome, FaCalculator, FaRobot, FaUser, FaThumbsUp } from "react-icons/fa";
+import "./Navbar.css";
 
-const Navbar = ({ isLoggedIn, searchQuery, setSearchQuery }) => {
-  const navigate = useNavigate();
+export default function Navbar({ isLoggedIn }) {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    navigate("/login");
-    window.location.reload();
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  const closeMobileMenu = () => {
+    setIsMobileMenuOpen(false);
   };
 
   return (
-    <nav className=" navbar flex items-center justify-between px-6 py-4 bg-white shadow-md font-inter">
-      {/* 🔰 Brand Logo */}
-      <div className="flex items-center gap-2 text-2xl font-bold text-blue-600">
-        <FaMapMarkedAlt className="text-3xl" />
-        <Link to="/">YourTripPlanner</Link>
+    <nav className="navbar">
+      {/* Logo Section */}
+      <div className="navbar-brand">
+        <NavLink to={isLoggedIn ? "/home" : "/"} className="brand-link" onClick={closeMobileMenu}>
+          <FaPlane className="navbar-logo" />
+          <span className="brand-text">YourTripPlanner</span>
+        </NavLink>
       </div>
 
-      {/* 🔷 Right: Navigation Links */}
-      <div className="flex space-x-6 items-center text-gray-700 font-medium">
-        {isLoggedIn ? (
-          <>
-            <input 
-              type="text"
-              placeholder="Search by city name..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="px-4 py-2 border rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-            <Link to="/plan" className="hover:text-blue-600 transition duration-200 flex items-center gap-1">
-              <FaSuitcase /> Plan Trip
-            </Link>
-            <Link to="/expenses" className="hover:text-blue-600 transition duration-200 flex items-center gap-1">
-              <FaMoneyBillWave /> Expenses
-            </Link>
-            <Link to="/api/chat" className="hover:text-blue-600 transition duration-200 flex items-center gap-1">
-              <FaRobot /> AI Assistant
-            </Link>
-            <Link to="/TripRecommender" className="hover:text-blue-600 transition duration-200 flex items-center gap-1">
-              <FaPlaneDeparture /> Trip Recommender
-            </Link>
+      {/* Navigation Links */}
+      <div className={`navbar-nav ${isMobileMenuOpen ? 'active' : ''}`}>
+        <NavLink to={isLoggedIn ? "/home" : "/"} className="nav-link" onClick={closeMobileMenu}>
+          <FaHome className="nav-icon" />
+          <span>Home</span>
+        </NavLink>
 
-            <button
-              onClick={handleLogout}
-              className="ml-4 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition duration-200"
-            >
-              Logout
-            </button>
+        {isLoggedIn && (
+          <>
+            <NavLink to="/plan" className="nav-link" onClick={closeMobileMenu}>
+              <FaPlane className="nav-icon" />
+              <span>Plan Trip</span>
+            </NavLink>
+            <NavLink to="/expenses" className="nav-link" onClick={closeMobileMenu}>
+              <FaCalculator className="nav-icon" />
+              <span>Expenses</span>
+            </NavLink>
+            <NavLink to="/api/chat" className="nav-link" onClick={closeMobileMenu}>
+              <FaRobot className="nav-icon" />
+              <span>AI Assistant</span>
+            </NavLink>
+            <NavLink to="/trip-recommender" className="nav-link" onClick={closeMobileMenu}>
+              <FaThumbsUp className="nav-icon" />
+              <span>Trip Recommender</span>
+            </NavLink>
+            <NavLink to="/profile" className="nav-link profile-link" onClick={closeMobileMenu}>
+              <FaUser className="nav-icon" />
+            </NavLink>
           </>
-        ) : (
-          <Link
-            to="/login"
-            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition duration-200"
-          >
-            Login
-          </Link>
         )}
+      </div>
+
+      {/* Mobile Menu Button */}
+      <div 
+        className={`mobile-menu-btn ${isMobileMenuOpen ? 'active' : ''}`}
+        onClick={toggleMobileMenu}
+      >
+        <span></span>
+        <span></span>
+        <span></span>
       </div>
     </nav>
   );
-};
-
-export default Navbar;
+}

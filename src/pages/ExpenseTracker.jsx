@@ -67,7 +67,7 @@ const ExpenseTracker = () => {
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-100 to-blue-100 p-4">
+    <div className="min-h-screen bg-gradient-to-br from-purple-100 to-blue-100 p-4" style={{ marginTop: '70px' }}>
       <div className="max-w-3xl mx-auto bg-white rounded-2xl shadow-xl p-8">
         <h1 className="text-3xl font-extrabold flex items-center justify-center gap-3 text-center mb-4">
           <FaMoneyBillWave className="text-green-600 text-4xl" />

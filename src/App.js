@@ -1,56 +1,93 @@
 
-import React, { useState } from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import Navbar from "./Components/Navbar";
 
 import HomeSplit from "./pages/HomeSplit";
+import Home from "./pages/Home";
 import PlanTrip from "./pages/PlanTrip";
 import ExpenseTracker from "./pages/ExpenseTracker";
 import ChatBot from "./pages/Chatbot";
 import Login from "./pages/login";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import Profile from "./pages/Profile";
 import TripRecommender from "./pages/TripRecommender";
 
-
 import "./index.css";
-import Footer from "./Components/Footer";
-import Signup from "./pages/Signup";
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // 🔐 Global login state
+  const location = useLocation();
+
+  // Check if user is already logged in on app load
+  useEffect(() => {
+    const isAuthenticated = localStorage.getItem('isAuthenticated');
+    if (isAuthenticated === 'true') {
+      setIsLoggedIn(true);
+    }
+  }, []);
+
+  // Define pages that should NOT show the navbar
+  const noNavbarPages = ['/', '/login'];
+  const showNavbar = !noNavbarPages.includes(location.pathname);
 
   return (
     <>
-      <Navbar isLoggedIn={isLoggedIn} searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+      {/* Show navbar only on certain pages */}
+      {showNavbar && <Navbar isLoggedIn={isLoggedIn} />}
 
-      {/* 🧱 Add padding to prevent content being hidden behind navbar */}
-      <div className="pt-20"> {/* Adjust based on navbar height */}
-        <Routes>
-          {/* <Route path="/" element={<HomeSplit setIsLoggedIn={setIsLoggedIn} />} /> */}
-           {/* <Route path="/" element={<><HomeSplit setIsLoggedIn={setIsLoggedIn}/><Signup setIsLoggedIn={setIsLoggedIn} /> </>} /> */}
-           <Route path="/" element={<>< Signup setIsLoggedIn={setIsLoggedIn} /> </>} />
-          <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
-          <Route path="/plan" element={isLoggedIn ? <PlanTrip searchQuery={searchQuery} /> : <Navigate to="/login" />} />
-          <Route path="/expenses" element={isLoggedIn ? <ExpenseTracker /> : <Navigate to="/login" />} />
-          <Route path="/api/chat" element={isLoggedIn ? <ChatBot /> : <Navigate to="/login" />} />
-          <Route path="/TripRecommender" element={isLoggedIn ? <TripRecommender /> : <Navigate to="/login" />} />
-          <Route path="*" element={<Navigate to="/" />} />
-        </Routes>
+      <div className={showNavbar ? "main-content with-navbar" : "main-content no-navbar"}>
 
-        <Footer isLoggedIn={isLoggedIn} />
+      <Routes>
+        {/* Landing/Signup page */}
+        <Route
+          path="/"
+          element={<HomeSplit setIsLoggedIn={setIsLoggedIn} />}
+        />
+
+        {/* Home page (dummy) */}
+        <Route
+          path="/home"
+          element={isLoggedIn ? <Home /> : <Navigate to="/login" />}
+        />
+
+        {/* Login page */}
+        <Route
+          path="/login"
+          element={<Login setIsLoggedIn={setIsLoggedIn} />}
+        />
+
+        {/* Protected routes */}
+        <Route
+          path="/plan"
+          element={isLoggedIn ? <PlanTrip /> : <Navigate to="/login" />}
+        />
+        <Route
+          path="/expenses"
+          element={isLoggedIn ? <ExpenseTracker /> : <Navigate to="/login" />}
+        />
+        <Route
+          path="/api/chat"
+          element={isLoggedIn ? <ChatBot /> : <Navigate to="/login" />}
+        />
+        <Route
+          path="/trip-recommender"
+          element={isLoggedIn ? <TripRecommender /> : <Navigate to="/login" />}
+        />
+        <Route
+          path="/profile"
+          element={isLoggedIn ? <Profile /> : <Navigate to="/login" />}
+        />
+
+        {/* Fallback route (optional) */}
+        <Route
+          path="*"
+          element={<Navigate to="/" />}
+        />
+      </Routes>
       </div>
-
-      <ToastContainer
-        position="bottom-left"
-        autoClose={3000}
-        pauseOnHover
-        theme="colored"
-      />
     </>
   );
 }
 
-
 export default App;
+
