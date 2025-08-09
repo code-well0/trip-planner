@@ -1,9 +1,10 @@
-import React, { useRef, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import "./HomeSplit.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import HeroSection from "../Components/Hero";
 
 export default function Login({ setIsLoggedIn }) {
   const navigate = useNavigate();
@@ -30,11 +31,7 @@ export default function Login({ setIsLoggedIn }) {
       <div className="overlay">
         <div className="split-content">
           {/* Hero Section */}
-          <div className="hero-box">
-            <h1>Plan Your Next Adventure</h1>
-            <p>Discover amazing places and create unforgettable memories.</p>
-            <button>Start Planning →</button>
-          </div>
+          <HeroSection/>
 
           {/* Login Section */}
           <div className="signup-box">
