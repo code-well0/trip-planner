@@ -16,6 +16,9 @@ import TripRecommender from "./pages/TripRecommender";
 import "./index.css";
 import Footer from "./Components/Footer";
 import Signup from "./pages/Signup";
+import TourDetails from "./Components/TourDetails";
+import Card from "./Components/Card";
+import Tours from "./Components/Tours";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -36,6 +39,14 @@ function App() {
           <Route path="/expenses" element={isLoggedIn ? <ExpenseTracker /> : <Navigate to="/login" />} />
           <Route path="/api/chat" element={isLoggedIn ? <ChatBot /> : <Navigate to="/login" />} />
           <Route path="/TripRecommender" element={isLoggedIn ? <TripRecommender /> : <Navigate to="/login" />} />
+          <Route path="/" element={
+          <div className="card-container">
+            {Tours.map(tour => (
+              <Card key={tour.id} tour={tour} />
+            ))}
+          </div>
+        } />
+        <Route path="/tour/:id" element={<TourDetails />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
 

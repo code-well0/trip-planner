@@ -1,16 +1,21 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Card.css';
 
 const Card = (props) => {
-    const [readmore, setReadmore] = useState(false);
+    const navigate = useNavigate();
     const tour = props.tour;
 
-    let description = readmore
-        ? tour.info
-        : `${tour.info.substring(0, 200)}....`;
+    const handleCardClick = () => {
+        navigate(`/tour/${tour.id}`, { state: { tour } });
+    };
 
     return (
-        <div className="tour-card">
+        <div 
+            className="tour-card" 
+            onClick={handleCardClick}
+            style={{ cursor: 'pointer' }}
+        >
             <div className="image-wrapper">
                 <img className='cityImage' src={tour.image} alt="cityImage" />
                 <div className="price-tag">{tour.price}</div>
@@ -21,19 +26,9 @@ const Card = (props) => {
                     {tour.emoji} {tour.name} 
                     <span className="region">({tour.region})</span>
                 </h4>
-
-                <div className="description">
-                    {description}
-                    <span
-                        className='readMore'
-                        onClick={() => setReadmore(!readmore)}
-                    >
-                        {readmore ? " Show Less" : " Read More"}
-                    </span>
-                </div>
             </div>
 
-            <div className='cardActions'>
+            <div className='cardActions' onClick={(e) => e.stopPropagation()}>
                 <button
                     className='interestedBtn'
                     onClick={() => props.addToInterested && props.addToInterested(tour)}
