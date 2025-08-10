@@ -1,9 +1,12 @@
 import React from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { useTheme } from '../context/ThemeContext'; // Import the useTheme hook
 import './Footer.css';
 
 const Footer = ({ isLoggedIn }) => {
   const navigate = useNavigate();
+  // Use the custom hook to get the current theme
+  const { theme } = useTheme();
 
   // 🔐 Intercept protected link clicks if not logged in
   const handleProtectedClick = (e, path) => {
@@ -14,7 +17,8 @@ const Footer = ({ isLoggedIn }) => {
   };
 
   return (
-    <footer className="footer">
+    // Conditionally add a 'dark-theme' class based on the current theme
+    <footer className={`footer ${theme === 'dark' ? 'dark-theme-footer' : ''}`}>
       <div className="footer-container">
         <div className="footer-content">
           {/* Brand Section */}

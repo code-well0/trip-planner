@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url("https://fonts.googleapis.com/css2?family=Manrope&family=Montserrat&family=Mulish:ital@1&family=Poppins&family=Raleway&family=Roboto&display=swap");
+
 /* Chat animations */
 @keyframes fadeIn {
   from {
@@ -36,26 +38,63 @@
   background: #94a3b8;
 }
 
-@import url("https://fonts.googleapis.com/css2?family=Manrope&family=Montserrat&family=Mulish:ital@1&family=Poppins&family=Raleway&family=Roboto&display=swap");
-
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-.main-content {
-  padding-top: 80px;
+/* Base theme variables */
+:root {
+  --background-color: #f9f9f9;
+  --text-color: #333333;
+  --card-background: #ffffff;
+  --card-shadow: rgba(0, 0, 0, 0.08);
+  --title-color: #28a745;
+  --border-color: #ccc;
+  --link-color: #007bff;
+  --link-color-dark: #218838;
 }
 
+/* Dark theme overrides */
+.dark {
+  --background-color: #1a202c;
+  --text-color: #e2e8f0;
+  --card-background: #2d3748;
+  --card-shadow: rgba(0, 0, 0, 0.4);
+  --title-color: #68d391;
+  --border-color: #4a5568;
+  --link-color: #63b3ed;
+  --link-color-dark: #3182ce;
+}
 
 body, html, #root {
   margin: 0;
   padding: 0;
   height: 100%;
-  font-family: 'Manrope', sans-serif;
+  font-family: 'Manrope', 'Segoe UI', Roboto, sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+/* 🌍 Global Styles */
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Roboto, sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+h2, h3, h4 {
+  margin: 0;
+  font-weight: 600;
+  color: var(--text-color);
+}
+
+.main-content {
+  padding-top: 80px;
+}
 
 .container {
   display: flex;
@@ -65,11 +104,12 @@ body, html, #root {
 }
 
 .title {
-  border: 7px #0111a0;
+  border: 7px solid #0111a0;
   border-radius: 20px;
   font-size: 3rem;
   margin: 6vh;
   padding: 1vh 3vw;
+  color: var(--title-color);
 }
 
 .titleWrapper {
@@ -81,6 +121,7 @@ body, html, #root {
   font-size: 3rem;
   font-weight: bold;
   display: inline-block;
+  color: var(--title-color);
 }
 
 .cardsContainer {
@@ -88,16 +129,13 @@ body, html, #root {
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
-  
   margin: 0 auto;
-  
   width:100%;
-  align-items:stretch;  /* ADD THIS */
+  align-items:stretch;
 }
 
 .card {
   width:400px;
-  /* Remove height: max-content; */
   display: flex;
   flex-direction: column;
   padding: 1rem;
@@ -105,7 +143,14 @@ body, html, #root {
   box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.24);
   border-radius: 10px;
   align-items: center;
-  justify-content: flex-start; /* change to flex-start to align content at top */
+  justify-content: flex-start;
+  background-color: var(--card-background);
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 16px var(--card-shadow);
+}
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 20px var(--card-shadow);
 }
 
 
@@ -133,18 +178,18 @@ body, html, #root {
 }
 
 .readMore {
-  color: #12b0e2;
+  color: var(--link-color);
   cursor: pointer;
 }
-{/*Styling the cards */}
 
+/* Styling the cards */
 .cardActions{
   display: flex;
   gap: 10px;
   padding: 10px;
   justify-content: space-between;
-
 }
+
 .intrestedBtn{
   background-color: #47a24a;
   color: white;
@@ -157,7 +202,6 @@ body, html, #root {
   font-size: 15px;
   margin-top: 18px;
   transition: all 0.4s
-
 }
 .intrestedBtn:hover{
   background-color: green;
@@ -170,7 +214,6 @@ body, html, #root {
   border: none;
   padding: 10px 20px;
   border-radius: 5px;
-  /* text-align: center; */
   font-weight: bold;
   font-size: 15px;
   cursor: pointer;
@@ -206,27 +249,26 @@ body, html, #root {
 .regionFilters {
   margin: 1rem 0;
   text-align: center;
-  
 }
 
 .regionBtn {
-  padding: 0.5rem 1rem;
-  margin: 0 0.5rem 0.5rem;
-  background-color: #eee;
+  background-color: #28a745;
+  color: #fff;
   border: none;
-  border-radius: 20px;
+  padding: 0.6rem 1.4rem;
+  font-weight: 500;
+  border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.3s;
-
+  transition: all 0.3s ease;
 }
 
 .regionBtn:hover {
-  background-color: #ccc;
+  background-color: #218838;
 }
 
 .regionBtn.active {
-  background-color: #000;
-  color: #fff;
+  background-color: #ffc107;
+  color: #000;
 }
 .regionBtn.active:hover {
   background-color: #333;
@@ -272,157 +314,39 @@ body, html, #root {
 /* Dropdown Menu - Clean and minimal */
 .dropdown-menu {
   position: absolute;
-  top: 100%;
+  top: 110%;
   left: 0;
-  right: 0;
   background-color: white;
   border: 1px solid #ddd;
-  border-radius: 20px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  z-index: 1000;
-  margin-top: 4px;
-  overflow: hidden;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  z-index: 10;
+  min-width: 160px;
 }
 
 /* Dropdown Items - Same style as original regionBtn */
 .dropdown-item {
-  display: block;
-  width: 100%;
   padding: 0.5rem 1rem;
-  background-color: transparent;
+  width: 100%;
+  text-align: left;
+  background: none;
   border: none;
-  text-align: center;
   cursor: pointer;
   transition: background-color 0.3s;
   font-size: inherit;
   font-family: inherit;
 }
 
-.dropdown-item:hover {
-  background-color: #ccc;
-}
-
+.dropdown-item:hover,
 .dropdown-item.active {
-  background-color: #000;
-  color: #fff;
+  background-color: #f0f0f0;
 }
 
-.dropdown-item.active:hover {
-  background-color: #333;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  .controls-container {
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
-  }
-}
-
-body, html, #root {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  font-family: 'Segoe UI', sans-serif;
-}
-/* 🌍 Global Styles */
-body {
-  margin: 0;
-  font-family: 'Segoe UI', Roboto, sans-serif;
-  background-color: #f9f9f9;
-  color: #333;
-}
-
-h2, h3, h4 {
-  margin: 0;
-  font-weight: 600;
-}
-
-/* 🧳 Main Planner Container */
-.plan-trip-container {
-  padding: 2rem;
-  max-width: 1200px;
-  margin: auto;
-}
-
-/* 🎯 Title Styling */
-.titleWrapper {
-  text-align: center;
-  margin-bottom: 2rem;
-}
-
-.title {
-  font-size: 2.4rem;
-  color: #28a745;
-  border-bottom: 2px dashed #ccc;
-  display: inline-block;
-  padding-bottom: 0.5rem;
-}
-
-/* 🌐 Region Filters */
-.regionFilters {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 1rem;
-  margin-bottom: 2rem;
-}
-
-.regionBtn {
-  background-color: #28a745;
-  color: #fff;
-  border: none;
-  padding: 0.6rem 1.4rem;
-  font-weight: 500;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.regionBtn:hover {
-  background-color: #218838;
-}
-
-.regionBtn.active {
-  background-color: #ffc107;
-  color: #000;
-}
-
-/* 📦 Tours Grid */
-.toursWrapper {
-  padding: 1rem 0;
-}
-
-.cardsGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 2rem;
-  justify-items: center;
-}
-
-/* 🗂️ Card Style */
-.card {
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
-  padding: 1.2rem;
-  width: 100%;
-  max-width: 280px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
-}
-
-/* 🎉 Responsive Tweaks */
+/* Responsive Tweaks */
 @media (max-width: 768px) {
   .title {
     font-size: 2rem;
   }
-
   .regionBtn {
     padding: 0.5rem 1rem;
   }
@@ -451,10 +375,6 @@ h2, h3, h4 {
   gap: 1rem;
   margin-bottom: 2rem;
   flex-wrap: wrap;
-}
-
-.dropdown-container {
-  position: relative;
 }
 
 .dropdown-btn {
@@ -492,5 +412,3 @@ h2, h3, h4 {
 .dropdown-item.active {
   background-color: #f0f0f0;
 }
-
-

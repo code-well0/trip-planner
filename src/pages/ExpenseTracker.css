@@ -1,47 +1,43 @@
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-}
-
-
+/* Base Styles for the Expense Tracker page */
 .main {
   position: relative;
   min-height: 100vh;
   padding: 2rem;
-  background: url("https://plus.unsplash.com/premium_photo-1680721442350-6f91fbe7df3f?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")
-    no-repeat center center/cover;
+  background: url("https://plus.unsplash.com/premium_photo-1680721442350-6f91fbe7df3f?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D") no-repeat center center/cover;
   display: flex;
   flex-direction: column;
   align-items: center;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  font-family: Arial, sans-serif;
 }
 
 .main::before {
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.4); /* Dark overlay */
+  background: rgba(0, 0, 0, 0.4);
 }
-
 
 .page-title {
   text-align: center;
-  font-size: 2.4rem;  /* Bigger */
-  font-weight: 800;   /* Bold */
-  color: #111;        /* Dark color */
+  font-size: 2.4rem;
+  font-weight: 800;
+  color: #111;
   margin-bottom: 1.2rem;
 }
 
-
-
-.expense-form-wrapper {
+.expense-form-wrapper, .right-panel {
   max-width: 600px;
   margin: 2rem auto;
   padding: 2rem;
-  background: rgba(255, 255, 255, 0.95); /* Light background */
+  background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(8px);
   border-radius: 16px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-  color: #222; /* Darker text inside */
+  color: #222;
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 1; /* Ensure content is above the overlay */
 }
 
 .expense-form {
@@ -56,15 +52,15 @@ body {
 .expense-form select {
   padding: 0.6rem 1rem;
   font-size: 1rem;
-  background: #f2f2f2; /* Light grey input */
-  color: #222; /* Dark text */
+  background: #f2f2f2;
+  color: #222;
   border: 1px solid #bbb;
   border-radius: 8px;
   transition: 0.3s;
 }
 
 .expense-form input::placeholder {
-  color: #555; /* Darker placeholder */
+  color: #555;
 }
 
 .expense-form input:focus,
@@ -75,7 +71,8 @@ body {
 }
 
 .expense-form button,
-.analysis-btn {
+.analysis-btn,
+.clear-btn {
   padding: 0.6rem 1.2rem;
   background: linear-gradient(135deg, #4caf50, #2e7d32);
   color: white;
@@ -88,6 +85,9 @@ body {
   align-items: center;
   gap: 0.4rem;
 }
+.clear-btn {
+  background: linear-gradient(135deg, #ff4d4d, #b71c1c);
+}
 
 .expense-form button:hover,
 .analysis-btn:hover {
@@ -95,11 +95,15 @@ body {
   transform: scale(1.05);
 }
 
+.clear-btn:hover {
+  background: linear-gradient(135deg, #e60000, #7f0000);
+}
+
 .total-spent {
   text-align: center;
   font-size: 1.6rem;
   font-weight: 700;
-  color: #111; /* Darker total text */
+  color: #111;
   margin-bottom: 1rem;
 }
 
@@ -113,8 +117,8 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #f1f1f1; /* Light grey background */
-  color: #222; /* Dark text */
+  background: #f1f1f1;
+  color: #222;
   padding: 0.8rem 1rem;
   margin-bottom: 0.7rem;
   border-radius: 12px;
@@ -163,51 +167,10 @@ body {
   gap: 0.3rem;
 }
 
-.tag.travel {
-  background-color: #1e88e5;
-}
-.tag.food {
-  background-color: #d81b60;
-}
-.tag.stay {
-  background-color: #43a047;
-}
-.tag.misc {
-  background-color: #8e24aa;
-}
-
-.right-panel {
-  max-width: 500px;
-  margin: 2rem auto;
-  padding: 1rem;
-  background: rgba(255, 255, 255, 0.95); /* Same light background */
-  border-radius: 12px;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
-  transition: opacity 0.4s ease;
-  color: #222;
-}
-
-.hidden {
-  opacity: 0;
-  pointer-events: none;
-  transform: scale(0.95);
-}
-
-@media (max-width: 600px) {
-  .expense-form {
-    flex-direction: column;
-    gap: 0.6rem;
-  }
-
-  .expense-list li {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-}
-button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
+.tag.travel { background-color: #1e88e5; }
+.tag.food { background-color: #d81b60; }
+.tag.stay { background-color: #43a047; }
+.tag.misc { background-color: #8e24aa; }
 
 .button-group {
   display: flex;
@@ -216,20 +179,53 @@ button:disabled {
   margin-top: 1rem;
 }
 
-.clear-btn {
-  padding: 0.6rem 1.2rem;
-  background: linear-gradient(135deg, #ff4d4d, #b71c1c);
-  color: white;
-  border: none;
-  font-size: 1rem;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: 0.3s;
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
-.clear-btn:hover {
-  background: linear-gradient(135deg, #e60000, #7f0000);
+.hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.95);
+}
+
+/* Dark theme styles */
+.dark-theme-expense .main {
+  background: url("https://images.unsplash.com/photo-1518640467707-6811f445f743?q=80&w=1587&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D") no-repeat center center/cover;
+}
+
+.dark-theme-expense .main::before {
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.dark-theme-expense .page-title {
+  color: #fff;
+}
+
+.dark-theme-expense .expense-form-wrapper,
+.dark-theme-expense .right-panel {
+  background: rgba(45, 55, 72, 0.9);
+  color: #e2e8f0;
+}
+
+.dark-theme-expense .expense-form input,
+.dark-theme-expense .expense-form select {
+  background: #4a5568;
+  color: #e2e8f0;
+  border-color: #4a5568;
+}
+
+.dark-theme-expense .expense-form input::placeholder {
+  color: #a0aec0;
+}
+
+.dark-theme-expense .total-spent {
+  color: #fff;
+}
+
+.dark-theme-expense .expense-list li {
+  background: #4a5568;
+  color: #e2e8f0;
+  border-color: #4a5568;
 }

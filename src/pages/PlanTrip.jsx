@@ -5,9 +5,11 @@ import Refresh from "../Components/Refresh";
 import "../index.css";
 import "../Components/Navbar.css";
 import { FaPlaneDeparture, FaGlobeAsia, FaSortAmountDownAlt } from "react-icons/fa";
-import "./PlanTrip.css"; 
+import "./PlanTrip.css";
+import { useTheme } from '../context/ThemeContext'; // Import the useTheme hook
 
 export default function PlanTrip({ searchQuery }) {
+  const { theme } = useTheme(); // Use the custom hook to get the current theme
   const [tour, setTour] = useState(data);
   const [selectedRegion, setSelectedRegion] = useState("All");
   const [sortBy, setSortBy] = useState("default");
@@ -89,7 +91,8 @@ export default function PlanTrip({ searchQuery }) {
   }
 
   return (
-    <div className="plan-trip-container">
+    // Add a conditional class for dark mode to the main container
+    <div className={`plan-trip-container ${theme === 'dark' ? 'dark-theme-plan' : ''}`}>
       <div className="title-section">
         <h2 className="trip-title">
           <FaPlaneDeparture className="trip-icon" /> Your Trip Planner

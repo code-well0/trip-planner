@@ -1,0 +1,44 @@
+/* Light Theme Styles */
+.toursWrapper {
+  padding-top: 2rem;
+  background-color: #f8f9fa;
+  color: #212529;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.cardsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  justify-items: center;
+}
+
+.interested-tours-section {
+  padding: 2rem;
+  background-color: #ffffff;
+  color: #212529;
+  border-radius: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin-top: 2rem;
+  transition: all 0.3s ease;
+}
+
+/* Dark Theme Styles */
+.dark-theme-tours.toursWrapper {
+  background-color: #1a202c;
+  color: #e2e8f0;
+}
+
+.dark-theme-tours .interested-tours-section {
+  background-color: #2d3748;
+  color: #e2e8f0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.dark-theme-tours .interested-tours-section h3 {
+  color: #ffffff;
+}
+
+.dark-theme-tours .interested-tours-section p {
+  color: #a0aec0;
+}

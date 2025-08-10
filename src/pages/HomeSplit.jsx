@@ -2,10 +2,12 @@ import React, { useRef, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useTheme } from '../context/ThemeContext'; // Import the useTheme hook
 import "./HomeSplit.css";
 import HeroSection from "../Components/Hero";
 
 export default function HomeSplit({ setIsLoggedIn }) {
+  const { theme } = useTheme();
   const nameInputRef = useRef(null);
   const navigate = useNavigate();
 
@@ -13,13 +15,12 @@ export default function HomeSplit({ setIsLoggedIn }) {
   const [showPassword, setShowPassword] = useState(false);
 
   const handleStartPlanningClick = () => {
-  if (isSignedIn) {
-    navigate("/plan");
-  } else {
-    toast.error("Please sign up first!");
-  }
-};
-
+    if (isSignedIn) {
+      navigate("/plan");
+    } else {
+      toast.error("Please sign up first!");
+    }
+  };
 
   const handleSignup = (e) => {
     e.preventDefault();
@@ -29,9 +30,10 @@ export default function HomeSplit({ setIsLoggedIn }) {
   };
 
   return (
-    <div className="page-background">
+    // Conditionally add a 'dark-theme-home' class based on the current theme
+    <div className={`page-background ${theme === 'dark' ? 'dark-theme-home' : ''}`}>
       <div className="overlay ">
-        <div className="flex flex-col  justify-center lg:flex-row  items-center split-content">
+        <div className="flex flex-col justify-center lg:flex-row items-center split-content">
           {/* Hero Section */}
           <HeroSection />
           {/* Signup Section */}
