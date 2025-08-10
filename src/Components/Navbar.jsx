@@ -1,8 +1,5 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-<<<<<<< HEAD
-import { FaMapMarkedAlt, FaSuitcase, FaMoneyBillWave, FaRobot, FaPlaneDeparture } from "react-icons/fa";
-=======
 import {
   FaMapMarkedAlt,
   FaSuitcase,
@@ -10,7 +7,6 @@ import {
   FaRobot,
   FaPlaneDeparture,
 } from "react-icons/fa";
->>>>>>> 2a19235 (Add FAQs)
 
 const Navbar = ({ isLoggedIn, searchQuery, setSearchQuery }) => {
   const navigate = useNavigate();
@@ -33,32 +29,13 @@ const Navbar = ({ isLoggedIn, searchQuery, setSearchQuery }) => {
       <div className="flex space-x-6 items-center text-gray-700 font-medium">
         {isLoggedIn ? (
           <>
-<<<<<<< HEAD
-            <input 
-=======
             <input
->>>>>>> 2a19235 (Add FAQs)
               type="text"
               placeholder="Search by city name..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="px-4 py-2 border rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
-<<<<<<< HEAD
-            <Link to="/plan" className="hover:text-blue-600 transition duration-200 flex items-center gap-1">
-              <FaSuitcase /> Plan Trip
-            </Link>
-            <Link to="/expenses" className="hover:text-blue-600 transition duration-200 flex items-center gap-1">
-              <FaMoneyBillWave /> Expenses
-            </Link>
-            <Link to="/api/chat" className="hover:text-blue-600 transition duration-200 flex items-center gap-1">
-              <FaRobot /> AI Assistant
-            </Link>
-            <Link to="/TripRecommender" className="hover:text-blue-600 transition duration-200 flex items-center gap-1">
-              <FaPlaneDeparture /> Trip Recommender
-            </Link>
-
-=======
             <Link
               to="/plan"
               className="hover:text-blue-600 transition duration-200 flex items-center gap-1"
@@ -71,7 +48,12 @@ const Navbar = ({ isLoggedIn, searchQuery, setSearchQuery }) => {
             >
               <FaMoneyBillWave /> Expenses
             </Link>
-            <Link to="/faqs">FAQs</Link> {/* Ye line add karein */}
+            <Link
+              to="/faqs"
+              className="hover:text-blue-600 transition duration-200"
+            >
+              FAQs
+            </Link>
             <Link
               to="/api/chat"
               className="hover:text-blue-600 transition duration-200 flex items-center gap-1"
@@ -84,7 +66,6 @@ const Navbar = ({ isLoggedIn, searchQuery, setSearchQuery }) => {
             >
               <FaPlaneDeparture /> Trip Recommender
             </Link>
->>>>>>> 2a19235 (Add FAQs)
             <button
               onClick={handleLogout}
               className="ml-4 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition duration-200"
@@ -105,8 +86,4 @@ const Navbar = ({ isLoggedIn, searchQuery, setSearchQuery }) => {
   );
 };
 
-<<<<<<< HEAD
 export default Navbar;
-=======
-export default Navbar;
->>>>>>> 2a19235 (Add FAQs)

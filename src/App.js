@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-
-=======
->>>>>>> 2a19235 (Add FAQs)
 import React, { useState } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Navbar from "./Components/Navbar";
@@ -14,12 +10,7 @@ import Login from "./pages/login";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import TripRecommender from "./pages/TripRecommender";
-
-<<<<<<< HEAD
-
-=======
 import FAQs from "./pages/FAQs";
->>>>>>> 2a19235 (Add FAQs)
 import "./index.css";
 import Footer from "./Components/Footer";
 import Signup from "./pages/Signup";
@@ -30,24 +21,6 @@ function App() {
 
   return (
     <>
-<<<<<<< HEAD
-      <Navbar isLoggedIn={isLoggedIn} searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
-
-      {/* 🧱 Add padding to prevent content being hidden behind navbar */}
-      <div className="pt-20"> {/* Adjust based on navbar height */}
-        <Routes>
-          {/* <Route path="/" element={<HomeSplit setIsLoggedIn={setIsLoggedIn} />} /> */}
-           {/* <Route path="/" element={<><HomeSplit setIsLoggedIn={setIsLoggedIn}/><Signup setIsLoggedIn={setIsLoggedIn} /> </>} /> */}
-           <Route path="/" element={<>< Signup setIsLoggedIn={setIsLoggedIn} /> </>} />
-          <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
-          <Route path="/plan" element={isLoggedIn ? <PlanTrip searchQuery={searchQuery} /> : <Navigate to="/login" />} />
-          <Route path="/expenses" element={isLoggedIn ? <ExpenseTracker /> : <Navigate to="/login" />} />
-          <Route path="/api/chat" element={isLoggedIn ? <ChatBot /> : <Navigate to="/login" />} />
-          <Route path="/TripRecommender" element={isLoggedIn ? <TripRecommender /> : <Navigate to="/login" />} />
-          <Route path="*" element={<Navigate to="/" />} />
-        </Routes>
-
-=======
       <Navbar
         isLoggedIn={isLoggedIn}
         searchQuery={searchQuery}
@@ -56,7 +29,6 @@ function App() {
 
       {/* 🧱 Add padding to prevent content being hidden behind navbar */}
       <div className="pt-20">
-        {" "}
         {/* Adjust based on navbar height */}
         <Routes>
           {/* <Route path="/" element={<HomeSplit setIsLoggedIn={setIsLoggedIn} />} /> */}
@@ -65,7 +37,7 @@ function App() {
             path="/"
             element={
               <>
-                <Signup setIsLoggedIn={setIsLoggedIn} />{" "}
+                <Signup setIsLoggedIn={setIsLoggedIn} />
               </>
             }
           />
@@ -97,10 +69,10 @@ function App() {
               isLoggedIn ? <TripRecommender /> : <Navigate to="/login" />
             }
           />
-          <Route path="*" element={<Navigate to="/" />} />
           <Route path="/faqs" element={<FAQs />} />
+          <Route path="*" element={<Navigate to="/" />} />
         </Routes>
->>>>>>> 2a19235 (Add FAQs)
+
         <Footer isLoggedIn={isLoggedIn} />
       </div>
 
@@ -114,8 +86,4 @@ function App() {
   );
 }
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 2a19235 (Add FAQs)
 export default App;
