@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import data from "../data";
 import Tours from "../Components/Tours";
 import Refresh from "../Components/Refresh";
