@@ -136,7 +136,7 @@ body, html, #root {
   color: #12b0e2;
   cursor: pointer;
 }
-{/*Styling the cards */}
+/*Styling the cards */
 
 .cardActions{
   display: flex;

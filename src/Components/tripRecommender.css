@@ -106,3 +106,24 @@ small {
   margin: 0 auto;
   padding: 2rem 1rem;
 }
+.themeTags {
+  margin-top: 0.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tag {
+  background-color: #e0f7fa;
+  color: #00796b;
+  font-size: 0.75rem;
+  padding: 5px 10px;
+  border-radius: 15px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  transition: background-color 0.3s;
+}
+
+.tag:hover {
+  background-color: #b2ebf2;
+}
