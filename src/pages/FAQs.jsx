@@ -31,10 +31,17 @@ export default function FAQs() {
   });
 
   const [openIndex, setOpenIndex] = useState(null);
+  const [editIndex, setEditIndex] = useState(null);
+  const [editQuestion, setEditQuestion] = useState("");
+  const [editAnswer, setEditAnswer] = useState("");
+
   const [newQuestion, setNewQuestion] = useState("");
   const [newAnswer, setNewAnswer] = useState("");
 
-  // ✅ Save only when faqs change (no reset on reload)
+  // Snackbar state
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [deleteIndex, setDeleteIndex] = useState(null);
+
   useEffect(() => {
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(faqs));
   }, [faqs]);
@@ -55,7 +62,58 @@ export default function FAQs() {
     setFaqs(updatedFaqs);
     setNewQuestion("");
     setNewAnswer("");
-    setOpenIndex(faqs.length);
+    setOpenIndex(updatedFaqs.length - 1);
+  };
+
+  // Open snackbar to confirm delete
+  const confirmDelete = (index) => {
+    setDeleteIndex(index);
+    setSnackbarOpen(true);
+  };
+
+  // Actually delete the FAQ after confirm
+  const handleDelete = () => {
+    if (deleteIndex === null) return;
+    const updatedFaqs = faqs.filter((_, i) => i !== deleteIndex);
+    setFaqs(updatedFaqs);
+    if (openIndex === deleteIndex) setOpenIndex(null);
+    if (editIndex === deleteIndex) setEditIndex(null);
+    setDeleteIndex(null);
+    setSnackbarOpen(false);
+  };
+
+  const cancelDelete = () => {
+    setDeleteIndex(null);
+    setSnackbarOpen(false);
+  };
+
+  const startEdit = (index) => {
+    setEditIndex(index);
+    setEditQuestion(faqs[index].question);
+    setEditAnswer(faqs[index].answer);
+    setOpenIndex(null);
+  };
+
+  const cancelEdit = () => {
+    setEditIndex(null);
+    setEditQuestion("");
+    setEditAnswer("");
+  };
+
+  const saveEdit = () => {
+    if (editQuestion.trim() === "" || editAnswer.trim() === "") {
+      alert("Please enter both question and answer.");
+      return;
+    }
+    const updatedFaqs = faqs.map((faq, i) =>
+      i === editIndex
+        ? { question: editQuestion.trim(), answer: editAnswer.trim() }
+        : faq
+    );
+    setFaqs(updatedFaqs);
+    setEditIndex(null);
+    setEditQuestion("");
+    setEditAnswer("");
   };
 
   return (
@@ -65,6 +123,7 @@ export default function FAQs() {
         maxWidth: "700px",
         margin: "3rem auto",
         fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+        position: "relative",
       }}
     >
       <h1
@@ -91,51 +150,163 @@ export default function FAQs() {
             transition: "border-color 0.3s ease",
           }}
         >
-          <button
-            onClick={() => toggleFAQ(idx)}
-            style={{
-              width: "100%",
-              background: openIndex === idx ? "#3498db" : "#f7f9fc",
-              color: openIndex === idx ? "white" : "#2c3e50",
-              cursor: "pointer",
-              padding: "1rem 1.5rem",
-              textAlign: "left",
-              fontSize: "1.2rem",
-              fontWeight: "600",
-              border: "none",
-              outline: "none",
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
-            {faq.question}
-            <span
-              style={{
-                transform: openIndex === idx ? "rotate(45deg)" : "rotate(0deg)",
-                transition: "transform 0.3s ease",
-                fontSize: "1.5rem",
-                fontWeight: "bold",
-                lineHeight: 1,
-              }}
-            >
-              +
-            </span>
-          </button>
-
-          {openIndex === idx && (
+          {/* If editing this FAQ */}
+          {editIndex === idx ? (
             <div
               style={{
                 padding: "1rem 1.5rem",
                 backgroundColor: "#f9fbfd",
                 color: "#34495e",
-                fontSize: "1rem",
-                lineHeight: 1.5,
-                borderTop: "1px solid #ddd",
               }}
             >
-              {faq.answer}
+              <input
+                type="text"
+                value={editQuestion}
+                onChange={(e) => setEditQuestion(e.target.value)}
+                style={{
+                  width: "100%",
+                  padding: "0.5rem 1rem",
+                  fontSize: "1.1rem",
+                  marginBottom: "0.75rem",
+                  borderRadius: "6px",
+                  border: "1px solid #ccc",
+                  outline: "none",
+                }}
+              />
+              <textarea
+                value={editAnswer}
+                onChange={(e) => setEditAnswer(e.target.value)}
+                rows={4}
+                style={{
+                  width: "100%",
+                  padding: "0.5rem 1rem",
+                  fontSize: "1rem",
+                  borderRadius: "6px",
+                  border: "1px solid #ccc",
+                  outline: "none",
+                  resize: "vertical",
+                  marginBottom: "0.75rem",
+                }}
+              />
+              <div style={{ display: "flex", gap: "1rem" }}>
+                <button
+                  onClick={saveEdit}
+                  style={{
+                    backgroundColor: "#3498db",
+                    color: "white",
+                    padding: "0.5rem 1.5rem",
+                    border: "none",
+                    borderRadius: "6px",
+                    cursor: "pointer",
+                    fontWeight: "600",
+                    fontSize: "1rem",
+                  }}
+                >
+                  Save
+                </button>
+                <button
+                  onClick={cancelEdit}
+                  style={{
+                    backgroundColor: "#ccc",
+                    color: "#333",
+                    padding: "0.5rem 1.5rem",
+                    border: "none",
+                    borderRadius: "6px",
+                    cursor: "pointer",
+                    fontWeight: "600",
+                    fontSize: "1rem",
+                  }}
+                >
+                  Cancel
+                </button>
+              </div>
             </div>
+          ) : (
+            <>
+              <button
+                onClick={() => toggleFAQ(idx)}
+                style={{
+                  width: "100%",
+                  background: openIndex === idx ? "#3498db" : "#f7f9fc",
+                  color: openIndex === idx ? "white" : "#2c3e50",
+                  cursor: "pointer",
+                  padding: "1rem 1.5rem",
+                  textAlign: "left",
+                  fontSize: "1.2rem",
+                  fontWeight: "600",
+                  border: "none",
+                  outline: "none",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                {faq.question}
+                <span
+                  style={{
+                    transform:
+                      openIndex === idx ? "rotate(45deg)" : "rotate(0deg)",
+                    transition: "transform 0.3s ease",
+                    fontSize: "1.5rem",
+                    fontWeight: "bold",
+                    lineHeight: 1,
+                  }}
+                >
+                  +
+                </span>
+              </button>
+
+              {openIndex === idx && (
+                <div
+                  style={{
+                    padding: "1rem 1.5rem",
+                    backgroundColor: "#f9fbfd",
+                    color: "#34495e",
+                    fontSize: "1rem",
+                    lineHeight: 1.5,
+                    borderTop: "1px solid #ddd",
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
+                >
+                  <div style={{ flex: 1 }}>{faq.answer}</div>
+                  <div style={{ marginLeft: "1rem", whiteSpace: "nowrap" }}>
+                    <button
+                      onClick={() => startEdit(idx)}
+                      style={{
+                        backgroundColor: "#2980b9",
+                        color: "white",
+                        border: "none",
+                        padding: "0.4rem 0.8rem",
+                        borderRadius: "6px",
+                        cursor: "pointer",
+                        fontWeight: "600",
+                        fontSize: "0.9rem",
+                        marginRight: "0.5rem",
+                      }}
+                    >
+                      Edit
+                    </button>
+                    <button
+                      onClick={() => confirmDelete(idx)}
+                      style={{
+                        backgroundColor: "#e74c3c",
+                        color: "white",
+                        border: "none",
+                        padding: "0.4rem 0.8rem",
+                        borderRadius: "6px",
+                        cursor: "pointer",
+                        fontWeight: "600",
+                        fontSize: "0.9rem",
+                      }}
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </div>
+              )}
+            </>
           )}
         </div>
       ))}
@@ -200,6 +371,62 @@ export default function FAQs() {
           Add Question
         </button>
       </div>
+
+      {/* Snackbar for Delete Confirmation */}
+      {snackbarOpen && (
+        <div
+          style={{
+            position: "fixed",
+            bottom: "20px",
+            left: "50%",
+            transform: "translateX(-50%)",
+            backgroundColor: "#333",
+            color: "white",
+            padding: "1rem 2rem",
+            borderRadius: "8px",
+            boxShadow: "0 2px 10px rgba(0,0,0,0.3)",
+            display: "flex",
+            alignItems: "center",
+            gap: "1rem",
+            zIndex: 1000,
+            minWidth: "300px",
+            justifyContent: "space-between",
+          }}
+        >
+          <span>Are you sure you want to delete this FAQ?</span>
+          <div>
+            <button
+              onClick={handleDelete}
+              style={{
+                backgroundColor: "#e74c3c",
+                border: "none",
+                color: "white",
+                padding: "0.5rem 1rem",
+                borderRadius: "6px",
+                cursor: "pointer",
+                fontWeight: "600",
+                marginRight: "0.5rem",
+              }}
+            >
+              Confirm
+            </button>
+            <button
+              onClick={cancelDelete}
+              style={{
+                backgroundColor: "#555",
+                border: "none",
+                color: "white",
+                padding: "0.5rem 1rem",
+                borderRadius: "6px",
+                cursor: "pointer",
+                fontWeight: "600",
+              }}
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

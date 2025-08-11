@@ -36,8 +36,9 @@ node server.js
 
 ### 4. Test the Setup
 
+
 You can test if the API is working by visiting:
-- Health check: `http://localhost:5000/api/health`
+- Health check: `https://trip-planner-backend-bw79.onrender.com/api/health`
 - The chatbot should now work with Gemini responses
 
 ## Model Features
