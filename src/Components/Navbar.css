@@ -1,3 +1,4 @@
+/* Navbar container */
 .navbar {
   position: fixed;
   top: 0;
@@ -10,24 +11,8 @@
   align-items: center;
   z-index: 1000;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  color: rgb(124, 238, 155);
-  gap: 1.5rem;
+  color: white;
   height: 80px;
-}
-
-.nav-links {
-  display: flex;
-  background: #28a745;
-  color: rgb(124, 238, 155);
-  padding: 1rem 2rem;
-  display: flex;
-  gap: 2rem;
-
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 1000;
 }
 
 /* Push content below navbar */
@@ -35,8 +20,9 @@
   padding-top: 80px;
 }
 
+/* Links */
 .navbar a {
-  color: #fff;
+  color: white;
   text-decoration: none;
   font-weight: 600;
   font-size: 1rem;
@@ -44,21 +30,21 @@
 }
 
 .navbar a:hover {
-  color: #ffd966;
+  color: #d7e6d7;
   transform: scale(1.05);
 }
 
 /* Highlight active page */
 .active-link {
-  border-bottom: 2px solid #ffc107;
+  border-bottom: 2px solid #d7e6d7;
   padding-bottom: 2px;
 }
 
 /* Logout button */
 .logout-btn {
   background: transparent;
-  border: 1px solid white;
-  color: white;
+  border: 1px solid rgb(220, 143, 143);
+  color: rgb(199, 27, 27);
   padding: 6px 12px;
   border-radius: 5px;
   cursor: pointer;
@@ -67,5 +53,14 @@
 
 .logout-btn:hover {
   background-color: white;
-  color: #28a745;
+  color: #edf8f0;
+}
+
+/* Search bar styling */
+.navbar input[type="text"] {
+  padding: 6px 12px;
+  border-radius: 20px;
+  border: none;
+  outline: none;
+  font-size: 0.9rem;
 }
