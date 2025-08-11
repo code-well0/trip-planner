@@ -4,33 +4,38 @@ const LOCAL_STORAGE_KEY = "tripPlannerFaqs";
 
 const initialFaqs = [
   {
-    question: "Trip Planner kya hai?",
+    question: "What is Trip Planner?",
     answer:
-      "Ye ek web app hai jo aapko apni trips plan karne me madad karta hai.",
+      "It is a web app that helps you plan your trips easily and efficiently.",
   },
   {
-    question: "Main trips kaise bana sakta hoon?",
+    question: "How can I create a trip?",
     answer:
-      "Home page pe 'Create Trip' button pe click karein aur apni details bharein.",
+      "On the Home page, click the 'Create Trip' button and fill in your trip details.",
   },
   {
-    question: "Kya main apni trips share kar sakta hoon?",
-    answer: "Haan, aap apni trips link share kar sakte hain.",
+    question: "Can I share my trips?",
+    answer: "Yes, you can share your trip link with others.",
   },
 ];
 
 export default function FAQs() {
   const [faqs, setFaqs] = useState(() => {
-    // Pehle check karo localStorage me data hai ki nahi
     const savedFaqs = localStorage.getItem(LOCAL_STORAGE_KEY);
-    return savedFaqs ? JSON.parse(savedFaqs) : initialFaqs;
+    if (savedFaqs) {
+      return JSON.parse(savedFaqs);
+    } else {
+      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(initialFaqs));
+      return initialFaqs;
+    }
   });
+
   const [openIndex, setOpenIndex] = useState(null);
   const [newQuestion, setNewQuestion] = useState("");
   const [newAnswer, setNewAnswer] = useState("");
 
+  // ✅ Save only when faqs change (no reset on reload)
   useEffect(() => {
-    // Jab bhi faqs change ho, localStorage me save kar do
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(faqs));
   }, [faqs]);
 
@@ -40,16 +45,17 @@ export default function FAQs() {
 
   const handleAddFAQ = () => {
     if (newQuestion.trim() === "" || newAnswer.trim() === "") {
-      alert("Please enter both question and answer.");
+      alert("Please enter both a question and an answer.");
       return;
     }
-    setFaqs([
+    const updatedFaqs = [
       ...faqs,
       { question: newQuestion.trim(), answer: newAnswer.trim() },
-    ]);
+    ];
+    setFaqs(updatedFaqs);
     setNewQuestion("");
     setNewAnswer("");
-    setOpenIndex(faqs.length); // open the newly added FAQ
+    setOpenIndex(faqs.length);
   };
 
   return (
@@ -145,11 +151,11 @@ export default function FAQs() {
         }}
       >
         <h2 style={{ marginBottom: "1rem", color: "#2980b9" }}>
-          Apna Question Yahan Bhejein
+          Submit Your Question
         </h2>
         <input
           type="text"
-          placeholder="Question"
+          placeholder="Enter your question"
           value={newQuestion}
           onChange={(e) => setNewQuestion(e.target.value)}
           style={{
@@ -163,7 +169,7 @@ export default function FAQs() {
           }}
         />
         <textarea
-          placeholder="Answer"
+          placeholder="Enter your answer"
           value={newAnswer}
           onChange={(e) => setNewAnswer(e.target.value)}
           rows={4}
