@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 const Card = (props) => {
     const [readmore, setReadmore] = useState(false);
@@ -36,20 +36,19 @@ const Card = (props) => {
                 </div>
             </div>
 
-            {/* Final resolved version: both buttons inside cardActions */}
             <div className='cardActions'>
                 <button 
-                    className='intrestedBtn' 
+                    className='interestedBtn' 
                     onClick={() => props.addToInterested && props.addToInterested(tour)}
                 > 
-                    Interested
+                    ❤️ Interested
                 </button>
 
                 <button 
-                    className='notIntrestedBtn' 
+                    className='notInterestedBtn' 
                     onClick={() => props.getRemoveId(tour.id)}
                 >
-                    Not Interested
+                    ❌ Not Interested
                 </button>
             </div>
         </div>
@@ -57,4 +56,3 @@ const Card = (props) => {
 };
 
 export default Card;
-
