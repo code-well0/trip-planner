@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import data from "../data";
 import Tours from "../Components/Tours";
-import Refresh from "../Components/Refresh";
+// import Refresh from "../Components/Refresh";
 import { FaMapMarkedAlt, FaSearch, FaTimesCircle } from "react-icons/fa";
 import "../index.css";
 import "../Components/Navbar.css";
 
-export default function PlanTrip({searchQuery}) {
+export default function PlanTrip() {
   const [tour, setTour] = useState(data);
   const [selectedRegion, setSelectedRegion] = useState("All");
   const [sortBy, setSortBy] = useState("default");
@@ -194,13 +194,13 @@ export default function PlanTrip({searchQuery}) {
 
       {/* Tours List with Improved Card Layout */}
       {sortedAndFilteredTours.length > 0 ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
+        // <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
           <Tours
             tours={sortedAndFilteredTours}
             removeTour={removeTour}
             setSelectedRegion={setSelectedRegion}
           />
-        </div>
+        // </div>
       ) : (
         <div className="text-center py-20 text-gray-500 text-lg italic animate-fadeIn">
           No destinations found. Try adjusting your search or filters.
