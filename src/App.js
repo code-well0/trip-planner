@@ -56,6 +56,11 @@ function App() {
             }
           />
           <Route
+            path="/home"
+            element={<HomeSplit setIsLoggedIn={setIsLoggedIn} />}
+          />
+
+          <Route
             path="/expenses"
             element={isLoggedIn ? <ExpenseTracker /> : <Navigate to="/login" />}
           />
