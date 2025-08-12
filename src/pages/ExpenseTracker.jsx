@@ -182,6 +182,19 @@ const ExpenseTracker = () => {
 )}
 
 
+
+        <h2 className="total-spent">Total Spent: ₹{total.toFixed(2)}</h2>
+         
+        <ul className="expense-list">
+          <AnimatePresence>
+            {expenses.map((exp, index) => (
+              <motion.li
+                key={index}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.3 }}
+
         <div className="mt-10">
           <div className="flex justify-between items-center mb-3">
             <h3 className="text-lg font-bold">Expense List</h3>
@@ -200,7 +213,9 @@ const ExpenseTracker = () => {
               <li
                 key={idx}
                 className="flex justify-between items-center p-3 bg-gray-50 rounded-lg shadow-sm hover:bg-gray-100"
+
               >
+              
                 <div>
                   <p className="font-medium">
                     {exp.item} ({exp.label})
@@ -219,7 +234,14 @@ const ExpenseTracker = () => {
                     <FaTrash />
                   </button>
                 </div>
+
+              
+                <button className="delete-btn" onClick={() => removeExpense(index)}>
+                  <FaTrash />
+                </button>
+              </motion.li>
               </li>
+
             ))}
           </ul>
         </div>

@@ -193,16 +193,26 @@ body {
   transform: scale(0.95);
 }
 
-@media (max-width: 600px) {
+@media screen and (min-width:320px) and (max-width: 800px) {
   .expense-form {
     flex-direction: column;
     gap: 0.6rem;
   }
 
-  .expense-list li {
-    flex-direction: column;
-    align-items: flex-start;
+  .expense-list li{
+    flex-direction:column;
+    align-items:flex-start;
+    
   }
+
+ .tag{
+  margin-top:10px;
+ }
+
+ .delete-btn{
+  margin-top:10px;
+  align-self: flex-end;
+ }
 }
 button:disabled {
   opacity: 0.5;
