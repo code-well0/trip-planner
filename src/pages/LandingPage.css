@@ -1,0 +1,99 @@
+.landing-container {
+  padding: 2rem;
+  background-color: white;
+  color: black;
+  text-align: center;
+}
+
+.landing-header h1 {
+  font-size: 4rem;
+  font-weight: 1000;
+  margin-bottom: 0.5rem;
+  color: rgb(4, 107, 34);
+}
+
+.landing-header p {
+  font-size: 2.2rem;
+  color: #0f0f0f;
+}
+
+.section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 3rem 0;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.section.reverse {
+  flex-direction: row-reverse;
+}
+
+.section img {
+  width: 550px;
+  height: 350px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.section .text {
+  max-width: 400px;
+  text-align: left;
+  
+}
+
+.features {
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+  margin: 3rem 0;
+}
+
+.feature-item {
+  text-align: center;
+}
+
+.feature-item img {
+  width: 150px;
+  height: 150px;
+  margin-bottom: 0.5rem;
+}
+.section .text p {
+  font-size: 1.2rem;   /* bigger text */
+  font-weight: 600;    /* bold */
+  color: rgb(42, 41, 41);        /* ensure black text */
+  line-height: 1.6;    /* better readability */
+}
+.section .text h2,
+.section .text h3 {
+  font-size: 1.6rem;     /* much bigger */
+  font-weight: 700;
+  color: rgb(28, 28, 28);
+}
+
+.travel-tagline {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #333;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+  font-weight: 500;
+}
+
+.final-message {
+  margin: 3rem auto;
+  max-width: 700px;
+  text-align: center;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #047d1e;
+}
+
+.features-heading{
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #024b10;
+}
+
