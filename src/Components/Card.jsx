@@ -17,17 +17,42 @@ const Card = (props) => {
                         <span style={{ fontSize: '0.8rem', color: '#888' }}> ({tour.region})</span>
                     </h4>
                 </div>
+
                 <div className="description">
                     {description}
-                    <span className='readMore' onClick={() => setReadmore(!readmore)}>
+                    <span 
+                        className='readMore' 
+                        onClick={() => setReadmore(!readmore)}
+                    >
                         {readmore ? " Show Less" : " Read More"}
                     </span>
                 </div>
+
+                {/* Theme tags */}
+                <div className="themeTags">
+                    {tour.themes && tour.themes.map((theme, index) => (
+                        <span className="tag" key={index}>{theme}</span>
+                    ))}
+                </div>
             </div>
-            <button className='notIntrestedBtn' onClick={() => props.getRemoveId(tour.id)}>Not Interested</button>
+
+            <div className='cardActions'>
+                <button 
+                    className='interestedBtn' 
+                    onClick={() => props.addToInterested && props.addToInterested(tour)}
+                > 
+                    ❤️ Interested
+                </button>
+
+                <button 
+                    className='notInterestedBtn' 
+                    onClick={() => props.getRemoveId(tour.id)}
+                >
+                    ❌ Not Interested
+                </button>
+            </div>
         </div>
     );
 };
 
 export default Card;
-

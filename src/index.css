@@ -49,13 +49,13 @@
 }
 
 
-body {
-  font-family: "Poppins", sans-serif;
-  overflow-y: auto;
-  overflow-x: hidden;
-  height: 100vh;
-  width: 100%;
+body, html, #root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Manrope', sans-serif;
 }
+
 
 .container {
   display: flex;
@@ -136,24 +136,50 @@ body {
   color: #12b0e2;
   cursor: pointer;
 }
+/*Styling the cards */
+
+.cardActions{
+  display: flex;
+  gap: 10px;
+  padding: 10px;
+  justify-content: space-between;
+
+}
+.intrestedBtn{
+  background-color: #47a24a;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  flex: 1;
+  font-weight: bold;
+  font-size: 15px;
+  margin-top: 18px;
+  transition: all 0.4s
+
+}
+.intrestedBtn:hover{
+  background-color: green;
+}
 
 .notIntrestedBtn {
-  color: black;
+  color: white;
   border-radius: 10px;
-  background-color: #b4161b21;
-  border: 1px solid #b4161b;
-  padding: 10px 80px;
+  background-color: #f44336;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
   /* text-align: center; */
   font-weight: bold;
-  font-size: 18px;
+  font-size: 15px;
   cursor: pointer;
   margin-top: 18px;
   transition: all 0.4s;
 }
 
 .notIntrestedBtn:hover {
-  background-color: red;
-  color: white;
+  background-color: #da190b;
 }
 
 .refresh {
@@ -206,13 +232,265 @@ body {
   background-color: #333;
 }
 
+/* Controls Container for Dropdowns */
+.controls-container {
+  margin: 1rem 0;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+/* Dropdown Container */
+.dropdown-container {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown Button - Same style as original regionBtn */
+.dropdown-btn {
+  padding: 0.5rem 1rem;
+  margin: 0 0.5rem;
+  background-color: #eee;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-size: inherit;
+  font-family: inherit;
+  min-width: 120px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dropdown-btn:hover {
+  background-color: #ccc;
+}
+
+/* Dropdown Menu - Clean and minimal */
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  margin-top: 4px;
+  overflow: hidden;
+}
+
+/* Dropdown Items - Same style as original regionBtn */
+.dropdown-item {
+  display: block;
+  width: 100%;
+  padding: 0.5rem 1rem;
+  background-color: transparent;
+  border: none;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-size: inherit;
+  font-family: inherit;
+}
+
+.dropdown-item:hover {
+  background-color: #ccc;
+}
+
+.dropdown-item.active {
+  background-color: #000;
+  color: #fff;
+}
+
+.dropdown-item.active:hover {
+  background-color: #333;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .controls-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+}
+
 body, html, #root {
   margin: 0;
   padding: 0;
   height: 100%;
   font-family: 'Segoe UI', sans-serif;
 }
+/* 🌍 Global Styles */
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Roboto, sans-serif;
+  background-color: #f9f9f9;
+  color: #333;
+}
 
+h2, h3, h4 {
+  margin: 0;
+  font-weight: 600;
+}
 
+/* 🧳 Main Planner Container */
+.plan-trip-container {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: auto;
+}
+
+/* 🎯 Title Styling */
+.titleWrapper {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.title {
+  font-size: 2.4rem;
+  color: #28a745;
+  border-bottom: 2px dashed #ccc;
+  display: inline-block;
+  padding-bottom: 0.5rem;
+}
+
+/* 🌐 Region Filters */
+.regionFilters {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.regionBtn {
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  padding: 0.6rem 1.4rem;
+  font-weight: 500;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.regionBtn:hover {
+  background-color: #218838;
+}
+
+.regionBtn.active {
+  background-color: #ffc107;
+  color: #000;
+}
+
+/* 📦 Tours Grid */
+.toursWrapper {
+  padding: 1rem 0;
+}
+
+.cardsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  justify-items: center;
+}
+
+/* 🗂️ Card Style */
+.card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+  padding: 1.2rem;
+  width: 100%;
+  max-width: 280px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+}
+
+/* 🎉 Responsive Tweaks */
+@media (max-width: 768px) {
+  .title {
+    font-size: 2rem;
+  }
+
+  .regionBtn {
+    padding: 0.5rem 1rem;
+  }
+}
+
+.plan-trip-container {
+  padding: 2rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.title-section {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.trip-title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.dropdowns-wrapper {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.dropdown-container {
+  position: relative;
+}
+
+.dropdown-btn {
+  background-color: #007bff;
+  color: white;
+  padding: 0.6rem 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 110%;
+  left: 0;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  z-index: 10;
+  min-width: 160px;
+}
+
+.dropdown-item {
+  padding: 0.5rem 1rem;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.dropdown-item:hover,
+.dropdown-item.active {
+  background-color: #f0f0f0;
+}
 
 

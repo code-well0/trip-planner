@@ -1,0 +1,129 @@
+
+
+.trip-recommender h2 {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.filters label {
+  font-weight: 500;
+}
+
+.filters select {
+  padding: 0.5rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
+.filters button {
+  padding: 0.6rem 1.2rem;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.filters button:hover {
+  background-color: #388e3c;
+}
+
+.results {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  padding: 1rem 0;
+}
+
+.place-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+  transition: transform 0.3s ease;
+}
+
+.place-card:hover {
+  transform: translateY(-5px);
+}
+
+.card {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.cityImage {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-bottom: 1px solid #eee;
+}
+
+.tourInfo {
+  padding: 1rem;
+}
+
+.tourPrice {
+  color: green;
+  margin: 0 0 0.5rem 0;
+  font-weight: bold;
+}
+
+.tourCityName {
+  margin: 0.5rem 0;
+  font-size: 1.2rem;
+}
+
+.tourDetails {
+  margin-bottom: 0.5rem;
+}
+
+p {
+  margin: 0.5rem 0;
+  font-size: 0.95rem;
+  color: #444;
+}
+
+small {
+  color: #666;
+  font-size: 0.85rem;
+}
+.trip-recommender {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+.themeTags {
+  margin-top: 0.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tag {
+  background-color: #e0f7fa;
+  color: #00796b;
+  font-size: 0.75rem;
+  padding: 5px 10px;
+  border-radius: 15px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  transition: background-color 0.3s;
+}
+
+.tag:hover {
+  background-color: #b2ebf2;
+}
