@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { FaMapMarkedAlt, FaSuitcase, FaMoneyBillWave, FaRobot, FaPlaneDeparture, FaMoon, FaSun } from "react-icons/fa";
+import { FaMapMarkedAlt, FaSuitcase, FaMoneyBillWave, FaRobot, FaPlaneDeparture, FaMoon, FaSun, FaUser } from "react-icons/fa";
 import { useTheme } from '../contexts/ThemeContext';
 
 const Navbar = ({ isLoggedIn, searchQuery, setSearchQuery }) => {
@@ -46,12 +46,12 @@ const Navbar = ({ isLoggedIn, searchQuery, setSearchQuery }) => {
               {theme === 'dark' ? <FaSun /> : <FaMoon />}
             </button>
 
-            <button
-              onClick={handleLogout}
-              className="ml-4 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition duration-200"
+            <Link
+              to="/profile"
+              className="ml-4 px-4 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition duration-200 flex items-center gap-2"
             >
-              Logout
-            </button>
+              <FaUser /> Profile
+            </Link>
           </>
         ) : (
           <>
