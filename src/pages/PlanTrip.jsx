@@ -6,11 +6,11 @@ import { FaMapMarkedAlt, FaSearch, FaTimesCircle } from "react-icons/fa";
 import "../index.css";
 import "../Components/Navbar.css";
 
-export default function PlanTrip() {
+export default function PlanTrip({ searchQuery = "" }) {
   const [tour, setTour] = useState(data);
   const [selectedRegion, setSelectedRegion] = useState("All");
   const [sortBy, setSortBy] = useState("default");
-  const [searchQuery, setSearchQuery] = useState("");
+  const [localSearchQuery, setLocalSearchQuery] = useState("");
   const [showRegionDropdown, setShowRegionDropdown] = useState(false);
   const [showSortDropdown, setShowSortDropdown] = useState(false);
 
@@ -61,7 +61,8 @@ export default function PlanTrip() {
 
   const filteredTours = tour.filter((t) => {
     const matchesRegion = selectedRegion === "All" || t.region === selectedRegion;
-    const matchesSearch = t.name.toLowerCase().includes(searchQuery.toLowerCase());
+    const effectiveSearchQuery = (searchQuery || localSearchQuery || "").toLowerCase();
+    const matchesSearch = t.name.toLowerCase().includes(effectiveSearchQuery);
     return matchesRegion && matchesSearch;
   });
 
@@ -80,7 +81,7 @@ export default function PlanTrip() {
   const handleClearFilters = () => {
     setSelectedRegion("All");
     setSortBy("default");
-    setSearchQuery("");
+    setLocalSearchQuery("");
   };
 
   return (
@@ -139,8 +140,8 @@ export default function PlanTrip() {
       <input
         type="text"
         placeholder="Search destinations..."
-        value={searchQuery}
-        onChange={(e) => setSearchQuery(e.target.value)}
+        value={localSearchQuery}
+        onChange={(e) => setLocalSearchQuery(e.target.value)}
         className="pl-10 pr-4 py-2 w-full rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 shadow-sm bg-white"
       />
     </div>
