@@ -1,9 +1,10 @@
 
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Navbar from "./Components/Navbar";
-import LandingPage from "./pages/LandingPage"; // ✅ Import your landing page
+import { useTheme } from "./contexts/ThemeContext";
 
+import LandingPage from "./pages/LandingPage"; // ✅ Your landing page
 import PlanTrip from "./pages/PlanTrip";
 import ExpenseTracker from "./pages/ExpenseTracker";
 import ChatBot from "./pages/Chatbot";
@@ -17,19 +18,23 @@ import Footer from "./Components/Footer";
 import Signup from "./pages/Signup";
 
 function App() {
+  const { theme } = useTheme();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
 
-  return (
-    <>
-      <Navbar
-        isLoggedIn={isLoggedIn}
-        searchQuery={searchQuery}
-        setSearchQuery={setSearchQuery}
-      />
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      setIsLoggedIn(true);
+    }
+  }, []);
 
-      {/* Add padding so content doesn't hide behind navbar */}
-      <div className="pt-20">
+  return (
+    <div className={bg-gray-100 dark:bg-gray-900 transition-colors duration-300 min-h-screen ${theme}}>
+      <Navbar isLoggedIn={isLoggedIn} searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+
+      {/* 🧱 Add padding to prevent content being hidden behind navbar */}
+      <div className="pt-20 flex-grow">
         <Routes>
           {/* Landing Page as home */}
           <Route path="/" element={<LandingPage />} />
@@ -39,39 +44,16 @@ function App() {
           <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
 
           {/* Protected pages */}
-          <Route
-            path="/plan"
-            element={
-              isLoggedIn ? (
-                <PlanTrip searchQuery={searchQuery} />
-              ) : (
-                <Navigate to="/login" />
-              )
-            }
-          />
-          <Route
-            path="/expenses"
-            element={
-              isLoggedIn ? <ExpenseTracker /> : <Navigate to="/login" />
-            }
-          />
-          <Route
-            path="/api/chat"
-            element={isLoggedIn ? <ChatBot /> : <Navigate to="/login" />}
-          />
-          <Route
-            path="/TripRecommender"
-            element={
-              isLoggedIn ? <TripRecommender /> : <Navigate to="/login" />
-            }
-          />
+          <Route path="/plan" element={isLoggedIn ? <PlanTrip searchQuery={searchQuery} /> : <Navigate to="/login" />} />
+          <Route path="/expenses" element={isLoggedIn ? <ExpenseTracker /> : <Navigate to="/login" />} />
+          <Route path="/api/chat" element={isLoggedIn ? <ChatBot /> : <Navigate to="/login" />} />
+          <Route path="/TripRecommender" element={isLoggedIn ? <TripRecommender /> : <Navigate to="/login" />} />
 
           {/* Fallback */}
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
-
-        <Footer isLoggedIn={isLoggedIn} />
       </div>
+      <Footer isLoggedIn={isLoggedIn} />
 
       <ToastContainer
         position="bottom-left"
@@ -79,7 +61,7 @@ function App() {
         pauseOnHover
         theme="colored"
       />
-    </>
+    </div>
   );
 }
 
