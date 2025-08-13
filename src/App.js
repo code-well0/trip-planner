@@ -11,7 +11,7 @@ import Login from "./pages/login";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import TripRecommender from "./pages/TripRecommender";
-
+import TermsOfService from "./pages/terms";
 
 import "./index.css";
 import Footer from "./Components/Footer";
@@ -44,6 +44,7 @@ function App() {
           <Route path="/expenses" element={isLoggedIn ? <ExpenseTracker /> : <Navigate to="/login" />} />
           <Route path="/api/chat" element={isLoggedIn ? <ChatBot /> : <Navigate to="/login" />} />
           <Route path="/TripRecommender" element={isLoggedIn ? <TripRecommender /> : <Navigate to="/login" />} />
+          <Route path="/terms" element={ <TermsOfService/>} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </div>
