@@ -17,6 +17,8 @@ import "./index.css";
 import Footer from "./Components/Footer";
 import Signup from "./pages/Signup";
 import About from "./Components/About.jsx";
+import Contact from "./Components/Contact.jsx";
+import PrivacyPolicy from "./Components/privacy.jsx";
 
 function App() {
   const { theme } = useTheme();
@@ -46,6 +48,8 @@ function App() {
           <Route path="/api/chat" element={isLoggedIn ? <ChatBot /> : <Navigate to="/login" />} />
           <Route path="/TripRecommender" element={isLoggedIn ? <TripRecommender /> : <Navigate to="/login" />} />
           <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/privacy" element={<PrivacyPolicy></PrivacyPolicy>} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </div>

@@ -1,33 +1,101 @@
-h1 , .choose h2 , .mission h2{
+.about-container {
+    min-height: 100vh;
+    padding: 2rem;
+    transition: background-color 0.3s ease;
+}
+
+.about-container.light {
+    background-color: #f8f9fa; /* Light body color */
+}
+
+.about-container.dark {
+    background-color: #121826; /* Dark body color */
+}
+
+/* Content container */
+.about {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    border-radius: 12px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.about.light {
+    background-color: #ffffff;
+    color: #333333;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.about.dark {
+    background-color: #1a2035; /* Slightly lighter than body */
+    color: #f0f0f0;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+h1, .choose h2, .mission h2 {
     text-align: center;
-    color:white;
     font-size: 3em;
     font-weight: bolder;
     margin-top: 20px;
 }
-.about{
+
+.about.light h1,
+.about.light .choose h2,
+.about.light .mission h2 {
+    color: #333333;
+}
+
+.about.dark h1,
+.about.dark .choose h2,
+.about.dark .mission h2 {
+    color: white;
+}
+
+.about {
     margin-bottom: 50px;
 }
-.welcome p , .mission p{
+
+.welcome p, .mission p {
     max-width: 80%;
-    color: beige;
     margin-left: auto;
     margin-right: auto;
     margin-top: 30px;
     text-align: center;
     font-size: 1.2em;
 }
-.list{
+
+.about.light .welcome p,
+.about.light .mission p,
+.about.light .choose p {
+    color: #555555;
+}
+
+.about.dark .welcome p,
+.about.dark .mission p,
+.about.dark .choose p {
+    color: beige;
+}
+
+.list {
     margin-left: 130px;
     margin-top: 20px;
 }
-.list li{
+
+.list li {
     margin-bottom: 10px;
     font-size: 1.2em;
+}
+
+.about.light .list li {
+    color: #444444;
+}
+
+.about.dark .list li {
     color: beige;
 }
-.choose p{
-    color: beige;
+
+.choose p {
     margin-top: 50px;
     font-size: 1.2em;
     max-width: 70%;
@@ -35,10 +103,37 @@ h1 , .choose h2 , .mission h2{
     margin-right: auto;
     text-align: center;
 }
-.choose h3{
-    color: white;
+
+.choose h3 {
     margin-top: 40px;
     text-align: center;
     font-size: 1.5em;
     font-weight: bolder;
+}
+
+.about.light .choose h3 {
+    color: #333333;
+}
+
+.about.dark .choose h3 {
+    color: white;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .about-container {
+        padding: 1rem;
+    }
+    
+    .about {
+        padding: 1.5rem;
+    }
+    
+    h1, .choose h2, .mission h2 {
+        font-size: 2.5em;
+    }
+    
+    .list {
+        margin-left: 30px;
+    }
 }
