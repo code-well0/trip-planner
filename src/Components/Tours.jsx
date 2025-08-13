@@ -4,7 +4,7 @@ import Card from './Card.jsx';
 const Tours = ({ tours, removeTour }) => {
   const [interestedTours, setInterestedTours] = useState(() => {
     const saved = localStorage.getItem('interestedTours');
-      return saved ? JSON.parse(saved) : [];
+    return saved ? JSON.parse(saved) : [];
   });
 
   useEffect(() => {
@@ -16,36 +16,40 @@ const Tours = ({ tours, removeTour }) => {
     setInterestedTours(prev => prev.filter(tour => tour.id !== id));
   };
 
-// Handler to add a tour to "Interested"
-const handleAddToInterested = (tour) => {
-  if (!interestedTours.find(t => t.id === tour.id)) {
-    setInterestedTours([...interestedTours, tour]);
-  }
-};
+  const handleAddToInterested = (tour) => {
+    if (!interestedTours.find(t => t.id === tour.id)) {
+      setInterestedTours([...interestedTours, tour]);
+    }
+  };
 
   return (
-    <div className="toursWrapper">
-      <div className="cardsGrid">
+    <div className="toursWrapper px-4 py-8">
+      {/* Main Cards Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
         {tours.map((tour) => (
-          <Card 
-          addToInterested={handleAddToInterested}
-          key={tour.id} 
-          tour={tour} 
-          getRemoveId={getId} 
+          <Card
+            key={tour.id}
+            tour={tour}
+            getRemoveId={getId}
+            addToInterested={handleAddToInterested}
           />
         ))}
       </div>
 
-      <div>
-        <h3>Interested Tours</h3>
-        {interestedTours.length === 0 && <p>No tours marked as interested yet.</p>}
-        {interestedTours.map(tour => (
-          <div key={tour.id}>{tour.name}</div>
-        ))}
+      {/* Interested Tours Section */}
+      <div className="bg-white p-6 rounded-xl shadow-md border">
+        <h3 className="text-xl font-bold mb-3">⭐ Interested Tours</h3>
+        {interestedTours.length === 0 ? (
+          <p className="text-gray-500">No tours marked as interested yet.</p>
+        ) : (
+          <ul className="list-disc list-inside text-gray-700">
+            {interestedTours.map(tour => (
+              <li key={tour.id}>{tour.name}</li>
+            ))}
+          </ul>
+        )}
       </div>
     </div>
-
-    
   );
 };
 
