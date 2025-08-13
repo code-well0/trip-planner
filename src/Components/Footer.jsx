@@ -2,7 +2,6 @@ import React from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useTheme } from '../contexts/ThemeContext';
 import { FaGithub, FaEnvelope, FaInstagram, FaLinkedinIn, FaPaperPlane } from "react-icons/fa";
-
 const Footer = ({ isLoggedIn }) => {
     const navigate = useNavigate();
     const { theme } = useTheme();

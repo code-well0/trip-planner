@@ -1,0 +1,44 @@
+h1 , .choose h2 , .mission h2{
+    text-align: center;
+    color:white;
+    font-size: 3em;
+    font-weight: bolder;
+    margin-top: 20px;
+}
+.about{
+    margin-bottom: 50px;
+}
+.welcome p , .mission p{
+    max-width: 80%;
+    color: beige;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 30px;
+    text-align: center;
+    font-size: 1.2em;
+}
+.list{
+    margin-left: 130px;
+    margin-top: 20px;
+}
+.list li{
+    margin-bottom: 10px;
+    font-size: 1.2em;
+    color: beige;
+}
+.choose p{
+    color: beige;
+    margin-top: 50px;
+    font-size: 1.2em;
+    max-width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+.choose h3{
+    color: white;
+    margin-top: 40px;
+    text-align: center;
+    font-size: 1.5em;
+    font-weight: bolder;
+}
