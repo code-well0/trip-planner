@@ -13,6 +13,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import TripRecommender from "./pages/TripRecommender";
 import ActivityPlanner from "./pages/ActivityPlanner";
+import TermsOfService from "./pages/terms";
 
 import "./index.css";
 import Footer from "./Components/Footer";
@@ -52,6 +53,7 @@ function App() {
           <Route path="/profile" element={isLoggedIn ? <Profile /> : <Navigate to="/login" />} />
           <Route path = "/contact" element={<Contact></Contact>} />
           <Route path="/privacy" element={<PrivacyPolicy />} />
+          <Route path="/terms" element={ <TermsOfService/>} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </div>
