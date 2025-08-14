@@ -7,6 +7,8 @@ import PlanTrip from "./pages/PlanTrip";
 import ExpenseTracker from "./pages/ExpenseTracker";
 import ChatBot from "./pages/Chatbot";
 import Login from "./pages/login";
+import Home from "./pages/Home";
+import Profile from "./pages/Profile";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import TripRecommender from "./pages/TripRecommender";
@@ -35,15 +37,17 @@ function App() {
       {/* 🧱 Add padding to prevent content being hidden behind navbar */}
       <div className="pt-20 flex-grow">
         <Routes>
-          {/* <Route path="/" element={<HomeSplit setIsLoggedIn={setIsLoggedIn} />} /> */}
-          {/* <Route path="/" element={<><HomeSplit setIsLoggedIn={setIsLoggedIn}/><Signup setIsLoggedIn={setIsLoggedIn} /> </>} /> */}
-          <Route path="/" element={<>< Signup setIsLoggedIn={setIsLoggedIn} /> </>} />
+          <Route path="/" element={isLoggedIn ? <Home /> : <Signup setIsLoggedIn={setIsLoggedIn} />} />
           <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
           <Route path="/plan" element={isLoggedIn ? <PlanTrip searchQuery={searchQuery} /> : <Navigate to="/login" />} />
           <Route path="/expenses" element={isLoggedIn ? <ExpenseTracker /> : <Navigate to="/login" />} />
           <Route path="/api/chat" element={isLoggedIn ? <ChatBot /> : <Navigate to="/login" />} />
           <Route path="/TripRecommender" element={isLoggedIn ? <TripRecommender /> : <Navigate to="/login" />} />
+
            <Route path="/activity-planner" element={isLoggedIn ? <ActivityPlanner /> : <Navigate to="/login" />} /> 
+
+          <Route path="/profile" element={isLoggedIn ? <Profile /> : <Navigate to="/login" />} />
+
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </div>
