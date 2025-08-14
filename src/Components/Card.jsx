@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FaRupeeSign, FaMapMarkerAlt, FaRegCalendarAlt, FaRegThumbsDown } from 'react-icons/fa';
-import { useTheme } from '../contexts/ThemeContext'; // Import the useTheme hook
+import { useTheme } from '../contexts/ThemeContext';
 
 const Card = ({ tour, getRemoveId, addToInterested }) => {
   const { theme } = useTheme();
@@ -31,6 +31,20 @@ const Card = ({ tour, getRemoveId, addToInterested }) => {
             {readmore ? "Show Less" : "Read More"}
           </span>
         </p>
+
+        {/* Google Map Embed */}
+        {tour.mapUrl && (
+          <iframe
+            title={`${tour.name} Map`}
+            src={tour.mapUrl}
+            width="100%"
+            height="150"
+            loading="lazy"
+            className="rounded-lg mb-4"
+            style={{ border: 0 }}
+            allowFullScreen
+          ></iframe>
+        )}
 
         <div className="flex items-center justify-between mb-4">
           <span className="flex items-center gap-1 text-green-600 dark:text-green-400 font-bold text-lg">
