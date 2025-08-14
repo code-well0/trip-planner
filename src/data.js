@@ -10,6 +10,7 @@ const data = [
     info: "Agra is a city in northern India, known for the iconic Taj Mahal...",
     image: "https://cdn.thecodehelp.in/Agra.jpeg",
     price: "35,758",
+    mapUrl: "https://www.google.com/maps?q=Agra,India&output=embed",
   },
   {
     id: 2,
@@ -22,6 +23,7 @@ const data = [
     info: "Jaipur is the capital city of the Indian state of Rajasthan...",
     image: "https://cdn.thecodehelp.in/Jaipur.jpeg",
     price: "82,560",
+    mapUrl: "https://www.google.com/maps?q=Jaipur,India&output=embed",
   },
   {
     id: 3,
@@ -34,6 +36,7 @@ const data = [
     info: "Goa is a small state on India's western coast...",
     image: "https://cdn.thecodehelp.in/Goa.jpeg",
     price: "29,695",
+    mapUrl: "https://www.google.com/maps?q=Goa,India&output=embed",
   },
   {
     id: 4,
@@ -46,6 +49,7 @@ const data = [
     info: "Varanasi is a holy city in northern India...",
     image: "https://cdn.thecodehelp.in/Varanasi.jpeg",
     price: "31,095",
+    mapUrl: "https://www.google.com/maps?q=Varanasi,India&output=embed",
   },
   {
     id: 5,
@@ -58,6 +62,7 @@ const data = [
     info: "Darjeeling is a beautiful hill station...",
     image: "https://cdn.thecodehelp.in/Darjeeling.jpeg",
     price: "78,595",
+    mapUrl: "https://www.google.com/maps?q=Darjeeling,India&output=embed",
   },
   {
     id: 6,
@@ -70,6 +75,7 @@ const data = [
     info: "Jaisalmer is known for its sandstone architecture...",
     image: "https://cdn.thecodehelp.in/Jaisalmer.jpeg",
     price: "68,595",
+    mapUrl: "https://www.google.com/maps?q=Jaisalmer,India&output=embed",
   },
   {
     id: 7,
@@ -82,6 +88,7 @@ const data = [
     info: "Udaipur is known as the City of Lakes...",
     image: "https://upload.wikimedia.org/wikipedia/commons/c/c0/Udaipur_5.jpg",
     price: "22,000",
+    mapUrl: "https://www.google.com/maps?q=Udaipur,India&output=embed",
   },
   {
     id: 8,
@@ -92,8 +99,10 @@ const data = [
     purposeTags: ["Solo detox", "Spiritual journey"],
     themeTags: ["Spiritual Trip", "Adventure Trip", "Solo Travel"],
     info: "Rishikesh is the Yoga capital of the world...",
-    image: "https://upload.wikimedia.org/wikipedia/commons/8/8c/Rishikesh_India_%28183707211%29.jpeg",
+    image:
+      "https://upload.wikimedia.org/wikipedia/commons/8/8c/Rishikesh_India_%28183707211%29.jpeg",
     price: "10,000",
+    mapUrl: "https://www.google.com/maps?q=Rishikesh,India&output=embed",
   },
   {
     id: 9,
@@ -104,8 +113,10 @@ const data = [
     purposeTags: ["Spiritual journey", "Couple trip"],
     themeTags: ["Historical Place", "Spiritual Trip"],
     info: "Famous for its UNESCO-listed group of temples...",
-    image: "https://upload.wikimedia.org/wikipedia/commons/b/b6/Khajuraho_Dulhadeo_2010.jpg",
+    image:
+      "https://upload.wikimedia.org/wikipedia/commons/b/b6/Khajuraho_Dulhadeo_2010.jpg",
     price: "16,500",
+    mapUrl: "https://www.google.com/maps?q=Khajuraho,India&output=embed",
   },
   {
     id: 10,
@@ -116,8 +127,10 @@ const data = [
     purposeTags: ["Nature walk", "Solo detox"],
     themeTags: ["Adventure Trip", "Solo Travel"],
     info: "A beautiful hill station in Kerala...",
-    image: "https://upload.wikimedia.org/wikipedia/commons/6/6d/Munnar_-_View_from_Grand_Plaza_Hotel.jpg",
+    image:
+      "https://upload.wikimedia.org/wikipedia/commons/6/6d/Munnar_-_View_from_Grand_Plaza_Hotel.jpg",
     price: "18,500",
+    mapUrl: "https://www.google.com/maps?q=Munnar,India&output=embed",
   },
   {
     id: 11,
@@ -130,6 +143,7 @@ const data = [
     info: "Home to the Golden Temple, the holiest shrine of Sikhism...",
     image: "/images/Amritsar.jpg",
     price: "14,000",
+    mapUrl: "https://www.google.com/maps?q=Amritsar,India&output=embed",
   },
   {
     id: 12,
@@ -140,8 +154,10 @@ const data = [
     purposeTags: ["Solo detox", "History tour"],
     themeTags: ["Historical Place", "Solo Travel", "Educational Tour"],
     info: "An ancient village famous for its ruins...",
-    image: "https://upload.wikimedia.org/wikipedia/commons/f/f2/Hampi%2C_India%2C_Stone_ornaments_at_Vijaya_Vitthala_Temple.jpg",
+    image:
+      "https://upload.wikimedia.org/wikipedia/commons/f/f2/Hampi%2C_India%2C_Stone_ornaments_at_Vijaya_Vitthala_Temple.jpg",
     price: "17,000",
+    mapUrl: "https://www.google.com/maps?q=Hampi,India&output=embed",
   },
 ];
 
