@@ -18,7 +18,11 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import TripRecommender from "./pages/TripRecommender";
 
+
 import FAQs from "./pages/FAQs";
+
+import TermsOfService from "./pages/terms";
+
 import ActivityPlanner from "./pages/ActivityPlanner";
 
 import "./index.css";
@@ -111,6 +115,7 @@ function App() {
 
           <Route path="/profile" element={isLoggedIn ? <Profile /> : <Navigate to="/login" />} />
 
+          <Route path="/terms" element={ <TermsOfService/>} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </div>
