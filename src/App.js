@@ -1,7 +1,12 @@
+
+import React, { useState } from "react";
+
 import React, { useState, useEffect } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Navbar from "./Components/Navbar";
 import { useTheme } from "./contexts/ThemeContext";
+
+import HomeSplit from "./pages/HomeSplit";
 
 import PlanTrip from "./pages/PlanTrip";
 import ExpenseTracker from "./pages/ExpenseTracker";
@@ -12,7 +17,12 @@ import Profile from "./pages/Profile";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import TripRecommender from "./pages/TripRecommender";
+
+
+import FAQs from "./pages/FAQs";
+
 import TermsOfService from "./pages/terms";
+
 import ActivityPlanner from "./pages/ActivityPlanner";
 
 import "./index.css";
@@ -32,6 +42,62 @@ function App() {
   }, []);
 
   return (
+
+    <>
+      <Navbar
+        isLoggedIn={isLoggedIn}
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
+      />
+
+      {/* 🧱 Add padding to prevent content being hidden behind navbar */}
+      <div className="pt-20">
+        {/* Adjust based on navbar height */}
+        <Routes>
+          {/* <Route path="/" element={<HomeSplit setIsLoggedIn={setIsLoggedIn} />} /> */}
+          {/* <Route path="/" element={<><HomeSplit setIsLoggedIn={setIsLoggedIn}/><Signup setIsLoggedIn={setIsLoggedIn} /> </>} /> */}
+          <Route
+            path="/"
+            element={
+              <>
+                <Signup setIsLoggedIn={setIsLoggedIn} />
+              </>
+            }
+          />
+          <Route
+            path="/login"
+            element={<Login setIsLoggedIn={setIsLoggedIn} />}
+          />
+          <Route
+            path="/plan"
+            element={
+              isLoggedIn ? (
+                <PlanTrip searchQuery={searchQuery} />
+              ) : (
+                <Navigate to="/login" />
+              )
+            }
+          />
+          <Route
+            path="/home"
+            element={<HomeSplit setIsLoggedIn={setIsLoggedIn} />}
+          />
+
+          <Route
+            path="/expenses"
+            element={isLoggedIn ? <ExpenseTracker /> : <Navigate to="/login" />}
+          />
+          <Route
+            path="/api/chat"
+            element={isLoggedIn ? <ChatBot /> : <Navigate to="/login" />}
+          />
+          <Route
+            path="/TripRecommender"
+            element={
+              isLoggedIn ? <TripRecommender /> : <Navigate to="/login" />
+            }
+          />
+          <Route path="/faqs" element={<FAQs />} />
     <div className={`bg-gray-100 dark:bg-gray-900 transition-colors duration-300 min-h-screen ${theme}`}>
       <Navbar isLoggedIn={isLoggedIn} searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
 
@@ -64,6 +130,5 @@ function App() {
     </div>
   );
 }
-
 
 export default App;
