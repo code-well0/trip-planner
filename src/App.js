@@ -1,5 +1,5 @@
-import React, { useState } from "react";
 
+import React, { useState } from "react";
 
 import React, { useState, useEffect } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
@@ -17,7 +17,10 @@ import Profile from "./pages/Profile";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import TripRecommender from "./pages/TripRecommender";
+
 import FAQs from "./pages/FAQs";
+import ActivityPlanner from "./pages/ActivityPlanner";
+
 import "./index.css";
 import Footer from "./Components/Footer";
 import Signup from "./pages/Signup";
@@ -103,7 +106,11 @@ function App() {
           <Route path="/expenses" element={isLoggedIn ? <ExpenseTracker /> : <Navigate to="/login" />} />
           <Route path="/api/chat" element={isLoggedIn ? <ChatBot /> : <Navigate to="/login" />} />
           <Route path="/TripRecommender" element={isLoggedIn ? <TripRecommender /> : <Navigate to="/login" />} />
+
+           <Route path="/activity-planner" element={isLoggedIn ? <ActivityPlanner /> : <Navigate to="/login" />} /> 
+
           <Route path="/profile" element={isLoggedIn ? <Profile /> : <Navigate to="/login" />} />
+
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </div>

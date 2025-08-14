@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { FaMapMarkedAlt, FaSuitcase, FaMoneyBillWave, FaRobot, FaPlaneDeparture, FaMoon, FaSun, FaUser } from "react-icons/fa";
+import { FaMapMarkedAlt, FaSuitcase, FaMoneyBillWave, FaRobot, FaPlaneDeparture, FaMoon, FaSun, FaListAlt, FaUser } from "react-icons/fa";
 import { useTheme } from '../contexts/ThemeContext';
 
 const Navbar = ({ isLoggedIn, searchQuery, setSearchQuery }) => {
@@ -145,7 +145,11 @@ const Navbar = ({ isLoggedIn, searchQuery, setSearchQuery }) => {
             <Link to="/TripRecommender" className="hover:text-blue-600 transition duration-200 flex items-center gap-1 dark:hover:text-blue-400">
               <FaPlaneDeparture /> Trip Recommender
             </Link>
-
+            {/* Activity Planner Link */}
+            <Link to="/activity-planner" className="hover:text-blue-600 transition duration-200 flex items-center gap-1 dark:hover:text-blue-400">
+              <FaListAlt /> Activity Planner
+            </Link>
+            
             {/* Dark Mode Toggle Button */}
             <button
               onClick={toggleTheme}
