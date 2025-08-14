@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Navbar from "./Components/Navbar";
@@ -11,7 +10,7 @@ import Login from "./pages/login";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import TripRecommender from "./pages/TripRecommender";
-
+import ActivityPlanner from "./pages/ActivityPlanner";
 
 import "./index.css";
 import Footer from "./Components/Footer";
@@ -44,6 +43,7 @@ function App() {
           <Route path="/expenses" element={isLoggedIn ? <ExpenseTracker /> : <Navigate to="/login" />} />
           <Route path="/api/chat" element={isLoggedIn ? <ChatBot /> : <Navigate to="/login" />} />
           <Route path="/TripRecommender" element={isLoggedIn ? <TripRecommender /> : <Navigate to="/login" />} />
+           <Route path="/activity-planner" element={isLoggedIn ? <ActivityPlanner /> : <Navigate to="/login" />} /> 
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </div>
