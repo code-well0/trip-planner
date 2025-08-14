@@ -17,6 +17,8 @@ import ActivityPlanner from "./pages/ActivityPlanner";
 import "./index.css";
 import Footer from "./Components/Footer";
 import Signup from "./pages/Signup";
+import PrivacyPolicy from "./pages/privacy";
+import Contact from "./pages/contact";
 
 function App() {
   const { theme } = useTheme();
@@ -48,7 +50,8 @@ function App() {
            <Route path="/activity-planner" element={isLoggedIn ? <ActivityPlanner /> : <Navigate to="/login" />} /> 
 
           <Route path="/profile" element={isLoggedIn ? <Profile /> : <Navigate to="/login" />} />
-
+          <Route path = "/contact" element={<Contact></Contact>} />
+          <Route path="/privacy" element={<PrivacyPolicy />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </div>
