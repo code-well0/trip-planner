@@ -36,6 +36,7 @@ function App() {
 
       {/* 🧱 Add padding to prevent content being hidden behind navbar */}
       <div className="pt-20 flex-grow">
+ {/* these are the routes */}
         <Routes>
           <Route path="/" element={isLoggedIn ? <Home /> : <Signup setIsLoggedIn={setIsLoggedIn} />} />
           <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
