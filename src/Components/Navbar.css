@@ -1,4 +1,6 @@
 .navbar {
+  background: #28a745;
+  color: rgb(124, 238, 155);
   position: fixed;
   top: 0;
   left: 0;

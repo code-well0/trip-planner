@@ -64,7 +64,10 @@ export default function Signup({ setIsLoggedIn }) {
   };
 
   return (
-    <div className={`relative flex flex-col lg:flex-row items-center justify-center min-h-screen transition-colors duration-300 ${theme === 'dark' ? 'bg-gray-900' : 'bg-gray-100'}`}
+    <div
+      className={`relative flex flex-col lg:flex-row items-center justify-center min-h-screen transition-colors duration-300 ${
+        theme === 'dark' ? 'bg-gray-900' : 'bg-gray-100'
+      }`}
       style={{ backgroundImage: `url('./images/India on the Road.jpeg')` }}
     >
       <div className="absolute inset-0 bg-black bg-opacity-50 dark:bg-opacity-70 transition-opacity duration-300"></div>
@@ -74,18 +77,7 @@ export default function Signup({ setIsLoggedIn }) {
         
         {/* Hero Section */}
         <div className="hidden lg:flex w-full lg:w-1/2 p-8 text-white flex-col items-center justify-center bg-gray-900 dark:bg-gray-700 bg-opacity-70 dark:bg-opacity-70 rounded-l-xl">
-          <h1 className="text-4xl font-bold mb-4 text-center">
-            Plan Your Next Adventure
-          </h1>
-          <p className="text-lg text-center mb-8">
-            Discover amazing places and create unforgettable memories.
-          </p>
-          <button
-            onClick={() => navigate("/login")}
-            className="px-6 py-3 bg-yellow-500 text-gray-900 font-bold rounded-full shadow-lg hover:bg-yellow-600 transition-colors duration-300"
-          >
-            Start Planning →
-          </button>
+          <HeroSection />
         </div>
 
         {/* Form Section */}
@@ -148,7 +140,11 @@ export default function Signup({ setIsLoggedIn }) {
               <hr className="flex-grow border-gray-300 dark:border-gray-600" />
             </div>
 
-            <button type="button" className="w-full py-3 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-white font-semibold rounded-lg shadow-md hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors duration-300 flex items-center justify-center space-x-2" onClick={handleGoogleSignIn}>
+            <button 
+              type="button" 
+              className="w-full py-3 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-white font-semibold rounded-lg shadow-md hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors duration-300 flex items-center justify-center space-x-2" 
+              onClick={handleGoogleSignIn}
+            >
               <FaGoogle />
               <span>Continue with Google</span>
             </button>
@@ -162,6 +158,7 @@ export default function Signup({ setIsLoggedIn }) {
           </form>
         </div>
       </div>
+
       <ToastContainer
         position="bottom-left"
         autoClose={3000}
@@ -176,4 +173,3 @@ export default function Signup({ setIsLoggedIn }) {
     </div>
   );
 }
-
