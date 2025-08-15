@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
   FaMapMarkedAlt, FaSuitcase, FaMoneyBillWave, FaRobot,
-  FaPlaneDeparture, FaMoon, FaSun, FaListAlt, FaUser, FaBars, FaTimes
+  FaPlaneDeparture, FaMoon, FaSun, FaListAlt, FaUser, FaBars, FaTimes , FaHeart
 } from "react-icons/fa";
 import { useTheme } from '../contexts/ThemeContext';
 import "./Navbar.css";
@@ -43,6 +43,7 @@ const Navbar = ({ isLoggedIn }) => {
             <Link to="/api/chat"><FaRobot /> AI Assistant</Link>
             <Link to="/TripRecommender"><FaPlaneDeparture /> Trip Recommender</Link>
             <Link to="/activity-planner"><FaListAlt /> Activity Planner</Link>
+             <Link to="/interested"><FaHeart className="text-red-500" /> Interested</Link> 
             <button onClick={toggleTheme} className="theme-btn">
               {theme === 'dark' ? <FaSun /> : <FaMoon />}
             </button>
@@ -68,6 +69,7 @@ const Navbar = ({ isLoggedIn }) => {
               <Link to="/api/chat" onClick={() => setMenuOpen(false)}><FaRobot /> AI Assistant</Link>
               <Link to="/TripRecommender" onClick={() => setMenuOpen(false)}><FaPlaneDeparture /> Trip Recommender</Link>
               <Link to="/activity-planner" onClick={() => setMenuOpen(false)}><FaListAlt /> Activity Planner</Link>
+                 <Link to="/interested" onClick={() => setMenuOpen(false)}><FaHeart className="text-red-500" /> Interested</Link>
               <button onClick={() => { toggleTheme(); setMenuOpen(false); }}>
                 {theme === 'dark' ? <FaSun /> : <FaMoon />} Toggle Theme
               </button>
