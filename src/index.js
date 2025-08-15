@@ -3,20 +3,16 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import { BrowserRouter } from 'react-router-dom';
 import './index.css';
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-
+import { ThemeProvider } from './contexts/ThemeContext'; // 1. Import ThemeProvider
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-
 root.render(
-  <BrowserRouter>
-    <App />
-    <ToastContainer
-        position="bottom-left"
-        autoClose={3000}
-        pauseOnHover
-        theme="colored"
-      />
-  </BrowserRouter>
+  <React.StrictMode>
+    {/* 2. Wrap the entire application with the ThemeProvider */}
+    <ThemeProvider>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </ThemeProvider>
+  </React.StrictMode>
 );
