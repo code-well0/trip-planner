@@ -10,6 +10,49 @@ import { FaGoogle } from "react-icons/fa";
 import { createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from "../firebase";
 
+function SignupForm() {
+  const [form, setForm] = useState({
+    name: '',
+    email: '',
+    password: ''
+  });
+
+  const [errors, setErrors] = useState({});
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const validate = () => {
+    const newErrors = {};
+
+    if (!form.name.trim()) {
+      newErrors.name = "Name is required.";
+    } else if (form.name.length < 3) {
+      newErrors.name = "Name must be at least 3 characters.";
+    }
+
+    if (!form.email) {
+      newErrors.email = "Email is required.";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
+      newErrors.email = "Email is invalid.";
+    }
+
+    if (!form.password) {
+      newErrors.password = "Password is required.";
+    } else if (form.password.length < 6) {
+      newErrors.password = "Password must be at least 6 characters.";
+    }
+
+    return newErrors;
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setForm(prevForm => ({
+      ...prevForm,
+      [name]: value
+    }));
+  };
+
+
 export default function Signup({ setIsLoggedIn }) {
   const navigate = useNavigate();
   const { theme } = useTheme();
@@ -23,6 +66,37 @@ export default function Signup({ setIsLoggedIn }) {
 
   const handleSignup = (e) => {
     e.preventDefault();
+
+
+    console.log("Form submitted"); // Debug
+    const validationErrors = validate();
+    console.log("Validation Errors:", validationErrors); // Debug
+    setErrors(validationErrors);
+
+    if (Object.keys(validationErrors).length === 0) {
+      setIsSubmitted(true);
+      console.log("Form submitted successfully:", form);
+    } else {
+      setIsSubmitted(false);
+
+
+    // Basic validation
+    if (name && email && password) {
+      setIsLoading(true); // Set loading state to true when signup is initiated
+
+      toast.success("Signup successful!");
+      
+      setTimeout(() => {
+        setIsLoggedIn(true);  // Set login state to true
+        setIsLoggedInLocal(true);  // Track login state in component state
+        setIsLoading(false);  // Reset loading state
+        navigate("/plan");  // Redirect after showing the toast
+      }, 1500); // Wait for 1.5 seconds before redirecting
+
+    } else {
+      toast.error("Please fill all fields");
+
+
     if (!name || !email || !password) {
       toast.error("Please fill all fields");
       return;
@@ -60,10 +134,86 @@ export default function Signup({ setIsLoggedIn }) {
     } catch (error) {
       console.error("Error during Google sign-in:", error);
       toast.error("Failed to sign up with Google.");
+
     }
   };
 
   return (
+
+    <div style={{ padding: "2rem", maxWidth: "400px", margin: "auto" }}>
+      <h2>Signup</h2>
+      <form onSubmit={handleSubmit} noValidate>
+        <label>
+          Name:
+          <input
+            type="text"
+            name="name"
+            value={form.name}
+            onChange={handleChange}
+          />
+        </label>
+        {errors.name && <div style={{ color: 'red' }}>{errors.name}</div>}
+        <br />
+
+        <label>
+          Email:
+          <input
+            type="email"
+            name="email"
+            value={form.email}
+            onChange={handleChange}
+          />
+        </label>
+        {errors.email && <div style={{ color: 'red' }}>{errors.email}</div>}
+        <br />
+
+        <label>
+          Password:
+          <input
+            type="password"
+            name="password"
+            value={form.password}
+            onChange={handleChange}
+          />
+        </label>
+        {errors.password && <div style={{ color: 'red' }}>{errors.password}</div>}
+        <br />
+
+        <button type="submit">Signup</button>
+
+        {isSubmitted && (
+          <p style={{ color: "green" }}>Form Submitted successfully!</p>
+        )}
+      </form>
+
+    <div className="page-background">
+      <div className="overlay">
+        <div className="split-content">
+          {/* Hero Section */}
+          <HeroSection/>
+          {/* Signup Section */}
+          <div className="signup-box">
+            <form className="signup-form space-y-4" onSubmit={handleSignup}>
+              <h2 className="text-3xl font-bold">Sign Up</h2>
+
+              <input
+                type="text"
+                placeholder="Name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                className="w-full p-3 rounded-md border border-gray-300"
+                required
+              />
+
+              <input
+                type="email"
+                placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full p-3 rounded-md border border-gray-300"
+                required
+              />
+
     <div className={`relative flex flex-col lg:flex-row items-center justify-center min-h-screen transition-colors duration-300 ${theme === 'dark' ? 'bg-gray-900' : 'bg-gray-100'}`}
       style={{ backgroundImage: `url('./images/India on the Road.jpeg')` }}
     >
@@ -173,7 +323,12 @@ export default function Signup({ setIsLoggedIn }) {
         pauseOnHover
         theme="colored"
       />
+
     </div>
   );
 }
+
+
+
+export default SignupForm;
 

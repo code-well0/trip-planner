@@ -182,6 +182,18 @@
   font-size: 0.9rem;
 }
 
+
+
+.error {
+  color: red;
+  font-size: 0.9rem;
+  margin: 4px 0;
+}
+
+/* --- New Styles for Google Button and Divider --- */
+
+/* Divider Style ("OR") */
+
 /* Divider Style ("OR") - TIGHTER SPACING */
 .divider {
   display: flex;

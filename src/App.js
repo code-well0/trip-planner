@@ -7,6 +7,9 @@ import PlanTrip from "./pages/PlanTrip";
 import ExpenseTracker from "./pages/ExpenseTracker";
 import ChatBot from "./pages/Chatbot";
 import Login from "./pages/login";
+
+import SignupForm from "./pages/Signup";
+
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
 import { ToastContainer } from "react-toastify";
@@ -14,6 +17,7 @@ import "react-toastify/dist/ReactToastify.css";
 import TripRecommender from "./pages/TripRecommender";
 import TermsOfService from "./pages/terms";
 import ActivityPlanner from "./pages/ActivityPlanner";
+
 
 import "./index.css";
 import Footer from "./Components/Footer";
@@ -32,11 +36,58 @@ function App() {
   }, []);
 
   return (
+    <>
+ Update/SignUp-page
+      {/*Navbar reacts to login status */}
+      <Navbar isLoggedIn={isLoggedIn} />
+
+      <Routes>
+        {/* Signup page */}
+        <Route
+          path="/"
+          element={<HomeSplit setIsLoggedIn={setIsLoggedIn} />}
+        />
+
+        {/* Login page */}
+        <Route
+          path="/login"
+          element={<Login setIsLoggedIn={setIsLoggedIn} />}
+        />
+
+        {/* Protected routes */}
+        <Route
+          path="/plan"
+          element={isLoggedIn ? <PlanTrip /> : <Navigate to="/login" />}
+        />
+        <Route
+          path="/expenses"
+          element={isLoggedIn ? <ExpenseTracker /> : <Navigate to="/login" />}
+        />
+        <Route
+          path="/api/chat"
+          element={isLoggedIn ? <ChatBot /> : <Navigate to="/login" />}
+        />
+
+        {/* Fallback route (optional) */}
+        <Route
+          path="*"
+          element={<Navigate to="/" />}
+        />
+
+        <Route path="/signup" element={<SignupForm/>} />
+      </Routes>
+
+      <Navbar isLoggedIn={isLoggedIn} searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+
+      {/*  Add padding to prevent content being hidden behind navbar */}
+      <div className="pt-20"> {/* Adjust based on navbar height */}
+
     <div className={`bg-gray-100 dark:bg-gray-900 transition-colors duration-300 min-h-screen ${theme}`}>
       <Navbar isLoggedIn={isLoggedIn} searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
 
       {/* 🧱 Add padding to prevent content being hidden behind navbar */}
       <div className="pt-20 flex-grow">
+
         <Routes>
           <Route path="/" element={isLoggedIn ? <Home /> : <Signup setIsLoggedIn={setIsLoggedIn} />} />
           <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
