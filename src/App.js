@@ -18,7 +18,8 @@ import ActivityPlanner from "./pages/ActivityPlanner";
 import "./index.css";
 import Footer from "./Components/Footer";
 import Signup from "./pages/Signup";
-
+import { InterestedProvider } from './contexts/InterestedContext';
+import Interested from "./pages/interested";
 function App() {
   const { theme } = useTheme();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -32,6 +33,7 @@ function App() {
   }, []);
 
   return (
+      <InterestedProvider>
     <div className={`bg-gray-100 dark:bg-gray-900 transition-colors duration-300 min-h-screen ${theme}`}>
       <Navbar isLoggedIn={isLoggedIn} searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
 
@@ -51,6 +53,10 @@ function App() {
 
           <Route path="/terms" element={ <TermsOfService/>} />
           <Route path="*" element={<Navigate to="/" />} />
+            <Route
+  path="/interested"
+  element={isLoggedIn ? <Interested /> : <Navigate to="/login" />}
+/>
         </Routes>
       </div>
       <Footer isLoggedIn={isLoggedIn} />
@@ -61,7 +67,11 @@ function App() {
         pauseOnHover
         theme="colored"
       />
+    
+      {/* Your routes/components here */}
+    
     </div>
+    </InterestedProvider>
   );
 }
 

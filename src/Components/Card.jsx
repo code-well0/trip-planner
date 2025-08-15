@@ -1,11 +1,16 @@
 import React, { useState } from 'react';
 import { FaRupeeSign, FaMapMarkerAlt, FaRegCalendarAlt, FaRegThumbsDown } from 'react-icons/fa';
 import { useTheme } from '../contexts/ThemeContext';
+import { useInterested } from '../contexts/InterestedContext';
 
-const Card = ({ tour, getRemoveId, addToInterested }) => {
+const Card = ({ tour, getRemoveId }) => {
   const { theme } = useTheme();
+  const { addToInterested } = useInterested(); 
   const [readmore, setReadmore] = useState(false);
-  const description = readmore ? tour.info : `${tour.info.substring(0, 200)}...`;
+
+  const description = readmore
+    ? tour.info
+    : `${tour.info.substring(0, 200)}...`;
 
   return (
     <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 flex flex-col overflow-hidden border border-gray-100 dark:border-gray-700 group">
@@ -19,7 +24,9 @@ const Card = ({ tour, getRemoveId, addToInterested }) => {
         <h3 className="text-2xl font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
           <FaMapMarkerAlt className="text-blue-500" />
           {tour.emoji && <span>{tour.emoji}</span>} {tour.name}
-          <span className="ml-2 text-sm text-gray-500 dark:text-gray-400">({tour.region})</span>
+          <span className="ml-2 text-sm text-gray-500 dark:text-gray-400">
+            ({tour.region})
+          </span>
         </h3>
 
         <p className="text-gray-500 dark:text-gray-300 text-base mb-4">
@@ -28,11 +35,10 @@ const Card = ({ tour, getRemoveId, addToInterested }) => {
             onClick={() => setReadmore(!readmore)}
             className="text-blue-500 hover:text-blue-600 dark:hover:text-blue-400 cursor-pointer ml-1"
           >
-            {readmore ? "Show Less" : "Read More"}
+            {readmore ? 'Show Less' : 'Read More'}
           </span>
         </p>
 
-        {/* Google Map Embed */}
         {tour.mapUrl && (
           <iframe
             title={`${tour.name} Map`}
@@ -58,7 +64,7 @@ const Card = ({ tour, getRemoveId, addToInterested }) => {
         <div className="mt-auto flex justify-between gap-4">
           <button
             className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg text-sm transition"
-            onClick={() => addToInterested && addToInterested(tour)}
+            onClick={() => addToInterested(tour)}
           >
             Interested
           </button>
