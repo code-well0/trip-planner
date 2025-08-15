@@ -3,6 +3,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import Navbar from "./Components/Navbar";
 import { useTheme } from "./contexts/ThemeContext";
 
+import LandingPage from "./pages/LandingPage"; //  Landing page
 import PlanTrip from "./pages/PlanTrip";
 import ExpenseTracker from "./pages/ExpenseTracker";
 import ChatBot from "./pages/Chatbot";
@@ -32,27 +33,36 @@ function App() {
   }, []);
 
   return (
-    <div className={`bg-gray-100 dark:bg-gray-900 transition-colors duration-300 min-h-screen ${theme}`}>
+    <div className={bg-gray-100 dark:bg-gray-900 transition-colors duration-300 min-h-screen ${theme}}>
       <Navbar isLoggedIn={isLoggedIn} searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
 
       {/* 🧱 Add padding to prevent content being hidden behind navbar */}
       <div className="pt-20 flex-grow">
         <Routes>
-          <Route path="/" element={isLoggedIn ? <Home /> : <Signup setIsLoggedIn={setIsLoggedIn} />} />
+          {/* Landing page as home */}
+          <Route path="/" element={<LandingPage />} />
+
+          {/* Auth pages */}
+          <Route path="/signup" element={<Signup setIsLoggedIn={setIsLoggedIn} />} />
           <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
+
+          {/* Protected pages */}
+          <Route path="/home" element={isLoggedIn ? <Home /> : <Navigate to="/login" />} />
           <Route path="/plan" element={isLoggedIn ? <PlanTrip searchQuery={searchQuery} /> : <Navigate to="/login" />} />
           <Route path="/expenses" element={isLoggedIn ? <ExpenseTracker /> : <Navigate to="/login" />} />
           <Route path="/api/chat" element={isLoggedIn ? <ChatBot /> : <Navigate to="/login" />} />
           <Route path="/TripRecommender" element={isLoggedIn ? <TripRecommender /> : <Navigate to="/login" />} />
-
-           <Route path="/activity-planner" element={isLoggedIn ? <ActivityPlanner /> : <Navigate to="/login" />} /> 
-
+          <Route path="/activity-planner" element={isLoggedIn ? <ActivityPlanner /> : <Navigate to="/login" />} /> 
           <Route path="/profile" element={isLoggedIn ? <Profile /> : <Navigate to="/login" />} />
 
-          <Route path="/terms" element={ <TermsOfService/>} />
+          {/* Public pages */}
+          <Route path="/terms" element={<TermsOfService />} />
+
+          {/* Fallback */}
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </div>
+      
       <Footer isLoggedIn={isLoggedIn} />
 
       <ToastContainer
@@ -64,6 +74,5 @@ function App() {
     </div>
   );
 }
-
 
 export default App;
