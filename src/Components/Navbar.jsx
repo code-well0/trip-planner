@@ -9,7 +9,9 @@ import {
   FaBars,
   FaTimes,
   FaMoon,
-  FaSun
+  FaSun,
+  FaListAlt,
+  FaUser
 } from "react-icons/fa";
 import { useTheme } from "../contexts/ThemeContext";
 
@@ -28,7 +30,6 @@ const Navbar = ({ isLoggedIn, searchQuery, setSearchQuery }) => {
 
   const toggleMenu = () => setMenuOpen(!menuOpen);
 
-  // Check if we’re on auth pages
   const isAuthPage =
     location.pathname === "/" ||
     location.pathname === "/login" ||
@@ -48,53 +49,98 @@ const Navbar = ({ isLoggedIn, searchQuery, setSearchQuery }) => {
               mobile ? "w-full border-green-600" : "w-auto border-gray-300"
             }`}
           />
-          <Link to="/plan" className={flex items-center gap-1 transition duration-200 ${mobile ? "text-green-700" : "hover:text-blue-600 dark:hover:text-blue-400"}}>
+          <Link
+            to="/plan"
+            className={`flex items-center gap-1 transition duration-200 ${
+              mobile ? "text-green-700" : "hover:text-blue-600 dark:hover:text-blue-400"
+            }`}
+          >
             <FaSuitcase /> Plan Trip
           </Link>
-          <Link to="/expenses" className={flex items-center gap-1 transition duration-200 ${mobile ? "text-green-700" : "hover:text-blue-600 dark:hover:text-blue-400"}}>
+          <Link
+            to="/expenses"
+            className={`flex items-center gap-1 transition duration-200 ${
+              mobile ? "text-green-700" : "hover:text-blue-600 dark:hover:text-blue-400"
+            }`}
+          >
             <FaMoneyBillWave /> Expenses
           </Link>
-          <Link to="/api/chat" className={flex items-center gap-1 transition duration-200 ${mobile ? "text-green-700" : "hover:text-blue-600 dark:hover:text-blue-400"}}>
+          <Link
+            to="/api/chat"
+            className={`flex items-center gap-1 transition duration-200 ${
+              mobile ? "text-green-700" : "hover:text-blue-600 dark:hover:text-blue-400"
+            }`}
+          >
             <FaRobot /> AI Assistant
           </Link>
-          <Link to="/TripRecommender" className={flex items-center gap-1 transition duration-200 ${mobile ? "text-green-700" : "hover:text-blue-600 dark:hover:text-blue-400"}}>
+          <Link
+            to="/TripRecommender"
+            className={`flex items-center gap-1 transition duration-200 ${
+              mobile ? "text-green-700" : "hover:text-blue-600 dark:hover:text-blue-400"
+            }`}
+          >
             <FaPlaneDeparture /> Trip Recommender
           </Link>
+          <Link
+            to="/activity-planner"
+            className={`flex items-center gap-1 transition duration-200 ${
+              mobile ? "text-green-700" : "hover:text-blue-600 dark:hover:text-blue-400"
+            }`}
+          >
+            <FaListAlt /> Activity Planner
+          </Link>
 
-          {/* Dark Mode Toggle */}
+          {/* Theme Toggle */}
           <button
             onClick={toggleTheme}
-            className={px-4 py-2 ${mobile ? "bg-gray-200 text-gray-700" : "ml-4 bg-gray-200 text-gray-700"} rounded-full dark:bg-gray-700 dark:text-white hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors duration-300 flex items-center justify-center}
+            className={`px-4 py-2 ${
+              mobile ? "bg-gray-200 text-gray-700" : "ml-4 bg-gray-200 text-gray-700"
+            } rounded-full dark:bg-gray-700 dark:text-white hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors duration-300 flex items-center justify-center`}
           >
             {theme === "dark" ? <FaSun /> : <FaMoon />}
           </button>
 
+          <Link
+            to="/profile"
+            className={`px-4 py-2 ${
+              mobile ? "bg-blue-500" : "ml-4 bg-blue-500"
+            } text-white rounded-full hover:bg-blue-600 transition duration-200 flex items-center gap-2`}
+          >
+            <FaUser /> Profile
+          </Link>
+
           <button
             onClick={handleLogout}
-            className={px-4 py-2 rounded ${mobile ? "bg-red-500 text-white hover:bg-red-600" : "ml-4 bg-red-500 text-white hover:bg-red-600"} transition duration-200}
+            className={`px-4 py-2 rounded ${
+              mobile ? "bg-red-500 text-white hover:bg-red-600" : "ml-4 bg-red-500 text-white hover:bg-red-600"
+            } transition duration-200`}
           >
             Logout
           </button>
         </>
       ) : isAuthPage ? (
         <>
-          {/* Dark Mode Toggle */}
           <button
             onClick={toggleTheme}
-            className={px-4 py-2 ${mobile ? "bg-gray-200 text-gray-700" : "ml-4 bg-gray-200 text-gray-700"} rounded-full dark:bg-gray-700 dark:text-white hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors duration-300 flex items-center justify-center}
+            className={`px-4 py-2 ${
+              mobile ? "bg-gray-200 text-gray-700" : "ml-4 bg-gray-200 text-gray-700"
+            } rounded-full dark:bg-gray-700 dark:text-white hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors duration-300 flex items-center justify-center`}
           >
             {theme === "dark" ? <FaSun /> : <FaMoon />}
           </button>
-
           <Link
             to="/login"
-            className={px-4 py-2 rounded ${mobile ? "bg-green-600 text-white hover:bg-green-800" : "bg-green-500 text-white hover:bg-green-700"} transition duration-200}
+            className={`px-4 py-2 rounded ${
+              mobile ? "bg-green-600 text-white hover:bg-green-800" : "bg-green-500 text-white hover:bg-green-700"
+            } transition duration-200`}
           >
             Login
           </Link>
           <Link
             to="/signup"
-            className={px-4 py-2 rounded ${mobile ? "bg-green-600 text-white hover:bg-green-800" : "bg-green-500 text-white hover:bg-green-700"} transition duration-200}
+            className={`px-4 py-2 rounded ${
+              mobile ? "bg-green-600 text-white hover:bg-green-800" : "bg-green-500 text-white hover:bg-green-700"
+            } transition duration-200`}
           >
             Sign Up
           </Link>
@@ -103,13 +149,17 @@ const Navbar = ({ isLoggedIn, searchQuery, setSearchQuery }) => {
         <>
           <button
             onClick={toggleTheme}
-            className={px-4 py-2 ${mobile ? "bg-gray-200 text-gray-700" : "ml-4 bg-gray-200 text-gray-700"} rounded-full dark:bg-gray-700 dark:text-white hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors duration-300 flex items-center justify-center}
+            className={`px-4 py-2 ${
+              mobile ? "bg-gray-200 text-gray-700" : "ml-4 bg-gray-200 text-gray-700"
+            } rounded-full dark:bg-gray-700 dark:text-white hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors duration-300 flex items-center justify-center`}
           >
             {theme === "dark" ? <FaSun /> : <FaMoon />}
           </button>
           <Link
             to="/login"
-            className={px-4 py-2 rounded ${mobile ? "bg-green-600 text-white hover:bg-green-800" : "bg-green-500 text-white hover:bg-green-700"} transition duration-200}
+            className={`px-4 py-2 rounded ${
+              mobile ? "bg-green-600 text-white hover:bg-green-800" : "bg-green-500 text-white hover:bg-green-700"
+            } transition duration-200`}
           >
             Login
           </Link>
@@ -126,12 +176,12 @@ const Navbar = ({ isLoggedIn, searchQuery, setSearchQuery }) => {
         <Link to="/">YourTripPlanner</Link>
       </div>
 
-      {/* Mobile Menu Button */}
+      {/* Mobile Menu Toggle */}
       <button className="lg:hidden text-2xl" onClick={toggleMenu}>
         {menuOpen ? <FaTimes /> : <FaBars />}
       </button>
 
-      {/* Desktop Links */}
+      {/* Desktop Menu */}
       <div className="hidden lg:flex space-x-6 items-center text-gray-700 font-medium dark:text-gray-300">
         <NavLinks />
       </div>
