@@ -20,6 +20,7 @@ import Footer from "./Components/Footer";
 import Signup from "./pages/Signup";
 import { InterestedProvider } from './contexts/InterestedContext';
 import Interested from "./pages/interested";
+import TripDetails from "./pages/TripDetails";
 function App() {
   const { theme } = useTheme();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -43,10 +44,7 @@ function App() {
           <Route path="/" element={isLoggedIn ? <Home /> : <Signup setIsLoggedIn={setIsLoggedIn} />} />
           <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
           <Route path="/plan" element={isLoggedIn ? <PlanTrip searchQuery={searchQuery} /> : <Navigate to="/login" />} />
-          <Route path="/expenses" element={isLoggedIn ? <ExpenseTracker /> : <Navigate to="/login" />} />
-          <Route path="/api/chat" element={isLoggedIn ? <ChatBot /> : <Navigate to="/login" />} />
-          <Route path="/TripRecommender" element={isLoggedIn ? <TripRecommender /> : <Navigate to="/login" />} />
-
+          <Route path="/plan/:id" element={isLoggedIn ? <TripDetails /> : <Navigate to="login" />} />        
            <Route path="/activity-planner" element={isLoggedIn ? <ActivityPlanner /> : <Navigate to="/login" />} /> 
 
           <Route path="/profile" element={isLoggedIn ? <Profile /> : <Navigate to="/login" />} />
