@@ -14,10 +14,13 @@ import "react-toastify/dist/ReactToastify.css";
 import TripRecommender from "./pages/TripRecommender";
 import TermsOfService from "./pages/terms";
 import ActivityPlanner from "./pages/ActivityPlanner";
+import TermsOfService from "./pages/terms";
 
 import "./index.css";
 import Footer from "./Components/Footer";
 import Signup from "./pages/Signup";
+import PrivacyPolicy from "./pages/privacy";
+import Contact from "./pages/contact";
 import { InterestedProvider } from './contexts/InterestedContext';
 import Interested from "./pages/interested";
 function App() {
@@ -39,6 +42,7 @@ function App() {
 
       {/* 🧱 Add padding to prevent content being hidden behind navbar */}
       <div className="pt-20 flex-grow">
+ {/* these are the routes */}
         <Routes>
           <Route path="/" element={isLoggedIn ? <Home /> : <Signup setIsLoggedIn={setIsLoggedIn} />} />
           <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
@@ -50,6 +54,8 @@ function App() {
            <Route path="/activity-planner" element={isLoggedIn ? <ActivityPlanner /> : <Navigate to="/login" />} /> 
 
           <Route path="/profile" element={isLoggedIn ? <Profile /> : <Navigate to="/login" />} />
+          <Route path = "/contact" element={<Contact></Contact>} />
+          <Route path="/privacy" element={<PrivacyPolicy />} />
 
           <Route path="/terms" element={ <TermsOfService/>} />
           <Route path="*" element={<Navigate to="/" />} />
