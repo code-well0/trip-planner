@@ -3,7 +3,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import Navbar from "./Components/Navbar";
 import { useTheme } from "./contexts/ThemeContext";
 
-import PlanTrip from "./pages/PlanTrip";
+
 import ExpenseTracker from "./pages/ExpenseTracker";
 import ChatBot from "./pages/Chatbot";
 import Login from "./pages/login";
@@ -14,6 +14,7 @@ import "react-toastify/dist/ReactToastify.css";
 import TripRecommender from "./pages/TripRecommender";
 import TermsOfService from "./pages/terms";
 import ActivityPlanner from "./pages/ActivityPlanner";
+import PlanTrip from "./pages/PlanTrip";
 
 import "./index.css";
 import Footer from "./Components/Footer";
@@ -58,7 +59,6 @@ function App() {
         </Routes>
       </div>
       <Footer isLoggedIn={isLoggedIn} />
-
       <ToastContainer
         position="bottom-left"
         autoClose={3000}

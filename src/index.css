@@ -39,3 +39,30 @@ html.dark {
 ::-webkit-scrollbar-thumb:hover {
   background: theme('colors.gray.500');
 }
+
+
+/* Custom bounce animation for scroll to top button 
+@keyframes bounce {
+  0% {
+    transform: translateY(0);
+  }
+  30% {
+    transform: translateY(-8px);
+  }
+  60% {
+    transform: translateY(4px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+*/
+/* Responsive adjustments for mobile 
+@media (max-width: 600px) {
+  .scroll-to-top-btn {
+    bottom: 20px;
+    right: 15px;
+    padding: 12px 16px;
+    font-size: 18px;
+  }
+}*/
