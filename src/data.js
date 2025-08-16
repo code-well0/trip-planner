@@ -11,9 +11,6 @@ const data = [
     image: "https://cdn.thecodehelp.in/Agra.jpeg",
     price: "35,758",
     mapUrl: "https://www.google.com/maps?q=Agra,India&output=embed",
-    bestSeason: "October – March",
-    specialty: "Mughlai cuisine, Marble handicrafts",
-    attraction: "Taj Mahal & Agra Fort",
   },
   {
     id: 2,
@@ -27,9 +24,6 @@ const data = [
     image: "https://cdn.thecodehelp.in/Jaipur.jpeg",
     price: "82,560",
     mapUrl: "https://www.google.com/maps?q=Jaipur,India&output=embed",
-    bestSeason: "October – March",
-    specialty: "Handicrafts, Ghewar sweet",
-    attraction: "Hawa Mahal & Amber Fort",
   },
   {
     id: 3,
@@ -43,9 +37,6 @@ const data = [
     image: "https://cdn.thecodehelp.in/Goa.jpeg",
     price: "29,695",
     mapUrl: "https://www.google.com/maps?q=Goa,India&output=embed",
-    bestSeason: "November – February",
-    specialty: "Seafood, Cashew feni",
-    attraction: "Baga Beach & Dudhsagar Falls",
   },
   {
     id: 4,
@@ -59,9 +50,6 @@ const data = [
     image: "https://cdn.thecodehelp.in/Varanasi.jpeg",
     price: "31,095",
     mapUrl: "https://www.google.com/maps?q=Varanasi,India&output=embed",
-    bestSeason: "October – March",
-    specialty: "Banarasi silk sarees, Street food (Kachori Sabzi)",
-    attraction: "Kashi Vishwanath Temple & Ganga Aarti at Dashashwamedh Ghat",
   },
   {
     id: 5,
@@ -75,9 +63,6 @@ const data = [
     image: "https://cdn.thecodehelp.in/Darjeeling.jpeg",
     price: "78,595",
     mapUrl: "https://www.google.com/maps?q=Darjeeling,India&output=embed",
-    bestSeason: "March – May & September – November",
-    specialty: "Darjeeling Tea, Momos",
-    attraction: "Tiger Hill & Himalayan Railway",
   },
   {
     id: 6,
@@ -91,9 +76,6 @@ const data = [
     image: "https://cdn.thecodehelp.in/Jaisalmer.jpeg",
     price: "68,595",
     mapUrl: "https://www.google.com/maps?q=Jaisalmer,India&output=embed",
-    bestSeason: "October – March",
-    specialty: "Rajasthani folk music & embroidery",
-    attraction: "Jaisalmer Fort & Desert Safari",
   },
   {
     id: 7,
@@ -107,9 +89,6 @@ const data = [
     image: "https://upload.wikimedia.org/wikipedia/commons/c/c0/Udaipur_5.jpg",
     price: "22,000",
     mapUrl: "https://www.google.com/maps?q=Udaipur,India&output=embed",
-    bestSeason: "September – March",
-    specialty: "Miniature paintings, Dal Baati Churma",
-    attraction: "City Palace & Lake Pichola",
   },
   {
     id: 8,
@@ -120,12 +99,10 @@ const data = [
     purposeTags: ["Solo detox", "Spiritual journey"],
     themeTags: ["Spiritual Trip", "Adventure Trip", "Solo Travel"],
     info: "Rishikesh is the Yoga capital of the world...",
-    image: "https://upload.wikimedia.org/wikipedia/commons/8/8c/Rishikesh_India_%28183707211%29.jpeg",
+    image:
+      "https://upload.wikimedia.org/wikipedia/commons/8/8c/Rishikesh_India_%28183707211%29.jpeg",
     price: "10,000",
     mapUrl: "https://www.google.com/maps?q=Rishikesh,India&output=embed",
-    bestSeason: "September – November & March – May",
-    specialty: "Yoga retreats, Ayurvedic food",
-    attraction: "Laxman Jhula & River Rafting",
   },
   {
     id: 9,
@@ -136,12 +113,10 @@ const data = [
     purposeTags: ["Spiritual journey", "Couple trip"],
     themeTags: ["Historical Place", "Spiritual Trip"],
     info: "Famous for its UNESCO-listed group of temples...",
-    image: "https://upload.wikimedia.org/wikipedia/commons/b/b6/Khajuraho_Dulhadeo_2010.jpg",
+    image:
+      "https://upload.wikimedia.org/wikipedia/commons/b/b6/Khajuraho_Dulhadeo_2010.jpg",
     price: "16,500",
     mapUrl: "https://www.google.com/maps?q=Khajuraho,India&output=embed",
-    bestSeason: "October – March",
-    specialty: "Classical dance festival, Stone carvings",
-    attraction: "Kandariya Mahadev Temple",
   },
   {
     id: 10,
@@ -152,12 +127,10 @@ const data = [
     purposeTags: ["Nature walk", "Solo detox"],
     themeTags: ["Adventure Trip", "Solo Travel"],
     info: "A beautiful hill station in Kerala...",
-    image: "https://upload.wikimedia.org/wikipedia/commons/6/6d/Munnar_-_View_from_Grand_Plaza_Hotel.jpg",
+    image:
+      "https://upload.wikimedia.org/wikipedia/commons/6/6d/Munnar_-_View_from_Grand_Plaza_Hotel.jpg",
     price: "18,500",
     mapUrl: "https://www.google.com/maps?q=Munnar,India&output=embed",
-    bestSeason: "September – May",
-    specialty: "Tea plantations, Spices",
-    attraction: "Eravikulam National Park",
   },
   {
     id: 11,
@@ -171,9 +144,6 @@ const data = [
     image: "/images/Amritsar.jpg",
     price: "14,000",
     mapUrl: "https://www.google.com/maps?q=Amritsar,India&output=embed",
-    bestSeason: "October – March",
-    specialty: "Amritsari Kulcha, Phulkari embroidery",
-    attraction: "Golden Temple & Wagah Border",
   },
   {
     id: 12,
@@ -184,12 +154,10 @@ const data = [
     purposeTags: ["Solo detox", "History tour"],
     themeTags: ["Historical Place", "Solo Travel", "Educational Tour"],
     info: "An ancient village famous for its ruins...",
-    image: "https://upload.wikimedia.org/wikipedia/commons/f/f2/Hampi%2C_India%2C_Stone_ornaments_at_Vijaya_Vitthala_Temple.jpg",
+    image:
+      "https://upload.wikimedia.org/wikipedia/commons/f/f2/Hampi%2C_India%2C_Stone_ornaments_at_Vijaya_Vitthala_Temple.jpg",
     price: "17,000",
     mapUrl: "https://www.google.com/maps?q=Hampi,India&output=embed",
-    bestSeason: "October – February",
-    specialty: "Stone carvings, Banana fritters",
-    attraction: "Vittala Temple & Virupaksha Temple",
   },
 ];
 
