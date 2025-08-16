@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Card from './Card.jsx';
+import { FaArrowUp } from "react-icons/fa"
 
 const Tours = ({ tours, removeTour }) => {
   const [interestedTours, setInterestedTours] = useState(() => {
@@ -7,9 +8,21 @@ const Tours = ({ tours, removeTour }) => {
     return saved ? JSON.parse(saved) : [];
   });
 
+  const [showScrollTop, setShowScrollTop] = useState(false)
+
   useEffect(() => {
     localStorage.setItem('interestedTours', JSON.stringify(interestedTours));
   }, [interestedTours]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop
+      setShowScrollTop(scrollTop > 300)
+    }
+
+    window.addEventListener("scroll", handleScroll)
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [])
 
   const getId = (id) => {
     removeTour(id);
@@ -21,6 +34,13 @@ const Tours = ({ tours, removeTour }) => {
       setInterestedTours([...interestedTours, tour]);
     }
   };
+  
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    })
+  }
 
   return (
     <div className="toursWrapper px-4 py-8">
@@ -49,6 +69,17 @@ const Tours = ({ tours, removeTour }) => {
           </ul>
         )}
       </div>
+      
+      {showScrollTop && (
+        <button
+          onClick={scrollToTop}
+          className="fixed bottom-6 right-6 bg-gradient-to-r from-purple-500 to-pink-500 text-white p-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 z-50 animate-bounce"
+          aria-label="Scroll to top"
+        >
+          <FaArrowUp className="text-xl" />
+        </button>
+      )}
+
     </div>
   );
 };
