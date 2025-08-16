@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Navbar from "./Components/Navbar";
 import { useTheme } from "./contexts/ThemeContext";
-
+import CityPage from './pages/CityPage';
+import PlanTrip from "./pages/PlanTrip";
 
 import ExpenseTracker from "./pages/ExpenseTracker";
 import ChatBot from "./pages/Chatbot";
@@ -21,6 +22,7 @@ import Footer from "./Components/Footer";
 import Signup from "./pages/Signup";
 import { InterestedProvider } from './contexts/InterestedContext';
 import Interested from "./pages/interested";
+
 function App() {
   const { theme } = useTheme();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -54,10 +56,11 @@ function App() {
 
           <Route path="/terms" element={ <TermsOfService/>} />
           <Route path="*" element={<Navigate to="/" />} />
-            <Route
-  path="/interested"
-  element={isLoggedIn ? <Interested /> : <Navigate to="/login" />}
-/>
+          <Route path="/interested" element={isLoggedIn ? <Interested /> : <Navigate to="/login" />} />
+          <Route path="/destinations/:city" element={<CityPage />} />
+
+            <Route path="*" element={<Navigate to="/" />} />
+
         </Routes>
       </div>
       <Footer isLoggedIn={isLoggedIn} />
