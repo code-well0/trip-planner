@@ -8,30 +8,81 @@ const CityPage = () => {
   const { city } = useParams();
   const cityInfo = cities[city.toLowerCase()];
 
-  // Weather functionality
-  const [loading, setLoading] = useState(true);
-  const [weather, setWeather] = useState(null);
-  const API_KEY = process.env.REACT_APP_WEATHER_API_KEY;
+  const API_KEY = process.env.REACT_APP_WEATHERAPI_KEY;
 
+  // Current Weather
+  const [currentWeather, setCurrentWeather] = useState(null);
+  const [loadingCurrent, setLoadingCurrent] = useState(true);
+  const [currentError, setCurrentError] = useState('');
+
+  // Prediction feature
+  const [selectedDate, setSelectedDate] = useState('');
+  const [predictedWeather, setPredictedWeather] = useState(null);
+  const [loadingPrediction, setLoadingPrediction] = useState(false);
+  const [predictionError, setPredictionError] = useState('');
+
+  // Fetch current weather using WeatherAPI.com
   useEffect(() => {
-    const fetchWeather = async () => {
+    const fetchCurrentWeather = async () => {
+      if (!cityInfo) return;
       try {
-        setLoading(true);
+        setLoadingCurrent(true);
+        setCurrentError('');
         const response = await axios.get(
-          `https://api.openweathermap.org/data/2.5/weather?q=${cityInfo.name}&units=metric&appid=${API_KEY}`
+          `https://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${cityInfo.name},IN`
         );
-        setWeather(response.data);
-      } catch (error) {
-        console.error('Error fetching weather:', error);
+        console.log('Current weather API response:', response.data);
+        setCurrentWeather(response.data);
+      } catch (err) {
+        console.error('Error fetching current weather:', err);
+        setCurrentError('Current weather info unavailable');
       } finally {
-        setLoading(false);
+        setLoadingCurrent(false);
       }
     };
+    fetchCurrentWeather();
+  }, [cityInfo, API_KEY]);
 
-    if (cityInfo) {
-      fetchWeather();
+  // Handle weather prediction
+  const handlePredictWeather = async () => {
+    if (!selectedDate) return;
+
+    try {
+      setLoadingPrediction(true);
+      setPredictionError('');
+      setPredictedWeather(null);
+
+      const response = await axios.get('http://127.0.0.1:5000/api/predict_weather', {
+        params: { city: cityInfo.name, date: selectedDate }
+      });
+
+      const data = response.data;
+
+      if (data.error) {
+        setPredictionError('Prediction unavailable');
+        return;
+      }
+
+      const condition = data.details.condition || 'Unavailable';
+      const tempMax = data.details.temp_max ?? 'N/A';
+      const tempMin = data.details.temp_min ?? 'N/A';
+
+      let conditionClass = 'sunny';
+      const condLower = condition.toLowerCase();
+      if (condLower.includes('cloud')) conditionClass = 'cloudy';
+      else if (condLower.includes('rain')) conditionClass = 'rainy';
+      else if (condLower.includes('wind')) conditionClass = 'windy';
+      else if (condLower.includes('snow')) conditionClass = 'snowy';
+      else if (condLower.includes('storm')) conditionClass = 'stormy';
+
+      setPredictedWeather({ tempMax, tempMin, condition, conditionClass });
+    } catch (err) {
+      console.error('Prediction error:', err);
+      setPredictionError('Prediction not available');
+    } finally {
+      setLoadingPrediction(false);
     }
-  }, [cityInfo]);
+  };
 
   if (!cityInfo) {
     return <h1 className="text-center text-2xl mt-20">City not found</h1>;
@@ -40,42 +91,17 @@ const CityPage = () => {
   return (
     <div className="city-page-container">
       <div className="city-card">
-        {/* City Image */}
         <div className="image-wrapper">
-          <img
-            src={cityInfo.imageUrl}
-            alt={cityInfo.name}
-            className="city-image"
-          />
+          <img src={cityInfo.imageUrl} alt={cityInfo.name} className="city-image" />
         </div>
 
-        {/* City Content */}
         <div className="city-content">
           <h1 className="city-name">{cityInfo.name}</h1>
-
-          {/* Weather Info */}
-          <div className="city-weather mb-4">
-            <h3 className="detail-title font-bold mb-2">Current Weather:</h3>
-            {loading ? (
-              <p className="text-gray-500">Fetching weather...</p>
-            ) : weather ? (
-              <div className="weather-details">
-                <p className="text-prussian mb-1">
-                  🌡 Temperature: {weather.main.temp}°C
-                </p>
-                <p className="text-prussian">
-                  ☁ Condition: {weather.weather[0].description}
-                </p>
-              </div>
-            ) : (
-              <p className="text-gray-500">Weather info not available</p>
-            )}
-          </div>
 
           {/* Description */}
           <p className="city-description">{cityInfo.description}</p>
 
-          {/* Details: Ideal Time, Famous For, Transport */}
+          {/* Details */}
           <div className="city-details">
             <div className="detail">
               <h3 className="detail-title font-bold mb-1">Ideal Time to Visit:</h3>
@@ -89,6 +115,55 @@ const CityPage = () => {
               <h3 className="detail-title font-bold mb-1">Transport:</h3>
               <p className="text-prussian">{cityInfo.transport}</p>
             </div>
+          </div>
+
+          {/* Current Weather */}
+          <div className="weather-current mt-6">
+            <h3 className="detail-title font-bold mb-2">Current Weather:</h3>
+            {loadingCurrent ? (
+              <p className="text-gray-500">Fetching current weather...</p>
+            ) : currentError ? (
+              <p className="text-red-500">{currentError}</p>
+            ) : currentWeather ? (
+              <div className="p-4 border rounded sunny flex items-center gap-4">
+                <img
+                  src={`https:${currentWeather.current.condition.icon}`}
+                  alt={currentWeather.current.condition.text}
+                />
+                <div>
+                  <p><strong>Temp:</strong> {currentWeather.current.temp_c}°C</p>
+                  <p><strong>Condition:</strong> {currentWeather.current.condition.text}</p>
+                </div>
+              </div>
+            ) : null}
+          </div>
+
+          {/* Weather Prediction */}
+          <div className="weather-predictor mt-6">
+            <h3 className="detail-title font-bold mb-2">Plan Your Visit Weather:</h3>
+            <input
+              type="date"
+              value={selectedDate}
+              onChange={(e) => setSelectedDate(e.target.value)}
+              className="border p-2 rounded mb-2"
+            />
+            <button
+              onClick={handlePredictWeather}
+              className="bg-blue-800 text-white p-2 rounded ml-2"
+            >
+              Check Weather on Planned Date
+            </button>
+
+            {loadingPrediction && <p className="mt-2 text-gray-500">Fetching prediction...</p>}
+            {predictionError && <p className="mt-2 text-red-500">{predictionError}</p>}
+
+            {predictedWeather && (
+              <div className={`mt-4 p-4 border rounded ${predictedWeather.conditionClass}`}>
+                <p><strong>Max Temp:</strong> {predictedWeather.tempMax}°C</p>
+                <p><strong>Min Temp:</strong> {predictedWeather.tempMin}°C</p>
+                <p><strong>Condition:</strong> {predictedWeather.condition}</p>
+              </div>
+            )}
           </div>
         </div>
       </div>
