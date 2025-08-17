@@ -15,7 +15,6 @@ import "react-toastify/dist/ReactToastify.css";
 import TripRecommender from "./pages/TripRecommender";
 import TermsOfService from "./pages/terms";
 import ActivityPlanner from "./pages/ActivityPlanner";
-import PlanTrip from "./pages/PlanTrip";
 
 import "./index.css";
 import Footer from "./Components/Footer";
