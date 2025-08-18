@@ -1,6 +1,8 @@
 import React from 'react';
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
+  const navigate=useNavigate();
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
       <div className="container mx-auto px-4 py-8">
@@ -15,7 +17,9 @@ const Home = () => {
         </div>
 
         <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-          <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
+          <div onClick={()=> navigate("/plan")} 
+          className="cursor-pointer bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md transition transform hover:scale-105 hover:shadow-xl hover:bg-gray-100 dark:hover:bg-gray-700">
+            
             <h3 className="text-xl font-semibold text-gray-800 dark:text-white mb-3">
               Plan Your Trip
             </h3>
@@ -24,7 +28,8 @@ const Home = () => {
             </p>
           </div>
 
-          <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
+          <div onClick={()=> navigate("/expenses")} 
+           className="cursor-pointer bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md transition transform hover:scale-105 hover:shadow-xl hover:bg-gray-100 dark:hover:bg-gray-700">
             <h3 className="text-xl font-semibold text-gray-800 dark:text-white mb-3">
               Track Expenses
             </h3>
@@ -33,7 +38,7 @@ const Home = () => {
             </p>
           </div>
 
-          <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
+          <div onClick={()=> navigate("/api/chat")} className="cursor-pointer bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md transition transform hover:scale-105 hover:shadow-xl hover:bg-gray-100 dark:hover:bg-gray-700">
             <h3 className="text-xl font-semibold text-gray-800 dark:text-white mb-3">
               AI Assistant
             </h3>
@@ -48,3 +53,4 @@ const Home = () => {
 };
 
 export default Home;
+

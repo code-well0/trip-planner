@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import {
   PieChart,
   Pie,
@@ -98,7 +98,9 @@ const ExpenseTracker = () => {
       return acc;
     }, {})
   );
-
+  useEffect(() => {
+      window.scrollTo(0, 0);
+    }, []);
   return (
     <div className={`min-h-screen p-4 transition-colors duration-300 ${theme === 'dark' ? 'bg-gray-900' : 'bg-gradient-to-br from-purple-100 to-blue-100'}`}>
       <ConfirmModal
