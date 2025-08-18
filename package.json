@@ -12,7 +12,7 @@
     "cors": "^2.8.5",
     "dotenv": "^17.2.1",
     "express-session": "^1.18.2",
-    "firebase": "^12.1.0",
+    "firebase": "^9.23.0",
     "framer-motion": "^12.23.12",
     "lucide-react": "^0.536.0",
     "mongoose": "^8.17.1",
