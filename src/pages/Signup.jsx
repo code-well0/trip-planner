@@ -7,7 +7,9 @@ import "react-toastify/dist/ReactToastify.css";
 import HeroSection from "../Components/Hero";
 import { useTheme } from '../contexts/ThemeContext';
 import { FaGoogle } from "react-icons/fa";
-import { createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { FaApple } from "react-icons/fa";
+import { OAuthProvider, signInWithPopup } from "firebase/auth";
+import { createUserWithEmailAndPassword, GoogleAuthProvider } from "firebase/auth";
 import { auth } from "../firebase";
 
 export default function Signup({ setIsLoggedIn }) {
@@ -60,6 +62,34 @@ export default function Signup({ setIsLoggedIn }) {
     } catch (error) {
       console.error("Error during Google sign-in:", error);
       toast.error("Failed to sign up with Google.");
+    }
+  };
+
+  const signInWithMicrosoft = async () => {
+    const microsoftProvider = new OAuthProvider("microsoft.com");
+    try {
+      const result = await signInWithPopup(auth, microsoftProvider);
+      const user = result.user;
+      toast.success(`Welcome ${user.displayName || user.email}!`);
+      setIsLoggedIn(true);
+      navigate("/plan");
+    } catch (error) {
+      console.error("Microsoft login error:", error);
+      toast.error("Failed to sign in with Microsoft.");
+    }
+  };
+
+  const signInWithApple = async () => {
+    const appleProvider = new OAuthProvider("apple.com");
+    try {
+      const result = await signInWithPopup(auth, appleProvider);
+      const user = result.user;
+      toast.success(`Welcome ${user.displayName || user.email}!`);
+      setIsLoggedIn(true);
+      navigate("/plan");
+    } catch (error) {
+      console.error("Apple login error:", error);
+      toast.error("Failed to sign in with Apple.");
     }
   };
 
@@ -148,9 +178,35 @@ export default function Signup({ setIsLoggedIn }) {
               <hr className="flex-grow border-gray-300 dark:border-gray-600" />
             </div>
 
-            <button type="button" className="w-full py-3 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-white font-semibold rounded-lg shadow-md hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors duration-300 flex items-center justify-center space-x-2" onClick={handleGoogleSignIn}>
-              <FaGoogle />
+            <button
+              type="button"
+              onClick={handleGoogleSignIn}
+              className="w-full py-3 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-white font-semibold rounded-lg shadow-md hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors duration-300 flex items-center justify-center space-x-2"
+            >
+              <FaGoogle size={20} />
               <span>Continue with Google</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={signInWithMicrosoft}
+              className="w-full py-3 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-white font-semibold rounded-lg shadow-md hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors duration-300 flex items-center justify-center space-x-2"
+            >
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg"
+                alt="Microsoft logo"
+                className="w-5 h-5"
+              />
+              <span>Continue with Microsoft</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={signInWithApple}
+              className="w-full py-3 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-white font-semibold rounded-lg shadow-md hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors duration-300 flex items-center justify-center space-x-2"
+            >
+              <FaApple size={20} />
+              <span>Continue with Apple</span>
             </button>
 
             <p className="text-center text-sm text-gray-700 dark:text-gray-300">
@@ -176,4 +232,3 @@ export default function Signup({ setIsLoggedIn }) {
     </div>
   );
 }
-
