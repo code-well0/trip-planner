@@ -20,6 +20,7 @@ const CityPage = () => {
   const [predictionError, setPredictionError] = useState('');
 
   const API_KEY = process.env.REACT_APP_WEATHERAPI_KEY;
+  const API_URL = process.env.REACT_APP_API_URL; // <- Use this for deployed backend
 
   // Fetch current weather using WeatherAPI.com
   useEffect(() => {
@@ -51,7 +52,7 @@ const CityPage = () => {
       setPredictionError('');
       setPredictedWeather(null);
 
-      const response = await axios.get('http://127.0.0.1:5000/api/forecast', {
+      const response = await axios.get(`${API_URL}/api/forecast`, {
         params: { city: cityInfo.name, date: selectedDate }
       });
 
