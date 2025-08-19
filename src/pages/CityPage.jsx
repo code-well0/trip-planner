@@ -8,9 +8,7 @@ const CityPage = () => {
   const { city } = useParams();
   const cityInfo = cities[city.toLowerCase()];
 
-  const API_KEY = process.env.REACT_APP_WEATHERAPI_KEY;
-
-  // Current Weather
+  // Current Weather (from WeatherAPI)
   const [currentWeather, setCurrentWeather] = useState(null);
   const [loadingCurrent, setLoadingCurrent] = useState(true);
   const [currentError, setCurrentError] = useState('');
@@ -20,6 +18,8 @@ const CityPage = () => {
   const [predictedWeather, setPredictedWeather] = useState(null);
   const [loadingPrediction, setLoadingPrediction] = useState(false);
   const [predictionError, setPredictionError] = useState('');
+
+  const API_KEY = process.env.REACT_APP_WEATHERAPI_KEY;
 
   // Fetch current weather using WeatherAPI.com
   useEffect(() => {
@@ -31,7 +31,6 @@ const CityPage = () => {
         const response = await axios.get(
           `https://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${cityInfo.name},IN`
         );
-        console.log('Current weather API response:', response.data);
         setCurrentWeather(response.data);
       } catch (err) {
         console.error('Error fetching current weather:', err);
@@ -43,7 +42,7 @@ const CityPage = () => {
     fetchCurrentWeather();
   }, [cityInfo, API_KEY]);
 
-  // Handle weather prediction
+  // Handle weather prediction using Flask backend
   const handlePredictWeather = async () => {
     if (!selectedDate) return;
 
@@ -52,7 +51,7 @@ const CityPage = () => {
       setPredictionError('');
       setPredictedWeather(null);
 
-      const response = await axios.get('http://127.0.0.1:5000/api/predict_weather', {
+      const response = await axios.get('http://127.0.0.1:5000/api/forecast', {
         params: { city: cityInfo.name, date: selectedDate }
       });
 
@@ -63,10 +62,11 @@ const CityPage = () => {
         return;
       }
 
-      const condition = data.details.condition || 'Unavailable';
-      const tempMax = data.details.temp_max ?? 'N/A';
-      const tempMin = data.details.temp_min ?? 'N/A';
+      const tempMax = data.forecast.temp_max ?? 'N/A';
+      const tempMin = data.forecast.temp_min ?? 'N/A';
+      const condition = data.forecast.condition ?? 'Unavailable';
 
+      // Map condition to CSS classes
       let conditionClass = 'sunny';
       const condLower = condition.toLowerCase();
       if (condLower.includes('cloud')) conditionClass = 'cloudy';
@@ -97,11 +97,8 @@ const CityPage = () => {
 
         <div className="city-content">
           <h1 className="city-name">{cityInfo.name}</h1>
-
-          {/* Description */}
           <p className="city-description">{cityInfo.description}</p>
 
-          {/* Details */}
           <div className="city-details">
             <div className="detail">
               <h3 className="detail-title font-bold mb-1">Ideal Time to Visit:</h3>
@@ -110,10 +107,6 @@ const CityPage = () => {
             <div className="detail">
               <h3 className="detail-title font-bold mb-1">Famous For:</h3>
               <p className="text-prussian">{cityInfo.famousFor}</p>
-            </div>
-            <div className="detail sm:col-span-2">
-              <h3 className="detail-title font-bold mb-1">Transport:</h3>
-              <p className="text-prussian">{cityInfo.transport}</p>
             </div>
           </div>
 
