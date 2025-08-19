@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
@@ -92,6 +92,10 @@ export default function Signup({ setIsLoggedIn }) {
       toast.error("Failed to sign in with Apple.");
     }
   };
+  
+  useEffect(() => {
+        window.scrollTo(0, 0);
+      }, []);
 
   return (
     <div className={`relative flex flex-col lg:flex-row items-center justify-center min-h-screen transition-colors duration-300 ${theme === 'dark' ? 'bg-gray-900' : 'bg-gray-100'}`}
