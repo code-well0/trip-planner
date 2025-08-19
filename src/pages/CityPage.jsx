@@ -20,7 +20,7 @@ const CityPage = () => {
   const [predictionError, setPredictionError] = useState('');
 
   const API_KEY = process.env.REACT_APP_WEATHERAPI_KEY;
-  const API_URL = process.env.REACT_APP_API_URL; // <- Use this for deployed backend
+  const API_URL = process.env.REACT_APP_API_URL || 'http://127.0.0.1:5000'; // fallback to local
 
   // Fetch current weather using WeatherAPI.com
   useEffect(() => {
