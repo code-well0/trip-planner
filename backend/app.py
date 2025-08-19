@@ -5,9 +5,13 @@ import os
 import pandas as pd
 import joblib
 import re
+import logging
 
 app = Flask(__name__)
 CORS(app)
+
+# Logging
+logging.basicConfig(level=logging.INFO)
 
 # Folder where all models are stored
 MODEL_FOLDER = os.path.join(os.path.dirname(__file__), "..", "models")
@@ -68,6 +72,7 @@ def forecast_city(city, date):
 
             predictions[feat] = yhat
         except Exception as e:
+            logging.warning(f"Prediction failed for {feat} in {city}: {e}")
             predictions[feat] = None
 
     temp_max = predictions.get("temperature_2m_max (°C)")
@@ -98,6 +103,7 @@ def forecast():
             "forecast": forecast_data
         })
     except Exception as e:
+        logging.error(f"Forecast failed: {e}")
         return jsonify({"error": str(e)}), 500
 
 @app.route("/")
@@ -105,4 +111,6 @@ def index():
     return "Weather API is running!"
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 5000))  # Use Heroku/Render port if available
+    debug_mode = os.environ.get("FLASK_DEBUG", "False") == "True"
+    app.run(host="0.0.0.0", port=port, debug=debug_mode)
