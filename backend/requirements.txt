@@ -5,3 +5,4 @@ numpy==1.26.4
 joblib>=1.4.2
 python-dateutil==2.8.2
 pytz==2025.2
+gunicorn==20.1.0
