@@ -57,7 +57,9 @@ function ChatBot() {
             setIsLoading(false);
         }
     };
-
+    useEffect(() => {
+      window.scrollTo(0, 0);
+    }, []);
     return (
         <div className={`p-8 min-h-screen bg-gray-100 dark:bg-gray-900 transition-colors duration-300 ${theme}`}>
             <div className="max-w-3xl mx-auto flex flex-col h-[calc(100vh-120px)] rounded-xl shadow-lg bg-white dark:bg-gray-800 transition-colors duration-300">

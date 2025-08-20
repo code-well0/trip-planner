@@ -84,6 +84,10 @@ export default function PlanTrip({ searchQuery = "" }) {
     setLocalSearchQuery("");
   };
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div className="px-4 py-10 md:px-16 lg:px-24">
       {/* Title Section */}

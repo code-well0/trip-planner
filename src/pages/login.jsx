@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -100,6 +100,9 @@ export default function Login({ setIsLoggedIn }) {
       });
   };
 
+  useEffect(() => {
+      window.scrollTo(0, 0);
+    }, []);
   return (
     <div className={`relative flex flex-col lg:flex-row items-center justify-center min-h-screen transition-colors duration-300 ${theme === 'dark' ? 'bg-gray-900' : 'bg-gray-100'}`}
       style={{ backgroundImage: `url('./images/India on the Road.jpeg')` }}
