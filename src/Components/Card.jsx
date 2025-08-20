@@ -2,18 +2,23 @@ import React, { useState } from 'react';
 import { FaRupeeSign, FaMapMarkerAlt, FaRegCalendarAlt, FaRegThumbsDown } from 'react-icons/fa';
 import { useTheme } from '../contexts/ThemeContext';
 import { useInterested } from '../contexts/InterestedContext';
+import { useNavigate } from 'react-router-dom';
 
 const Card = ({ tour, getRemoveId }) => {
   const { theme } = useTheme();
   const { addToInterested } = useInterested(); 
   const [readmore, setReadmore] = useState(false);
+  const navigate = useNavigate();
 
   const description = readmore
     ? tour.info
     : `${tour.info.substring(0, 200)}...`;
 
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 flex flex-col overflow-hidden border border-gray-100 dark:border-gray-700 group">
+    <div
+      className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 flex flex-col overflow-hidden border border-gray-100 dark:border-gray-700 group cursor-pointer"
+      onClick={() => navigate(`/destinations/${tour.name.toLowerCase()}`)}
+    >
       <img
         src={tour.image}
         alt={tour.name}
@@ -32,7 +37,7 @@ const Card = ({ tour, getRemoveId }) => {
         <p className="text-gray-500 dark:text-gray-300 text-base mb-4">
           {description}
           <span
-            onClick={() => setReadmore(!readmore)}
+            onClick={(e) => { e.stopPropagation(); setReadmore(!readmore); }}
             className="text-blue-500 hover:text-blue-600 dark:hover:text-blue-400 cursor-pointer ml-1"
           >
             {readmore ? 'Show Less' : 'Read More'}
@@ -64,13 +69,13 @@ const Card = ({ tour, getRemoveId }) => {
         <div className="mt-auto flex justify-between gap-4">
           <button
             className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg text-sm transition"
-            onClick={() => addToInterested(tour)}
+            onClick={(e) => { e.stopPropagation(); addToInterested(tour); }}
           >
             Interested
           </button>
           <button
             className="flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-white font-medium hover:bg-red-100 dark:hover:bg-red-900 hover:text-red-600 dark:hover:text-red-400 border border-gray-200 dark:border-gray-600 transition-all duration-200"
-            onClick={() => getRemoveId(tour.id)}
+            onClick={(e) =>  { e.stopPropagation(); getRemoveId(tour.id); }}
           >
             <FaRegThumbsDown className="text-lg" /> Not Interested
           </button>
