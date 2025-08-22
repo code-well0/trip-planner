@@ -8,13 +8,21 @@ import "../Components/Navbar.css";
 
 export default function PlanTrip({ searchQuery = "" }) {
   const [tour, setTour] = useState(data);
+  const [selectedCountry, setSelectedCountry] = useState("India");
   const [selectedRegion, setSelectedRegion] = useState("All");
   const [sortBy, setSortBy] = useState("default");
   const [localSearchQuery, setLocalSearchQuery] = useState("");
   const [showRegionDropdown, setShowRegionDropdown] = useState(false);
   const [showSortDropdown, setShowSortDropdown] = useState(false);
 
-  const regions = ["All", "North", "South", "East", "West"];
+  const regions = [
+    "All",
+    ...new Set(
+      data
+        .filter((t) => t.country === selectedCountry)
+        .map((t) => t.region)
+    ),
+  ];
   const sortOptions = [
     { value: "default", label: "Default" },
     { value: "price-low", label: "Price: Low to High" },
@@ -42,28 +50,22 @@ export default function PlanTrip({ searchQuery = "" }) {
 
   const getSortedTours = (tours) => {
     if (sortBy === "price-low") {
-      return [...tours].sort(
-        (a, b) =>
-          parseFloat(a.price.replace(/,/g, "")) -
-          parseFloat(b.price.replace(/,/g, ""))
-      );
+      return [...tours].sort((a, b) => a.price - b.price);
     }
     if (sortBy === "price-high") {
-      return [...tours].sort(
-        (a, b) =>
-          parseFloat(b.price.replace(/,/g, "")) -
-          parseFloat(a.price.replace(/,/g, ""))
-      );
+      return [...tours].sort((a, b) => b.price - a.price);
     }
     return tours;
   };
 
 
   const filteredTours = tour.filter((t) => {
-    const matchesRegion = selectedRegion === "All" || t.region === selectedRegion;
+    const matchesCountry = t.country === selectedCountry;
+    const matchesRegion =
+      selectedRegion === "All" || t.region === selectedRegion;
     const effectiveSearchQuery = (searchQuery || localSearchQuery || "").toLowerCase();
     const matchesSearch = t.name.toLowerCase().includes(effectiveSearchQuery);
-    return matchesRegion && matchesSearch;
+    return matchesCountry && matchesRegion && matchesSearch;
   });
 
   const sortedAndFilteredTours = getSortedTours(filteredTours);
@@ -101,6 +103,30 @@ export default function PlanTrip({ searchQuery = "" }) {
         <p className="mt-2 text-sm text-gray-500 italic">
           Adventure, culture, or calm — what are you exploring today?
         </p>
+      </div>
+
+      {/* Country Tabs */}
+      <div className="flex justify-center mb-8 border-b-2 border-gray-200 dark:border-gray-700">
+        <button
+          onClick={() => setSelectedCountry("India")}
+          className={`px-6 py-2 text-lg font-semibold transition-colors duration-300 ${
+            selectedCountry === "India"
+              ? "border-b-4 border-purple-500 text-purple-600 dark:text-purple-400"
+              : "text-gray-500 hover:text-purple-500 dark:text-gray-400 dark:hover:text-purple-400"
+          }`}
+        >
+          India
+        </button>
+        <button
+          onClick={() => setSelectedCountry("Global")}
+          className={`px-6 py-2 text-lg font-semibold transition-colors duration-300 ${
+            selectedCountry === "Global"
+              ? "border-b-4 border-purple-500 text-purple-600 dark:text-purple-400"
+              : "text-gray-500 hover:text-purple-500 dark:text-gray-400 dark:hover:text-purple-400"
+          }`}
+        >
+          Global
+        </button>
       </div>
 
       {/* Search, Filter and Sort Controls */}
