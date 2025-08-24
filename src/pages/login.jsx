@@ -23,40 +23,41 @@ export default function Login({ setIsLoggedIn }) {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleLogin = (e) => {
-    e.preventDefault();
-    if (!email || !password) {
-      toast.error("Please enter email and password");
-      return;
-    }
-    setIsLoading(true);
-    signInWithEmailAndPassword(auth, email, password)
-      .then(() => {
-        setIsLoading(false);
-        setIsLoggedIn(true);
-        toast.success("Login successful!");
-        navigate("/plan");
-      })
-      .catch((error) => {
-        setIsLoading(false);
-        toast.error("Incorrect email or password.");
-        console.error("Error during login:", error);
-      });
-  };
-
-  const handleGoogleSignIn = async () => {
-    const provider = new GoogleAuthProvider();
-    provider.setCustomParameters({ prompt: "select_account" });
-    try {
-      await signInWithPopup(auth, provider);
-      setIsLoggedIn(true);
-      toast.success("Logged in with Google successfully!");
+  
+const handleLogin = (e) => {
+  e.preventDefault();
+  if (!email || !password) {
+    toast.error("Please enter email and password");
+    return;
+  }
+  setIsLoading(true);
+  signInWithEmailAndPassword(auth, email, password)
+    .then(() => {
+      setIsLoading(false);
+      
+      toast.success("Login successful!");
       navigate("/plan");
-    } catch (error) {
-      console.error("Google login error:", error);
-      toast.error("Failed to sign in with Google.");
-    }
-  };
+    })
+    .catch((error) => {
+      setIsLoading(false);
+      toast.error("Incorrect email or password.");
+      console.error("Error during login:", error);
+    });
+};
+
+const handleGoogleSignIn = async () => {
+  const provider = new GoogleAuthProvider();
+  provider.setCustomParameters({ prompt: "select_account" });
+  try {
+    await signInWithPopup(auth, provider);
+    
+    toast.success("Logged in with Google successfully!");
+    navigate("/plan");
+  } catch (error) {
+    console.error("Google login error:", error);
+    toast.error("Failed to sign in with Google.");
+  }
+};
 
   const handleMicrosoftSignIn = async () => {
     const provider = new OAuthProvider("microsoft.com");
