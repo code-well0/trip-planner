@@ -18,6 +18,7 @@ function ChatBot() {
     }, [messages]);
 
     // Handle sending a message to the AI
+
     const handleSendMessage = async (e) => {
         e.preventDefault();
         if (!input.trim()) return;
@@ -28,21 +29,21 @@ function ChatBot() {
         setIsLoading(true);
 
         try {
-            // Placeholder for Gemini API call
-            // In a real application, you would make an API call to a model
-            let chatHistory = [];
-            chatHistory.push({ role: "user", parts: [{ text: input }] });
-            const payload = { contents: chatHistory };
-            const apiKey = "";
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
-
-            const response = await fetch(apiUrl, {
+            // Corrected: Call your own backend API
+            const response = await fetch('https://trip-planner-backend-bw79.onrender.com/api/chat', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
+                body: JSON.stringify({ message: input })
             });
+
+            // Handle non-OK responses from your server
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.error || 'Server error occurred');
+            }
+
             const result = await response.json();
-            const botResponse = result.candidates[0].content.parts[0].text;
+            const botResponse = result.reply;
 
             setTimeout(() => {
                 const botMessage = { text: botResponse, sender: 'bot' };
@@ -50,13 +51,15 @@ function ChatBot() {
                 setIsLoading(false);
             }, 500); // Simulate typing delay
         } catch (error) {
-            console.error("Error fetching AI response:", error);
-            const errorMessage = { text: "Sorry, I'm having trouble connecting right now. Please try again later.", sender: 'bot' };
+            console.error("Error fetching AI response from server:", error);
+            const errorMessage = { text: `Sorry, there was a problem: ${error.message}`, sender: 'bot' };
             setMessages(prevMessages => [...prevMessages, errorMessage]);
             setIsLoading(false);
         }
     };
-
+    useEffect(() => {
+      window.scrollTo(0, 0);
+    }, []);
     return (
         <div className={`p-8 min-h-screen bg-gray-100 dark:bg-gray-900 transition-colors duration-300 ${theme}`}>
             <div className="max-w-3xl mx-auto flex flex-col h-[calc(100vh-120px)] rounded-xl shadow-lg bg-white dark:bg-gray-800 transition-colors duration-300">

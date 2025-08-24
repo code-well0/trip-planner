@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { FaGlobeAsia, FaSearch, FaCompass } from "react-icons/fa";
 import { useTheme } from '../contexts/ThemeContext';
 import data from "../data";
@@ -50,6 +50,9 @@ export default function TripRecommender() {
 
     setRecommendations(filtered.slice(0, 6));
   };
+  useEffect(() => {
+      window.scrollTo(0, 0);
+    }, []);
 
   return (
     <div className={`p-8 min-h-screen bg-gray-100 dark:bg-gray-900 transition-colors duration-300 ${theme}`}>
