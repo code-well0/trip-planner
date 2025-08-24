@@ -27,6 +27,8 @@ function App() {
   const [isLoading, setIsLoading] = useState(true); 
   const [searchQuery, setSearchQuery] = useState("");
 
+  //issue fix for persisting login state
+
   useEffect(() => {
     
     const unsubscribe = onAuthStateChanged(auth, (user) => {
