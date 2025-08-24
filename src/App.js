@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Navbar from "./Components/Navbar";
 import { useTheme } from "./contexts/ThemeContext";
+import DestinationPage from "./pages/DestinationPage";
 
 
 import ExpenseTracker from "./pages/ExpenseTracker";
@@ -15,6 +16,11 @@ import TripRecommender from "./pages/TripRecommender";
 import TermsOfService from "./pages/terms";
 import ActivityPlanner from "./pages/ActivityPlanner";
 import PlanTrip from "./pages/PlanTrip";
+import AboutUs from "./pages/AboutUs";
+import HelpCenter from "./pages/HelpCenter";
+import ContactUs from "./pages/ContactUs";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import FAQ from "./pages/FAQ";
 
 import "./index.css";
 import Footer from "./Components/Footer";
@@ -51,9 +57,16 @@ function App() {
            <Route path="/activity-planner" element={isLoggedIn ? <ActivityPlanner /> : <Navigate to="/login" />} /> 
 
           <Route path="/profile" element={isLoggedIn ? <Profile /> : <Navigate to="/login" />} />
+          
 
           <Route path="/terms" element={ <TermsOfService/>} />
+          <Route path="/about" element={ <AboutUs />} />
+          <Route path="/help" element={<HelpCenter />} />
+          <Route path="/contact" element={<ContactUs />} />
+          <Route path="/privacy" element={<PrivacyPolicy />} />
+          <Route path="/faq" element={<FAQ />} />
           <Route path="*" element={<Navigate to="/" />} />
+          <Route path="/destinations/:id" element={<DestinationPage />} />
             <Route
   path="/interested"
   element={isLoggedIn ? <Interested /> : <Navigate to="/login" />}
