@@ -23,32 +23,33 @@ export default function Signup({ setIsLoggedIn }) {
   const [isLoggedInLocal, setIsLoggedInLocal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleSignup = (e) => {
-    e.preventDefault();
-    if (!name || !email || !password) {
-      toast.error("Please fill all fields");
-      return;
-    }
-    setIsLoading(true);
-    createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        setIsLoading(false);
-        setIsLoggedIn(true);
-        toast.success("Signed up successfully!");
-        navigate("/plan");
-      })
-      .catch((error) => {
-        setIsLoading(false);
-        if (error.code === 'auth/email-already-in-use') {
-          toast.error("This email address is already in use.");
-        } else if (error.code === 'auth/weak-password') {
-          toast.error("Password should be at least 6 characters.");
-        } else {
-          toast.error("Failed to create an account.");
-        }
-        console.error("Error during signup:", error);
-      });
-  };
+
+const handleSignup = (e) => {
+  e.preventDefault();
+  if (!name || !email || !password) {
+    toast.error("Please fill all fields");
+    return;
+  }
+  setIsLoading(true);
+  createUserWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+      setIsLoading(false);
+      
+      toast.success("Signed up successfully!");
+      navigate("/plan");
+    })
+    .catch((error) => {
+      setIsLoading(false);
+      if (error.code === 'auth/email-already-in-use') {
+        toast.error("This email address is already in use.");
+      } else if (error.code === 'auth/weak-password') {
+        toast.error("Password should be at least 6 characters.");
+      } else {
+        toast.error("Failed to create an account.");
+      }
+      console.error("Error during signup:", error);
+    });
+};
 
   const handleGoogleSignIn = async () => {
     const provider = new GoogleAuthProvider();
