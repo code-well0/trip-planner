@@ -49,10 +49,10 @@ const Footer = ({ isLoggedIn }) => {
                         <h4 className="text-lg font-semibold mb-3">Popular Destinations</h4>
                         <ul className="space-y-2">
                             <li><Link to="/destinations/goa" className="hover:text-blue-500 transition-colors duration-200">🏖️ Goa</Link></li>
-                            <li><Link to="/destinations/kerala" className="hover:text-blue-500 transition-colors duration-200">🌴 Kerala</Link></li>
-                            <li><Link to="/destinations/rajasthan" className="hover:text-blue-500 transition-colors duration-200">🏰 Rajasthan</Link></li>
-                            <li><Link to="/destinations/himachal" className="hover:text-blue-500 transition-colors duration-200">🏔️ Himachal Pradesh</Link></li>
-                            <li><Link to="/destinations/kashmir" className="hover:text-blue-500 transition-colors duration-200">❄️ Kashmir</Link></li>
+                            <li><Link to="/destinations/jaipur" className="hover:text-blue-500 transition-colors duration-200">🏰 Jaipur</Link></li>
+                            <li><Link to="/destinations/varanasi" className="hover:text-blue-500 transition-colors duration-200">🕉️ Varanasi</Link></li>
+                            <li><Link to="/destinations/darjeeling" className="hover:text-blue-500 transition-colors duration-200">🏞️ Darjeeling</Link></li>
+                            <li><Link to="/destinations/paris" className="hover:text-blue-500 transition-colors duration-200">🗼 Paris</Link></li>
                         </ul>
                     </div>
 
