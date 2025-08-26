@@ -95,7 +95,7 @@ export default function PlanTrip({ searchQuery = "" }) {
       {/* Title Section */}
       <div className="text-center mb-10">
         <h2 className="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 text-transparent bg-clip-text flex items-center justify-center gap-3 animate-fadeIn">
-          <FaMapMarkedAlt className="text-5xl" /> Plan Your Dream Getaway
+          <FaMapMarkedAlt className="text-5xl" /> Plan Your Dream Gateway
         </h2>
         <p className="text-gray-600 mt-3 text-lg">
           Discover the best destinations tailored to your mood and purpose.
