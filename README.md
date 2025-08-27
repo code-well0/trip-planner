@@ -142,57 +142,12 @@
 
 We welcome contributions from everyone, especially participants of **GSSoC’25**! ✨
 
-Follow these steps to contribute your changes to **trip-planner**:
-
-**1. Star & Fork the Repository**
-
-   Click the **Star** button to support the project, then **Fork** the repo to create your own copy:
-   
-   👉 [https://github.com/code-well0/trip-planner](https://github.com/code-well0/trip-planner)
-
-**2. Clone Your Fork** 
-
-   Use the following command to clone your forked repository to your local machine:
-   
-   ```bash
-   git clone https://github.com/Your-Username/trip-planner.git
-   ```
-**3. Create a Branch**
-
-    Navigate to the project directory and create a new branch for your changes:
-
-    ```bash
-    cd trip-planner
-    git checkout -b my-feature-branch
-    ```
-
-**4. Make Changes**
-
-    Add your new ML projects, games, websites, or enhancements. Fix bugs or improve UI/UX as needed.
-
-**5. Commit Your Changes**
-
-    Use a meaningful commit message:
-
-    ```bash
-    git add .
-    git commit -m "📦 [Feature Add] Add XYZ website project"
-    ```
-
-**6. Push Your Changes**
- 
-    Push your branch to your GitHub fork:
-    
-    ```bash
-    git push origin my-feature-branch
-    ```
-	
-**7. Submit a Pull Request**
-
-- Go to your fork on GitHub.
-- Click "Compare & pull request".
-- Add a descriptive title using one of the prefixes: [UI], [UX], [Feature Add].  
-- Link the related issue (if any) and clearly describe your changes.
+To contribute:
+* Fork the repository
+* Create a new branch: `git checkout -b feature-name`
+* Make your changes and commit: `git commit -m "Added new feature"`
+* Push to your fork: `git push origin feature-name`
+* Create a Pull Request
 
 ![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
 
@@ -313,3 +268,4 @@ This project is licensed under the MIT License - see the [`License`](https://git
 
 
 > **"Travel is the only thing you buy that makes you richer." Ready to show off your coding achievements? Get started with trip-planner today! 🚀**
+
