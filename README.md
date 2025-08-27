@@ -154,15 +154,14 @@ Follow these steps to contribute your changes to **trip-planner**:
 
    Use the following command to clone your forked repository to your local machine:
    
-   ```
+   ```bash
    git clone https://github.com/Your-Username/trip-planner.git
    ```
-   
 **3. Create a Branch**
 
     Navigate to the project directory and create a new branch for your changes:
 
-    ```
+    ```bash
     cd trip-planner
     git checkout -b my-feature-branch
     ```
@@ -175,7 +174,7 @@ Follow these steps to contribute your changes to **trip-planner**:
 
     Use a meaningful commit message:
 
-    ```
+    ```bash
     git add .
     git commit -m "📦 [Feature Add] Add XYZ website project"
     ```
@@ -184,7 +183,7 @@ Follow these steps to contribute your changes to **trip-planner**:
  
     Push your branch to your GitHub fork:
     
-    ```
+    ```bash
     git push origin my-feature-branch
     ```
 	
@@ -311,5 +310,6 @@ This project is licensed under the MIT License - see the [`License`](https://git
 </p>
 
 <img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&height=65&section=footer"/>
+
 
 > **"Travel is the only thing you buy that makes you richer." Ready to show off your coding achievements? Get started with trip-planner today! 🚀**
