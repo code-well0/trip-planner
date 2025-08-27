@@ -1,23 +1,68 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FaUser, FaSignOutAlt, FaEdit, FaSave, FaTimes } from 'react-icons/fa';
+import { FaUser, FaSignOutAlt, FaEdit, FaSave, FaTimes, FaSpinner } from 'react-icons/fa';
+import { auth, db } from "../firebase"; // Assuming db is exported from your firebase config
+import { doc, getDoc, setDoc } from "firebase/firestore";
+import { updateProfile, signOut } from "firebase/auth";
+import { toast } from 'react-toastify';
 
 const Profile = () => {
   const navigate = useNavigate();
   const [isEditing, setIsEditing] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [isSaving, setIsSaving] = useState(false);
   const [userInfo, setUserInfo] = useState({
-    name: 'Travel Enthusiast',
-    email: 'user@example.com',
-    location: 'New York, USA',
-    bio: 'Love exploring new places and creating memories!',
-    joinDate: 'January 2024'
+    name: '',
+    email: '',
+    location: '',
+    bio: '',
+    joinDate: ''
   });
   const [editInfo, setEditInfo] = useState({ ...userInfo });
 
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    navigate("/login");
-    window.location.reload();
+  useEffect(() => {
+    const fetchUserData = async () => {
+      if (auth.currentUser) {
+        const userDocRef = doc(db, "users", auth.currentUser.uid);
+        try {
+          const docSnap = await getDoc(userDocRef);
+          const dbData = docSnap.exists() ? docSnap.data() : {};
+
+          const fullUserInfo = {
+            name: auth.currentUser.displayName || dbData.name || 'New User',
+            email: auth.currentUser.email,
+            location: dbData.location || '',
+            bio: dbData.bio || '',
+            joinDate: auth.currentUser.metadata.creationTime
+              ? new Date(auth.currentUser.metadata.creationTime).toLocaleDateString()
+              : 'N/A',
+          };
+          setUserInfo(fullUserInfo);
+          setEditInfo(fullUserInfo);
+        } catch (error) {
+          console.error("Error fetching user data:", error);
+          toast.error("Could not fetch your profile data.");
+        } finally {
+          setLoading(false);
+        }
+      } else {
+        // If no user, stop loading and the component will redirect.
+        setLoading(false);
+      }
+    };
+
+    fetchUserData();
+  }, []);
+
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      navigate("/login");
+      toast.success("Logged out successfully.");
+    } catch (error) {
+      console.error("Error signing out: ", error);
+      toast.error("Failed to log out.");
+    }
   };
 
   const handleEdit = () => {
@@ -25,10 +70,40 @@ const Profile = () => {
     setEditInfo({ ...userInfo });
   };
 
-  const handleSave = () => {
-    setUserInfo({ ...editInfo });
-    setIsEditing(false);
-    // Here you would typically save to a database
+  const handleSave = async () => {
+    if (!auth.currentUser) return;
+    setIsSaving(true);
+
+    // 1. Update Firebase Auth profile (for properties like displayName)
+    if (editInfo.name !== userInfo.name) {
+      try {
+        await updateProfile(auth.currentUser, { displayName: editInfo.name });
+      } catch (error) {
+        console.error("Error updating auth profile:", error);
+        toast.error("Failed to update profile name.");
+        setIsSaving(false);
+        return;
+      }
+    }
+
+    // 2. Update Firestore document for other details
+    const userDocRef = doc(db, "users", auth.currentUser.uid);
+    try {
+      await setDoc(userDocRef, {
+        name: editInfo.name,
+        location: editInfo.location,
+        bio: editInfo.bio,
+      }, { merge: true });
+
+      setUserInfo({ ...editInfo });
+      setIsEditing(false);
+      toast.success("Profile updated successfully!");
+    } catch (error) {
+      console.error("Error saving profile details to Firestore:", error);
+      toast.error("Failed to save profile details.");
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   const handleCancel = () => {
@@ -39,6 +114,20 @@ const Profile = () => {
   const handleInputChange = (field, value) => {
     setEditInfo({ ...editInfo, [field]: value });
   };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900">
+        <p className="text-gray-600 dark:text-gray-300">Loading profile...</p>
+      </div>
+    );
+  }
+
+  if (!auth.currentUser) {
+    // This should ideally not be hit if routing is correct, but as a safeguard:
+    navigate('/login');
+    return null;
+  }
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
@@ -66,9 +155,9 @@ const Profile = () => {
                   />
                   <input
                     type="email"
-                    value={editInfo.email}
-                    onChange={(e) => handleInputChange('email', e.target.value)}
-                    className="text-gray-600 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded px-3 py-2 w-full"
+                    value={editInfo.email || ''}
+                    readOnly
+                    className="text-gray-600 dark:text-gray-300 bg-gray-200 dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded px-3 py-2 w-full cursor-not-allowed"
                     placeholder="Your Email"
                   />
                   <input
@@ -88,10 +177,10 @@ const Profile = () => {
               ) : (
                 <div>
                   <h1 className="text-3xl font-bold text-gray-800 dark:text-white mb-2">
-                    {userInfo.name}
+                    {userInfo.name || 'New User'}
                   </h1>
-                  <p className="text-gray-600 dark:text-gray-300 mb-2">{userInfo.email}</p>
-                  <p className="text-gray-600 dark:text-gray-300 mb-3">{userInfo.location}</p>
+                  <p className="text-gray-600 dark:text-gray-300 mb-2">{userInfo.email || 'No email provided'}</p>
+                  <p className="text-gray-600 dark:text-gray-300 mb-3">{userInfo.location || 'Location not set'}</p>
                   <p className="text-gray-700 dark:text-gray-300 mb-4">{userInfo.bio}</p>
                   <p className="text-sm text-gray-500 dark:text-gray-400">
                     Member since {userInfo.joinDate}
@@ -105,9 +194,13 @@ const Profile = () => {
                   <>
                     <button
                       onClick={handleSave}
-                      className="flex items-center gap-2 px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition duration-200"
+                      className="flex items-center justify-center gap-2 px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition duration-200 disabled:bg-green-300 dark:disabled:bg-green-800"
+                      disabled={isSaving}
                     >
-                      <FaSave /> Save
+                      {isSaving 
+                        ? <><FaSpinner className="animate-spin" /> Saving...</>
+                        : <><FaSave /> Save</>
+                      }
                     </button>
                     <button
                       onClick={handleCancel}
