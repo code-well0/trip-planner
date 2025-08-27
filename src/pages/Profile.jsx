@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+
 import { FaUser, FaSignOutAlt, FaEdit, FaSave, FaTimes, FaSpinner } from 'react-icons/fa';
 import { auth, db } from "../firebase"; // Assuming db is exported from your firebase config
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { updateProfile, signOut } from "firebase/auth";
 import { toast } from 'react-toastify';
+
+
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -19,6 +22,7 @@ const Profile = () => {
     joinDate: ''
   });
   const [editInfo, setEditInfo] = useState({ ...userInfo });
+
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -64,6 +68,7 @@ const Profile = () => {
       toast.error("Failed to log out.");
     }
   };
+
 
   const handleEdit = () => {
     setIsEditing(true);
