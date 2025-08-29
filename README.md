@@ -215,11 +215,11 @@ This project is licensed under the MIT License - see the [`License`](https://git
 
 <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="150%">
 
-**👨‍💻 Built with ❤️ by trip-planner Team**
+<h3 align="center"> 👨‍💻 Built with ❤️ by trip-planner Team </h3>
 
-**❤️ Shubrali jain and Contributors ❤️**
+<h4 align="center">❤️ Shubrali jain and Contributors ❤️ </h4>
 
-[open an issue](https://github.com/code-well0/trip-planner/issues) | [Watch Demo](https://trip-planner-sable-eight.vercel.app/)
+<h5 align="center"> [open an issue](https://github.com/code-well0/trip-planner/issues) | [Watch Demo](https://trip-planner-sable-eight.vercel.app/) </h5>
 
 <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="150%">
 
@@ -232,4 +232,5 @@ This project is licensed under the MIT License - see the [`License`](https://git
 <img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&height=65&section=footer"/>
 
 > **"Travel is the only thing you buy that makes you richer." Ready to show off your coding achievements? Get started with trip-planner today! 🚀**
+
 
