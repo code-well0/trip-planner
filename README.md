@@ -77,7 +77,7 @@
   <b>This project is now OFFICIALLY accepted for:</b>
 </p>
 
-![GSSoC Logo](/trip-planner/public/images/gssoc%20logo.png)
+![GSSoC Logo](https://github.com/code-well0/trip-planner/blob/main/public/images/gssoc%20logo.png)
 
 **Exciting News...**
 
@@ -235,3 +235,4 @@ This project is licensed under the MIT License - see the [`License`](https://git
 <img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&height=65&section=footer"/>
 
 > **"Travel is the only thing you buy that makes you richer." Ready to show off your coding achievements? Get started with trip-planner today! 🚀**
+
