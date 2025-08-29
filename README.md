@@ -46,57 +46,57 @@
 
 <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="150%">
 
-**✨ Features**
+**Features**
 
-***🗺️ Destination Discovery***
+***Destination Discovery***
 
 * Browse a curated list of popular Indian cities
 * Beautifully themed with cultural emojis
 * Seamless navigation and engaging UI
 
-***🔍 Smart Filtering***
+***Smart Filtering***
 
 * Instantly filter destinations by region: North, South, East, West
 * Dynamic and user-friendly buttons
 
-***🤖 AI Travel Assistant***
+***AI Travel Assistant***
 
 * **Powered by Google Gemini 2.0 Flash**
 * Get personalized travel suggestions, routes, local insights
 * Fast, intelligent, real-time chat with typing indicators
 
-***💰 Expense Tracking***
+***Expense Tracking***
 
 * Keep tabs on your travel budget
 * Add and monitor trip expenses with ease
 
 <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="150%">
 
-<h2 align="center">🎯 Open Source Programmes ⭐</h2>
+<h2 align="center">Open Source Programmes </h2>
 <p align="center">
   <b>This project is now OFFICIALLY accepted for:</b>
 </p>
 
 ![GSSoC Logo](/trip-planner/public/images/gssoc%20logo.png)
 
-🌟 **Exciting News...**
+**Exciting News...**
 
-🚀 This project is now an official part of GirlScript Summer of Code – GSSoC'25! 💃🎉💻 We're thrilled to welcome contributors from all over India and beyond to collaborate, build, and grow trip-planner! Let’s make learning and career development smarter – together! 🌟👨‍💻👩‍💻
+This project is now an official part of GirlScript Summer of Code – GSSoC'25! We're thrilled to welcome contributors from all over India and beyond to collaborate, build, and grow trip-planner! Let’s make learning and career development smarter – together! 
 
-👩‍💻 GSSoC is one of India’s **largest 3-month-long open-source programs** that encourages developers of all levels to contribute to real-world projects 🌍 while learning, collaborating, and growing together. 🌱
+GSSoC is one of India’s **largest 3-month-long open-source programs** that encourages developers of all levels to contribute to real-world projects while learning, collaborating, and growing together. 
 
-🌈 With **mentorship, community support**, and **collaborative coding**, it's the perfect platform for developers to:
+With **mentorship, community support**, and **collaborative coding**, it's the perfect platform for developers to:
 
-- ✨ Improve their skills
-- 🤝 Contribute to impactful projects
-- 🏆 Get recognized for their work
-- 📜 Receive certificates and swag!
+- Improve their skills
+- Contribute to impactful projects
+- Get recognized for their work
+- Receive certificates and swag!
 
-🎉 **I can’t wait to welcome new contributors** from GSSoC 2025 to this trip-planner project family! Let's build, learn, and grow together — one commit at a time. 🔥👨‍💻👩‍💻
+**I can’t wait to welcome new contributors** from GSSoC 2025 to this trip-planner project family! Let's build, learn, and grow together — one commit at a time. 
 
 <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="150%">
 
-**🛠️ Tech Stack**
+**Tech Stack**
 
 * **React.js** – Component-based front-end architecture
 * **CSS Flexbox** – Clean and responsive UI design
@@ -138,9 +138,9 @@
 
 ![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
 
-**🤝 Contributing**
+**Contributing**
 
-We welcome contributions from everyone, especially participants of **GSSoC’25**! ✨
+We welcome contributions from everyone, especially participants of **GSSoC’25**! 
 
 To contribute:
 * Fork the repository
@@ -151,38 +151,25 @@ To contribute:
 
 ![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
 
-**🙌 Acknowledgements**
+**Acknowledgements**
 
-- Thanks to all contributors of this project ❤️
+- Thanks to all contributors of this project 
 - Special shoutout to **GirlScript Summer of Code (GSSoC’25)** for the amazing community and support!
-- Built with dedication, collaboration, and lots of chai ☕
+- Built with dedication, collaboration, and lots of chai 
 
 <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="100%">
 
-**📜 Code of Conduct**
+**Code of Conduct**
 
 Please refer to the [`Code of Conduct`](https://github.com/code-well0/trip-planner/blob/main/CODE_OF_CONDUCT.md) for details on contributing guidelines and community standards.
 
 <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="100%">
 
-**👤 Contribution Guidelines**
+**Contribution Guidelines**
 
 We love our contributors! If you'd like to help, please check out our [`CONTRIBUTE.md`](https://github.com/code-well0/trip-planner/blob/main/CONTRIBUTING.md) file for guidelines.
 
->Thank you once again to all our contributors who has contributed to **trip-planner!** Your efforts are truly appreciated. 💖👏
-
-<!-- Contributors badge (auto-updating) -->
-
-[![Contributors](https://img.shields.io/github/contributors/code-well0/trip-planner?style=for-the-badge)](https://github.com/code-well0/trip-planner/graphs/contributors)
-
-<!-- Contributors avatars (auto-updating) -->
-<p align="left">
-  <a href="https://github.com/code-well0/trip-planner/graphs/contributors">
-    <img src="https://contrib.rocks/image?repo=code-well0/trip-planner" alt="Contributors" />
-  </a>
-</p>
-
-See the full list of contributors and their contributions on the [`GitHub Contributors Graph`](https://github.com/code-well0/trip-planner/graphs/contributors).
+>Thank you once again to all our contributors who has contributed to **trip-planner!** Your efforts are truly appreciated.
 
 <h2 align="center">
 <p style="font-family:var(--ff-philosopher);font-size:3rem;"><b> Show some <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Red%20Heart.png" alt="Red Heart" width="40" height="40" /> by starring this awesome repository!
@@ -191,40 +178,21 @@ See the full list of contributors and their contributions on the [`GitHub Contri
 
 <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="150%">
 
-**💡 Suggestions & Feedback**
+**Suggestions & Feedback**
 
 Feel free to open issues or discussions if you have any feedback, feature suggestions, or want to collaborate!
 
 <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="150%">
 
-**🙌 Support & Star**
+**Support & Star**
 
-***If you find this project helpful, please give it a star! ⭐ to support more such educational initiatives!***
+***If you find this project helpful, please give it a star to support more such educational initiatives!***
 
 <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="100%">
 
 **📄 License**
 
 This project is licensed under the MIT License - see the [`License`](https://github.com/code-well0/trip-planner/blob/main/License.md) file for details.
-
-<img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="150%">
-
-**⭐ Stargazers**
-
-<div align="center">
-  <a href="https://github.com/code-well0/trip-planner/stargazers">
-    <img src="https://reporoster.com/stars/code-well0/trip-planner?type=svg&limit=100&names=false" alt="Stargazers" />
-  </a>
-</div>
-
-<img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="150%">
-
-**🍴 Forkers**
-
-<div align="center">
-  <a href="https://github.com/code-well0/trip-planner/network/members">
-    <img src="https://reporoster.com/forks/code-well0/trip-planner?type=svg&limit=100&names=false" alt="Forkers" />
-  </a>
 
 <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="150%">
 
@@ -238,14 +206,6 @@ This project is licensed under the MIT License - see the [`License`](https://git
 </table>
 
 <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="150%">
-
-**👨‍🏫 Mentors – Security-Screening-System (GSSoC'25)**
-
-| Role          | Name               | GitHub Profile                                      | LinkedIn Profile                                                        |
-| ------------- | ------------------ | --------------------------------------------------- | ----------------------------------------------------------------------- |
-| Mentor 1   | Pratyaksh Khetrapal |  [Pratham00007](https://github.com/Pratham00007)  | [pratham-khetrapal](https://www.linkedin.com/in/pratham-khetrapal/) |
-
-<img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="100%">
 
 <h1 align="center"><img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Glowing%20Star.png" alt="Glowing Star" width="25" height="25" /> Give us a Star and let's make magic! <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Glowing%20Star.png" alt="Glowing Star" width="25" height="25" /></h1>
 
@@ -274,7 +234,4 @@ This project is licensed under the MIT License - see the [`License`](https://git
 
 <img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&height=65&section=footer"/>
 
-
 > **"Travel is the only thing you buy that makes you richer." Ready to show off your coding achievements? Get started with trip-planner today! 🚀**
-
-
