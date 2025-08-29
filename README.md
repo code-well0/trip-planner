@@ -196,7 +196,7 @@ This project is licensed under the MIT License - see the [`License`](https://git
 
 <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="150%">
 
-<h2>🧑‍💻Project Admin:</h2>
+<h2 align="center">🧑‍💻Project Admin:</h2>
 <table>
 <tr>
 <td align="center">
@@ -215,11 +215,11 @@ This project is licensed under the MIT License - see the [`License`](https://git
 
 <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="150%">
 
-<h4 align="center">
 **👨‍💻 Built with ❤️ by trip-planner Team**
+
 **❤️ Shubrali jain and Contributors ❤️**
+
 [open an issue](https://github.com/code-well0/trip-planner/issues) | [Watch Demo](https://trip-planner-sable-eight.vercel.app/)
-</h4>
 
 <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="150%">
 
