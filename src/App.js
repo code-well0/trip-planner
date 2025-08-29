@@ -9,7 +9,7 @@ import DestinationPage from "./pages/DestinationPage";
 import ExpenseTracker from "./pages/ExpenseTracker";
 import ChatBot from "./pages/Chatbot";
 import Login from "./pages/login";
-import Home from "./pages/Home";
+import Home from "./pages/Home"; // ✅ New Public Landing Page
 import Profile from "./pages/Profile";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -29,6 +29,7 @@ import Footer from "./Components/Footer";
 import Signup from "./pages/Signup";
 import { InterestedProvider } from "./contexts/InterestedContext";
 import Interested from "./pages/interested";
+import Dashboard from "./pages/Dashboard"; // ✅ renamed HomeSplit → Dashboard
 
 function App() {
   const { theme } = useTheme();
@@ -67,24 +68,17 @@ function App() {
 
         <div className="pt-20 flex-grow">
           <Routes>
-            {/* Auth & Home */}
-            <Route
-              path="/"
-              element={
-                isLoggedIn ? (
-                  <Home />
-                ) : (
-                  <Signup setIsLoggedIn={setIsLoggedIn} />
-                )
-              }
-            />
+            {/* Public Homepage */}
+            <Route path="/" element={<Home />} />
+
+            {/* Auth Pages */}
             <Route
               path="/signup"
               element={
                 !isLoggedIn ? (
                   <Signup setIsLoggedIn={setIsLoggedIn} />
                 ) : (
-                  <Navigate to="/" />
+                  <Navigate to="/dashboard" />
                 )
               }
             />
@@ -94,7 +88,19 @@ function App() {
                 !isLoggedIn ? (
                   <Login setIsLoggedIn={setIsLoggedIn} />
                 ) : (
-                  <Navigate to="/" />
+                  <Navigate to="/dashboard" />
+                )
+              }
+            />
+
+            {/* After login → Dashboard */}
+            <Route
+              path="/dashboard"
+              element={
+                isLoggedIn ? (
+                  <Dashboard setIsLoggedIn={setIsLoggedIn} />
+                ) : (
+                  <Navigate to="/login" />
                 )
               }
             />

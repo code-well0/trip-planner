@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import { useNavigate } from "react-router-dom";
 
 const testimonials = [
@@ -13,106 +13,79 @@ const testimonials = [
 
 const Home = () => {
   const navigate = useNavigate();
-  
+
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
-      <div className="container mx-auto px-4 py-8">
-        
-        {/* Hero Section */}
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-gray-800 dark:text-white mb-4">
-            Welcome to Your Trip Planner
-          </h1>
-          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-            Plan amazing trips, track your expenses, and get AI-powered recommendations 
-            for your next adventure.
-          </p>
-        </div>
-
-        {/* Features */}
-        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto mb-16">
-          
-          <div 
-            onClick={() => navigate("/plan")} 
-            className="cursor-pointer bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md transition transform hover:scale-105 hover:shadow-xl hover:bg-gray-100 dark:hover:bg-gray-700"
-          >
-            <h3 className="text-xl font-semibold text-gray-800 dark:text-white mb-3">
-              Plan Your Trip
-            </h3>
-            <p className="text-gray-600 dark:text-gray-300">
-              Discover amazing destinations and create your perfect itinerary.
-            </p>
-          </div>
-
-          <div 
-            onClick={() => navigate("/expenses")} 
-            className="cursor-pointer bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md transition transform hover:scale-105 hover:shadow-xl hover:bg-gray-100 dark:hover:bg-gray-700"
-          >
-            <h3 className="text-xl font-semibold text-gray-800 dark:text-white mb-3">
-              Track Expenses
-            </h3>
-            <p className="text-gray-600 dark:text-gray-300">
-              Keep track of your travel budget and expenses in real-time.
-            </p>
-          </div>
-
-          <div 
-            onClick={() => navigate("/api/chat")} 
-            className="cursor-pointer bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md transition transform hover:scale-105 hover:shadow-xl hover:bg-gray-100 dark:hover:bg-gray-700"
-          >
-            <h3 className="text-xl font-semibold text-gray-800 dark:text-white mb-3">
-              AI Assistant
-            </h3>
-            <p className="text-gray-600 dark:text-gray-300">
-              Get personalized travel recommendations powered by AI.
-            </p>
-          </div>
-        </div>
-
-        {/* ✅ Scrolling Testimonials */}
-        <section className="bg-gray-100 dark:bg-gray-800 py-12 rounded-xl shadow-inner overflow-hidden">
-          <h2 className="text-3xl font-bold text-center text-gray-800 dark:text-white mb-10">
-            What Our Travelers Say
-          </h2>
-          <div className="relative w-full overflow-hidden">
-            <div className="flex animate-scroll space-x-6">
-              {[...testimonials, ...testimonials].map((t, index) => (
-                <div
-                  key={index}
-                  className="min-w-[300px] bg-white dark:bg-gray-900 p-6 rounded-lg shadow-lg"
-                >
-                  <p className="text-gray-600 dark:text-gray-300 italic mb-4">
-                    "{t.feedback}"
-                  </p>
-                  <h3 className="text-lg font-semibold text-gray-800 dark:text-white">
-                    {t.name}
-                  </h3>
-                  <p className="text-sm text-gray-500 dark:text-gray-400">{t.role}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Login/Signup */}
-        <div className="text-center mt-12">
-          <h2 className="text-2xl font-semibold mb-4 text-gray-800 dark:text-white">
-            Get Started
-          </h2>
+      {/* ✅ Hero Section (simple built-in, no import needed) */}
+      <section className="relative bg-gradient-to-r from-indigo-800 via-purple-800 to-black
+ text-white py-24 text-center">
+        <h1 className="text-5xl font-extrabold mb-4">YourTrip Planner 🌍</h1>
+        <p className="text-lg max-w-2xl mx-auto">
+          Plan your next adventure, track expenses, and get AI-powered recommendations.  
+          All in one place.
+        </p>
+        <div className="mt-8 space-x-4">
           <button
             onClick={() => navigate("/login")}
-            className="px-6 py-2 bg-blue-600 text-white rounded-xl m-2 hover:bg-blue-700"
+            className="px-6 py-3 bg-white text-blue-600 font-semibold rounded-lg shadow hover:bg-gray-200"
           >
             Login
           </button>
           <button
-            onClick={() => navigate("/login")}
-            className="px-6 py-2 bg-green-600 text-white rounded-xl m-2 hover:bg-green-700"
-            >
+            onClick={() => navigate("/signup")}
+            className="px-6 py-3 bg-green-500 text-white font-semibold rounded-lg shadow hover:bg-green-600"
+          >
             Signup
-            </button>
+          </button>
+        </div>
+      </section>
+
+      <div className="container mx-auto px-4 py-8">
+        {/* Features */}
+        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto mb-16 mt-12">
+          <div
+            onClick={() => navigate("/plan")}
+            className="cursor-pointer bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md hover:scale-105 transform transition"
+          >
+            <h3 className="text-xl font-semibold text-gray-800 dark:text-white mb-3">Plan Your Trip</h3>
+            <p className="text-gray-600 dark:text-gray-300">Discover amazing destinations and create your perfect itinerary.</p>
           </div>
 
+          <div
+            onClick={() => navigate("/expenses")}
+            className="cursor-pointer bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md hover:scale-105 transform transition"
+          >
+            <h3 className="text-xl font-semibold text-gray-800 dark:text-white mb-3">Track Expenses</h3>
+            <p className="text-gray-600 dark:text-gray-300">Keep track of your travel budget and expenses in real-time.</p>
+          </div>
+
+          <div
+            onClick={() => navigate("/api/chat")}
+            className="cursor-pointer bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md hover:scale-105 transform transition"
+          >
+            <h3 className="text-xl font-semibold text-gray-800 dark:text-white mb-3">AI Assistant</h3>
+            <p className="text-gray-600 dark:text-gray-300">Get personalized travel recommendations powered by AI.</p>
+          </div>
+        </div>
+
+        {/* ✅ Testimonials */}
+        <section className="bg-gray-100 dark:bg-gray-800 py-12 rounded-xl shadow-inner">
+          <h2 className="text-3xl font-bold text-center text-gray-800 dark:text-white mb-10">
+            What Our Travelers Say
+          </h2>
+          <div className="flex overflow-x-auto gap-6 px-4">
+            {testimonials.map((t, index) => (
+              <div
+                key={index}
+                className="min-w-[300px] bg-white dark:bg-gray-900 p-6 rounded-lg shadow-lg"
+              >
+                <p className="text-gray-600 dark:text-gray-300 italic mb-4">"{t.feedback}"</p>
+                <h3 className="text-lg font-semibold text-gray-800 dark:text-white">{t.name}</h3>
+                <p className="text-sm text-gray-500 dark:text-gray-400">{t.role}</p>
+              </div>
+            ))}
+          </div>
+        </section>
       </div>
     </div>
   );
