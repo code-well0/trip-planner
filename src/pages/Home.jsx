@@ -92,12 +92,6 @@ const Home = () => {
           </button>
         </div>
       </section>
-    {/* <ScrollReveal
-  baseOpacity={0}
-  enableBlur={true}
-  baseRotation={5}
-  blurStrength={10}
-> */}
       
 
       <div className="container mx-auto px-4 py-8">
@@ -169,7 +163,6 @@ const Home = () => {
           </div>
         </section>
       </div>
-      {/* </ScrollReveal> */}
     </div>
   );
 };
