@@ -20,7 +20,7 @@ const CityPage = () => {
   const [predictionError, setPredictionError] = useState('');
 
   const API_KEY = process.env.REACT_APP_WEATHERAPI_KEY;
-  const API_URL = process.env.REACT_APP_API_URL || 'http://127.0.0.1:5000'; // fallback to local
+  const API_URL = process.env.REACT_APP_API_URL || 'http://127.0.0.1:5000'; 
 
   // Fetch current weather using WeatherAPI.com
   useEffect(() => {
@@ -67,7 +67,7 @@ const CityPage = () => {
       const tempMin = data.forecast.temp_min ?? 'N/A';
       const condition = data.forecast.condition ?? 'Unavailable';
 
-      // Map condition to CSS classes
+    
       let conditionClass = 'sunny';
       const condLower = condition.toLowerCase();
       if (condLower.includes('cloud')) conditionClass = 'cloudy';
