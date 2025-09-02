@@ -1,39 +1,21 @@
-.activity-planner-container {
-  background: #fff;
-  max-width: 500px;
-  margin: 2rem auto;
-  padding: 2rem 2.5rem;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+/* Keyframes for the infinite horizontal scroll */
+@keyframes scroll-x {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
 }
 
-.destination-input, .add-activity {
-  margin-bottom: 1rem;
+/* Class to apply the animation */
+.animate-scroll-x {
+  /* The flex-basis calculation ensures the animation is seamless */
+  flex: 0 0 calc(50% - 0.5rem * 8); /* 50% of container width minus half the gap */
+  animation: scroll-x 60s linear infinite;
 }
 
-.add-activity input, .destination-input input {
-  margin-left: 0.5rem;
-  padding: 0.5rem;
-}
-
-.add-activity button {
-  margin-left: 0.5rem;
-  padding: 0.4rem 0.8rem;
-}
-
-.activity-list {
-  list-style: none;
-  padding-left: 0;
-}
-
-.activity-list li {
-  display: flex;
-  align-items: center;
-  margin-bottom: 0.8rem;
-}
-
-.activity-list button {
-  margin-left: 0.7rem;
-  padding: 0.2rem 0.7rem;
-  font-size: 0.9rem;
+/* Pause animation on hover */
+.scroller:hover .animate-scroll-x {
+  animation-play-state: paused;
 }
