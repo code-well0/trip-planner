@@ -1,7 +1,10 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { FaGlobeAsia, FaSearch, FaCompass } from "react-icons/fa";
 import { useTheme } from '../contexts/ThemeContext';
 import data from "../data";
+import { io } from "socket.io-client";
+
+const socket = io('http://localhost:5000');
 
 export default function TripRecommender() {
   const { theme } = useTheme();
@@ -9,6 +12,20 @@ export default function TripRecommender() {
   const [selectedPurpose, setSelectedPurpose] = useState("");
   const [selectedTheme, setSelectedTheme] = useState("");
   const [recommendations, setRecommendations] = useState([]);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    // Listen for trip updates from other users
+    socket.on('trip:update', ({ mood, purpose, theme }) => {
+      setSelectedMood(mood);
+      setSelectedPurpose(purpose);
+      setSelectedTheme(theme);
+      handleFilter(mood, purpose, theme);
+    });
+    return () => {
+      socket.off('trip:update');
+    };
+  }, [handleFilter]);
 
   const moods = [
     "Relaxing",
@@ -40,19 +57,17 @@ export default function TripRecommender() {
     "Educational Tour"
   ];
 
-  const handleFilter = () => {
+  const handleFilter = (mood = selectedMood, purpose = selectedPurpose, theme = selectedTheme) => {
     const filtered = data.filter((place) => {
-      const moodMatch = selectedMood ? place.moodTags.includes(selectedMood) : true;
-      const purposeMatch = selectedPurpose ? place.purposeTags.includes(selectedPurpose) : true;
-      const themeMatch = selectedTheme ? place.themeTags.includes(selectedTheme) : true;
+      const moodMatch = mood ? place.moodTags.includes(mood) : true;
+      const purposeMatch = purpose ? place.purposeTags.includes(purpose) : true;
+      const themeMatch = theme ? place.themeTags.includes(theme) : true;
       return moodMatch && purposeMatch && themeMatch;
     });
-
     setRecommendations(filtered.slice(0, 6));
+    // Emit trip update to other users
+    socket.emit('trip:update', { mood, purpose, theme });
   };
-  useEffect(() => {
-      window.scrollTo(0, 0);
-    }, []);
 
   return (
     <div className={`p-8 min-h-screen bg-gray-100 dark:bg-gray-900 transition-colors duration-300 ${theme}`}>
@@ -64,7 +79,6 @@ export default function TripRecommender() {
         <p className="text-center text-gray-500 dark:text-gray-400 mb-10 text-lg">
           Discover your next destination based on your mood, theme, and travel goals ✨
         </p>
-
         {/* Filters */}
         <div className="flex flex-wrap justify-center gap-6 mb-14">
           {/* Mood */}
@@ -81,7 +95,6 @@ export default function TripRecommender() {
               ))}
             </select>
           </div>
-
           {/* Purpose */}
           <div className="flex flex-col">
             <label className="mb-2 text-gray-800 dark:text-gray-200 font-semibold text-sm tracking-wide">Purpose</label>
@@ -96,7 +109,6 @@ export default function TripRecommender() {
               ))}
             </select>
           </div>
-
           {/* Theme */}
           <div className="flex flex-col">
             <label className="mb-2 text-gray-800 dark:text-gray-200 font-semibold text-sm tracking-wide">Theme</label>
@@ -111,17 +123,15 @@ export default function TripRecommender() {
               ))}
             </select>
           </div>
-
           {/* Button */}
           <button
-            onClick={handleFilter}
+            onClick={() => handleFilter()}
             className="self-end flex items-center gap-2 bg-gradient-to-r from-green-500 to-green-600 text-white px-6 py-3 rounded-xl font-semibold hover:from-green-600 hover:to-green-700 focus:ring-2 focus:ring-green-400 shadow-md hover:shadow-lg transition-all duration-200"
           >
             <FaSearch />
             Find Trips
           </button>
         </div>
-
         {/* Results */}
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
           {recommendations.length > 0 ? (
@@ -175,4 +185,3 @@ export default function TripRecommender() {
     </div>
   );
 }
-
