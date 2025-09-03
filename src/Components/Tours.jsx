@@ -30,7 +30,7 @@ const Tours = ({ tours, removeTour }) => {
   }
 
   return (
-    <div className="toursWrapper px-4 py-8">
+    <div className="toursWrapper px-4 py-8" role="main" aria-label="Tours">
       {/* Main Cards Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
         {tours.map((tour) => (
@@ -92,6 +92,8 @@ const Tours = ({ tours, removeTour }) => {
           onClick={scrollToTop}
           className="fixed bottom-6 right-6 bg-gradient-to-r from-purple-500 to-pink-500 text-white p-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 z-50 animate-bounce"
           aria-label="Scroll to top"
+          tabIndex={0}
+          onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { scrollToTop(); } }}
         >
           <FaArrowUp className="text-xl" />
         </button>

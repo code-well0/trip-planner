@@ -18,10 +18,12 @@ const Card = ({ tour, getRemoveId }) => {
         src={tour.image}
         alt={tour.name}
         className="h-48 w-full object-cover group-hover:scale-105 transition-transform duration-300"
+        role="img"
+        aria-label={tour.name}
       />
 
       <div className="p-6 flex flex-col flex-1">
-        <h3 className="text-2xl font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
+        <h3 className="text-2xl font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2" tabIndex={0} aria-label={`Tour name: ${tour.name}`}>
           <FaMapMarkerAlt className="text-blue-500" />
           {tour.emoji && <span>{tour.emoji}</span>} {tour.name}
           <span className="ml-2 text-sm text-gray-500 dark:text-gray-400">
@@ -70,6 +72,7 @@ const Card = ({ tour, getRemoveId }) => {
           <button
             className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg text-sm transition"
             onClick={() => addToInterested(tour)}
+            aria-label={`Mark ${tour.name} as Interested`}
           >
             I'm Interested
           </button>
@@ -84,6 +87,7 @@ const Card = ({ tour, getRemoveId }) => {
          border border-gray-200 dark:border-gray-600
          transition-all duration-200"
             onClick={() => getRemoveId(tour.id)}
+            aria-label={`Remove ${tour.name} from Interested`}
           >
             <FaRegThumbsDown className="text-lg" /> Not Interested
           </button>
