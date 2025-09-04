@@ -16,7 +16,7 @@ const Footer = ({ isLoggedIn }) => {
     };
 
     return (
-        <footer className="w-full bg-gray-200 text-gray-700 py-10 dark:bg-gray-800 dark:text-white transition-colors duration-300">
+        <footer className="w-full bg-gray-200 text-gray-700 py-10 dark:bg-gray-800 dark:text-white transition-colors duration-300" role="contentinfo" aria-label="Footer">
             <div className="max-w-7xl mx-auto px-4 md:px-8">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 border-b border-gray-300 dark:border-gray-700 pb-8">
 
@@ -25,10 +25,10 @@ const Footer = ({ isLoggedIn }) => {
                         <h3 className="text-2xl font-bold">YourTripPlanner</h3>
                         <p className="text-sm">Your ultimate companion for exploring the incredible destinations of India. Plan smarter, travel better.</p>
                         <div className="flex space-x-4 text-xl">
-                            <a href="mailto:shubralijain@gmail.com" className="social-link hover:text-blue-500 transition-colors duration-200"><FaEnvelope /></a>
-                            <a href="https://github.com/code-well0" className="social-link hover:text-blue-500 transition-colors duration-200" target="_blank" rel="noopener noreferrer"><FaGithub /></a>
-                            <a href="https://www.instagram.com/_shubrali/" className="social-link hover:text-blue-500 transition-colors duration-200" target="_blank" rel="noopener noreferrer"><FaInstagram /></a>
-                            <a href="https://www.linkedin.com/in/shubrali-jain/" className="social-link hover:text-blue-500 transition-colors duration-200" target="_blank" rel="noopener noreferrer"><FaLinkedinIn /></a>
+                            <a href="mailto:shubralijain@gmail.com" className="social-link hover:text-blue-500 transition-colors duration-200" aria-label="Email"><FaEnvelope /></a>
+                            <a href="https://github.com/code-well0" className="social-link hover:text-blue-500 transition-colors duration-200" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><FaGithub /></a>
+                            <a href="https://www.instagram.com/_shubrali/" className="social-link hover:text-blue-500 transition-colors duration-200" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><FaInstagram /></a>
+                            <a href="https://www.linkedin.com/in/shubrali-jain/" className="social-link hover:text-blue-500 transition-colors duration-200" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><FaLinkedinIn /></a>
                         </div>
                     </div>
 
@@ -49,10 +49,10 @@ const Footer = ({ isLoggedIn }) => {
                         <h4 className="text-lg font-semibold mb-3">Popular Destinations</h4>
                         <ul className="space-y-2">
                             <li><Link to="/destinations/goa" className="hover:text-blue-500 transition-colors duration-200">🏖️ Goa</Link></li>
-                            <li><Link to="/destinations/kerala" className="hover:text-blue-500 transition-colors duration-200">🌴 Kerala</Link></li>
-                            <li><Link to="/destinations/rajasthan" className="hover:text-blue-500 transition-colors duration-200">🏰 Rajasthan</Link></li>
-                            <li><Link to="/destinations/himachal" className="hover:text-blue-500 transition-colors duration-200">🏔️ Himachal Pradesh</Link></li>
-                            <li><Link to="/destinations/kashmir" className="hover:text-blue-500 transition-colors duration-200">❄️ Kashmir</Link></li>
+                            <li><Link to="/destinations/jaipur" className="hover:text-blue-500 transition-colors duration-200">🏰 Jaipur</Link></li>
+                            <li><Link to="/destinations/varanasi" className="hover:text-blue-500 transition-colors duration-200">🕉️ Varanasi</Link></li>
+                            <li><Link to="/destinations/darjeeling" className="hover:text-blue-500 transition-colors duration-200">🏞️ Darjeeling</Link></li>
+                            <li><Link to="/destinations/paris" className="hover:text-blue-500 transition-colors duration-200">🗼 Paris</Link></li>
                         </ul>
                     </div>
 

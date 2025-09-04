@@ -1,40 +1,106 @@
-import React from 'react';
+import React from "react";
 import { useNavigate } from "react-router-dom";
+import SplitText from "../Components/SplitText";
+import FadeContent from '../Components/FadeContent'
+
 
 const testimonials = [
-  { name: "Ananya", role: "Traveler", feedback: "Trip Planner made my vacation so much easier! I could plan everything in one place." },
-  { name: "Rahul", role: "Adventure Enthusiast", feedback: "I loved how smooth the planning process was. Highly recommend this app!" },
-  { name: "Sophia", role: "Backpacker", feedback: "Clean UI, easy to use, and perfect for organizing trips with friends!" },
-  { name: "David", role: "Solo Explorer", feedback: "Managing my budget on the go was super easy. This app is a must-have!" },
-  { name: "Meera", role: "Family Planner", feedback: "Helped me organize a family trip without any stress. Kids loved the experience!" },
-  { name: "Alex", role: "Photographer", feedback: "AI recommendations took me to hidden gems I’d never have found otherwise." },
-  { name: "Li Wei", role: "Student Traveler", feedback: "Affordable trip planning and amazing suggestions within my budget." },
+  {
+    name: "Ananya",
+    role: "Traveler",
+    feedback:
+      "Trip Planner made my vacation so much easier! I could plan everything in one place.",
+  },
+  {
+    name: "Rahul",
+    role: "Adventure Enthusiast",
+    feedback:
+      "I loved how smooth the planning process was. Highly recommend this app!",
+  },
+  {
+    name: "Sophia",
+    role: "Backpacker",
+    feedback:
+      "Clean UI, easy to use, and perfect for organizing trips with friends!",
+  },
+  {
+    name: "David",
+    role: "Solo Explorer",
+    feedback:
+      "Managing my budget on the go was super easy. This app is a must-have!",
+  },
+  {
+    name: "Meera",
+    role: "Family Planner",
+    feedback:
+      "Helped me organize a family trip without any stress. Kids loved the experience!",
+  },
+  {
+    name: "Alex",
+    role: "Photographer",
+    feedback:
+      "AI recommendations took me to hidden gems I’d never have found otherwise.",
+  },
+  {
+    name: "Li Wei",
+    role: "Student Traveler",
+    feedback:
+      "Affordable trip planning and amazing suggestions within my budget.",
+  },
 ];
 
 const Home = () => {
   const navigate = useNavigate();
-  
+
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
-      <div className="container mx-auto px-4 py-8">
-        
-        {/* Hero Section */}
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-gray-800 dark:text-white mb-4">
-            Welcome to Your Trip Planner
-          </h1>
-          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-            Plan amazing trips, track your expenses, and get AI-powered recommendations 
-            for your next adventure.
-          </p>
+      {/* ✅ Hero Section (simple built-in, no import needed) */}
+      <section
+        className="relative bg-gradient-to-r from-indigo-800 via-purple-800 to-black
+ text-white py-24 text-center"
+      >
+        {/* <h1 className="text-5xl font-extrabold mb-4">YourTrip Planner 🌍</h1> */}
+        <SplitText
+          text="YourTrip Planner 🌍"
+          className="text-5xl font-extrabold text-center py-14"
+          delay={50}
+          duration={0.5}
+          ease="power3.out"
+          splitType="chars"
+          from={{ opacity: 0, y: 40 }}
+          to={{ opacity: 1, y: 0 }}
+          threshold={0.1}
+          rootMargin="-100px"
+          textAlign="center"
+        />
+        <p className="text-lg max-w-2xl mx-auto">
+          Plan your next adventure, track expenses, and get AI-powered
+          recommendations. All in one place.
+        </p>
+        <div className="mt-8 space-x-4">
+          <button
+            onClick={() => navigate("/login")}
+            className="px-6 py-3 bg-white text-blue-600 font-semibold rounded-lg shadow hover:bg-gray-200"
+          >
+            Login
+          </button>
+          <button
+            onClick={() => navigate("/signup")}
+            className="px-6 py-3 bg-green-500 text-white font-semibold rounded-lg shadow hover:bg-green-600"
+          >
+            Signup
+          </button>
         </div>
+      </section>
+      
 
+      <div className="container mx-auto px-4 py-8">
         {/* Features */}
-        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto mb-16">
-          
-          <div 
-            onClick={() => navigate("/plan")} 
-            className="cursor-pointer bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md transition transform hover:scale-105 hover:shadow-xl hover:bg-gray-100 dark:hover:bg-gray-700"
+        <FadeContent blur={true} duration={1000} easing="ease-out" initialOpacity={0}>
+        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto my-16">
+          <div
+            onClick={() => navigate("/plan")}
+            className="cursor-pointer bg-white dark:bg-gray-800 p-14 rounded-lg shadow-md hover:scale-105 transform transition"
           >
             <h3 className="text-xl font-semibold text-gray-800 dark:text-white mb-3">
               Plan Your Trip
@@ -44,9 +110,9 @@ const Home = () => {
             </p>
           </div>
 
-          <div 
-            onClick={() => navigate("/expenses")} 
-            className="cursor-pointer bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md transition transform hover:scale-105 hover:shadow-xl hover:bg-gray-100 dark:hover:bg-gray-700"
+          <div
+            onClick={() => navigate("/expenses")}
+            className="cursor-pointer bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md hover:scale-105 transform transition"
           >
             <h3 className="text-xl font-semibold text-gray-800 dark:text-white mb-3">
               Track Expenses
@@ -56,9 +122,9 @@ const Home = () => {
             </p>
           </div>
 
-          <div 
-            onClick={() => navigate("/api/chat")} 
-            className="cursor-pointer bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md transition transform hover:scale-105 hover:shadow-xl hover:bg-gray-100 dark:hover:bg-gray-700"
+          <div
+            onClick={() => navigate("/api/chat")}
+            className="cursor-pointer bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md hover:scale-105 transform transition"
           >
             <h3 className="text-xl font-semibold text-gray-800 dark:text-white mb-3">
               AI Assistant
@@ -69,50 +135,33 @@ const Home = () => {
           </div>
         </div>
 
-        {/* ✅ Scrolling Testimonials */}
-        <section className="bg-gray-100 dark:bg-gray-800 py-12 rounded-xl shadow-inner overflow-hidden">
-          <h2 className="text-3xl font-bold text-center text-gray-800 dark:text-white mb-10">
+        </FadeContent>
+
+
+        {/* ✅ Testimonials */}
+        <section className="bg-gray-100 dark:bg-gray-800 py-12 rounded-xl shadow-inner">
+          <h2 className="text-3xl font-bold text-center text-gray-800 dark:text-white my-10">
             What Our Travelers Say
           </h2>
-          <div className="relative w-full overflow-hidden">
-            <div className="flex animate-scroll space-x-6">
-              {[...testimonials, ...testimonials].map((t, index) => (
-                <div
-                  key={index}
-                  className="min-w-[300px] bg-white dark:bg-gray-900 p-6 rounded-lg shadow-lg"
-                >
-                  <p className="text-gray-600 dark:text-gray-300 italic mb-4">
-                    "{t.feedback}"
-                  </p>
-                  <h3 className="text-lg font-semibold text-gray-800 dark:text-white">
-                    {t.name}
-                  </h3>
-                  <p className="text-sm text-gray-500 dark:text-gray-400">{t.role}</p>
-                </div>
-              ))}
-            </div>
+          <div className="flex overflow-x-auto gap-6 px-4">
+            {testimonials.map((t, index) => (
+              <div
+                key={index}
+                className="min-w-[300px] bg-white dark:bg-gray-900 p-6 rounded-lg shadow-lg my-8"
+              >
+                <p className="text-gray-600 dark:text-gray-300 italic mb-4">
+                  "{t.feedback}"
+                </p>
+                <h3 className="text-lg font-semibold text-gray-800 dark:text-white">
+                  {t.name}
+                </h3>
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                  {t.role}
+                </p>
+              </div>
+            ))}
           </div>
         </section>
-
-        {/* Login/Signup */}
-        <div className="text-center mt-12">
-          <h2 className="text-2xl font-semibold mb-4 text-gray-800 dark:text-white">
-            Get Started
-          </h2>
-          <button
-            onClick={() => navigate("/login")}
-            className="px-6 py-2 bg-blue-600 text-white rounded-xl m-2 hover:bg-blue-700"
-          >
-            Login
-          </button>
-          <button
-            onClick={() => navigate("/login")}
-            className="px-6 py-2 bg-green-600 text-white rounded-xl m-2 hover:bg-green-700"
-            >
-            Signup
-            </button>
-          </div>
-
       </div>
     </div>
   );

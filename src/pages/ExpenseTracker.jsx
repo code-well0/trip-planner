@@ -1,8 +1,5 @@
 import React, { useState,useEffect } from 'react';
 import {
-  PieChart,
-  Pie,
-  Cell,
   Tooltip,
   ResponsiveContainer,
   BarChart,
@@ -10,11 +7,13 @@ import {
   XAxis,
   YAxis,
   Legend,
+  LineChart,
+  Line
 } from 'recharts';
-import { FaChartPie, FaChartBar, FaTrash, FaBroom, FaMoneyBillWave, FaTimes } from 'react-icons/fa';
+import { FaTrash, FaBroom, FaMoneyBillWave } from 'react-icons/fa';
 import { useTheme } from '../contexts/ThemeContext';
 
-const COLORS = ['#8884d8', '#82ca9d', '#ffc658', '#ff7f50', '#ffbb28'];
+
 
 // Custom Modal Component for confirmation
 const ConfirmModal = ({ isOpen, onConfirm, onCancel, message }) => {
@@ -51,7 +50,7 @@ const ExpenseTracker = () => {
   const [date, setDate] = useState('');
   const [category, setCategory] = useState('Travel');
   const [label, setLabel] = useState('');
-  const [chartType, setChartType] = useState('pie');
+
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleAddExpense = () => {
@@ -90,17 +89,39 @@ const ExpenseTracker = () => {
   
   const totalSpent = expenses.reduce((acc, curr) => acc + curr.amount, 0);
 
-  const data = Object.values(
-    expenses.reduce((acc, expense) => {
-      const key = expense.label;
-      if (!acc[key]) acc[key] = { name: key, value: 0 };
-      acc[key].value += expense.amount;
-      return acc;
-    }, {})
-  );
+  const data = [];
   useEffect(() => {
       window.scrollTo(0, 0);
     }, []);
+  // Advanced analytics data
+  const monthlyData = [];
+  const categoryData = [];
+  const forecastData = [];
+  if (expenses.length > 0) {
+    // Monthly trends
+    const monthMap = {};
+    expenses.forEach(exp => {
+      const month = exp.date.slice(0,7); // YYYY-MM
+      monthMap[month] = (monthMap[month] || 0) + exp.amount;
+    });
+    for (const month in monthMap) {
+      monthlyData.push({ month, amount: monthMap[month] });
+    }
+    // Category breakdown
+    const catMap = {};
+    expenses.forEach(exp => {
+      catMap[exp.category] = (catMap[exp.category] || 0) + exp.amount;
+    });
+    for (const cat in catMap) {
+      categoryData.push({ category: cat, amount: catMap[cat] });
+    }
+    // Simple forecast: average monthly spend projected for next 3 months
+    const months = Object.keys(monthMap);
+    const avg = months.length > 0 ? monthlyData.reduce((a,b) => a+b.amount,0)/months.length : 0;
+    for (let i=1; i<=3; i++) {
+      forecastData.push({ month: `Forecast ${i}`, amount: avg });
+    }
+  }
   return (
     <div className={`min-h-screen p-4 transition-colors duration-300 ${theme === 'dark' ? 'bg-gray-900' : 'bg-gradient-to-br from-purple-100 to-blue-100'}`}>
       <ConfirmModal
@@ -167,60 +188,47 @@ const ExpenseTracker = () => {
         <h2 className="text-xl font-semibold mt-8 text-center text-gray-800 dark:text-gray-200">
           Total Spent: ₹{totalSpent.toFixed(2)}
         </h2>
-
-      {expenses.length > 0 && (
-        <div className="mt-10">
-          <div className="flex justify-between items-center mb-4">
-            <h3 className="text-lg font-semibold flex items-center gap-2 text-gray-800 dark:text-gray-200">
-              {chartType === 'pie' ? <FaChartPie /> : <FaChartBar />} Analysis
-            </h3>
-            <select
-              value={chartType}
-              onChange={(e) => setChartType(e.target.value)}
-              className="p-2 rounded-md border border-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-white focus:outline-none"
-            >
-              <option value="pie">Pie Chart</option>
-              <option value="bar">Bar Chart</option>
-            </select>
-          </div>
-
-          <div className="h-80 bg-white dark:bg-gray-700 rounded-xl shadow-md p-4 transition-colors duration-300">
-            <ResponsiveContainer width="100%" height="100%">
-              {chartType === 'pie' ? (
-                <PieChart>
-                  <Pie
-                    data={data}
-                    cx="50%"
-                    cy="50%"
-                    label={({ name, percent }) =>
-                      `${name}: ${(percent * 100).toFixed(0)}%`
-                    }
-                    outerRadius={100}
-                    fill="#8884d8"
-                    dataKey="value"
-                  >
-                    {data.map((_, index) => (
-                      <Cell
-                        key={`cell-${index}`}
-                        fill={COLORS[index % COLORS.length]}
-                      />
-                    ))}
-                  </Pie>
-                  <Tooltip formatter={(value) => [`₹${value}`, 'Amount']} />
-                </PieChart>
-              ) : (
-                <BarChart data={data}>
-                  <XAxis dataKey="name" stroke={theme === 'dark' ? '#f3f4f6' : '#6b7280'} />
-                  <YAxis stroke={theme === 'dark' ? '#f3f4f6' : '#6b7280'} />
-                  <Tooltip formatter={(value) => [`₹${value}`, 'Amount']} />
+        {/* Advanced Analytics Section */}
+        {expenses.length > 0 && (
+          <div className="mt-10 grid gap-8 grid-cols-1 md:grid-cols-3">
+            <div>
+              <h3 className="text-lg font-semibold mb-2 text-gray-800 dark:text-gray-200">Monthly Trends</h3>
+              <ResponsiveContainer width="100%" height={200}>
+                <LineChart data={monthlyData}>
+                  <XAxis dataKey="month" />
+                  <YAxis />
+                  <Tooltip />
                   <Legend />
-                  <Bar dataKey="value" fill="#82ca9d" />
+                  <Line type="monotone" dataKey="amount" stroke="#8884d8" />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
+            <div>
+              <h3 className="text-lg font-semibold mb-2 text-gray-800 dark:text-gray-200">Category Breakdown</h3>
+              <ResponsiveContainer width="100%" height={200}>
+                <BarChart data={categoryData}>
+                  <XAxis dataKey="category" />
+                  <YAxis />
+                  <Tooltip />
+                  <Legend />
+                  <Bar dataKey="amount" fill="#82ca9d" />
                 </BarChart>
-              )}
-            </ResponsiveContainer>
+              </ResponsiveContainer>
+            </div>
+            <div>
+              <h3 className="text-lg font-semibold mb-2 text-gray-800 dark:text-gray-200">Spending Forecast</h3>
+              <ResponsiveContainer width="100%" height={200}>
+                <LineChart data={forecastData}>
+                  <XAxis dataKey="month" />
+                  <YAxis />
+                  <Tooltip />
+                  <Legend />
+                  <Line type="monotone" dataKey="amount" stroke="#ff7300" />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
           </div>
-        </div>
-      )}
+        )}
 
 
         <div className="mt-10">
