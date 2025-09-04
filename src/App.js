@@ -15,6 +15,12 @@ import TripRecommender from "./pages/TripRecommender";
 import TermsOfService from "./pages/terms";
 import ActivityPlanner from "./pages/ActivityPlanner";
 import PlanTrip from "./pages/PlanTrip";
+import Blog from "./pages/Blog";
+import BlogDetail from "./pages/BlogDetail";
+import AddBlog from "./pages/AddBlog";
+
+
+
 
 import "./index.css";
 import Footer from "./Components/Footer";
@@ -53,6 +59,14 @@ function App() {
           <Route path="/profile" element={isLoggedIn ? <Profile /> : <Navigate to="/login" />} />
 
           <Route path="/terms" element={ <TermsOfService/>} />
+           
+  <Route path="/blog" element={isLoggedIn ? <Blog /> : <Navigate to="/login" />} />
+  <Route path="/blog/:id" element={isLoggedIn ? <BlogDetail /> : <Navigate to="/login" />} />
+  <Route path="/add-blog" element={isLoggedIn ? <AddBlog /> : <Navigate to="/login" />} />
+
+
+ 
+  <Route path="*" element={<Navigate to="/" />} />  
           <Route path="*" element={<Navigate to="/" />} />
             <Route
   path="/interested"
