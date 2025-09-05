@@ -2,10 +2,11 @@ import React, { useState, useEffect } from "react";
 import { FaGlobeAsia, FaSearch, FaCompass } from "react-icons/fa";
 import { useTheme } from '../contexts/ThemeContext';
 import data from "../data";
+
+import SkeletonCard from "../Components/SkeletonCard"; 
 import { io } from "socket.io-client";
 
 const socket = io('http://localhost:5000');
-
 export default function TripRecommender() {
   const { theme } = useTheme();
   const [selectedMood, setSelectedMood] = useState("");
@@ -13,6 +14,8 @@ export default function TripRecommender() {
   const [selectedTheme, setSelectedTheme] = useState("");
   const [recommendations, setRecommendations] = useState([]);
 
+   // new-- state for loading indicator
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     window.scrollTo(0, 0);
     // Listen for trip updates from other users
@@ -26,6 +29,7 @@ export default function TripRecommender() {
       socket.off('trip:update');
     };
   }, [handleFilter]);
+
 
   const moods = [
     "Relaxing",
@@ -56,6 +60,36 @@ export default function TripRecommender() {
     "Spiritual Trip",
     "Educational Tour"
   ];
+
+// ------------------- UPDATED handleFilter -------------------
+  const handleFilter = () => {
+    //  show skeletons
+    setLoading(true);
+
+    // simulate API delay (800ms)
+    setTimeout(() => {
+      const filtered = data.filter((place) => {
+        const moodMatch = selectedMood ? place.moodTags.includes(selectedMood) : true;
+        const purposeMatch = selectedPurpose ? place.purposeTags.includes(selectedPurpose) : true;
+        const themeMatch = selectedTheme ? place.themeTags.includes(selectedTheme) : true;
+        return moodMatch && purposeMatch && themeMatch;
+      });
+
+      setRecommendations(filtered.slice(0, 6));
+      //  stop skeletons
+      setLoading(false);
+    }, 800);
+  };// ------------------------------------------------------------
+  useEffect(() => {
+      window.scrollTo(0, 0);
+      // hide skeletons after 800ms on first load
+  const timer = setTimeout(() => {
+    setLoading(false);
+  }, 800);
+
+  return () => clearTimeout(timer); // cleanup
+    }, []);
+
 
   const handleFilter = (mood = selectedMood, purpose = selectedPurpose, theme = selectedTheme) => {
     const filtered = data.filter((place) => {
@@ -134,7 +168,10 @@ export default function TripRecommender() {
         </div>
         {/* Results */}
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
-          {recommendations.length > 0 ? (
+            {loading ? (
+            // show skeletons when loading
+            Array(6).fill(0).map((_, i) => <SkeletonCard key={i} />)    ////
+          ) : recommendations.length > 0 ? (
             recommendations.map((place) => (
               <div
                 key={place.id}

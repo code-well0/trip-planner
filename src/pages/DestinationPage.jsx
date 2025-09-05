@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, Link } from "react-router-dom";
 import data from '../data';
 import { FaMapMarkerAlt, FaRupeeSign, FaRegCalendarAlt, FaArrowLeft, FaTag } from 'react-icons/fa';
 import { useInterested } from '../contexts/InterestedContext';
 import { toast } from 'react-toastify';
-
+import SkeletonCard from "../Components/SkeletonCard";
 const Tag = ({ text, colorClass }) => (
   <span className={`text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full last:mr-0 mr-1 ${colorClass}`}>
     {text}
@@ -15,14 +15,31 @@ export default function DestinationPage() {
   const { id } = useParams();
   const { addToInterested } = useInterested();
 
-  // Find the destination from the main data source
-  const destination = data.find(d => d.name.toLowerCase() === id.toLowerCase());
+  //  Local state to handle loading
+  const [loading, setLoading] = useState(true);
+  const [destination, setDestination] = useState(null);
 
+  // Simulate data fetch with useEffect
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      const found = data.find(d => d.name.toLowerCase() === id.toLowerCase());// Find the destination from the main data source
+      setDestination(found || null);
+      setLoading(false);
+    }, 1000); // simulate 1s delay
+    return () => clearTimeout(timer);
+  }, [id]);
   const handleAddToInterested = () => {
     addToInterested(destination);
     toast.success(`${destination.name} added to your interested list!`);
   };
-
+  // Show Skeleton while loading
+  if (loading) {
+    return (
+      <div className="max-w-7xl mx-auto p-6">
+        <SkeletonCard /> {/* Full page skeleton */}
+      </div>
+    );
+  }
   if (!destination) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[calc(100vh-13rem)] text-center px-4">
@@ -79,7 +96,7 @@ export default function DestinationPage() {
           <div className="lg:col-span-2 bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-lg">
             <h2 className="text-2xl font-bold mb-4 text-gray-800 dark:text-white">About this destination</h2>
             <p className="text-gray-600 dark:text-gray-400 mb-6 leading-relaxed">{destination.info}</p>
-            
+
             <div className="flex items-center justify-between mb-6 p-4 bg-gray-100 dark:bg-gray-700 rounded-xl">
               <span className="flex items-center gap-2 text-green-600 dark:text-green-400 font-bold text-xl"><FaRupeeSign /> {destination.price.toLocaleString('en-IN')}</span>
               <span className="flex items-center gap-2 text-gray-500 dark:text-gray-400 text-md"><FaRegCalendarAlt /> {destination.duration}</span>
