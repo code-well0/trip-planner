@@ -48,11 +48,11 @@ const Footer = ({ isLoggedIn }) => {
                     <div>
                         <h4 className="text-lg font-semibold mb-3">Popular Destinations</h4>
                         <ul className="space-y-2">
-                            <li><Link to="/destinations/goa" className="hover:text-blue-500 transition-colors duration-200">🏖️ Goa</Link></li>
-                            <li><Link to="/destinations/jaipur" className="hover:text-blue-500 transition-colors duration-200">🏰 Jaipur</Link></li>
-                            <li><Link to="/destinations/varanasi" className="hover:text-blue-500 transition-colors duration-200">🕉️ Varanasi</Link></li>
-                            <li><Link to="/destinations/darjeeling" className="hover:text-blue-500 transition-colors duration-200">🏞️ Darjeeling</Link></li>
-                            <li><Link to="/destinations/paris" className="hover:text-blue-500 transition-colors duration-200">🗼 Paris</Link></li>
+                            <li><Link to="/destinations/goa" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="hover:text-blue-500 transition-colors duration-200">🏖️ Goa</Link></li>
+                            <li><Link to="/destinations/jaipur" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="hover:text-blue-500 transition-colors duration-200">🏰 Jaipur</Link></li>
+                            <li><Link to="/destinations/varanasi" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="hover:text-blue-500 transition-colors duration-200">🕉️ Varanasi</Link></li>
+                            <li><Link to="/destinations/darjeeling" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="hover:text-blue-500 transition-colors duration-200">🏞️ Darjeeling</Link></li>
+                            <li><Link to="/destinations/paris" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="hover:text-blue-500 transition-colors duration-200">🗼 Paris</Link></li>
                         </ul>
                     </div>
 
