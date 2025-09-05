@@ -17,11 +17,15 @@ import TripRecommender from "./pages/TripRecommender";
 import TermsOfService from "./pages/terms";
 import ActivityPlanner from "./pages/ActivityPlanner";
 import PlanTrip from "./pages/PlanTrip";
+ feature/blog-page
 import Blog from "./pages/Blog";
 import BlogDetail from "./pages/BlogDetail";
 import AddBlog from "./pages/AddBlog";
 
 
+
+
+import Blogs from "./pages/Blogs";
 
 
 import AboutUs from "./pages/AboutUs";
@@ -173,6 +177,13 @@ function App() {
               path="/activity-planner"
               element={
                 isLoggedIn ? <ActivityPlanner /> : <Navigate to="/login" />
+              }
+            />
+
+            <Route
+              path="/blogs"
+              element={
+                isLoggedIn ? <Blogs /> : <Navigate to="/login" />
               }
             />
 

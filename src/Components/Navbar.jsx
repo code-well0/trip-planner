@@ -2,8 +2,12 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
   FaMapMarkedAlt, FaSuitcase, FaMoneyBillWave, FaRobot,
+ feature/blog-page
   FaPlaneDeparture, FaMoon, FaSun, FaListAlt, FaUser, FaBars, FaTimes, FaHeart,
   FaBookOpen   
+
+  FaPlaneDeparture, FaMoon, FaSun, FaListAlt, FaUser, FaBars, FaTimes, FaHeart, FaBookOpen
+
 } from "react-icons/fa";
 
 import { useTheme } from '../contexts/ThemeContext';
@@ -26,10 +30,15 @@ const Navbar = ({ isLoggedIn }) => {
     { to: "/api/chat", icon: FaRobot, text: "AI Assistant" },
     { to: "/TripRecommender", icon: FaPlaneDeparture, text: "Trip Recommender" },
     { to: "/activity-planner", icon: FaListAlt, text: "Activity Planner" },
+ feature/blog-page
     { to: "/interested", icon: FaHeart, text: "Interested", special: true },
     { to: "/blog", icon: FaBookOpen, text: "Blog" },
     { to: "/add-blog", icon: FaBookOpen, text: "Add Blog" }
 
+
+
+    { to: "/blogs", icon: FaBookOpen, text: "Blogs" },
+    { to: "/interested", icon: FaHeart, text: "Interested", special: true },
 
   ];
 
