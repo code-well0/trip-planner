@@ -17,6 +17,7 @@ import TripRecommender from "./pages/TripRecommender";
 import TermsOfService from "./pages/terms";
 import ActivityPlanner from "./pages/ActivityPlanner";
 import PlanTrip from "./pages/PlanTrip";
+import Blogs from "./pages/Blogs";
 
 import AboutUs from "./pages/AboutUs";
 import HelpCenter from "./pages/HelpCenter";
@@ -136,6 +137,13 @@ function App() {
               path="/activity-planner"
               element={
                 isLoggedIn ? <ActivityPlanner /> : <Navigate to="/login" />
+              }
+            />
+
+            <Route
+              path="/blogs"
+              element={
+                isLoggedIn ? <Blogs /> : <Navigate to="/login" />
               }
             />
 

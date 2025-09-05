@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
   FaMapMarkedAlt, FaSuitcase, FaMoneyBillWave, FaRobot,
-  FaPlaneDeparture, FaMoon, FaSun, FaListAlt, FaUser, FaBars, FaTimes, FaHeart
+  FaPlaneDeparture, FaMoon, FaSun, FaListAlt, FaUser, FaBars, FaTimes, FaHeart, FaBookOpen
 } from "react-icons/fa";
 import { useTheme } from '../contexts/ThemeContext';
 
@@ -24,8 +24,8 @@ const Navbar = ({ isLoggedIn }) => {
     { to: "/api/chat", icon: FaRobot, text: "AI Assistant" },
     { to: "/TripRecommender", icon: FaPlaneDeparture, text: "Trip Recommender" },
     { to: "/activity-planner", icon: FaListAlt, text: "Activity Planner" },
+    { to: "/blogs", icon: FaBookOpen, text: "Blogs" },
     { to: "/interested", icon: FaHeart, text: "Interested", special: true },
-    { to: "/blogs", icon: FaListAlt, text: "Blogs" }
   ];
 
   // Theme-based classes
