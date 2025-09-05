@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { signOut } from "firebase/auth";
+import { auth } from "../firebase"; 
+import { toast } from "react-toastify";
 import { FaUser, FaSignOutAlt, FaEdit, FaSave, FaTimes } from 'react-icons/fa';
 
 const Profile = () => {
@@ -14,11 +17,17 @@ const Profile = () => {
   });
   const [editInfo, setEditInfo] = useState({ ...userInfo });
 
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    navigate("/login");
-    window.location.reload();
-  };
+const handleLogout = () => {
+  signOut(auth)
+    .then(() => {
+      toast.success("Logged out successfully!");
+      navigate("/login");
+    })
+    .catch((error) => {
+      console.error("Error during logout:", error);
+      toast.error("Failed to logout. Please try again.");
+    });
+};
 
   const handleEdit = () => {
     setIsEditing(true);

@@ -40,6 +40,13 @@ html.dark {
   background: theme('colors.gray.500');
 }
 
+/* Line clamp utility for text truncation */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
 
 /* Custom bounce animation for scroll to top button 
 @keyframes bounce {
@@ -66,3 +73,15 @@ html.dark {
     font-size: 18px;
   }
 }*/
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.animate-fadeIn {
+  animation: fadeIn 0.5s ease-in-out;
+}

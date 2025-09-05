@@ -2,8 +2,12 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
   FaMapMarkedAlt, FaSuitcase, FaMoneyBillWave, FaRobot,
+ feature/blog-page
   FaPlaneDeparture, FaMoon, FaSun, FaListAlt, FaUser, FaBars, FaTimes, FaHeart,
   FaBookOpen   
+
+  FaPlaneDeparture, FaMoon, FaSun, FaListAlt, FaUser, FaBars, FaTimes, FaHeart, FaBookOpen
+
 } from "react-icons/fa";
 
 import { useTheme } from '../contexts/ThemeContext';
@@ -26,10 +30,15 @@ const Navbar = ({ isLoggedIn }) => {
     { to: "/api/chat", icon: FaRobot, text: "AI Assistant" },
     { to: "/TripRecommender", icon: FaPlaneDeparture, text: "Trip Recommender" },
     { to: "/activity-planner", icon: FaListAlt, text: "Activity Planner" },
+ feature/blog-page
     { to: "/interested", icon: FaHeart, text: "Interested", special: true },
     { to: "/blog", icon: FaBookOpen, text: "Blog" },
     { to: "/add-blog", icon: FaBookOpen, text: "Add Blog" }
 
+
+
+    { to: "/blogs", icon: FaBookOpen, text: "Blogs" },
+    { to: "/interested", icon: FaHeart, text: "Interested", special: true },
 
   ];
 
@@ -62,13 +71,13 @@ const Navbar = ({ isLoggedIn }) => {
 
   return (
     <>
-      <nav className={`${navbarClasses} sticky top-0 z-50 transition-all duration-300`}>
+      <nav className={`${navbarClasses} sticky top-0 z-50 transition-all duration-300`} role="navigation" aria-label="Main Navigation">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             {/* Brand */}
             <div className="flex items-center space-x-2 flex-shrink-0">
               <FaMapMarkedAlt className={theme === 'dark' ? 'text-blue-400 text-2xl' : 'text-blue-600 text-2xl'} />
-              <Link to="/" className={`text-xl font-bold transition-colors duration-200 ${brandTextClasses}`}>
+              <Link to="/" className={`text-xl font-bold transition-colors duration-200 ${brandTextClasses}`} aria-label="Home">
                 YourTripPlanner
               </Link>
             </div>
@@ -97,12 +106,14 @@ const Navbar = ({ isLoggedIn }) => {
                   <button
                     onClick={toggleTheme}
                     className={`p-2 rounded-lg transition-all duration-200 ${hamburgerClasses}`}
+                    aria-label="Toggle theme"
                   >
                     {theme === 'dark' ? <FaSun className="text-lg" /> : <FaMoon className="text-lg" />}
                   </button>
                   <Link
                     to="/profile"
                     className="flex items-center space-x-1 px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200"
+                    aria-label="Profile"
                   >
                     <FaUser className="text-sm" />
                     <span>Profile</span>
@@ -133,11 +144,12 @@ const Navbar = ({ isLoggedIn }) => {
                 onClick={(e) => {
                   e.preventDefault();
                   e.stopPropagation();
-                  console.log('Hamburger clicked, current menuOpen:', menuOpen);
                   setMenuOpen(!menuOpen);
                 }}
                 aria-label="Toggle menu"
                 type="button"
+                tabIndex={0}
+                onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { setMenuOpen(!menuOpen); } }}
               >
                 <div className="w-6 h-6 flex items-center justify-center">
                   {menuOpen ? (
