@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react'; 
 import { useNavigate } from 'react-router-dom';
 import { signOut } from "firebase/auth";
 import { auth } from "../firebase"; 
 import { toast } from "react-toastify";
 import { FaUser, FaSignOutAlt, FaEdit, FaSave, FaTimes } from 'react-icons/fa';
-
+import SkeletonCard from "../Components/SkeletonCard";
 const Profile = () => {
   const navigate = useNavigate();
   const [isEditing, setIsEditing] = useState(false);
@@ -16,7 +16,13 @@ const Profile = () => {
     joinDate: 'January 2024'
   });
   const [editInfo, setEditInfo] = useState({ ...userInfo });
-
+   
+  const [isLoading, setIsLoading] = useState(true);//  loading state for skeleton
+ //  Fake delay to simulate API call or Firebase fetch
+  useEffect(() => {
+    const timer = setTimeout(() => setIsLoading(false), 1500);
+    return () => clearTimeout(timer);
+  }, []);
 const handleLogout = () => {
   signOut(auth)
     .then(() => {
@@ -52,6 +58,17 @@ const handleLogout = () => {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
       <div className="container mx-auto px-4 py-8 max-w-4xl">
+        
+        {/*  Show skeleton loader while profile data is "loading" */}
+        {isLoading ? (
+          <div className="space-y-6">
+            <SkeletonCard height="150px" /> {/* Profile card skeleton */}
+            <SkeletonCard height="120px" /> {/* Stats section skeleton */}
+            <SkeletonCard height="200px" /> {/* Recent activity skeleton */}
+            <SkeletonCard height="100px" /> {/* Account actions skeleton */}
+          </div>
+        ) : (   
+          <>
         {/* Profile Header */}
         <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-8 mb-8">
           <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
@@ -186,6 +203,8 @@ const handleLogout = () => {
             <FaSignOutAlt /> Logout
           </button>
         </div>
+          </>
+        )}
       </div>
     </div>
   );
