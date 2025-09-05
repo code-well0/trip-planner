@@ -24,7 +24,8 @@ const Navbar = ({ isLoggedIn }) => {
     { to: "/api/chat", icon: FaRobot, text: "AI Assistant" },
     { to: "/TripRecommender", icon: FaPlaneDeparture, text: "Trip Recommender" },
     { to: "/activity-planner", icon: FaListAlt, text: "Activity Planner" },
-    { to: "/interested", icon: FaHeart, text: "Interested", special: true }
+    { to: "/interested", icon: FaHeart, text: "Interested", special: true },
+    { to: "/blogs", icon: FaListAlt, text: "Blogs" }
   ];
 
   // Theme-based classes
