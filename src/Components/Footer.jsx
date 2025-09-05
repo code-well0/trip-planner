@@ -16,7 +16,7 @@ const Footer = ({ isLoggedIn }) => {
     };
 
     return (
-        <footer className="w-full bg-gray-200 text-gray-700 py-10 dark:bg-gray-800 dark:text-white transition-colors duration-300">
+        <footer className="w-full bg-gray-200 text-gray-700 py-10 dark:bg-gray-800 dark:text-white transition-colors duration-300" role="contentinfo" aria-label="Footer">
             <div className="max-w-7xl mx-auto px-4 md:px-8">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 border-b border-gray-300 dark:border-gray-700 pb-8">
 
@@ -25,10 +25,10 @@ const Footer = ({ isLoggedIn }) => {
                         <h3 className="text-2xl font-bold">YourTripPlanner</h3>
                         <p className="text-sm">Your ultimate companion for exploring the incredible destinations of India. Plan smarter, travel better.</p>
                         <div className="flex space-x-4 text-xl">
-                            <a href="mailto:shubralijain@gmail.com" className="social-link hover:text-blue-500 transition-colors duration-200"><FaEnvelope /></a>
-                            <a href="https://github.com/code-well0" className="social-link hover:text-blue-500 transition-colors duration-200" target="_blank" rel="noopener noreferrer"><FaGithub /></a>
-                            <a href="https://www.instagram.com/_shubrali/" className="social-link hover:text-blue-500 transition-colors duration-200" target="_blank" rel="noopener noreferrer"><FaInstagram /></a>
-                            <a href="https://www.linkedin.com/in/shubrali-jain/" className="social-link hover:text-blue-500 transition-colors duration-200" target="_blank" rel="noopener noreferrer"><FaLinkedinIn /></a>
+                            <a href="mailto:shubralijain@gmail.com" className="social-link hover:text-blue-500 transition-colors duration-200" aria-label="Email"><FaEnvelope /></a>
+                            <a href="https://github.com/code-well0" className="social-link hover:text-blue-500 transition-colors duration-200" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><FaGithub /></a>
+                            <a href="https://www.instagram.com/_shubrali/" className="social-link hover:text-blue-500 transition-colors duration-200" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><FaInstagram /></a>
+                            <a href="https://www.linkedin.com/in/shubrali-jain/" className="social-link hover:text-blue-500 transition-colors duration-200" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><FaLinkedinIn /></a>
                         </div>
                     </div>
 

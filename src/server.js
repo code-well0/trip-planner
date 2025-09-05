@@ -15,6 +15,26 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+const server = require('http').createServer(app);
+const { Server } = require('socket.io');
+const io = new Server(server, {
+  cors: {
+    origin: '*',
+    methods: ['GET', 'POST']
+  }
+});
+
+io.on('connection', (socket) => {
+  console.log('User connected:', socket.id);
+  // Collaborative trip planning event
+  socket.on('trip:update', (data) => {
+    // Broadcast trip updates to all clients except sender
+    socket.broadcast.emit('trip:update', data);
+  });
+  socket.on('disconnect', () => {
+    console.log('User disconnected:', socket.id);
+  });
+});
 // Health check endpoint
 app.get('/api/health', (req, res) => {
   res.json({ 
@@ -26,11 +46,11 @@ app.get('/api/health', (req, res) => {
 });
 
 app.post('/api/chat', async (req, res) => {
-  const { message } = req.body;
+  const { message, expenses } = req.body;
 
   try {
-    // Create a travel-focused prompt for better responses
-    const travelPrompt = `You are an AI Travel Assistant for a trip planning application. You specialize in:
+    // Enhanced travel and expense-focused prompt
+    let travelPrompt = `You are an AI Travel Assistant for a trip planning application. You specialize in:
     - Destination recommendations
     - Travel itinerary planning
     - Budget advice for trips
@@ -38,10 +58,19 @@ app.post('/api/chat', async (req, res) => {
     - Transportation options
     - Accommodation suggestions
     - Cultural insights and travel tips
-    
-    Please provide helpful, accurate, and engaging travel advice. Keep responses conversational and practical.
-    
-    User question: ${message}`;
+    - Expense tracking and financial advice
+    Please provide helpful, accurate, and engaging travel advice. If the user asks about expenses, analyze their expense data and offer budgeting tips, spending forecasts, or category breakdowns. Keep responses conversational and practical.`;
+
+    if (expenses && Array.isArray(expenses) && expenses.length > 0) {
+      // Summarize expense data for Gemini
+      const total = expenses.reduce((sum, e) => sum + (e.amount || 0), 0);
+      const categories = {};
+      expenses.forEach(e => {
+        categories[e.category] = (categories[e.category] || 0) + (e.amount || 0);
+      });
+      travelPrompt += `\nUser's total expenses: ₹${total}. Category breakdown: ${JSON.stringify(categories)}.`;
+    }
+    travelPrompt += `\nUser question: ${message}`;
 
     const result = await model.generateContent(travelPrompt);
     const response = await result.response;
@@ -55,16 +84,13 @@ app.post('/api/chat', async (req, res) => {
     res.json({ reply: reply.trim() });
   } catch (error) {
     console.error('Gemini API Error:', error.message);
-    
     // Provide more specific error messages
     let errorMessage = 'Sorry, I encountered an error. Please try again.';
-    
     if (error.message.includes('API_KEY')) {
       errorMessage = 'API configuration issue. Please check the server setup.';
     } else if (error.message.includes('quota') || error.message.includes('limit')) {
       errorMessage = 'Service temporarily unavailable. Please try again in a moment.';
     }
-    
     res.status(500).json({ error: errorMessage });
   }
 });

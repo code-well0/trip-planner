@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import { Loader2 } from "lucide-react";
 import "react-toastify/dist/ReactToastify.css";
-import HeroSection from "../Components/Hero";
+
 import { useTheme } from '../contexts/ThemeContext';
 import { FaGoogle } from "react-icons/fa";
 import { FaApple } from "react-icons/fa";
@@ -20,7 +20,7 @@ export default function Signup({ setIsLoggedIn }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [isLoggedInLocal, setIsLoggedInLocal] = useState(false);
+
   const [isLoading, setIsLoading] = useState(false);
 
 
