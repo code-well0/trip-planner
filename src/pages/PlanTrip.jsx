@@ -5,6 +5,8 @@ import Tours from "../Components/Tours";
 import { FaMapMarkedAlt, FaSearch, FaTimesCircle } from "react-icons/fa";
 import "../index.css";
 import "../Components/Navbar.css";
+//  Import SkeletonCard for loading state
+import SkeletonCard from "../Components/SkeletonCard";
 
 export default function PlanTrip({ searchQuery = "" }) {
   const [tour, setTour] = useState(data);
@@ -15,6 +17,8 @@ export default function PlanTrip({ searchQuery = "" }) {
   const [showRegionDropdown, setShowRegionDropdown] = useState(false);
   const [showSortDropdown, setShowSortDropdown] = useState(false);
 
+ //  Added loading state
+  const [isLoading, setIsLoading] = useState(true);
   const regions = [
     "All",
     ...new Set(
@@ -89,6 +93,15 @@ export default function PlanTrip({ searchQuery = "" }) {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  //  Simulate loading effect when component mounts
+  useEffect(() => {
+    setIsLoading(true);
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1000); // fake 1 second loading
+    return () => clearTimeout(timer);
+  }, [selectedCountry, selectedRegion, sortBy, localSearchQuery]);
 
   return (
     <div className="px-4 py-10 md:px-16 lg:px-24">
@@ -222,9 +235,18 @@ export default function PlanTrip({ searchQuery = "" }) {
 </div>
 
        
+       {/* Search, Filter and Sort Controls */}
+      {/* ... (unchanged filter UI code) ... */}
 
       {/* Tours List with Improved Card Layout */}
-      {sortedAndFilteredTours.length > 0 ? (
+      {isLoading ? (
+        // ✅ Show Skeletons while loading
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
+          {Array.from({ length: 6 }).map((_, index) => (
+            <SkeletonCard key={index} />
+          ))}
+        </div>
+      ) : sortedAndFilteredTours.length > 0 ? (
         // <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
           <Tours
             tours={sortedAndFilteredTours}
