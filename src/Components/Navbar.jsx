@@ -35,7 +35,11 @@ const Navbar = ({ isLoggedIn }) => {
     { to: "/plan", icon: FaSuitcase, text: "Plan Trip" },
     { to: "/expenses", icon: FaMoneyBillWave, text: "Expenses" },
     { to: "/api/chat", icon: FaRobot, text: "AI Assistant" },
-    { to: "/TripRecommender", icon: FaPlaneDeparture, text: "Trip Recommender" },
+    {
+      to: "/TripRecommender",
+      icon: FaPlaneDeparture,
+      text: "Trip Recommender",
+    },
     { to: "/activity-planner", icon: FaListAlt, text: "Activity Planner" },
     { to: "/interested", icon: FaHeart, text: "Interested", special: true },
     { to: "/blogs", icon: FaBookOpen, text: "Blogs" },
@@ -44,35 +48,46 @@ const Navbar = ({ isLoggedIn }) => {
 
 
   // Theme-based classes
-  const navbarClasses = theme === 'dark' 
-    ? 'bg-gray-800 shadow-lg border-b-4 border-blue-400' 
-    : 'bg-white shadow-lg border-b-4 border-blue-500';
-  
-  const brandTextClasses = theme === 'dark' 
-    ? 'text-gray-100 hover:text-blue-400' 
-    : 'text-gray-800 hover:text-blue-600';
-  
-  const menuItemClasses = theme === 'dark' 
-    ? 'text-gray-300 hover:bg-gray-700 hover:text-blue-400' 
-    : 'text-gray-700 hover:bg-blue-50 hover:text-blue-600';
-  
-  const hamburgerClasses = theme === 'dark' 
-    ? 'text-gray-300 hover:bg-gray-700 hover:text-blue-400' 
-    : 'text-gray-700 hover:bg-blue-50 hover:text-blue-600';
+  const navbarClasses =
+    theme === "dark"
+      ? "bg-gray-800 shadow-lg border-b-4 border-blue-400"
+      : "bg-white shadow-lg border-b-4 border-blue-500";
 
-  const mobileMenuClasses = theme === 'dark' 
-    ? 'bg-gray-800 shadow-xl border-t border-gray-600' 
-    : 'bg-white shadow-xl border-t border-gray-200';
+  const brandTextClasses =
+    theme === "dark"
+      ? "text-gray-100 hover:text-blue-400"
+      : "text-gray-800 hover:text-blue-600";
 
-  const mobileMenuItemClasses = theme === 'dark' 
-    ? 'text-gray-300 hover:bg-gray-700 hover:text-blue-400 border-transparent hover:border-blue-400' 
-    : 'text-gray-700 hover:bg-blue-50 hover:text-blue-600 border-transparent hover:border-blue-200';
+  const menuItemClasses =
+    theme === "dark"
+      ? "text-gray-300 hover:bg-gray-700 hover:text-blue-400"
+      : "text-gray-700 hover:bg-blue-50 hover:text-blue-600";
 
-  const dividerClasses = theme === 'dark' ? 'border-gray-600' : 'border-gray-200';
+  const hamburgerClasses =
+    theme === "dark"
+      ? "text-gray-300 hover:bg-gray-700 hover:text-blue-400"
+      : "text-gray-700 hover:bg-blue-50 hover:text-blue-600";
+
+  const mobileMenuClasses =
+    theme === "dark"
+      ? "bg-gray-800 shadow-xl border-t border-gray-600"
+      : "bg-white shadow-xl border-t border-gray-200";
+
+  const mobileMenuItemClasses =
+    theme === "dark"
+      ? "text-gray-300 hover:bg-gray-700 hover:text-blue-400 border-transparent hover:border-blue-400"
+      : "text-gray-700 hover:bg-blue-50 hover:text-blue-600 border-transparent hover:border-blue-200";
+
+  const dividerClasses =
+    theme === "dark" ? "border-gray-600" : "border-gray-200";
 
   return (
     <>
-      <nav className={`${navbarClasses} sticky top-0 z-50 transition-all duration-300`} role="navigation" aria-label="Main Navigation">
+      <nav
+        className={`${navbarClasses} sticky top-0 z-50 transition-all duration-300`}
+        role="navigation"
+        aria-label="Main Navigation"
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             {/* Brand */}
@@ -84,7 +99,24 @@ const Navbar = ({ isLoggedIn }) => {
             </div>
 
             {/* Desktop Menu */}
-            <div className="hidden md:flex items-center space-x-1">
+            <div className="hidden md:flex items-center space-x-6">
+              {/* navBar content */}
+              <div
+                className={`w-full flex items-center`}
+              >
+                <a href="#" className={`${menuItemClasses} space-x-1 px-3 py-2  font-medium rounded-lg transition-all duration-200`}>
+                  Home
+                </a>
+                <a href="#"  className={`${menuItemClasses} space-x-1 px-3 py-2  font-medium rounded-lg transition-all duration-200`}>
+                  Features
+                </a>
+                <a href="#" className={`${menuItemClasses} space-x-1 px-3 py-2  font-medium rounded-lg transition-all duration-200`}>
+                  About
+                </a>
+                <a href="#" className={`${menuItemClasses} space-x-1 px-3 py-2  font-medium rounded-lg transition-all duration-200`}>
+                  Contact
+                </a>
+              </div>
               {isLoggedIn ? (
                 <>
                   {navItems.map((item) => {
@@ -94,8 +126,8 @@ const Navbar = ({ isLoggedIn }) => {
                         key={item.to}
                         to={item.to}
                         className={`flex items-center space-x-1 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
-                          item.special 
-                            ? 'text-red-500 hover:text-red-600' 
+                          item.special
+                            ? "text-red-500 hover:text-red-600"
                             : menuItemClasses
                         }`}
                       >
@@ -109,7 +141,11 @@ const Navbar = ({ isLoggedIn }) => {
                     className={`p-2 rounded-lg transition-all duration-200 ${hamburgerClasses}`}
                     aria-label="Toggle theme"
                   >
-                    {theme === 'dark' ? <FaSun className="text-lg" /> : <FaMoon className="text-lg" />}
+                    {theme === "dark" ? (
+                      <FaSun className="text-lg" />
+                    ) : (
+                      <FaMoon className="text-lg" />
+                    )}
                   </button>
                   <Link
                     to="/profile"
@@ -126,7 +162,11 @@ const Navbar = ({ isLoggedIn }) => {
                     onClick={toggleTheme}
                     className={`p-2 rounded-lg transition-all duration-200 ${hamburgerClasses}`}
                   >
-                    {theme === 'dark' ? <FaSun className="text-lg" /> : <FaMoon className="text-lg" />}
+                    {theme === "dark" ? (
+                      <FaSun className="text-lg" />
+                    ) : (
+                      <FaMoon className="text-lg" />
+                    )}
                   </button>
                   <Link
                     to="/login"
@@ -150,7 +190,11 @@ const Navbar = ({ isLoggedIn }) => {
                 aria-label="Toggle menu"
                 type="button"
                 tabIndex={0}
-                onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { setMenuOpen(!menuOpen); } }}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    setMenuOpen(!menuOpen);
+                  }
+                }}
               >
                 <div className="w-6 h-6 flex items-center justify-center">
                   {menuOpen ? (
@@ -175,10 +219,29 @@ const Navbar = ({ isLoggedIn }) => {
         {/* Mobile Menu */}
         <div
           className={`md:hidden fixed top-16 left-0 right-0 z-50 transition-all duration-300 ${mobileMenuClasses} ${
-            menuOpen ? 'transform translate-y-0 opacity-100 visible' : 'transform -translate-y-full opacity-0 invisible'
+            menuOpen
+              ? "transform translate-y-0 opacity-100 visible"
+              : "transform -translate-y-full opacity-0 invisible"
           }`}
         >
           <div className="px-4 py-6 space-y-1 max-h-[calc(100vh-4rem)] overflow-y-auto">
+            {/* navBar content for meobile menu */}
+            <div
+              className={`w-full flex items-center`}
+            >
+              <a href="#" className={`${mobileMenuItemClasses} space-x-1 px-3 py-2  font-medium rounded-lg transition-all duration-200`}>
+                Home
+              </a>
+              <a href="#" className={`${mobileMenuItemClasses} space-x-1 px-3 py-2  font-medium rounded-lg transition-all duration-200`}>
+                Features
+              </a>
+              <a href="#" className={`${mobileMenuItemClasses} space-x-1 px-3 py-2  font-medium rounded-lg transition-all duration-200`}>
+                About
+              </a>
+              <a href="#" className={`${mobileMenuItemClasses} space-x-1 px-3 py-2  font-medium rounded-lg transition-all duration-200`}>
+                Contact
+              </a>
+            </div>
             {isLoggedIn ? (
               <>
                 {navItems.map((item, index) => {
@@ -189,13 +252,15 @@ const Navbar = ({ isLoggedIn }) => {
                       to={item.to}
                       onClick={() => setMenuOpen(false)}
                       className={`flex items-center space-x-3 px-4 py-3 rounded-xl font-medium transition-all duration-200 border ${
-                        item.special 
-                          ? 'text-red-500 hover:text-red-600 border-transparent hover:border-red-200' 
+                        item.special
+                          ? "text-red-500 hover:text-red-600 border-transparent hover:border-red-200"
                           : mobileMenuItemClasses
                       }`}
                       style={{
                         animationDelay: `${index * 50}ms`,
-                        animation: menuOpen ? 'slideInRight 0.3s ease-out forwards' : 'none'
+                        animation: menuOpen
+                          ? "slideInRight 0.3s ease-out forwards"
+                          : "none",
                       }}
                     >
                       <Icon className="text-lg flex-shrink-0" />
@@ -203,17 +268,24 @@ const Navbar = ({ isLoggedIn }) => {
                     </Link>
                   );
                 })}
-                
+
                 <div className={`border-t my-4 ${dividerClasses}`} />
-                
+
                 <button
-                  onClick={() => { toggleTheme(); setMenuOpen(false); }}
+                  onClick={() => {
+                    toggleTheme();
+                    setMenuOpen(false);
+                  }}
                   className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl font-medium transition-all duration-200 border ${mobileMenuItemClasses}`}
                 >
-                  {theme === 'dark' ? <FaSun className="text-lg" /> : <FaMoon className="text-lg" />}
+                  {theme === "dark" ? (
+                    <FaSun className="text-lg" />
+                  ) : (
+                    <FaMoon className="text-lg" />
+                  )}
                   <span>Toggle Theme</span>
                 </button>
-                
+
                 <Link
                   to="/profile"
                   onClick={() => setMenuOpen(false)}
@@ -222,7 +294,7 @@ const Navbar = ({ isLoggedIn }) => {
                   <FaUser className="text-lg" />
                   <span>Profile</span>
                 </Link>
-                
+
                 <button
                   onClick={handleLogout}
                   className="w-full flex items-center space-x-3 px-4 py-3 bg-red-500 text-white rounded-xl hover:bg-red-600 transition-colors duration-200 font-medium mt-2"
@@ -233,12 +305,21 @@ const Navbar = ({ isLoggedIn }) => {
             ) : (
               <>
                 <button
-                  onClick={() => { toggleTheme(); setMenuOpen(false); }}
+                  onClick={() => {
+                    toggleTheme();
+                    setMenuOpen(false);
+                  }}
                   className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl font-medium transition-all duration-200 ${
-                    theme === 'dark' ? 'text-gray-300 hover:bg-gray-700 hover:text-blue-400' : 'text-gray-700 hover:bg-blue-50 hover:text-blue-600'
+                    theme === "dark"
+                      ? "text-gray-300 hover:bg-gray-700 hover:text-blue-400"
+                      : "text-gray-700 hover:bg-blue-50 hover:text-blue-600"
                   }`}
                 >
-                  {theme === 'dark' ? <FaSun className="text-lg" /> : <FaMoon className="text-lg" />}
+                  {theme === "dark" ? (
+                    <FaSun className="text-lg" />
+                  ) : (
+                    <FaMoon className="text-lg" />
+                  )}
                   <span>Toggle Theme</span>
                 </button>
                 <Link
@@ -265,23 +346,23 @@ const Navbar = ({ isLoggedIn }) => {
             transform: translateX(0);
           }
         }
-        
+
         /* Custom scrollbar for mobile menu */
         .overflow-y-auto::-webkit-scrollbar {
           width: 4px;
         }
-        
+
         .overflow-y-auto::-webkit-scrollbar-track {
-          background: ${theme === 'dark' ? '#374151' : '#f1f5f9'};
+          background: ${theme === "dark" ? "#374151" : "#f1f5f9"};
         }
-        
+
         .overflow-y-auto::-webkit-scrollbar-thumb {
-          background: ${theme === 'dark' ? '#60a5fa' : '#3b82f6'};
+          background: ${theme === "dark" ? "#60a5fa" : "#3b82f6"};
           border-radius: 2px;
         }
-        
+
         .overflow-y-auto::-webkit-scrollbar-thumb:hover {
-          background: ${theme === 'dark' ? '#3b82f6' : '#2563eb'};
+          background: ${theme === "dark" ? "#3b82f6" : "#2563eb"};
         }
       `}</style>
     </>
