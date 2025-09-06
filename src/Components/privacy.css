@@ -1,0 +1,135 @@
+.privacy-container {
+    min-height: 100vh;
+    padding: 2rem;
+    transition: background-color 0.3s ease;
+}
+
+.privacy-container.light {
+    background-color: #f8f9fa; /* Light body color */
+}
+
+.privacy-container.dark {
+    background-color: #121826; /* Dark body color from reference */
+}
+
+/* Content styling */
+.privacy-content {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem;
+    border-radius: 12px;
+    line-height: 1.7;
+    transition: all 0.3s ease;
+}
+
+.privacy-container.light .privacy-content {
+    background-color: #ffffff;
+    color: #333333;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.privacy-container.dark .privacy-content {
+    background-color: #1a2035; /* Slightly lighter than body for contrast */
+    color: #e0e0e0;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Typography */
+.privacy-content h1 {
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 2.5rem;
+    font-weight: 600;
+    color: inherit;
+}
+
+.privacy-container.light h1 {
+    color: #2c3e50;
+}
+
+.privacy-container.dark h1 {
+    color: #ffffff;
+}
+
+.intro-section {
+    margin-bottom: 3rem;
+}
+
+.intro-section p {
+    margin-bottom: 1.5rem;
+    font-size: 1.1rem;
+    text-align: center;
+}
+
+/* Policy sections */
+.policy-section {
+    margin-bottom: 3rem;
+}
+
+.policy-section h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid;
+    color: inherit;
+}
+
+.privacy-container.light .policy-section h2 {
+    border-color: #3498db;
+}
+
+.privacy-container.dark .policy-section h2 {
+    border-color: #9b59b6;
+}
+
+.subsection {
+    margin-left: 1rem;
+}
+
+.subsection h3 {
+    font-size: 1.4rem;
+    margin: 1.5rem 0 1rem;
+    color: inherit;
+}
+
+.privacy-content ul {
+    padding-left: 2rem;
+    margin: 1rem 0;
+}
+
+.privacy-content li {
+    margin-bottom: 0.8rem;
+    font-size: 1.05rem;
+    position: relative;
+}
+
+.privacy-container.light li {
+    color: #444;
+}
+
+.privacy-container.dark li {
+    color: #e0e0e0;
+}
+
+.privacy-content li strong {
+    font-weight: 600;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .privacy-container {
+        padding: 1rem;
+    }
+    
+    .privacy-content {
+        padding: 1.5rem;
+    }
+    
+    .privacy-content h1 {
+        font-size: 2rem;
+    }
+    
+    .policy-section h2 {
+        font-size: 1.6rem;
+    }
+}

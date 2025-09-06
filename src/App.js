@@ -16,6 +16,7 @@ import "react-toastify/dist/ReactToastify.css";
 import TripRecommender from "./pages/TripRecommender";
 import TermsOfService from "./pages/terms";
 import ActivityPlanner from "./pages/ActivityPlanner";
+import TermsOfService from "./pages/terms";
 import PlanTrip from "./pages/PlanTrip";
 import Blogs from "./pages/Blogs";
 
@@ -28,6 +29,9 @@ import FAQ from "./pages/FAQ";
 import "./index.css";
 import Footer from "./Components/Footer";
 import Signup from "./pages/Signup";
+import PrivacyPolicy from "./pages/privacy";
+import Contact from "./pages/contact";
+import { InterestedProvider } from './contexts/InterestedContext';
 import { InterestedProvider } from "./contexts/InterestedContext";
 import Interested from "./pages/interested";
 import Dashboard from "./pages/Dashboard"; // ✅ renamed HomeSplit → Dashboard
@@ -37,14 +41,29 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
-
+  //issue fix for persisting login state
+      {/* 🧱 Add padding to prevent content being hidden behind navbar */}
+      <div className="pt-20 flex-grow">
+ {/* these are the routes */}
+        <Routes>
+          <Route path="/" element={isLoggedIn ? <Home /> : <Signup setIsLoggedIn={setIsLoggedIn} />} />
+          <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
+          <Route path="/plan" element={isLoggedIn ? <PlanTrip searchQuery={searchQuery} /> : <Navigate to="/login" />} />
+          <Route path="/expenses" element={isLoggedIn ? <ExpenseTracker /> : <Navigate to="/login" />} />
+          <Route path="/api/chat" element={isLoggedIn ? <ChatBot /> : <Navigate to="/login" />} />
+          <Route path="/TripRecommender" element={isLoggedIn ? <TripRecommender /> : <Navigate to="/login" />} />
   // Persist login state
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setIsLoggedIn(!!user);
       setIsLoading(false);
     });
-
+    
+    return () => unsubscribe();
+  }, []);
+          <Route path="/profile" element={isLoggedIn ? <Profile /> : <Navigate to="/login" />} />
+          <Route path = "/contact" element={<Contact></Contact>} />
+          <Route path="/privacy" element={<PrivacyPolicy />} />
     return () => unsubscribe();
   }, []);
 
@@ -55,7 +74,6 @@ function App() {
       </div>
     );
   }
-
   return (
     <InterestedProvider>
       <div
