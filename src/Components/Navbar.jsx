@@ -58,12 +58,12 @@ const Navbar = ({ isLoggedIn }) => {
   return (
     <>
       <nav className={`${navbarClasses} sticky top-0 z-50 transition-all duration-300`} role="navigation" aria-label="Main Navigation">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="w-full px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             {/* Brand */}
-            <div className="flex items-center space-x-2 flex-shrink-0">
+            <div className="flex items-center space-x-2  ">
               <FaMapMarkedAlt className={theme === 'dark' ? 'text-blue-400 text-2xl' : 'text-blue-600 text-2xl'} />
-              <Link to="/" className={`text-xl font-bold transition-colors duration-200 ${brandTextClasses}`} aria-label="Home">
+              <Link to="/" className={`text-3xl font-extrabold font-serif transition-colors duration-200 ${brandTextClasses}`} aria-label="Home">
                 YourTripPlanner
               </Link>
             </div>
