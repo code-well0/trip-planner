@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "title": "Exploring Manali",
+    "content": "Manali is a beautiful hill station with snow peaks and rivers.",
+    "author": "Aditi",
+    "image": "https://tse2.mm.bing.net/th/id/OIP.zCy83ag7n6Ls-3NhVUH08QHaE8?rs=1&pid=ImgDetMain&o=7&rm=3"
+  },
+  {
+    "id": 2,
+    "title": "A Weekend in Goa",
+    "content": "Goa is famous for its beaches, nightlife, and seafood.",
+    "author": "Rahul",
+    "image": "https://cdn.kimkim.com/files/a/images/7e6190c2f4ca72332f0ed33c8a706a0f7210d1d6/original-2fb99b9dec97e64b6516ed36fae562f7.jpg"
+  },
+  {
+    "id": 3,
+    "title": "Discovering Jaipur",
+    "content": "Jaipur, the Pink City, is known for its palaces, forts, and rich culture.",
+    "author": "Sneha",
+    "image": "https://c8.alamy.com/comp/M1C3GG/hawa-mahal-royal-palace-jaipur-rajasthan-constructed-with-red-and-M1C3GG.jpg"
+  }
+]
