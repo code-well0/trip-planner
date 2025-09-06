@@ -9,7 +9,7 @@ import DestinationPage from "./pages/DestinationPage";
 import ExpenseTracker from "./pages/ExpenseTracker";
 import ChatBot from "./pages/Chatbot";
 import Login from "./pages/login";
-import Home from "./pages/Home"; // ✅ New Public Landing Page
+import Home from "./pages/Home";
 import Profile from "./pages/Profile";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -17,20 +17,21 @@ import TripRecommender from "./pages/TripRecommender";
 import TermsOfService from "./pages/terms";
 import ActivityPlanner from "./pages/ActivityPlanner";
 import PlanTrip from "./pages/PlanTrip";
+import Blog from "./pages/Blog";
+import BlogDetail from "./pages/BlogDetail";
+import AddBlog from "./pages/AddBlog";
 import Blogs from "./pages/Blogs";
-
 import AboutUs from "./pages/AboutUs";
 import HelpCenter from "./pages/HelpCenter";
 import ContactUs from "./pages/ContactUs";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import FAQ from "./pages/FAQ";
-
 import "./index.css";
 import Footer from "./Components/Footer";
 import Signup from "./pages/Signup";
 import { InterestedProvider } from "./contexts/InterestedContext";
 import Interested from "./pages/interested";
-import Dashboard from "./pages/Dashboard"; // ✅ renamed HomeSplit → Dashboard
+import Dashboard from "./pages/Dashboard";
 
 function App() {
   const { theme } = useTheme();
@@ -38,13 +39,11 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
 
-  // Persist login state
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setIsLoggedIn(!!user);
       setIsLoading(false);
     });
-
     return () => unsubscribe();
   }, []);
 
@@ -119,9 +118,7 @@ function App() {
             />
             <Route
               path="/expenses"
-              element={
-                isLoggedIn ? <ExpenseTracker /> : <Navigate to="/login" />
-              }
+              element={isLoggedIn ? <ExpenseTracker /> : <Navigate to="/login" />}
             />
             <Route
               path="/api/chat"
@@ -140,11 +137,22 @@ function App() {
               }
             />
 
+            {/* Blogs */}
+            <Route
+              path="/blog"
+              element={isLoggedIn ? <Blog /> : <Navigate to="/login" />}
+            />
+            <Route
+              path="/blog/:id"
+              element={isLoggedIn ? <BlogDetail /> : <Navigate to="/login" />}
+            />
+            <Route
+              path="/add-blog"
+              element={isLoggedIn ? <AddBlog /> : <Navigate to="/login" />}
+            />
             <Route
               path="/blogs"
-              element={
-                isLoggedIn ? <Blogs /> : <Navigate to="/login" />
-              }
+              element={isLoggedIn ? <Blogs /> : <Navigate to="/login" />}
             />
 
             {/* User Profile */}

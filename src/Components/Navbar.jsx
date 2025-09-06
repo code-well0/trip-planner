@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+
 import {
   FaMapMarkedAlt,
   FaSuitcase,
@@ -13,9 +14,10 @@ import {
   FaBars,
   FaTimes,
   FaHeart,
-  FaBookOpen,
+  FaBookOpen
 } from "react-icons/fa";
-import { useTheme } from "../contexts/ThemeContext";
+
+import { useTheme } from '../contexts/ThemeContext';
 
 const Navbar = ({ isLoggedIn }) => {
   const navigate = useNavigate();
@@ -29,7 +31,7 @@ const Navbar = ({ isLoggedIn }) => {
     setMenuOpen(false);
   };
 
-  const navItems = [
+   const navItems = [
     { to: "/plan", icon: FaSuitcase, text: "Plan Trip" },
     { to: "/expenses", icon: FaMoneyBillWave, text: "Expenses" },
     { to: "/api/chat", icon: FaRobot, text: "AI Assistant" },
@@ -39,9 +41,11 @@ const Navbar = ({ isLoggedIn }) => {
       text: "Trip Recommender",
     },
     { to: "/activity-planner", icon: FaListAlt, text: "Activity Planner" },
-    { to: "/blogs", icon: FaBookOpen, text: "Blogs" },
     { to: "/interested", icon: FaHeart, text: "Interested", special: true },
+    { to: "/blogs", icon: FaBookOpen, text: "Blogs" },
+    { to: "/add-blog", icon: FaBookOpen, text: "Add Blog" }
   ];
+
 
   // Theme-based classes
   const navbarClasses =
@@ -88,19 +92,9 @@ const Navbar = ({ isLoggedIn }) => {
           <div className="flex justify-between items-center h-16">
             {/* Brand */}
             <div className="flex items-center space-x-2 flex-shrink-0">
-              <FaMapMarkedAlt
-                className={
-                  theme === "dark"
-                    ? "text-blue-400 text-2xl"
-                    : "text-blue-600 text-2xl"
-                }
-              />
-              <Link
-                to="/"
-                className={`text-xl font-bold transition-colors duration-200 ${brandTextClasses}`}
-                aria-label="Home"
-              >
-                YourTripPlanner
+              <FaMapMarkedAlt className={theme === 'dark' ? 'text-blue-400 text-2xl' : 'text-blue-600 text-2xl'} />
+              <Link to="/" className={`text-xl font-bold transition-colors duration-200 ${brandTextClasses}`} aria-label="Home">
+             
               </Link>
             </div>
 
