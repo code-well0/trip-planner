@@ -1,9 +1,22 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+
 import {
-  FaMapMarkedAlt, FaSuitcase, FaMoneyBillWave, FaRobot,
-  FaPlaneDeparture, FaMoon, FaSun, FaListAlt, FaUser, FaBars, FaTimes, FaHeart, FaBookOpen
+  FaMapMarkedAlt,
+  FaSuitcase,
+  FaMoneyBillWave,
+  FaRobot,
+  FaPlaneDeparture,
+  FaMoon,
+  FaSun,
+  FaListAlt,
+  FaUser,
+  FaBars,
+  FaTimes,
+  FaHeart,
+  FaBookOpen
 } from "react-icons/fa";
+
 import { useTheme } from '../contexts/ThemeContext';
 
 const Navbar = ({ isLoggedIn }) => {
@@ -18,15 +31,17 @@ const Navbar = ({ isLoggedIn }) => {
     setMenuOpen(false);
   };
 
-  const navItems = [
+   const navItems = [
     { to: "/plan", icon: FaSuitcase, text: "Plan Trip" },
     { to: "/expenses", icon: FaMoneyBillWave, text: "Expenses" },
     { to: "/api/chat", icon: FaRobot, text: "AI Assistant" },
     { to: "/TripRecommender", icon: FaPlaneDeparture, text: "Trip Recommender" },
     { to: "/activity-planner", icon: FaListAlt, text: "Activity Planner" },
-    { to: "/blogs", icon: FaBookOpen, text: "Blogs" },
     { to: "/interested", icon: FaHeart, text: "Interested", special: true },
+    { to: "/blogs", icon: FaBookOpen, text: "Blogs" },
+    { to: "/add-blog", icon: FaBookOpen, text: "Add Blog" }
   ];
+
 
   // Theme-based classes
   const navbarClasses = theme === 'dark' 
@@ -64,7 +79,7 @@ const Navbar = ({ isLoggedIn }) => {
             <div className="flex items-center space-x-2 flex-shrink-0">
               <FaMapMarkedAlt className={theme === 'dark' ? 'text-blue-400 text-2xl' : 'text-blue-600 text-2xl'} />
               <Link to="/" className={`text-xl font-bold transition-colors duration-200 ${brandTextClasses}`} aria-label="Home">
-                YourTripPlanner
+             
               </Link>
             </div>
 
