@@ -32,7 +32,7 @@ import Signup from "./pages/Signup";
 import { InterestedProvider } from "./contexts/InterestedContext";
 import Interested from "./pages/interested";
 import Dashboard from "./pages/Dashboard";
-
+import BackToTop from "./Components/BackToTop";
 function App() {
   const { theme } = useTheme();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -182,6 +182,8 @@ function App() {
         </div>
 
         <Footer isLoggedIn={isLoggedIn} />
+
+<BackToTop />
 
         <ToastContainer
           position="bottom-left"
