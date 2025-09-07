@@ -74,7 +74,7 @@ const Navbar = ({ isLoggedIn }) => {
     <>
       <nav className={`${navbarClasses} sticky top-0 z-50 transition-all duration-300`} role="navigation" aria-label="Main Navigation">
         <div className="w-full px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
+          <div className="flex justify-between items-center h-20">
             {/* Brand */}
             <div className="flex items-center space-x-2  ">
               <FaMapMarkedAlt className={theme === 'dark' ? 'text-blue-400 text-2xl' : 'text-blue-600 text-2xl'} />
