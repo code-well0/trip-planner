@@ -14,10 +14,10 @@ import {
   FaBars,
   FaTimes,
   FaHeart,
-  FaBookOpen
+  FaBookOpen,
 } from "react-icons/fa";
 
-import { useTheme } from '../contexts/ThemeContext';
+import { useTheme } from "../contexts/ThemeContext";
 
 const Navbar = ({ isLoggedIn }) => {
   const navigate = useNavigate();
@@ -31,7 +31,7 @@ const Navbar = ({ isLoggedIn }) => {
     setMenuOpen(false);
   };
 
-   const navItems = [
+  const navItems = [
     { to: "/plan", icon: FaSuitcase, text: "Plan Trip" },
     { to: "/expenses", icon: FaMoneyBillWave, text: "Expenses" },
     { to: "/api/chat", icon: FaRobot, text: "AI Assistant" },
@@ -43,9 +43,8 @@ const Navbar = ({ isLoggedIn }) => {
     { to: "/activity-planner", icon: FaListAlt, text: "Activity Planner" },
     { to: "/interested", icon: FaHeart, text: "Interested", special: true },
     { to: "/blogs", icon: FaBookOpen, text: "Blogs" },
-    { to: "/add-blog", icon: FaBookOpen, text: "Add Blog" }
+    { to: "/add-blog", icon: FaBookOpen, text: "Add Blog" },
   ];
-
 
   // Theme-based classes
   const navbarClasses =
@@ -92,28 +91,46 @@ const Navbar = ({ isLoggedIn }) => {
           <div className="flex justify-between items-center h-16">
             {/* Brand */}
             <div className="flex items-center space-x-2 flex-shrink-0">
-              <FaMapMarkedAlt className={theme === 'dark' ? 'text-blue-400 text-2xl' : 'text-blue-600 text-2xl'} />
-              <Link to="/" className={`text-xl font-bold transition-colors duration-200 ${brandTextClasses}`} aria-label="Home">
-             
-              </Link>
+              <FaMapMarkedAlt
+                className={
+                  theme === "dark"
+                    ? "text-blue-400 text-2xl"
+                    : "text-blue-600 text-2xl"
+                }
+              />
+              <Link
+                to="/"
+                className={`text-xl font-bold transition-colors duration-200 ${brandTextClasses}`}
+                aria-label="Home"
+              ></Link>
             </div>
 
             {/* Desktop Menu */}
             <div className="hidden md:flex items-center space-x-6">
               {/* navBar content */}
-              <div
-                className={`w-full flex items-center`}
-              >
-                <a href="#" className={`${menuItemClasses} space-x-1 px-3 py-2  font-medium rounded-lg transition-all duration-200`}>
+              <div className={`w-full flex items-center`}>
+                <a
+                  href="#"
+                  className={`${menuItemClasses} space-x-1 px-3 py-2  font-medium rounded-lg transition-all duration-200`}
+                >
                   Home
                 </a>
-                <a href="#"  className={`${menuItemClasses} space-x-1 px-3 py-2  font-medium rounded-lg transition-all duration-200`}>
+                <a
+                  href="#"
+                  className={`${menuItemClasses} space-x-1 px-3 py-2  font-medium rounded-lg transition-all duration-200`}
+                >
                   Features
                 </a>
-                <a href="#" className={`${menuItemClasses} space-x-1 px-3 py-2  font-medium rounded-lg transition-all duration-200`}>
+                <a
+                  href="#"
+                  className={`${menuItemClasses} space-x-1 px-3 py-2  font-medium rounded-lg transition-all duration-200`}
+                >
                   About
                 </a>
-                <a href="#" className={`${menuItemClasses} space-x-1 px-3 py-2  font-medium rounded-lg transition-all duration-200`}>
+                <a
+                  href="#"
+                  className={`${menuItemClasses} space-x-1 px-3 py-2  font-medium rounded-lg transition-all duration-200`}
+                >
                   Contact
                 </a>
               </div>
@@ -226,19 +243,29 @@ const Navbar = ({ isLoggedIn }) => {
         >
           <div className="px-4 py-6 space-y-1 max-h-[calc(100vh-4rem)] overflow-y-auto">
             {/* navBar content for meobile menu */}
-            <div
-              className={`w-full flex items-center`}
-            >
-              <a href="#" className={`${mobileMenuItemClasses} space-x-1 px-3 py-2  font-medium rounded-lg transition-all duration-200`}>
+            <div className={`w-full flex items-center`}>
+              <a
+                href="#"
+                className={`${mobileMenuItemClasses} space-x-1 px-3 py-2  font-medium rounded-lg transition-all duration-200`}
+              >
                 Home
               </a>
-              <a href="#" className={`${mobileMenuItemClasses} space-x-1 px-3 py-2  font-medium rounded-lg transition-all duration-200`}>
+              <a
+                href="#"
+                className={`${mobileMenuItemClasses} space-x-1 px-3 py-2  font-medium rounded-lg transition-all duration-200`}
+              >
                 Features
               </a>
-              <a href="#" className={`${mobileMenuItemClasses} space-x-1 px-3 py-2  font-medium rounded-lg transition-all duration-200`}>
+              <a
+                href="#"
+                className={`${mobileMenuItemClasses} space-x-1 px-3 py-2  font-medium rounded-lg transition-all duration-200`}
+              >
                 About
               </a>
-              <a href="#" className={`${mobileMenuItemClasses} space-x-1 px-3 py-2  font-medium rounded-lg transition-all duration-200`}>
+              <a
+                href="#"
+                className={`${mobileMenuItemClasses} space-x-1 px-3 py-2  font-medium rounded-lg transition-all duration-200`}
+              >
                 Contact
               </a>
             </div>
