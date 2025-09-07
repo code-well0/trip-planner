@@ -107,33 +107,6 @@ const Navbar = ({ isLoggedIn }) => {
 
             {/* Desktop Menu */}
             <div className="hidden md:flex items-center space-x-6">
-              {/* navBar content */}
-              <div className={`w-full flex items-center`}>
-                <a
-                  href="#"
-                  className={`${menuItemClasses} space-x-1 px-3 py-2  font-medium rounded-lg transition-all duration-200`}
-                >
-                  Home
-                </a>
-                <a
-                  href="#"
-                  className={`${menuItemClasses} space-x-1 px-3 py-2  font-medium rounded-lg transition-all duration-200`}
-                >
-                  Features
-                </a>
-                <a
-                  href="#"
-                  className={`${menuItemClasses} space-x-1 px-3 py-2  font-medium rounded-lg transition-all duration-200`}
-                >
-                  About
-                </a>
-                <a
-                  href="#"
-                  className={`${menuItemClasses} space-x-1 px-3 py-2  font-medium rounded-lg transition-all duration-200`}
-                >
-                  Contact
-                </a>
-              </div>
               {isLoggedIn ? (
                 <>
                   {navItems.map((item) => {
@@ -175,6 +148,33 @@ const Navbar = ({ isLoggedIn }) => {
                 </>
               ) : (
                 <>
+                  {/* navBar content when not logged In for desltop menu */}
+                  <div className={`w-full flex items-center`}>
+                    <a
+                      href="/home"
+                      className={`${menuItemClasses} space-x-1 px-3 py-2  font-medium rounded-lg transition-all duration-200`}
+                    >
+                      Home
+                    </a>
+                    <a
+                      href="#"
+                      className={`${menuItemClasses} space-x-1 px-3 py-2  font-medium rounded-lg transition-all duration-200`}
+                    >
+                      Features
+                    </a>
+                    <a
+                      href="#"
+                      className={`${menuItemClasses} space-x-1 px-3 py-2  font-medium rounded-lg transition-all duration-200`}
+                    >
+                      About
+                    </a>
+                    <a
+                      href="/footer"
+                      className={`${menuItemClasses} space-x-1 px-3 py-2  font-medium rounded-lg transition-all duration-200`}
+                    >
+                      Contact
+                    </a>
+                  </div>
                   <button
                     onClick={toggleTheme}
                     className={`p-2 rounded-lg transition-all duration-200 ${hamburgerClasses}`}
@@ -242,33 +242,6 @@ const Navbar = ({ isLoggedIn }) => {
           }`}
         >
           <div className="px-4 py-6 space-y-1 max-h-[calc(100vh-4rem)] overflow-y-auto">
-            {/* navBar content for meobile menu */}
-            <div className={`w-full flex items-center`}>
-              <a
-                href="#"
-                className={`${mobileMenuItemClasses} space-x-1 px-3 py-2  font-medium rounded-lg transition-all duration-200`}
-              >
-                Home
-              </a>
-              <a
-                href="#"
-                className={`${mobileMenuItemClasses} space-x-1 px-3 py-2  font-medium rounded-lg transition-all duration-200`}
-              >
-                Features
-              </a>
-              <a
-                href="#"
-                className={`${mobileMenuItemClasses} space-x-1 px-3 py-2  font-medium rounded-lg transition-all duration-200`}
-              >
-                About
-              </a>
-              <a
-                href="#"
-                className={`${mobileMenuItemClasses} space-x-1 px-3 py-2  font-medium rounded-lg transition-all duration-200`}
-              >
-                Contact
-              </a>
-            </div>
             {isLoggedIn ? (
               <>
                 {navItems.map((item, index) => {
@@ -295,7 +268,6 @@ const Navbar = ({ isLoggedIn }) => {
                     </Link>
                   );
                 })}
-
                 <div className={`border-t my-4 ${dividerClasses}`} />
 
                 <button
@@ -331,6 +303,33 @@ const Navbar = ({ isLoggedIn }) => {
               </>
             ) : (
               <>
+                {/* navBar content applied when not logged in for meobile menu */}
+                <div className={`w-full flex items-center`}>
+                  <a
+                    href="/home"
+                    className={`${mobileMenuItemClasses} space-x-1 px-3 py-2  font-medium rounded-lg transition-all duration-200`}
+                  >
+                    Home
+                  </a>
+                  <a
+                    href="#"
+                    className={`${mobileMenuItemClasses} space-x-1 px-3 py-2  font-medium rounded-lg transition-all duration-200`}
+                  >
+                    Features
+                  </a>
+                  <a
+                    href="#"
+                    className={`${mobileMenuItemClasses} space-x-1 px-3 py-2  font-medium rounded-lg transition-all duration-200`}
+                  >
+                    About
+                  </a>
+                  <a
+                    href="/contact"
+                    className={`${mobileMenuItemClasses} space-x-1 px-3 py-2  font-medium rounded-lg transition-all duration-200`}
+                  >
+                    Contact
+                  </a>
+                </div>
                 <button
                   onClick={() => {
                     toggleTheme();
