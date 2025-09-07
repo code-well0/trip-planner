@@ -40,22 +40,22 @@ function ActivityPlanner() {
     <div className="activity-planner-container">
       <h2>Activity Planner</h2>
       <div className="destination-input">
-        <label>
-          Destination: 
+        
+          
           <input
             type="text"
             value={destination}
             onChange={e => setDestination(e.target.value)}
-            placeholder="Enter your destination"
+            placeholder="Destination"
           />
-        </label>
+       
       </div>
       <div className="add-activity">
         <input
           type="text"
           value={activity}
           onChange={e => setActivity(e.target.value)}
-          placeholder="Add a new activity"
+          placeholder="Activity"
         />
         <button onClick={handleAddActivity}>Add</button>
       </div>
