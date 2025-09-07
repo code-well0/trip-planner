@@ -1,33 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import Card from './Card.jsx';
-import { FaArrowUp } from "react-icons/fa"
 import { useInterested } from '../contexts/InterestedContext';
 
 const Tours = ({ tours, removeTour }) => {
   const { interestedTours, removeFromInterested } = useInterested();
-  const [showScrollTop, setShowScrollTop] = useState(false)
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollTop = window.pageYOffset || document.documentElement.scrollTop
-      setShowScrollTop(scrollTop > 300)
-    }
-
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
-
-  const getId = (id) => {
-    removeTour(id);
-    removeFromInterested(id);
-  };
-  
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    })
-  }
 
   return (
     <div className="toursWrapper px-4 py-8" role="main" aria-label="Tours">
@@ -37,7 +13,7 @@ const Tours = ({ tours, removeTour }) => {
           <Card
             key={tour.id}
             tour={tour}
-            getRemoveId={getId}
+
           />
         ))}
       </div>
@@ -86,18 +62,7 @@ const Tours = ({ tours, removeTour }) => {
           </div>
         )}
       </div>
-      
-      {showScrollTop && (
-        <button
-          onClick={scrollToTop}
-          className="fixed bottom-6 right-6 bg-gradient-to-r from-purple-500 to-pink-500 text-white p-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 z-50 animate-bounce"
-          aria-label="Scroll to top"
-          tabIndex={0}
-          onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { scrollToTop(); } }}
-        >
-          <FaArrowUp className="text-xl" />
-        </button>
-      )}
+    
 
     </div>
   );
