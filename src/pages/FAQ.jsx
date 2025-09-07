@@ -25,9 +25,6 @@ const faqs = [
 const FaqItem = ({ faq, isOpen, onClick }) => {
   const { theme } = useTheme();
   return (
-    // rounded-xl 
-    //  transition-all duration-500 
-    //  hover:shadow-[0_0_25px_6px_rgba(96,165,250,0.8)] m-0.1 mx-1
     <div className={`border-b ${theme === 'dark' ? 'border-gray-700' : 'border-gray-200'} rounded-xl 
      transition-all duration-500 
      hover:shadow-[0_0_25px_6px_rgba(96,165,250,0.8)] m-0.1 mx-1`}  >
@@ -61,7 +58,6 @@ const FAQ = () => {
         <div className="text-center mb-10">
           <h1 className="text-4xl font-bold mb-2">Frequently Asked Questions</h1>
         </div>
-        {/* py-1 */}
         <div className={`rounded-lg shadow-lg overflow-hidden ${theme === 'dark' ? 'bg-gray-800' : 'bg-white'} py-1`}>
           {faqs.map((faq, index) => (
             <FaqItem
