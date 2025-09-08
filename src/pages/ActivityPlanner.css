@@ -7,6 +7,33 @@
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
+/* Form UI */
+@media (prefers-color-scheme: dark) {
+  .activity-planner-container {
+    background: rgb(33,41,54);
+    color: #ffffff;
+  }
+  .activity-planner-container h2{
+    text-align: center;
+    font-size: 30px;
+    margin-bottom:20px;
+  }
+
+
+  .destination-input input, .add-activity input{
+    background-color: rgb(57,65,80);
+    border-radius: 12px;
+    width:90%;
+  }
+
+  .add-activity button{
+    background-color: rgb(76,161,84);
+    color:#fff;
+    border-radius: 12px;
+    margin-top:15px;
+  }
+}
+
 .destination-input, .add-activity {
   margin-bottom: 1rem;
 }
