@@ -106,7 +106,7 @@ const Navbar = ({ isLoggedIn }) => {
             </div>
 
             {/* Desktop Menu */}
-            <div className="hidden md:flex items-center space-x-6">
+            <div className="hidden md:flex items-center space-x-1">
               {isLoggedIn ? (
                 <>
                   {navItems.map((item) => {
