@@ -3,6 +3,7 @@ import { FaPaperPlane, FaRobot, FaUser } from "react-icons/fa";
 import { useTheme } from '../contexts/ThemeContext';
 import { Loader2 } from "lucide-react";
 import { ToastContainer, toast } from "react-toastify";
+import ReactMarkdown from 'react-markdown';
 
 // The Chatbot component for interacting with an AI assistant
 function ChatBot() {
@@ -82,7 +83,30 @@ function ChatBot() {
                                     ? 'bg-blue-500 text-white'
                                     : 'bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white'
                             }`}>
-                                <p>{msg.text}</p>
+                                {msg.sender === 'bot' ? (
+                                    <div className="text-sm leading-relaxed">
+                                        <ReactMarkdown 
+                                            components={{
+                                                p: ({ children }) => <p className="mb-2 last:mb-0 text-gray-800 dark:text-gray-200">{children}</p>,
+                                                strong: ({ children }) => <strong className="font-semibold text-gray-900 dark:text-gray-100">{children}</strong>,
+                                                em: ({ children }) => <em className="italic text-gray-700 dark:text-gray-300">{children}</em>,
+                                                code: ({ children }) => <code className="bg-gray-300 dark:bg-gray-600 px-1 py-0.5 rounded text-xs font-mono text-gray-900 dark:text-gray-100">{children}</code>,
+                                                pre: ({ children }) => <pre className="bg-gray-300 dark:bg-gray-600 p-2 rounded overflow-x-auto text-xs font-mono text-gray-900 dark:text-gray-100 mb-2">{children}</pre>,
+                                                ul: ({ children }) => <ul className="list-disc list-inside mb-2 text-gray-800 dark:text-gray-200">{children}</ul>,
+                                                ol: ({ children }) => <ol className="list-decimal list-inside mb-2 text-gray-800 dark:text-gray-200">{children}</ol>,
+                                                li: ({ children }) => <li className="mb-1">{children}</li>,
+                                                h1: ({ children }) => <h1 className="text-lg font-bold mb-2 text-gray-900 dark:text-gray-100">{children}</h1>,
+                                                h2: ({ children }) => <h2 className="text-base font-bold mb-2 text-gray-900 dark:text-gray-100">{children}</h2>,
+                                                h3: ({ children }) => <h3 className="text-sm font-bold mb-1 text-gray-900 dark:text-gray-100">{children}</h3>,
+                                                blockquote: ({ children }) => <blockquote className="border-l-4 border-gray-400 dark:border-gray-500 pl-2 italic mb-2 text-gray-700 dark:text-gray-300">{children}</blockquote>
+                                            }}
+                                        >
+                                            {msg.text}
+                                        </ReactMarkdown>
+                                    </div>
+                                ) : (
+                                    <p>{msg.text}</p>
+                                )}
                             </div>
                             {msg.sender === 'user' && <FaUser className="text-gray-500 text-lg flex-shrink-0 mt-1" />}
                         </div>
