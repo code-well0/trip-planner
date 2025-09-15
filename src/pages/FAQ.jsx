@@ -126,7 +126,7 @@ const FAQ = () => {
 </div>
         <div className="mt-12 text-center">
           <Link
-            to="/"
+            to="/plan"
             className={`inline-block px-6 py-2 rounded-lg ${
               theme === 'dark'
                 ? 'bg-blue-600 hover:bg-blue-700'
