@@ -1,8 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { FaArrowUp } from "react-icons/fa";
+import { useLocation } from "react-router-dom";
 
 const BackToTop = () => {
   const [visible, setVisible] = useState(false);
+  const { pathname } = useLocation(); //  detects route changes
+
+  useEffect(() => {
+    // scroll to top automatically on route change
+    window.scrollTo(0, 0);
+  }, [pathname]);
 
   useEffect(() => {
     const toggleVisibility = () => {
