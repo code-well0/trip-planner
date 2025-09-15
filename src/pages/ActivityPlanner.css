@@ -1,39 +1,138 @@
 .activity-planner-container {
-  background: #fff;
-  max-width: 500px;
+  background: var(--bg-color, #fff);
+  color: var(--text-color, #222);
+  max-width: 600px;
   margin: 2rem auto;
   padding: 2rem 2.5rem;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+  transition: all 0.3s ease;
+}
+.title {
+  text-align: center;
+  font-size: 2rem;   
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  color: var(--primary-color, #4f46e5);
+  letter-spacing: 1px;
+  text-shadow: 1px 1px 4px rgba(0,0,0,0.1);
+  transition: color 0.3s ease;
 }
 
-.destination-input, .add-activity {
-  margin-bottom: 1rem;
+/* Inputs and buttons */
+.destination-input,
+.add-activity {
+  margin-bottom: 1.2rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  align-items: center;
 }
 
-.add-activity input, .destination-input input {
-  margin-left: 0.5rem;
-  padding: 0.5rem;
+.add-activity input,
+.destination-input input,
+.add-activity select,
+.add-activity input[type="date"] {
+  padding: 0.6rem 0.8rem;
+  border: 1px solid var(--border-color, #ccc);
+  border-radius: 8px;
+  flex: 1;
+  font-size: 0.95rem;
+  background: var(--input-bg, #f9f9f9);
+  color: var(--text-color, #222);
+  transition: border 0.2s ease;
 }
 
+.add-activity input:focus,
+.destination-input input:focus,
+.add-activity select:focus,
+.add-activity input[type="date"]:focus {
+  border-color: var(--primary-color, #4f46e5);
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.2);
+}
+
+/* Add button */
 .add-activity button {
-  margin-left: 0.5rem;
-  padding: 0.4rem 0.8rem;
+  background: var(--primary-color, #4f46e5);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.6rem 1rem;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
 }
 
+.add-activity button:hover {
+  background: var(--primary-hover, #4338ca);
+  transform: translateY(-1px);
+}
+
+/* Activities list */
 .activity-list {
   list-style: none;
   padding-left: 0;
+  margin-top: 1.5rem;
 }
 
 .activity-list li {
   display: flex;
   align-items: center;
-  margin-bottom: 0.8rem;
+  justify-content: space-between;
+  gap: 0.6rem;
+  margin-bottom: 1rem;
+  padding: 0.9rem 1rem;
+  border-radius: 10px;
+  background: var(--card-bg, #f4f4f9);
+  transition: background 0.3s ease, transform 0.2s ease;
 }
 
+.activity-list li:hover {
+  transform: translateY(-2px);
+  background: var(--card-hover, #eaeaff);
+}
+
+.activity-text {
+  flex: 1;
+  font-weight: 500;
+}
+
+.activity-date {
+  font-size: 0.85rem;
+  color: var(--muted-color, #666);
+  margin-left: 0.5rem;
+}
+
+.category-badge {
+  padding: 0.3rem 0.6rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.category-badge.general { background: #d1d5db; }
+.category-badge.adventure { background: #facc15; }
+.category-badge.food { background: #f87171; color: #fff; }
+.category-badge.shopping { background: #34d399; color: #fff; }
+.category-badge.relaxation { background: #60a5fa; color: #fff; }
+
+/* Buttons inside list */
 .activity-list button {
-  margin-left: 0.7rem;
-  padding: 0.2rem 0.7rem;
-  font-size: 0.9rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0.3rem 0.6rem;
+  font-size: 0.85rem;
+  border-radius: 6px;
+  transition: background 0.2s ease;
+}
+
+.activity-list button:hover {
+  background: rgba(0, 0, 0, 0.08);
+}
+
+.completed .activity-text {
+  text-decoration: line-through;
+  color: var(--muted-color, #777);
 }
