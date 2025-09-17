@@ -33,6 +33,10 @@ import { InterestedProvider } from "./contexts/InterestedContext";
 import Interested from "./pages/interested";
 import Dashboard from "./pages/Dashboard";
 import BackToTop from "./Components/BackToTop";
+
+// ✅ Import CurrencyConverter Component
+import CurrencyConverter from "./Components/CurrencyConverter";
+
 function App() {
   const { theme } = useTheme();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -60,8 +64,8 @@ function App() {
       <div
         className={`bg-gray-100 dark:bg-gray-900 transition-colors duration-300 min-h-screen ${theme}`}
       >
-        <SnakeCursor />  
-        
+        <SnakeCursor />
+
         <Navbar
           isLoggedIn={isLoggedIn}
           searchQuery={searchQuery}
@@ -167,6 +171,14 @@ function App() {
               element={isLoggedIn ? <Interested /> : <Navigate to="/login" />}
             />
 
+            {/* ✅ Currency Converter */}
+            <Route
+              path="/currency-converter"
+              element={
+                isLoggedIn ? <CurrencyConverter /> : <Navigate to="/login" />
+              }
+            />
+
             {/* Static Pages */}
             <Route path="/terms" element={<TermsOfService />} />
             <Route path="/about" element={<AboutUs />} />
@@ -185,7 +197,7 @@ function App() {
 
         <Footer isLoggedIn={isLoggedIn} />
 
-<BackToTop />
+        <BackToTop />
 
         <ToastContainer
           position="bottom-left"
