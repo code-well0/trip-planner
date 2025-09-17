@@ -44,6 +44,8 @@ const Navbar = ({ isLoggedIn }) => {
     { to: "/interested", icon: FaHeart, text: "Interested", special: true },
     { to: "/blogs", icon: FaBookOpen, text: "Blogs" },
     { to: "/add-blog", icon: FaBookOpen, text: "Add Blog" },
+    { to: "/currency-converter", icon: FaMoneyBillWave, text: "Currency Converter" },
+
   ];
 
   // Theme-based classes
@@ -106,7 +108,7 @@ const Navbar = ({ isLoggedIn }) => {
             </div>
 
             {/* Desktop Menu */}
-            <div className="hidden md:flex items-center space-x-1">
+            <div className="hidden md:flex items-center space-x-4">
               {isLoggedIn ? (
                 <>
                   {navItems.map((item) => {
@@ -126,17 +128,17 @@ const Navbar = ({ isLoggedIn }) => {
                       </Link>
                     );
                   })}
+
+                  {/* Theme Toggle Button */}
                   <button
                     onClick={toggleTheme}
                     className={`p-2 rounded-lg transition-all duration-200 ${hamburgerClasses}`}
                     aria-label="Toggle theme"
                   >
-                    {theme === "dark" ? (
-                      <FaSun className="text-lg" />
-                    ) : (
-                      <FaMoon className="text-lg" />
-                    )}
+                    {theme === "dark" ? <FaSun className="text-lg" /> : <FaMoon className="text-lg" />}
                   </button>
+
+                  {/* Profile Button */}
                   <Link
                     to="/profile"
                     className="flex items-center space-x-1 px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200"
@@ -148,43 +150,41 @@ const Navbar = ({ isLoggedIn }) => {
                 </>
               ) : (
                 <>
-                  {/* navBar content when not logged In for desltop menu */}
-                  <div className={`w-full flex items-center`}>
-                    <a
-                      href="/home"
-                      className={`${menuItemClasses} space-x-1 px-3 py-2  font-medium rounded-lg transition-all duration-200`}
-                    >
-                      Home
-                    </a>
-                    <a
-                      href="#"
-                      className={`${menuItemClasses} space-x-1 px-3 py-2  font-medium rounded-lg transition-all duration-200`}
-                    >
-                      Features
-                    </a>
-                    <a
-                      href="#"
-                      className={`${menuItemClasses} space-x-1 px-3 py-2  font-medium rounded-lg transition-all duration-200`}
-                    >
-                      About
-                    </a>
-                    <a
-                      href="/footer"
-                      className={`${menuItemClasses} space-x-1 px-3 py-2  font-medium rounded-lg transition-all duration-200`}
-                    >
-                      Contact
-                    </a>
-                  </div>
+                  {/* Not logged in links */}
+                  <Link
+                    to="/home"
+                    className={`${menuItemClasses} px-3 py-2 rounded-lg font-medium`}
+                  >
+                    Home
+                  </Link>
+                  <Link
+                    to="#"
+                    className={`${menuItemClasses} px-3 py-2 rounded-lg font-medium`}
+                  >
+                    Features
+                  </Link>
+                  <Link
+                    to="#"
+                    className={`${menuItemClasses} px-3 py-2 rounded-lg font-medium`}
+                  >
+                    About
+                  </Link>
+                  <Link
+                    to="/footer"
+                    className={`${menuItemClasses} px-3 py-2 rounded-lg font-medium`}
+                  >
+                    Contact
+                  </Link>
+
+                  {/* Theme Toggle Button */}
                   <button
                     onClick={toggleTheme}
                     className={`p-2 rounded-lg transition-all duration-200 ${hamburgerClasses}`}
                   >
-                    {theme === "dark" ? (
-                      <FaSun className="text-lg" />
-                    ) : (
-                      <FaMoon className="text-lg" />
-                    )}
+                    {theme === "dark" ? <FaSun className="text-lg" /> : <FaMoon className="text-lg" />}
                   </button>
+
+                  {/* Login Button */}
                   <Link
                     to="/login"
                     className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200"
@@ -194,7 +194,6 @@ const Navbar = ({ isLoggedIn }) => {
                 </>
               )}
             </div>
-
             {/* Mobile Hamburger - Fixed */}
             <div className="md:hidden">
               <button
