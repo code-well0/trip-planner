@@ -149,7 +149,7 @@ function App() {
               element={isLoggedIn ? <Blog /> : <Navigate to="/login" />}
             />
             <Route
-              path="/blog/:id"
+              path="/blogs/:id"
               element={isLoggedIn ? <BlogDetail /> : <Navigate to="/login" />}
             />
             <Route
