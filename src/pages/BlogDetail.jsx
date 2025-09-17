@@ -1,89 +1,99 @@
-import React, { useEffect, useState } from "react";
-import { useParams, Link, useNavigate } from "react-router-dom";
+import React from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 
-function BlogDetail() {
+const BlogDetails = () => {
   const { id } = useParams();
-  const [blog, setBlog] = useState(null);
-  const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    fetch(`http://localhost:5000/api/blogs/${id}`)
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error("Blog not found");
-        }
-        return res.json();
-      })
-      .then((data) => setBlog(data))
-      .catch((err) => setError(err.message));
-  }, [id]);
+  // Sample blogs data (you can also fetch from backend)
+  const blogs = [
+    {
+      id: 1,
+      title: "Top 10 Travel Destinations in 2025 🌍",
+      description:
+        "Discover the most trending destinations to explore this year with tips for budget-friendly trips and hidden gems. This blog covers exotic places like Bali, Iceland, Japan, and more. You'll also find insider hacks for affordable flights and unique stays!",
+      author: "Travel Guru",
+      date: "Sep 5, 2025",
+      tag: "Travel",
+      image:
+        "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=900&q=80",
+    },
+    {
+      id: 2,
+      title: "How to Plan a Budget-Friendly Europe Trip 💶",
+      description:
+        "Europe doesn’t have to be expensive! This guide will teach you how to explore iconic destinations like Paris, Rome, and Prague without draining your savings. Learn about budget airlines, hostels, and hidden gems that cost little to nothing.",
+      author: "Nomad Expert",
+      date: "Aug 22, 2025",
+      tag: "Budget",
+      image:
+        "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80",
+    },
+    {
+      id: 3,
+      title: "AI-Powered Trip Planning 🤖",
+      description:
+        "AI is changing how we travel! With smart recommendations, itinerary generators, and expense trackers, AI ensures every trip is personalized. In this blog, we explore the best AI tools and apps that make your journey smoother and more fun.",
+      author: "AI Traveler",
+      date: "Aug 10, 2025",
+      tag: "AI",
+      image:
+        "https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=900&q=80",
+    },
+    // add others from your Blogs.jsx...
+  ];
 
-  const handleDelete = async () => {
-    if (window.confirm("Are you sure you want to delete this blog?")) {
-      try {
-        const res = await fetch(`http://localhost:5000/api/blogs/${id}`, {
-          method: "DELETE",
-        });
-        if (res.ok) {
-          alert("Blog deleted successfully");
-          navigate("/blog"); // go back to listing
-        } else {
-          alert("Failed to delete blog");
-        }
-      } catch (err) {
-        alert("Error deleting blog");
-      }
-    }
-  };
+  const blog = blogs.find((b) => b.id === parseInt(id));
 
-  if (error) {
+  if (!blog) {
     return (
-      <div className="min-h-screen bg-blue-900 flex items-center justify-center p-6">
-        <p className="text-white text-lg">{error}</p>
-        <Link
-          to="/blog"
-          className="ml-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-        >
-          ← Back to Blogs
-        </Link>
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-900 via-purple-900 to-gray-900 text-white">
+        <h1 className="text-3xl font-bold">Blog Not Found 🚫</h1>
       </div>
     );
   }
 
-  if (!blog) return <p className="p-6 text-white">Loading...</p>;
-
   return (
-    <div className="min-h-screen bg-blue-900 flex items-center justify-center p-6">
-      <div className="max-w-3xl w-full bg-white rounded-xl shadow-lg p-8 text-gray-800">
-        {blog.image && (
+    <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-gray-900 text-white py-12 px-6">
+      <div className="max-w-4xl mx-auto">
+        {/* Back Button */}
+        <button
+          onClick={() => navigate("/blogs")}
+          className="mb-6 px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg transition"
+        >
+          ← Back to Blogs
+        </button>
+
+        {/* Blog Content */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="bg-gray-800/80 backdrop-blur-lg rounded-2xl shadow-lg overflow-hidden"
+        >
           <img
             src={blog.image}
             alt={blog.title}
-            className="w-full h-60 object-cover rounded-lg mb-6"
+            className="w-full h-80 object-cover"
           />
-        )}
-        <h1 className="text-3xl font-bold text-blue-700 mb-3">{blog.title}</h1>
-        <p className="text-sm text-gray-500 mb-6">✍ {blog.author}</p>
-        <p className="text-lg leading-relaxed text-gray-800">{blog.content}</p>
-
-        <div className="flex justify-between items-center mt-6">
-          <Link
-            to="/blog"
-            className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-          >
-            ← Back to Blogs
-          </Link>
-          <button
-            onClick={handleDelete}
-            className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
-          >
-            🗑 Delete Blog
-          </button>
-        </div>
+          <div className="p-6">
+            <h1 className="text-4xl font-extrabold mb-4">{blog.title}</h1>
+            <div className="flex justify-between items-center text-sm text-gray-400 mb-6">
+              <span>✍️ {blog.author}</span>
+              <span>{blog.date}</span>
+              <span className="bg-pink-500 text-xs px-3 py-1 rounded-full font-semibold">
+                #{blog.tag}
+              </span>
+            </div>
+            <p className="text-gray-200 text-lg leading-relaxed">
+              {blog.description}
+            </p>
+          </div>
+        </motion.div>
       </div>
     </div>
   );
-}
+};
 
-export default BlogDetail;
+export default BlogDetails;
