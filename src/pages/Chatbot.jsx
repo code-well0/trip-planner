@@ -19,7 +19,6 @@ function ChatBot() {
     }, [messages]);
 
     // Handle sending a message to the AI
-
     const handleSendMessage = async (e) => {
         e.preventDefault();
         if (!input.trim()) return;
@@ -58,88 +57,135 @@ function ChatBot() {
             setIsLoading(false);
         }
     };
+
     useEffect(() => {
       window.scrollTo(0, 0);
     }, []);
+
     return (
-        <div className={`p-8 min-h-screen bg-gray-100 dark:bg-gray-900 transition-colors duration-300 ${theme}`}>
-            <div className="max-w-3xl mx-auto flex flex-col h-[calc(100vh-120px)] rounded-xl shadow-lg bg-white dark:bg-gray-800 transition-colors duration-300">
-                {/* Chat header */}
-                <div className="flex items-center p-4 border-b border-gray-200 dark:border-gray-700">
-                    <FaRobot className="text-blue-500 text-2xl mr-2" />
-                    <h2 className="text-xl font-bold text-gray-800 dark:text-white">AI Assistant</h2>
-                </div>
+        <div className={`h-screen relative overflow-hidden ${theme}`}>
+            {/* Travel Background Image */}
+            <div 
+                className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+                style={{
+                    backgroundImage: `linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1469474968028-56623f02e42e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3840&q=80')`,
+                    backgroundSize: '120%'
+                }}
+            />
+            
+            {/* Content Overlay */}
+            <div className="relative z-10 p-6 h-screen flex items-center justify-center">
+                <div className="w-full max-w-4xl mx-auto">
+                    {/* Modern Chat Container */}
+                    <div className="backdrop-blur-xl bg-white/10 dark:bg-gray-900/20 border border-white/20 dark:border-gray-700/30 rounded-3xl shadow-2xl overflow-hidden">
+                        {/* Chat header with glassmorphism effect */}
+                        <div className="flex items-center p-6 border-b border-white/20 dark:border-gray-700/30 bg-white/5 backdrop-blur-sm">
+                            <div className="p-3 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl mr-4 shadow-lg">
+                                <FaRobot className="text-white text-xl" />
+                            </div>
+                            <div>
+                                <h2 className="text-2xl font-bold text-white drop-shadow-lg">Travel AI Assistant</h2>
+                                <p className="text-white/80 text-sm">Your intelligent travel companion</p>
+                            </div>
+                        </div>
 
-                {/* Message list */}
-                <div className="flex-grow overflow-y-auto p-4 space-y-4" style={{ WebkitOverflowScrolling: 'touch' }}>
-                    {messages.map((msg, index) => (
-                        <div
-                            key={index}
-                            className={`flex items-start space-x-2 ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}
-                        >
-                            {msg.sender === 'bot' && <FaRobot className="text-blue-500 text-lg flex-shrink-0 mt-1" />}
-                            <div className={`p-3 rounded-xl max-w-xs md:max-w-md break-words ${
-                                msg.sender === 'user'
-                                    ? 'bg-blue-500 text-white'
-                                    : 'bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white'
-                            }`}>
-                                {msg.sender === 'bot' ? (
-                                    <div className="text-sm leading-relaxed">
-                                        <ReactMarkdown 
-                                            components={{
-                                                p: ({ children }) => <p className="mb-2 last:mb-0 text-gray-800 dark:text-gray-200">{children}</p>,
-                                                strong: ({ children }) => <strong className="font-semibold text-gray-900 dark:text-gray-100">{children}</strong>,
-                                                em: ({ children }) => <em className="italic text-gray-700 dark:text-gray-300">{children}</em>,
-                                                code: ({ children }) => <code className="bg-gray-300 dark:bg-gray-600 px-1 py-0.5 rounded text-xs font-mono text-gray-900 dark:text-gray-100">{children}</code>,
-                                                pre: ({ children }) => <pre className="bg-gray-300 dark:bg-gray-600 p-2 rounded overflow-x-auto text-xs font-mono text-gray-900 dark:text-gray-100 mb-2">{children}</pre>,
-                                                ul: ({ children }) => <ul className="list-disc list-inside mb-2 text-gray-800 dark:text-gray-200">{children}</ul>,
-                                                ol: ({ children }) => <ol className="list-decimal list-inside mb-2 text-gray-800 dark:text-gray-200">{children}</ol>,
-                                                li: ({ children }) => <li className="mb-1">{children}</li>,
-                                                h1: ({ children }) => <h1 className="text-lg font-bold mb-2 text-gray-900 dark:text-gray-100">{children}</h1>,
-                                                h2: ({ children }) => <h2 className="text-base font-bold mb-2 text-gray-900 dark:text-gray-100">{children}</h2>,
-                                                h3: ({ children }) => <h3 className="text-sm font-bold mb-1 text-gray-900 dark:text-gray-100">{children}</h3>,
-                                                blockquote: ({ children }) => <blockquote className="border-l-4 border-gray-400 dark:border-gray-500 pl-2 italic mb-2 text-gray-700 dark:text-gray-300">{children}</blockquote>
-                                            }}
-                                        >
-                                            {msg.text}
-                                        </ReactMarkdown>
+                        {/* Message list with modern styling */}
+                        <div className="h-[500px] overflow-y-auto p-6 space-y-6 scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent">
+                            {messages.length === 0 && (
+                                <div className="text-center py-12">
+                                    <div className="p-4 bg-white/10 backdrop-blur-sm rounded-2xl inline-block mb-4">
+                                        <FaRobot className="text-white text-4xl" />
                                     </div>
-                                ) : (
-                                    <p>{msg.text}</p>
-                                )}
-                            </div>
-                            {msg.sender === 'user' && <FaUser className="text-gray-500 text-lg flex-shrink-0 mt-1" />}
+                                    <p className="text-white/80 text-lg font-medium">Start your travel conversation!</p>
+                                    <p className="text-white/60 text-sm mt-2">Ask me anything about your next adventure</p>
+                                </div>
+                            )}
+                            
+                            {messages.map((msg, index) => (
+                                <div
+                                    key={index}
+                                    className={`flex items-start space-x-3 ${msg.sender === 'user' ? 'justify-end' : 'justify-start'} animate-fade-in`}
+                                >
+                                    {msg.sender === 'bot' && (
+                                        <div className="p-2 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex-shrink-0 shadow-lg">
+                                            <FaRobot className="text-white text-sm" />
+                                        </div>
+                                    )}
+                                    <div className={`p-4 rounded-2xl max-w-xs md:max-w-md break-words shadow-xl ${
+                                        msg.sender === 'user'
+                                            ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white border border-blue-500/30'
+                                            : 'bg-white/20 dark:bg-gray-800/40 text-white backdrop-blur-sm border border-white/20'
+                                    } transition-all duration-300 hover:scale-105`}>
+                                        {msg.sender === 'bot' ? (
+                                            <div className="text-sm leading-relaxed">
+                                                <ReactMarkdown 
+                                                    components={{
+                                                        p: ({ children }) => <p className="mb-2 last:mb-0 text-white/90">{children}</p>,
+                                                        strong: ({ children }) => <strong className="font-semibold text-white">{children}</strong>,
+                                                        em: ({ children }) => <em className="italic text-white/80">{children}</em>,
+                                                        code: ({ children }) => <code className="bg-black/20 px-2 py-1 rounded text-xs font-mono text-white/90">{children}</code>,
+                                                        pre: ({ children }) => <pre className="bg-black/20 p-3 rounded-lg overflow-x-auto text-xs font-mono text-white/90 mb-2">{children}</pre>,
+                                                        ul: ({ children }) => <ul className="list-disc list-inside mb-2 text-white/90">{children}</ul>,
+                                                        ol: ({ children }) => <ol className="list-decimal list-inside mb-2 text-white/90">{children}</ol>,
+                                                        li: ({ children }) => <li className="mb-1">{children}</li>,
+                                                        h1: ({ children }) => <h1 className="text-lg font-bold mb-2 text-white">{children}</h1>,
+                                                        h2: ({ children }) => <h2 className="text-base font-bold mb-2 text-white">{children}</h2>,
+                                                        h3: ({ children }) => <h3 className="text-sm font-bold mb-1 text-white">{children}</h3>,
+                                                        blockquote: ({ children }) => <blockquote className="border-l-4 border-white/30 pl-3 italic mb-2 text-white/80">{children}</blockquote>
+                                                    }}
+                                                >
+                                                    {msg.text}
+                                                </ReactMarkdown>
+                                            </div>
+                                        ) : (
+                                            <p className="font-medium">{msg.text}</p>
+                                        )}
+                                    </div>
+                                    {msg.sender === 'user' && (
+                                        <div className="p-2 bg-gradient-to-r from-green-500 to-teal-600 rounded-full flex-shrink-0 shadow-lg">
+                                            <FaUser className="text-white text-sm" />
+                                        </div>
+                                    )}
+                                </div>
+                            ))}
+                            {isLoading && (
+                                <div className="flex justify-start items-start space-x-3 animate-pulse">
+                                    <div className="p-2 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex-shrink-0 shadow-lg">
+                                        <FaRobot className="text-white text-sm" />
+                                    </div>
+                                    <div className="p-4 rounded-2xl bg-white/20 dark:bg-gray-800/40 text-white backdrop-blur-sm border border-white/20 shadow-xl">
+                                        <Loader2 size={20} className="animate-spin" />
+                                    </div>
+                                </div>
+                            )}
+                            <div ref={messagesEndRef} />
                         </div>
-                    ))}
-                    {isLoading && (
-                        <div className="flex justify-start items-start space-x-2">
-                            <FaRobot className="text-blue-500 text-lg flex-shrink-0 mt-1" />
-                            <div className="p-3 rounded-xl bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white">
-                                <Loader2 size={24} className="animate-spin" />
-                            </div>
-                        </div>
-                    )}
-                    <div ref={messagesEndRef} />
-                </div>
 
-                {/* Message input form */}
-                <form onSubmit={handleSendMessage} className="p-4 border-t border-gray-200 dark:border-gray-700 flex space-x-2">
-                    <input
-                        type="text"
-                        value={input}
-                        onChange={(e) => setInput(e.target.value)}
-                        placeholder="Type your message..."
-                        className="flex-grow px-4 py-3 rounded-full border border-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    />
-                    <button
-                        type="submit"
-                        disabled={isLoading}
-                        className="p-3 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-colors duration-200 disabled:bg-gray-400"
-                    >
-                        <FaPaperPlane />
-                    </button>
-                </form>
+                        {/* Modern message input form */}
+                        <form onSubmit={handleSendMessage} className="p-6 border-t border-white/20 dark:border-gray-700/30 bg-white/5 backdrop-blur-sm">
+                            <div className="flex space-x-4 items-end">
+                                <div className="flex-grow relative">
+                                    <input
+                                        type="text"
+                                        value={input}
+                                        onChange={(e) => setInput(e.target.value)}
+                                        placeholder="Ask about destinations, planning tips, or travel advice..."
+                                        className="w-full px-6 py-4 rounded-2xl border-2 border-white/20 bg-white/10 backdrop-blur-sm text-white placeholder-white/60 focus:outline-none focus:border-blue-400/50 focus:ring-2 focus:ring-blue-400/20 transition-all duration-300 text-base"
+                                    />
+                                </div>
+                                <button
+                                    type="submit"
+                                    disabled={isLoading}
+                                    className="p-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-2xl hover:from-blue-700 hover:to-purple-700 transition-all duration-300 disabled:opacity-50 shadow-xl hover:shadow-2xl transform hover:scale-105 active:scale-95"
+                                >
+                                    <FaPaperPlane className="text-lg" />
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
+
             <ToastContainer
                 position="bottom-left"
                 autoClose={3000}
@@ -150,6 +196,44 @@ function ChatBot() {
                 draggable
                 theme="colored"
             />
+
+            <style jsx>{`
+                .animate-fade-in {
+                    animation: fadeIn 0.5s ease-in-out;
+                }
+                
+                @keyframes fadeIn {
+                    from {
+                        opacity: 0;
+                        transform: translateY(10px);
+                    }
+                    to {
+                        opacity: 1;
+                        transform: translateY(0);
+                    }
+                }
+
+                .scrollbar-thin {
+                    scrollbar-width: thin;
+                }
+
+                .scrollbar-thin::-webkit-scrollbar {
+                    width: 6px;
+                }
+
+                .scrollbar-thin::-webkit-scrollbar-track {
+                    background: transparent;
+                }
+
+                .scrollbar-thin::-webkit-scrollbar-thumb {
+                    background-color: rgba(255, 255, 255, 0.2);
+                    border-radius: 3px;
+                }
+
+                .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+                    background-color: rgba(255, 255, 255, 0.3);
+                }
+            `}</style>
         </div>
     );
 };
