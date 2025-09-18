@@ -4,7 +4,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase";
 import Navbar from "./Components/Navbar";
 import { useTheme } from "./contexts/ThemeContext";
-import SnakeCursor from "./Components/SnakeCursor";
+import SmoothCursor from "./Components/SmoothCursor";
 import DestinationPage from "./pages/DestinationPage";
 import ExpenseTracker from "./pages/ExpenseTracker";
 import ChatBot from "./pages/Chatbot";
@@ -64,7 +64,7 @@ function App() {
       <div
         className={`bg-gray-100 dark:bg-gray-900 transition-colors duration-300 min-h-screen ${theme}`}
       >
-        <SnakeCursor />
+        <SmoothCursor />
 
         <Navbar
           isLoggedIn={isLoggedIn}
