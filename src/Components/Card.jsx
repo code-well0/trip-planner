@@ -3,7 +3,7 @@ import { FaRupeeSign, FaMapMarkerAlt, FaRegCalendarAlt, FaRegThumbsDown } from '
 import { useTheme } from '../contexts/ThemeContext';
 import { useInterested } from '../contexts/InterestedContext';
 
-const Card = ({ tour, getRemoveId }) => {
+const Card = ({ tour, removeTour, lockItem, unlockItem, locked, presence }) => {
   const { theme } = useTheme();
   const { addToInterested } = useInterested(); 
   const [readmore, setReadmore] = useState(false);
@@ -76,7 +76,11 @@ const Card = ({ tour, getRemoveId }) => {
           >
             I'm Interested
           </button>
-          <button
+          <div className="flex items-center gap-2">
+            {locked ? (
+              <div className="text-xs text-yellow-600">Locked by {locked.lockedBy}</div>
+            ) : null}
+            <button
             className="flex items-center justify-center gap-2
          px-3 py-1.5
          rounded-md
@@ -86,11 +90,17 @@ const Card = ({ tour, getRemoveId }) => {
          hover:text-red-600 dark:hover:text-red-400
          border border-gray-200 dark:border-gray-600
          transition-all duration-200"
-            onClick={() => getRemoveId(tour.id)}
-            aria-label={`Remove ${tour.name} from Interested`}
+            onClick={() => {
+              // Remove from main plan (also propagates to Firestore when collaborating)
+              if (typeof removeTour === 'function') removeTour(tour.id);
+              // Also remove from interested list if the hook supports it
+              // ...existing code handles interested separately via context
+            }}
+            aria-label={`Remove ${tour.name} from Plan`}
           >
             <FaRegThumbsDown className="text-lg" /> Not Interested
           </button>
+          </div>
         </div>
       </div>
     </div>
