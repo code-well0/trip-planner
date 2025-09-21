@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Card from './Card.jsx';
 import { useInterested } from '../contexts/InterestedContext';
 
-const Tours = ({ tours, removeTour }) => {
+const Tours = ({ tours, removeTour, lockItem, unlockItem, locks, presence }) => {
   const { interestedTours, removeFromInterested } = useInterested();
 
   return (
@@ -13,7 +13,11 @@ const Tours = ({ tours, removeTour }) => {
           <Card
             key={tour.id}
             tour={tour}
-
+            removeTour={removeTour}
+            lockItem={lockItem}
+            unlockItem={unlockItem}
+            locked={locks?.[tour.id]}
+            presence={presence}
           />
         ))}
       </div>
