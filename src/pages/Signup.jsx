@@ -11,6 +11,7 @@ import { FaApple } from "react-icons/fa";
 import { OAuthProvider, signInWithPopup } from "firebase/auth";
 import { createUserWithEmailAndPassword, GoogleAuthProvider } from "firebase/auth";
 import { auth } from "../firebase";
+import zxcvbn from 'zxcvbn';
 
 export default function Signup({ setIsLoggedIn }) {
   const navigate = useNavigate();
@@ -20,8 +21,21 @@ export default function Signup({ setIsLoggedIn }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-
   const [isLoading, setIsLoading] = useState(false);
+  const [score, setScore] = useState(0);
+
+
+const handlePasswordChange = (e) => {
+    const val = e.target.value;
+    setPassword(val);
+    setScore(zxcvbn(val).score); 
+  };
+
+  
+const getStrengthLabel = (s) => {
+    return ["Very Weak", "Weak", "Fair", "Strong", "Very Strong"][s] || "";
+  };
+
 
 
 const handleSignup = (e) => {
@@ -30,6 +44,7 @@ const handleSignup = (e) => {
     toast.error("Please fill all fields");
     return;
   }
+
   setIsLoading(true);
   createUserWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
@@ -98,6 +113,22 @@ const handleSignup = (e) => {
         window.scrollTo(0, 0);
       }, []);
 
+  const barColors = [
+    "bg-red-500",
+    "bg-orange-400",
+    "bg-yellow-400",
+    "bg-green-400",
+    "bg-green-600",
+  ];  
+  
+  const colors = [
+    "text-red-500",
+    "text-orange-400",
+    "text-yellow-400",
+    "text-green-400",
+    "text-green-600",
+  ];  
+
   return (
     <div className={`relative flex flex-col lg:flex-row items-center justify-center min-h-screen transition-colors duration-300 ${theme === 'dark' ? 'bg-gray-900' : 'bg-gray-100'}`}
       style={{ backgroundImage: `url('./images/India on the Road.jpeg')` }}
@@ -150,10 +181,29 @@ const handleSignup = (e) => {
               type={showPassword ? "text" : "password"}
               placeholder="Password"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={handlePasswordChange}
               className="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white bg-opacity-70 dark:bg-gray-900 dark:bg-opacity-70 dark:text-white"
               required
             />
+            
+
+          {/* Password strength bar */}
+          <div className="!mt-0 h-3 pt-1">
+            {password && (
+             <div>
+              <div className="h-2 bg-gray-200 dark:bg-gray-700 rounded">
+                <div
+                className={`h-2 rounded transition-all duration-300 ${barColors[score]}`}
+                style={{ width: `${(score + 1) * 20}%` }}
+                />
+              </div>
+              <p className="text-xs font-semibold mt-1 text-gray-700 dark:text-gray-300">
+                Strength: <span className={`${colors[score]}`}>{getStrengthLabel(score)}</span>
+              </p>
+            </div>
+            )}
+           </div>
+
 
             <label className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300">
               <input
