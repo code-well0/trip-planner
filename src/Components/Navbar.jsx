@@ -41,10 +41,10 @@ const Navbar = ({ isLoggedIn }) => {
     };
   }, []);
 
-  // Standalone menu items
+  // Standalone menu items (Plan Trip comes before AI Assistant now)
   const standaloneItems = [
-    { to: "/api/chat", text: "AI Assistant" },
     { to: "/plan", text: "Plan Trip" },
+    { to: "/api/chat", text: "AI Assistant" },
     { to: "/expenses", text: "Expense Tracker" },
     { to: "/about", text: "About" },
   ];
