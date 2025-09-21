@@ -1,10 +1,27 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import data from "../data";
 import Tours from "../Components/Tours";
 // import Refresh from "../Components/Refresh";
 import { FaMapMarkedAlt, FaSearch, FaTimesCircle } from "react-icons/fa";
 import "../index.css";
 import "../Components/Navbar.css";
+import { db, auth } from "../firebase";
+import {
+  collection,
+  doc,
+  setDoc,
+  updateDoc,
+  onSnapshot,
+  serverTimestamp,
+  getDoc,
+  deleteDoc,
+  getDocs,
+} from "firebase/firestore";
+import {
+  signInAnonymously,
+  onAuthStateChanged,
+} from "firebase/auth";
+import { arrayToMap, mapToArray } from "../lib/planModel";
 
 export default function PlanTrip({ searchQuery = "" }) {
   const [tour, setTour] = useState(data);
@@ -14,6 +31,18 @@ export default function PlanTrip({ searchQuery = "" }) {
   const [localSearchQuery, setLocalSearchQuery] = useState("");
   const [showRegionDropdown, setShowRegionDropdown] = useState(false);
   const [showSortDropdown, setShowSortDropdown] = useState(false);
+  // Collaboration states
+  const [sharedPlanId, setSharedPlanId] = useState("");
+  const [isCollaborating, setIsCollaborating] = useState(false);
+  const [collabStatus, setCollabStatus] = useState("idle");
+  const unsubscribeRef = useRef({});
+  const saveTimeoutRef = useRef(null);
+  const presenceIntervalRef = useRef(null);
+  const [uid, setUid] = useState(null);
+  const [plansList, setPlansList] = useState([]);
+  const [planTitle, setPlanTitle] = useState("");
+  const [locks, setLocks] = useState({});
+  const [presence, setPresence] = useState({});
 
   const regions = [
     "All",
@@ -46,6 +75,16 @@ export default function PlanTrip({ searchQuery = "" }) {
   function removeTour(id) {
     const newTour = tour.filter((tour) => tour.id !== id);
     setTour(newTour);
+    // Persist removal when collaborating
+    if (isCollaborating && sharedPlanId) {
+      const planDoc = doc(collection(db, "sharedPlans"), sharedPlanId);
+      // Save as map keyed by id
+      const toursMap = arrayToMap(newTour);
+      updateDoc(planDoc, {
+        tours: toursMap,
+        updatedAt: serverTimestamp(),
+      }).catch((err) => console.error("Failed to sync removeTour:", err));
+    }
   }
 
   const getSortedTours = (tours) => {
@@ -88,6 +127,239 @@ export default function PlanTrip({ searchQuery = "" }) {
 
   useEffect(() => {
     window.scrollTo(0, 0);
+  }, []);
+
+  // Create a new shared plan in Firestore
+  const createSharedPlan = async () => {
+    try {
+      const plansCol = collection(db, "sharedPlans");
+      // Use a random id by creating a doc ref without id then reading its id
+      const newDocRef = doc(plansCol);
+      const id = newDocRef.id;
+      await setDoc(newDocRef, {
+        title: planTitle || "Untitled Plan",
+        owner: uid || null,
+        allowedEditors: uid ? [uid] : [],
+        tours: arrayToMap(tour),
+        createdAt: serverTimestamp(),
+        updatedAt: serverTimestamp(),
+      });
+      setSharedPlanId(id);
+      setIsCollaborating(true);
+      setCollabStatus("created");
+      subscribeToPlan(id);
+    } catch (err) {
+      console.error("createSharedPlan error:", err);
+      setCollabStatus("error");
+    }
+  };
+
+  // Join an existing shared plan by id
+  const joinSharedPlan = async (id) => {
+    if (!id) return;
+    try {
+      const planDocRef = doc(collection(db, "sharedPlans"), id);
+      const snap = await getDoc(planDocRef);
+      if (!snap.exists()) {
+        setCollabStatus("not-found");
+        return;
+      }
+      const dataSnap = snap.data();
+      if (dataSnap?.tours) setTour(mapToArray(dataSnap.tours));
+      // load metadata
+      if (dataSnap?.title) setPlanTitle(dataSnap.title);
+      setSharedPlanId(id);
+      setIsCollaborating(true);
+      setCollabStatus("joined");
+      subscribeToPlan(id);
+      // add presence doc
+      try {
+        const presenceDoc = doc(collection(db, "sharedPlans", id, "presence"), uid || "anon");
+        await setDoc(presenceDoc, { uid: uid || "anon", lastActive: serverTimestamp() });
+        // start updating lastActive periodically
+        if (presenceIntervalRef.current) clearInterval(presenceIntervalRef.current);
+        presenceIntervalRef.current = setInterval(async () => {
+          try {
+            await setDoc(presenceDoc, { uid: uid || "anon", lastActive: serverTimestamp() });
+          } catch (e) {
+            /* ignore */
+          }
+        }, 20000);
+      } catch (e) {
+        console.error("presence init error", e);
+      }
+    } catch (err) {
+      console.error("joinSharedPlan error:", err);
+      setCollabStatus("error");
+    }
+  };
+
+  const leaveSharedPlan = () => {
+    // unsubscribe all
+    if (unsubscribeRef.current.planUnsub) unsubscribeRef.current.planUnsub();
+    if (unsubscribeRef.current.locksUnsub) unsubscribeRef.current.locksUnsub();
+    if (unsubscribeRef.current.presenceUnsub) unsubscribeRef.current.presenceUnsub();
+    unsubscribeRef.current = {};
+    // clear presence interval
+    if (presenceIntervalRef.current) {
+      clearInterval(presenceIntervalRef.current);
+      presenceIntervalRef.current = null;
+    }
+    // remove presence doc
+    if (sharedPlanId && uid) {
+      const presenceDocRef = doc(collection(db, "sharedPlans", sharedPlanId, "presence"), uid);
+      deleteDoc(presenceDocRef).catch(() => {});
+    }
+    setIsCollaborating(false);
+    setCollabStatus("left");
+    setSharedPlanId("");
+  };
+
+  // Subscribe to real-time updates for a shared plan
+  const subscribeToPlan = (id) => {
+    // clean previous
+    if (unsubscribeRef.current.planUnsub) unsubscribeRef.current.planUnsub();
+    if (unsubscribeRef.current.locksUnsub) unsubscribeRef.current.locksUnsub();
+    if (unsubscribeRef.current.presenceUnsub) unsubscribeRef.current.presenceUnsub();
+
+    const planDoc = doc(collection(db, "sharedPlans"), id);
+    const planUnsub = onSnapshot(
+      planDoc,
+      (snap) => {
+        if (snap.exists()) {
+          const dataSnap = snap.data();
+          if (dataSnap?.tours) {
+            // Apply remote changes (tours stored as map)
+            setTour((prev) => {
+              const remoteArr = mapToArray(dataSnap.tours || {});
+              const remote = JSON.stringify(remoteArr || []);
+              const local = JSON.stringify(prev || []);
+              if (remote !== local) return remoteArr;
+              return prev;
+            });
+          }
+          if (dataSnap?.title) setPlanTitle(dataSnap.title);
+          setCollabStatus("synced");
+        } else {
+          setCollabStatus("deleted");
+        }
+      },
+      (err) => {
+        console.error("onSnapshot error:", err);
+        setCollabStatus("error");
+      }
+    );
+
+    // listen to locks subcollection
+    const locksCol = collection(db, "sharedPlans", id, "locks");
+    const locksUnsub = onSnapshot(locksCol, (snap) => {
+      const newLocks = {};
+      snap.docs.forEach((d) => newLocks[d.id] = d.data());
+      setLocks(newLocks);
+    });
+
+    // listen to presence subcollection
+    const presenceCol = collection(db, "sharedPlans", id, "presence");
+    const presenceUnsub = onSnapshot(presenceCol, (snap) => {
+      const newPresence = {};
+      snap.docs.forEach((d) => newPresence[d.id] = d.data());
+      setPresence(newPresence);
+    });
+
+    unsubscribeRef.current = { planUnsub, locksUnsub, presenceUnsub };
+  };
+
+  // Persist a full save to Firestore (useful for manual save button)
+  const saveSharedPlan = async () => {
+    if (!isCollaborating || !sharedPlanId) return;
+    try {
+      const planDoc = doc(collection(db, "sharedPlans"), sharedPlanId);
+      await updateDoc(planDoc, {
+        tours: arrayToMap(tour),
+        updatedAt: serverTimestamp(),
+      });
+      setCollabStatus("saved");
+    } catch (err) {
+      console.error("saveSharedPlan error:", err);
+      setCollabStatus("error");
+    }
+  };
+
+  // Auto-save (debounced) whenever the local `tour` changes while collaborating.
+  useEffect(() => {
+    if (!isCollaborating || !sharedPlanId) return;
+    if (saveTimeoutRef.current) clearTimeout(saveTimeoutRef.current);
+    saveTimeoutRef.current = setTimeout(async () => {
+      try {
+        const planDoc = doc(collection(db, "sharedPlans"), sharedPlanId);
+        await updateDoc(planDoc, {
+          tours: arrayToMap(tour),
+          updatedAt: serverTimestamp(),
+        });
+        setCollabStatus("autosaved");
+      } catch (err) {
+        console.error("autosave error:", err);
+        setCollabStatus("error");
+      }
+    }, 700);
+
+    return () => {
+      if (saveTimeoutRef.current) {
+        clearTimeout(saveTimeoutRef.current);
+        saveTimeoutRef.current = null;
+      }
+    };
+  }, [tour, isCollaborating, sharedPlanId]);
+
+  // Auth: sign in anonymously if not signed in
+  useEffect(() => {
+    const unsubAuth = onAuthStateChanged(auth, (user) => {
+      if (user) setUid(user.uid);
+      else {
+        signInAnonymously(auth).catch((e) => console.error("anon sign-in failed", e));
+      }
+    });
+    return () => unsubAuth();
+  }, []);
+
+  // fetch list of plans for browsing
+  const fetchPlansList = async () => {
+    try {
+      const plansCol = collection(db, "sharedPlans");
+      const snaps = await getDocs(plansCol);
+      const items = snaps.docs.map(d => ({ id: d.id, ...d.data() }));
+      setPlansList(items);
+    } catch (e) {
+      console.error("fetchPlans error", e);
+    }
+  };
+
+  // lock/unlock item
+  const lockItem = async (tourId) => {
+    if (!sharedPlanId || !uid) return;
+    const lockDoc = doc(collection(db, "sharedPlans", sharedPlanId, "locks"), tourId);
+    try {
+      await setDoc(lockDoc, { lockedBy: uid, lockedAt: serverTimestamp() });
+    } catch (e) {
+      console.error("lock error", e);
+    }
+  };
+
+  const unlockItem = async (tourId) => {
+    if (!sharedPlanId || !uid) return;
+    const lockDoc = doc(collection(db, "sharedPlans", sharedPlanId, "locks"), tourId);
+    try {
+      await deleteDoc(lockDoc);
+    } catch (e) {
+      console.error("unlock error", e);
+    }
+  };
+
+  // Clean up on unmount
+  useEffect(() => {
+    return () => {
+      if (unsubscribeRef.current) unsubscribeRef.current();
+    };
   }, []);
 
   return (
@@ -221,6 +493,65 @@ export default function PlanTrip({ searchQuery = "" }) {
   </div>
 </div>
 
+        {/* Collaboration Controls */}
+        <div className="mt-4 mb-8 flex flex-col md:flex-row items-center gap-3">
+          <input
+            type="text"
+            placeholder="Enter plan id to join or leave"
+            value={sharedPlanId}
+            onChange={(e) => setSharedPlanId(e.target.value)}
+            className="px-3 py-2 rounded-lg border border-gray-300 w-full md:w-72"
+          />
+          <div className="flex gap-2">
+            <button
+              onClick={createSharedPlan}
+              className="px-4 py-2 rounded-lg bg-blue-600 text-white font-semibold hover:bg-blue-700"
+            >
+              Create & Share
+            </button>
+            <button
+              onClick={() => joinSharedPlan(sharedPlanId)}
+              className="px-4 py-2 rounded-lg bg-green-600 text-white font-semibold hover:bg-green-700"
+            >
+              Join
+            </button>
+            <button
+              onClick={saveSharedPlan}
+              className="px-4 py-2 rounded-lg bg-indigo-600 text-white font-semibold hover:bg-indigo-700"
+            >
+              Save
+            </button>
+            <button
+              onClick={leaveSharedPlan}
+              className="px-4 py-2 rounded-lg bg-red-500 text-white font-semibold hover:bg-red-600"
+            >
+              Leave
+            </button>
+          </div>
+          <div className="ml-4 text-sm text-gray-600">
+            Status: <span className="font-medium">{collabStatus}</span>
+            {isCollaborating && sharedPlanId && (
+              <>
+                <div className="mt-1">
+                  Share id: <span className="font-semibold">{sharedPlanId}</span>
+                  <button
+                    onClick={() => {
+                      try {
+                        navigator.clipboard.writeText(sharedPlanId);
+                      } catch (e) {
+                        // ignore clipboard errors
+                      }
+                    }}
+                    className="ml-2 px-2 py-1 text-xs bg-gray-200 rounded"
+                  >
+                    Copy
+                  </button>
+                </div>
+              </>
+            )}
+          </div>
+        </div>
+
        
 
       {/* Tours List with Improved Card Layout */}
@@ -230,6 +561,10 @@ export default function PlanTrip({ searchQuery = "" }) {
             tours={sortedAndFilteredTours}
             removeTour={removeTour}
             setSelectedRegion={setSelectedRegion}
+            lockItem={lockItem}
+            unlockItem={unlockItem}
+            locks={locks}
+            presence={presence}
           />
         // </div>
       ) : (
@@ -237,6 +572,23 @@ export default function PlanTrip({ searchQuery = "" }) {
           No destinations found. Try adjusting your search or filters.
         </div>
       )}
+      {/* Plan browser */}
+      <div className="mt-8">
+        <h3 className="text-lg font-semibold mb-2">Available Shared Plans</h3>
+        <div className="flex gap-2 flex-wrap">
+          <button onClick={fetchPlansList} className="px-3 py-1 bg-gray-200 rounded">Refresh</button>
+          {plansList.map(p => (
+            <div key={p.id} className="p-3 border rounded bg-white">
+              <div className="font-semibold">{p.title}</div>
+              <div className="text-xs text-gray-500">id: {p.id}</div>
+              <div className="mt-2 flex gap-2">
+                <button onClick={() => { setSharedPlanId(p.id); joinSharedPlan(p.id); }} className="px-2 py-1 bg-green-500 text-white rounded">Join</button>
+                <button onClick={() => { navigator.clipboard?.writeText(p.id); }} className="px-2 py-1 bg-gray-100 rounded">Copy id</button>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
