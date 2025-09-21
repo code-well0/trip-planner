@@ -1,60 +1,101 @@
-// src/Components/LiquidNeonCursor.jsx
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 const LiquidNeonCursor = () => {
-  const cursorRef = useRef(null);
+  const ballRef = useRef(null);
+  const [isMoving, setIsMoving] = useState(false);
+  const moveTimeout = useRef(null);
 
   useEffect(() => {
-    const cursor = cursorRef.current;
+    const ball = ballRef.current;
+    if (!ball) return;
 
-    let mouseX = 0;
-    let mouseY = 0;
-    let posX = 0;
-    let posY = 0;
+    let mouseX = window.innerWidth / 2;
+    let mouseY = window.innerHeight / 2;
+
+    const createRipple = (x, y) => {
+      const ripple = document.createElement("span");
+      ripple.style.position = "fixed";
+      ripple.style.left = `${x}px`;
+      ripple.style.top = `${y}px`;
+      ripple.style.width = "10px";
+      ripple.style.height = "10px";
+      ripple.style.borderRadius = "50%";
+      ripple.style.pointerEvents = "none";
+      ripple.style.border = "2px solid #ff00ff";
+      ripple.style.background = "#ff00ff"; // Filled neon pink
+      ripple.style.opacity = "0.7";
+      ripple.style.transform = "translate(-50%, -50%) scale(0)";
+      ripple.style.zIndex = "9999";
+      ripple.style.transition = "transform 0.6s ease-out, opacity 0.6s ease-out";
+      ripple.style.boxShadow = "0 0 8px #ff00ff, 0 0 20px #ff00ff";
+
+      document.body.appendChild(ripple);
+
+      requestAnimationFrame(() => {
+        ripple.style.transform = "translate(-50%, -50%) scale(3)";
+        ripple.style.opacity = "0";
+      });
+
+      setTimeout(() => {
+        ripple.remove();
+      }, 600);
+    };
 
     const handleMouseMove = (e) => {
       mouseX = e.clientX;
       mouseY = e.clientY;
+
+      createRipple(mouseX, mouseY);
+
+      setIsMoving(true);
+
+      if (moveTimeout.current) clearTimeout(moveTimeout.current);
+      moveTimeout.current = setTimeout(() => {
+        setIsMoving(false);
+      }, 300);
     };
 
+    window.addEventListener("mousemove", handleMouseMove);
+
+    let posX = mouseX;
+    let posY = mouseY;
+
     const animate = () => {
-      // Smooth easing
-      posX += (mouseX - posX) * 0.2;
-      posY += (mouseY - posY) * 0.2;
+      if (isMoving) {
+        posX += (mouseX - posX) * 0.2;
+        posY += (mouseY - posY) * 0.2;
 
-      // Liquid/stretch effect
-      const diffX = mouseX - posX;
-      const diffY = mouseY - posY;
-      const scaleX = 1 + Math.min(Math.abs(diffX) * 0.01, 0.5);
-      const scaleY = 1 + Math.min(Math.abs(diffY) * 0.01, 0.5);
-
-      cursor.style.transform = `translate(${posX}px, ${posY}px) scaleX(${scaleX}) scaleY(${scaleY})`;
-
+        ball.style.transform = `translate(${posX}px, ${posY}px) translate(-50%, -50%)`;
+      }
       requestAnimationFrame(animate);
     };
 
-    document.addEventListener("mousemove", handleMouseMove);
     animate();
 
     return () => {
-      document.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("mousemove", handleMouseMove);
+      if (moveTimeout.current) clearTimeout(moveTimeout.current);
     };
-  }, []);
+  }, [isMoving]);
 
   return (
     <div
-      ref={cursorRef}
-      className="fixed top-0 left-0 w-8 h-8 rounded-full pointer-events-none"
+      ref={ballRef}
       style={{
-        transform: "translate(-50%, -50%)",
-        background: "linear-gradient(45deg, #ff00ff, #00ffff)",
-        opacity: 0.65, // less transparent, almost fully opaque
-        boxShadow:
-          "0 0 15px #ff00ff, 0 0 30px #00ffff, 0 0 45px #ff00ff, 0 0 60px #00ffff",
+        position: "fixed",
+        top: 0,
+        left: 0,
+        width: 10,
+        height: 10,
+        borderRadius: "50%",
+        pointerEvents: "none",
+        border: "2px solid #ff00ff",
+        background: "#ff00ff", // Filled neon pink
+        boxShadow: "0 0 8px #ff00ff, 0 0 20px #ff00ff",
         zIndex: 9999,
         transition: "width 0.1s, height 0.1s",
       }}
-    ></div>
+    />
   );
 };
 
