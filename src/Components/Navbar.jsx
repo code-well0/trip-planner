@@ -1,20 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import {
   FaMapMarkedAlt,
-  FaSuitcase,
-  FaMoneyBillWave,
-  FaRobot,
-  FaPlaneDeparture,
   FaMoon,
   FaSun,
-  FaListAlt,
   FaUser,
   FaBars,
   FaTimes,
-  FaHeart,
-  FaBookOpen,
+  FaChevronDown,
 } from "react-icons/fa";
 
 import { useTheme } from "../contexts/ThemeContext";
@@ -23,6 +17,8 @@ const Navbar = ({ isLoggedIn }) => {
   const navigate = useNavigate();
   const { theme, toggleTheme } = useTheme();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [activeDropdown, setActiveDropdown] = useState(null);
+  const dropdownRef = useRef(null);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -31,35 +27,82 @@ const Navbar = ({ isLoggedIn }) => {
     setMenuOpen(false);
   };
 
-  const navItems = [
-    { to: "/plan", icon: FaSuitcase, text: "Plan Trip" },
-    { to: "/expenses", icon: FaMoneyBillWave, text: "Expenses" },
-    { to: "/api/chat", icon: FaRobot, text: "AI Assistant" },
-    {
-      to: "/TripRecommender",
-      icon: FaPlaneDeparture,
-      text: "Trip Recommender",
-    },
-    { to: "/activity-planner", icon: FaListAlt, text: "Activity Planner" },
-    { to: "/interested", icon: FaHeart, text: "Interested", special: true },
-    { to: "/blogs", icon: FaBookOpen, text: "Blogs" },
-    { to: "/add-blog", icon: FaBookOpen, text: "Add Blog" },
-    { to: "/currency-converter", icon: FaMoneyBillWave, text: "Currency Converter" },
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setActiveDropdown(null);
+      }
+    };
 
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  // Standalone menu items (Plan Trip comes before AI Assistant now)
+  const standaloneItems = [
+    { to: "/plan", text: "Plan Trip" },
+    { to: "/api/chat", text: "AI Assistant" },
+    { to: "/expenses", text: "Expense Tracker" },
+    { to: "/about", text: "About" },
   ];
+
+  // Organized menu structure with dropdowns
+  const menuStructure = [
+    {
+      title: "Tools",
+      key: "tools",
+      items: [
+        { to: "/activity-planner", text: "Activity Planner" },
+        { to: "/currency-converter", text: "Currency Converter" },
+      ]
+    },
+    {
+      title: "Discover",
+      key: "discover",
+      items: [
+        { to: "/TripRecommender", text: "Trip Recommender" },
+        { to: "/blogs", text: "Travel Blogs" },
+        { to: "/interested", text: "Wishlist" },
+      ]
+    },
+    {
+      title: "Community",
+      key: "community",
+      items: [
+        { to: "/add-blog", text: "Write Blog" },
+      ]
+    }
+  ];
+
+  const toggleDropdown = (key) => {
+    setActiveDropdown(activeDropdown === key ? null : key);
+  };
 
   // Theme-based classes
   const navbarClasses =
     theme === "dark"
-      ? "bg-gray-800 shadow-lg border-b-4 border-blue-400"
-      : "bg-white shadow-lg border-b-4 border-blue-500";
+      ? "bg-gray-800 shadow-lg border-b border-gray-700"
+      : "bg-white shadow-lg border-b border-gray-200";
 
   const brandTextClasses =
     theme === "dark"
       ? "text-gray-100 hover:text-blue-400"
       : "text-gray-800 hover:text-blue-600";
 
-  const menuItemClasses =
+  const dropdownButtonClasses =
+    theme === "dark"
+      ? "text-gray-300 hover:bg-gray-700 hover:text-blue-400"
+      : "text-gray-700 hover:bg-blue-50 hover:text-blue-600";
+
+  const dropdownMenuClasses =
+    theme === "dark"
+      ? "bg-gray-800 border-gray-600 shadow-xl"
+      : "bg-white border-gray-200 shadow-xl";
+
+  const dropdownItemClasses =
     theme === "dark"
       ? "text-gray-300 hover:bg-gray-700 hover:text-blue-400"
       : "text-gray-700 hover:bg-blue-50 hover:text-blue-600";
@@ -76,8 +119,8 @@ const Navbar = ({ isLoggedIn }) => {
 
   const mobileMenuItemClasses =
     theme === "dark"
-      ? "text-gray-300 hover:bg-gray-700 hover:text-blue-400 border-transparent hover:border-blue-400"
-      : "text-gray-700 hover:bg-blue-50 hover:text-blue-600 border-transparent hover:border-blue-200";
+      ? "text-gray-300 hover:bg-gray-700 hover:text-blue-400"
+      : "text-gray-700 hover:bg-blue-50 hover:text-blue-600";
 
   const dividerClasses =
     theme === "dark" ? "border-gray-600" : "border-gray-200";
@@ -104,30 +147,63 @@ const Navbar = ({ isLoggedIn }) => {
                 to="/"
                 className={`text-xl font-bold transition-colors duration-200 ${brandTextClasses}`}
                 aria-label="Home"
-              ></Link>
+              >
+                Trip Planner
+              </Link>
             </div>
 
             {/* Desktop Menu */}
-            <div className="hidden md:flex items-center space-x-4">
+            <div className="hidden md:flex items-center space-x-1" ref={dropdownRef}>
               {isLoggedIn ? (
                 <>
-                  {navItems.map((item) => {
-                    const Icon = item.icon;
-                    return (
-                      <Link
-                        key={item.to}
-                        to={item.to}
-                        className={`flex items-center space-x-1 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
-                          item.special
-                            ? "text-red-500 hover:text-red-600"
-                            : menuItemClasses
+                  {/* Standalone Menu Items */}
+                  {standaloneItems.map((item) => (
+                    <Link
+                      key={item.to}
+                      to={item.to}
+                      className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${dropdownButtonClasses}`}
+                    >
+                      {item.text}
+                    </Link>
+                  ))}
+
+                  {/* Dropdown Menus */}
+                  {menuStructure.map((menu) => (
+                    <div key={menu.key} className="relative">
+                      <button
+                        onClick={() => toggleDropdown(menu.key)}
+                        className={`flex items-center space-x-1 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${dropdownButtonClasses} ${
+                          activeDropdown === menu.key ? ' text-blue-600' : ''
                         }`}
+                        aria-expanded={activeDropdown === menu.key}
                       >
-                        <Icon className="text-sm" />
-                        <span>{item.text}</span>
-                      </Link>
-                    );
-                  })}
+                        <span>{menu.title}</span>
+                        <FaChevronDown 
+                          className={`text-xs transition-transform duration-200 ${
+                            activeDropdown === menu.key ? 'rotate-180' : ''
+                          }`} 
+                        />
+                      </button>
+
+                      {/* Dropdown Menu */}
+                      {activeDropdown === menu.key && (
+                        <div className={`absolute top-full left-0 mt-1 w-48 rounded-lg border ${dropdownMenuClasses} z-50`}>
+                          <div className="py-2">
+                            {menu.items.map((item) => (
+                              <Link
+                                key={item.to}
+                                to={item.to}
+                                onClick={() => setActiveDropdown(null)}
+                                className={`block px-4 py-2 text-sm transition-colors duration-200 ${dropdownItemClasses}`}
+                              >
+                                {item.text}
+                              </Link>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  ))}
 
                   {/* Theme Toggle Button */}
                   <button
@@ -141,7 +217,7 @@ const Navbar = ({ isLoggedIn }) => {
                   {/* Profile Button */}
                   <Link
                     to="/profile"
-                    className="flex items-center space-x-1 px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200"
+                    className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200 font-medium"
                     aria-label="Profile"
                   >
                     <FaUser className="text-sm" />
@@ -153,25 +229,25 @@ const Navbar = ({ isLoggedIn }) => {
                   {/* Not logged in links */}
                   <Link
                     to="/home"
-                    className={`${menuItemClasses} px-3 py-2 rounded-lg font-medium`}
+                    className={`${dropdownButtonClasses} px-4 py-2 rounded-lg font-medium transition-all duration-200`}
                   >
                     Home
                   </Link>
                   <Link
                     to="#"
-                    className={`${menuItemClasses} px-3 py-2 rounded-lg font-medium`}
+                    className={`${dropdownButtonClasses} px-4 py-2 rounded-lg font-medium transition-all duration-200`}
                   >
                     Features
                   </Link>
                   <Link
-                    to="#"
-                    className={`${menuItemClasses} px-3 py-2 rounded-lg font-medium`}
+                    to="/about"
+                    className={`${dropdownButtonClasses} px-4 py-2 rounded-lg font-medium transition-all duration-200`}
                   >
                     About
                   </Link>
                   <Link
                     to="/footer"
-                    className={`${menuItemClasses} px-3 py-2 rounded-lg font-medium`}
+                    className={`${dropdownButtonClasses} px-4 py-2 rounded-lg font-medium transition-all duration-200`}
                   >
                     Contact
                   </Link>
@@ -187,14 +263,15 @@ const Navbar = ({ isLoggedIn }) => {
                   {/* Login Button */}
                   <Link
                     to="/login"
-                    className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200"
+                    className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200 font-medium"
                   >
                     Login
                   </Link>
                 </>
               )}
             </div>
-            {/* Mobile Hamburger - Fixed */}
+
+            {/* Mobile Hamburger */}
             <div className="md:hidden">
               <button
                 className={`p-2 rounded-lg transition-all duration-200 ${hamburgerClasses} focus:outline-none focus:ring-2 focus:ring-blue-500`}
@@ -205,12 +282,6 @@ const Navbar = ({ isLoggedIn }) => {
                 }}
                 aria-label="Toggle menu"
                 type="button"
-                tabIndex={0}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" || e.key === " ") {
-                    setMenuOpen(!menuOpen);
-                  }
-                }}
               >
                 <div className="w-6 h-6 flex items-center justify-center">
                   {menuOpen ? (
@@ -240,33 +311,46 @@ const Navbar = ({ isLoggedIn }) => {
               : "transform -translate-y-full opacity-0 invisible"
           }`}
         >
-          <div className="px-4 py-6 space-y-1 max-h-[calc(100vh-4rem)] overflow-y-auto">
+          <div className="px-4 py-6 space-y-3 max-h-[calc(100vh-4rem)] overflow-y-auto">
             {isLoggedIn ? (
               <>
-                {navItems.map((item, index) => {
-                  const Icon = item.icon;
-                  return (
+                {/* Standalone Items */}
+                <div className="space-y-2">
+                  {standaloneItems.map((item) => (
                     <Link
                       key={item.to}
                       to={item.to}
                       onClick={() => setMenuOpen(false)}
-                      className={`flex items-center space-x-3 px-4 py-3 rounded-xl font-medium transition-all duration-200 border ${
-                        item.special
-                          ? "text-red-500 hover:text-red-600 border-transparent hover:border-red-200"
-                          : mobileMenuItemClasses
-                      }`}
-                      style={{
-                        animationDelay: `${index * 50}ms`,
-                        animation: menuOpen
-                          ? "slideInRight 0.3s ease-out forwards"
-                          : "none",
-                      }}
+                      className={`block px-4 py-3 rounded-xl font-medium transition-all duration-200 ${mobileMenuItemClasses}`}
                     >
-                      <Icon className="text-lg flex-shrink-0" />
-                      <span>{item.text}</span>
+                      {item.text}
                     </Link>
-                  );
-                })}
+                  ))}
+                </div>
+
+                <div className={`border-t my-4 ${dividerClasses}`} />
+
+                {/* Mobile Dropdown Sections */}
+                {menuStructure.map((menu) => (
+                  <div key={menu.key} className="space-y-2">
+                    <h3 className={`px-2 text-sm font-semibold uppercase tracking-wide ${
+                      theme === "dark" ? "text-gray-400" : "text-gray-500"
+                    }`}>
+                      {menu.title}
+                    </h3>
+                    {menu.items.map((item) => (
+                      <Link
+                        key={item.to}
+                        to={item.to}
+                        onClick={() => setMenuOpen(false)}
+                        className={`block px-4 py-3 rounded-xl font-medium transition-all duration-200 ${mobileMenuItemClasses}`}
+                      >
+                        {item.text}
+                      </Link>
+                    ))}
+                  </div>
+                ))}
+
                 <div className={`border-t my-4 ${dividerClasses}`} />
 
                 <button
@@ -274,7 +358,7 @@ const Navbar = ({ isLoggedIn }) => {
                     toggleTheme();
                     setMenuOpen(false);
                   }}
-                  className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl font-medium transition-all duration-200 border ${mobileMenuItemClasses}`}
+                  className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl font-medium transition-all duration-200 ${mobileMenuItemClasses}`}
                 >
                   {theme === "dark" ? (
                     <FaSun className="text-lg" />
@@ -295,50 +379,53 @@ const Navbar = ({ isLoggedIn }) => {
 
                 <button
                   onClick={handleLogout}
-                  className="w-full flex items-center space-x-3 px-4 py-3 bg-red-500 text-white rounded-xl hover:bg-red-600 transition-colors duration-200 font-medium mt-2"
+                  className="w-full flex items-center justify-center px-4 py-3 bg-red-500 text-white rounded-xl hover:bg-red-600 transition-colors duration-200 font-medium mt-2"
                 >
                   <span>Logout</span>
                 </button>
               </>
             ) : (
               <>
-                {/* navBar content applied when not logged in for meobile menu */}
-                <div className={`w-full flex items-center`}>
-                  <a
-                    href="/home"
-                    className={`${mobileMenuItemClasses} space-x-1 px-3 py-2  font-medium rounded-lg transition-all duration-200`}
+                {/* Not logged in mobile menu */}
+                <div className="space-y-2">
+                  <Link
+                    to="/home"
+                    onClick={() => setMenuOpen(false)}
+                    className={`block px-4 py-3 rounded-xl font-medium transition-all duration-200 ${mobileMenuItemClasses}`}
                   >
                     Home
-                  </a>
-                  <a
-                    href="#"
-                    className={`${mobileMenuItemClasses} space-x-1 px-3 py-2  font-medium rounded-lg transition-all duration-200`}
+                  </Link>
+                  <Link
+                    to="#"
+                    onClick={() => setMenuOpen(false)}
+                    className={`block px-4 py-3 rounded-xl font-medium transition-all duration-200 ${mobileMenuItemClasses}`}
                   >
                     Features
-                  </a>
-                  <a
-                    href="#"
-                    className={`${mobileMenuItemClasses} space-x-1 px-3 py-2  font-medium rounded-lg transition-all duration-200`}
+                  </Link>
+                  <Link
+                    to="/about"
+                    onClick={() => setMenuOpen(false)}
+                    className={`block px-4 py-3 rounded-xl font-medium transition-all duration-200 ${mobileMenuItemClasses}`}
                   >
                     About
-                  </a>
-                  <a
-                    href="/contact"
-                    className={`${mobileMenuItemClasses} space-x-1 px-3 py-2  font-medium rounded-lg transition-all duration-200`}
+                  </Link>
+                  <Link
+                    to="/contact"
+                    onClick={() => setMenuOpen(false)}
+                    className={`block px-4 py-3 rounded-xl font-medium transition-all duration-200 ${mobileMenuItemClasses}`}
                   >
                     Contact
-                  </a>
+                  </Link>
                 </div>
+
+                <div className={`border-t my-4 ${dividerClasses}`} />
+
                 <button
                   onClick={() => {
                     toggleTheme();
                     setMenuOpen(false);
                   }}
-                  className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl font-medium transition-all duration-200 ${
-                    theme === "dark"
-                      ? "text-gray-300 hover:bg-gray-700 hover:text-blue-400"
-                      : "text-gray-700 hover:bg-blue-50 hover:text-blue-600"
-                  }`}
+                  className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl font-medium transition-all duration-200 ${mobileMenuItemClasses}`}
                 >
                   {theme === "dark" ? (
                     <FaSun className="text-lg" />
@@ -347,6 +434,7 @@ const Navbar = ({ isLoggedIn }) => {
                   )}
                   <span>Toggle Theme</span>
                 </button>
+
                 <Link
                   to="/login"
                   onClick={() => setMenuOpen(false)}
