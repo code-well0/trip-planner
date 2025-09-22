@@ -2,7 +2,7 @@ const axios = require('axios');
 
 class APIService {
   constructor() {
-    this.openaiKey = process.env.OPENAI_API_KEY;
+    this.geminiKey = process.env.GEMINI_API_KEY;
   }
 
   // Main method - only AI recommendations
@@ -18,22 +18,22 @@ class APIService {
 
   // AI Recommendation method
   async getAIRecommendations(params) {
+  try {
     const { destination, interests, budget, travelers, duration } = params;
-    
+
     const prompt = `
       As a travel expert, recommend 6 amazing destinations for someone traveling to ${destination}.
-      
       Travel Details:
       - Destination: ${destination}
-      - Interests: ${interests.join(', ')}
-      - Budget: ${budget || 'any'}
+      - Interests: ${interests.join(", ")}
+      - Budget: ${budget || "any"}
       - Travelers: ${travelers}
       - Duration: ${duration} days
-      
+
       Return ONLY valid JSON array with these exact fields for each destination:
       {
         "name": "destination name",
-        "country": "country name", 
+        "country": "country name",
         "region": "continent/region",
         "emoji": "relevant emoji",
         "moodTags": ["array", "of", "moods"],
@@ -50,42 +50,57 @@ class APIService {
       }
     `;
 
-    const response = await axios.post('https://api.openai.com/v1/chat/completions', {
-      model: "gpt-3.5-turbo",
-      messages: [{ role: "user", content: prompt }],
-      max_tokens: 2000,
-      temperature: 0.7
-    }, {
-      headers: {
-        'Authorization': `Bearer ${this.openaiKey}`,
-        'Content-Type': 'application/json'
+    const response = await axios.post(
+      "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent",
+      {
+        contents: [{ parts: [{ text: prompt }] }]
       },
-      timeout: 10000
-    });
-
-    const content = response.data.choices[0].message.content;
-    const jsonMatch = content.match(/```json\n([\s\S]*?)\n```/) || content.match(/\[[\s\S]*\]/);
-    
-    if (jsonMatch) {
-      let recommendations = JSON.parse(jsonMatch[1]);
-      
-      // Ensure it's an array
-      if (!Array.isArray(recommendations)) {
-        recommendations = [recommendations];
+      {
+        headers: {
+          "Content-Type": "application/json",
+          "X-goog-api-key": this.geminiKey
+        },
+        timeout: 30000
       }
-      
-      // Process images and add additional fields
-      return recommendations.map(place => ({
-        ...place,
-        image: `https://source.unsplash.com/400x300/?${encodeURIComponent(place.imageQuery || place.name)}`,
-        mapUrl: `https://www.google.com/maps?q=${encodeURIComponent(place.name + ' ' + place.country)}&output=embed`,
-        aiGenerated: true,
-        interestMatch: this.calculateInterestMatch(place, interests)
-      }));
-    }
-    
-    throw new Error('Invalid AI response format');
+    );
+
+    // Safely extract text
+    const content = response.data?.candidates?.[0]?.content?.parts?.[0]?.text;
+
+    if (!content) throw new Error("Gemini returned no content");
+
+    // Extract JSON
+    const jsonMatch =
+      content.match(/```json\n([\s\S]*?)\n```/) ||
+      content.match(/\[.*\]|\{.*\}/s);
+
+    if (!jsonMatch) throw new Error("No JSON found in AI response");
+
+    const recommendations = JSON.parse(jsonMatch[1] || jsonMatch[0]);
+
+    // Ensure array
+    const list = Array.isArray(recommendations)
+      ? recommendations
+      : [recommendations];
+
+    // Attach Unsplash image + Google Maps
+    return list.map(place => ({
+      ...place,
+      image: `https://source.unsplash.com/400x300/?${encodeURIComponent(
+        place.imageQuery || place.name
+      )}`,
+      mapUrl: `https://www.google.com/maps?q=${encodeURIComponent(
+        place.name + " " + place.country
+      )}&output=embed`,
+      aiGenerated: true,
+      interestMatch: this.calculateInterestMatch(place, interests)
+    }));
+  } catch (error) {
+    console.error("AI API error:", error.message);
+    throw new Error(`AI service failed: ${error.message}`);
   }
+}
+
 
   // Simple fallback if AI fails
   getFallbackRecommendations(params) {

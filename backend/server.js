@@ -17,7 +17,6 @@ const io = new Server(server, {
 });
 
 const PORT = process.env.PORT || 5000;
-
 app.use(cors());
 app.use(express.json());
 
@@ -88,7 +87,6 @@ app.delete("/api/blogs/:id", (req, res) => {
 app.post("/api/recommendations", async (req, res) => {
   try {
     const { destination, startDate, endDate, interests, budget, travelers } = req.body;
-
     // Validate required fields
     if (!destination || !startDate || !endDate || !interests || interests.length === 0) {
       return res.status(400).json({ 
@@ -106,7 +104,7 @@ app.post("/api/recommendations", async (req, res) => {
     }
 
     // Use AI Service for recommendations
-    const recommendations = await apiService.getTravelRecommendations({
+    const recommendations = await apiService.getAIRecommendations({
       destination,
       duration,
       interests,
