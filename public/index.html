@@ -36,51 +36,37 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 			To begin the development, run `npm start` or `yarn start`.
 			To create a production bundle, use `npm run build` or `yarn build`.
 		  -->
-	<div class="trail"></div>
 	<style>
-	 .trail {
+.cursor-dot {
   position: absolute;
-  width: 20px;
-  height: 20px;
-  background-color: rgba(0, 150, 255, 0.7); /* Blueish color */
+  width: 15px;
+  height: 15px;
+  background: #ff6f61; /* color change kar sakti ho */
   border-radius: 50%;
-  pointer-events: none; /* So it doesn’t block clicks */
+  pointer-events: none;
   transform: translate(-50%, -50%);
-  transition: transform 0.05s ease, opacity 0.3s ease;
-  opacity: 0; /* Hidden initially */
-  z-index: 9999;
 }
-	</style>		
+
+
+	</style>
 	<script>
-		const trail = document.querySelector('.trail');
-
-// Function to move trail
-function moveTrail(x, y) {
-  trail.style.left = x + 'px';
-  trail.style.top = y + 'px';
-  trail.style.opacity = 1;
-}
-
-// Desktop mouse move
-document.addEventListener('mousemove', (e) => {
-  moveTrail(e.clientX, e.clientY);
+		// Ek hi dot create karo
+const dot = document.createElement("div");
+dot.className = "cursor-dot";
+document.body.appendChild(dot);
+// Desktop mouse support
+document.addEventListener("mousemove", function(e) {
+  dot.style.left = e.pageX + "px";
+  dot.style.top = e.pageY + "px";
 });
 
-// Mobile touch move
-document.addEventListener('touchmove', (e) => {
+// Mobile touch support
+document.addEventListener("touchmove", function(e) {
   const touch = e.touches[0];
-  moveTrail(touch.clientX, touch.clientY);
-}, { passive: true });
-
-// Hide trail when touch ends
-document.addEventListener('touchend', () => {
-  trail.style.opacity = 0;
+  dot.style.left = touch.pageX + "px";
+  dot.style.top = touch.pageY + "px";
 });
 
-// Optional: Hide trail when mouse leaves window
-document.addEventListener('mouseleave', () => {
-  trail.style.opacity = 0;
-});
 
 	</script>
 </body>
