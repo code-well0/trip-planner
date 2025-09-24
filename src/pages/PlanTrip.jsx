@@ -357,11 +357,13 @@ export default function PlanTrip({ searchQuery = "" }) {
 
   // Clean up on unmount
   useEffect(() => {
-    return () => {
-      if (unsubscribeRef.current) unsubscribeRef.current();
-    };
-  }, []);
-
+  return () => {
+    if (unsubscribeRef.current.planUnsub) unsubscribeRef.current.planUnsub();
+    if (unsubscribeRef.current.locksUnsub) unsubscribeRef.current.locksUnsub();
+    if (unsubscribeRef.current.presenceUnsub) unsubscribeRef.current.presenceUnsub();
+    unsubscribeRef.current = {};
+  };
+}, []);
   return (
     <div className="px-4 py-10 md:px-16 lg:px-24">
       {/* Title Section */}
