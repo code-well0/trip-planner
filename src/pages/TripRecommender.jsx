@@ -405,7 +405,7 @@ export default function TripRecommender() {
                         {place.aiInsights.map((insight, i) => (
                           <li key={i} className="flex items-start">
                             <span className="text-blue-500 mr-1">•</span>
-                            {insight}
+                            <span>{insight}</span>
                           </li>
                         ))}
                       </ul>
