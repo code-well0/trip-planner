@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import  { useState, useRef, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import {
@@ -234,7 +234,7 @@ const Navbar = ({ isLoggedIn }) => {
                     Home
                   </Link>
                   <Link
-                    to="#"
+                    to="/plan"
                     className={`${dropdownButtonClasses} px-4 py-2 rounded-lg font-medium transition-all duration-200`}
                   >
                     Features
@@ -246,7 +246,7 @@ const Navbar = ({ isLoggedIn }) => {
                     About
                   </Link>
                   <Link
-                    to="/footer"
+                    to="/contact"
                     className={`${dropdownButtonClasses} px-4 py-2 rounded-lg font-medium transition-all duration-200`}
                   >
                     Contact
