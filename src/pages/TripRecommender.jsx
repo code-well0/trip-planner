@@ -2,8 +2,8 @@ import React, { useState, useEffect, useCallback } from "react";
 import { FaGlobeAsia, FaSearch, FaCompass, FaCalendarAlt, FaMapMarkerAlt, FaSpinner } from "react-icons/fa";
 import { useTheme } from "../contexts/ThemeContext";
 import data from "../data";
-import axios from "axios";
 import { io } from "socket.io-client";
+import APIService from "../Components/services/APIService";
 const socket = io("http://localhost:5000");
 
 export default function TripRecommender() {
@@ -24,7 +24,8 @@ export default function TripRecommender() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+  const apiService = new APIService();
+
   const moods = [
     "Relaxing",
     "Adventurous",
@@ -71,36 +72,23 @@ export default function TripRecommender() {
   };
 
   // AI-powered recommendation function
-  
   const handleAIRecommendations = async () => {
-    try {
-      setIsLoading(true);
-      setError(null);
-
-      // Calculate duration safely
-      let duration = 0;
-      if (startDate && endDate) {
-        const diffTime = new Date(endDate) - new Date(startDate);
-        duration = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-        if (duration <= 0) duration = 1;
-      }
-
-      const response = await axios.post(`${BACKEND_URL}/api/ai`, {
-        destination,
-        interests,
-        budget: budget || undefined,
-        travelers: travelers || 1,
-        duration,
-      });
-
-      setRecommendations(response.data.recommendations || []);
-    } catch (err) {
-      setError(err.response?.data?.error || err.message || "Something went wrong");
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
+  try {
+    setIsLoading(true);
+    const recommendations = await apiService.getAIRecommendations({
+      destination,
+      interests,
+      budget,
+      travelers,
+      duration: Math.ceil((new Date(endDate) - new Date(startDate)) / (1000*60*60*24))
+    });
+    setRecommendations(recommendations);
+  } catch (err) {
+    setError(err.message);
+  } finally {
+    setIsLoading(false);
+  }
+};
   
 
   // FIX: Define handleFilter BEFORE useEffect, and use useCallback for memoization
