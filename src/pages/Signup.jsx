@@ -130,9 +130,18 @@ const handleSignup = (e) => {
   ];  
 
   return (
-    <div className={`relative flex flex-col lg:flex-row items-center justify-center min-h-screen transition-colors duration-300 ${theme === 'dark' ? 'bg-gray-900' : 'bg-gray-100'}`}
-      style={{ backgroundImage: `url('./images/India on the Road.jpeg')` }}
-    >
+
+      //background
+      <div
+        className={`relative flex flex-col lg:flex-row items-center justify-center min-h-screen transition-colors duration-300 ${theme === 'dark' ? 'bg-gray-900' : 'bg-gray-100'}`}
+        style={{
+          backgroundImage: `url('./images/India on the Road.jpeg')`,
+          backgroundSize: "cover",       // scales to fill container
+          backgroundPosition: "center",  // keeps image centered
+          backgroundRepeat: "no-repeat", // prevents tiling
+        }}
+      >
+
       <div className="absolute inset-0 bg-black bg-opacity-50 dark:bg-opacity-70 transition-opacity duration-300"></div>
       
       {/* Form and Hero container for side-by-side layout */}
