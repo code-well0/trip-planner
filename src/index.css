@@ -20,6 +20,53 @@ html.dark {
   color: theme('colors.gray.100'); /* Dark mode text color */
   background-color: theme('colors.gray.900'); /* Dark mode background color */
 }
+/* 1. CSS STYLES */
+        /* You can move these styles to your main CSS file */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f7f9;
+            color: #333;
+        }
+        .container {
+            max-width: 1000px;
+            margin: auto;
+            padding: 20px;
+        }
+        .button {
+            display: inline-block;
+            background: #007bff;
+            color: #fff;
+            padding: 12px 24px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+        .button:hover {
+            background: #0056b3;
+        }
+        /* This class hides the features page by default */
+        .features-page {
+            display: none;
+        }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .feature-card {
+            background: #fff;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+        h1, h2, h3 {
+            color: #2c3e50;
+        }
 
 /* Simple scrollbar for better aesthetics on all browsers */
 ::-webkit-scrollbar {
