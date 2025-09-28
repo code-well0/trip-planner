@@ -14,7 +14,32 @@
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-TMFQGMNN');</script>
+})(window,document,'script','dataLayer','GTM-TMFQGMNN');
+ // Get references to the two content sections
+        const homeContent = document.getElementById('home-content');
+        const featuresPage = document.getElementById('features-page');
+
+        // This function checks the URL hash and displays the correct content
+        function handleNavigation() {
+            const hash = window.location.hash;
+
+            if (hash === '#features') {
+                // Show the features page and hide the main content
+                homeContent.style.display = 'none';
+                featuresPage.style.display = 'block';
+            } else {
+                // Show the main content and hide the features page (default state)
+                homeContent.style.display = 'block';
+                featuresPage.style.display = 'none';
+            }
+        }
+
+        // Run the navigation logic when the page first loads
+        window.addEventListener('DOMContentLoaded', handleNavigation);
+
+        // Run the navigation logic any time the URL hash changes (i.e., a link is clicked)
+        window.addEventListener('hashchange', handleNavigation);
+</script>
 <!-- End Google Tag Manager -->
 </head>
 
