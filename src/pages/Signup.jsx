@@ -111,6 +111,7 @@ const handleSignup = (e) => {
   
   useEffect(() => {
         window.scrollTo(0, 0);
+        document.title = 'Sign up | Your Trip Planner';
       }, []);
 
   const barColors = [

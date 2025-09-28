@@ -8,6 +8,11 @@ export default function CurrencyConverter() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
+  // Add this hook to set the page title
+  useEffect(() => {
+    document.title = 'Currency Converter | Your Trip Planner';
+  }, []);
+
   const currencies = [
     { code: "USD", name: "United States Dollar" },
     { code: "EUR", name: "Euro" },

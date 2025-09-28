@@ -13,6 +13,11 @@ function ActivityPlanner() {
   const [filterCategory, setFilterCategory] = useState("All");
   const [sortBy, setSortBy] = useState("date");
 
+  // This is the new hook to set the page title
+  useEffect(() => {
+    document.title = 'Activity Planner | Your Trip Planner';
+  }, []);
+
   useEffect(() => {
     const stored = JSON.parse(localStorage.getItem("activities")) || [];
     setActivities(stored);
@@ -147,8 +152,8 @@ function ActivityPlanner() {
           
           <div className="input-group">
             <label className="input-label">Category</label>
-            <select 
-              value={category} 
+            <select
+              value={category}
               onChange={(e) => setCategory(e.target.value)}
               className="input-field"
             >
@@ -192,8 +197,8 @@ function ActivityPlanner() {
 
           <div className="input-group">
             <label className="input-label">Filter by Category</label>
-            <select 
-              value={filterCategory} 
+            <select
+              value={filterCategory}
               onChange={(e) => setFilterCategory(e.target.value)}
               className="input-field"
             >
@@ -205,8 +210,8 @@ function ActivityPlanner() {
 
           <div className="input-group">
             <label className="input-label">Sort by</label>
-            <select 
-              value={sortBy} 
+            <select
+              value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
               className="input-field"
             >

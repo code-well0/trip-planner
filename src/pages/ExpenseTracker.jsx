@@ -13,8 +13,6 @@ import {
 import { FaTrash, FaBroom, FaMoneyBillWave } from 'react-icons/fa';
 import { useTheme } from '../contexts/ThemeContext';
 
-
-
 // Custom Modal Component for confirmation
 const ConfirmModal = ({ isOpen, onConfirm, onCancel, message }) => {
   if (!isOpen) return null;
@@ -53,6 +51,12 @@ const ExpenseTracker = () => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  // Updated useEffect to include the page title
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    document.title = 'Expense Tracker | Your Trip Planner';
+  }, []);
+
   const handleAddExpense = () => {
     if (item && amount && date && category) {
       setExpenses([
@@ -90,9 +94,6 @@ const ExpenseTracker = () => {
   const totalSpent = expenses.reduce((acc, curr) => acc + curr.amount, 0);
 
   const data = [];
-  useEffect(() => {
-      window.scrollTo(0, 0);
-    }, []);
   // Advanced analytics data
   const monthlyData = [];
   const categoryData = [];
@@ -229,7 +230,6 @@ const ExpenseTracker = () => {
             </div>
           </div>
         )}
-
 
         <div className="mt-10">
           <div className="flex justify-between items-center mb-3">

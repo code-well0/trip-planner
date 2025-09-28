@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react"; // Correct import
 import { useNavigate } from "react-router-dom";
 import SplitText from "../Components/SplitText";
-import FadeContent from "../Components/FadeContent"; 
+import FadeContent from "../Components/FadeContent";
 
 const testimonials = [
   {
@@ -51,6 +51,11 @@ const testimonials = [
 const Home = () => {
   const navigate = useNavigate();
 
+  // This is the correct place for the useEffect hook
+  useEffect(() => {
+    document.title = "Home | Your Trip Planner";
+  }, []);
+
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
       {/* ✅ Hero Section (simple built-in, no import needed) */}
@@ -58,7 +63,6 @@ const Home = () => {
         className="relative bg-gradient-to-r from-indigo-800 via-purple-800 to-black
  text-white py-24 text-center"
       >
-        {/* <h1 className="text-5xl font-extrabold mb-4">YourTrip Planner 🌍</h1> */}
         <SplitText
           text="YourTrip Planner 🌍"
           className="text-5xl font-extrabold text-center py-14"
@@ -90,7 +94,7 @@ const Home = () => {
             Signup
           </button>
         </div>
-        {/* Animated Plane Icon */} 
+        {/* Animated Plane Icon */}
       </section>
 
       <div className="container mx-auto px-4 py-8">
@@ -104,7 +108,7 @@ const Home = () => {
           <h2 className="text-3xl flex items-center justify-center font-bold mb-12 text-gray-800 dark:text-white">
             Why Choose YourTripPlanner?
           </h2>
-          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto my-16">
+          <div className="flex flex-col items-center md:grid md:grid-cols-3 gap-8 max-w-6xl mx-auto my-16">
             <div className="cursor-pointer bg-white dark:bg-gray-800 p-8 rounded-lg shadow-md hover:scale-105 transform transition">
               <span className="text-4xl">🗺️</span>
               <h3 className="mt-4 text-xl font-semibold text-gray-800 dark:text-white mb-3">

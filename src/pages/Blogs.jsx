@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Search } from "lucide-react";
 import { useNavigate } from "react-router-dom";
@@ -7,6 +7,11 @@ const Blogs = () => {
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState("All");
   const navigate = useNavigate();
+
+  // Add this hook to set the page title
+  useEffect(() => {
+    document.title = 'Blogs | Your Trip Planner';
+  }, []);
 
   const [blogs] = useState([
     {

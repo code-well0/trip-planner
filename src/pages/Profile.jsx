@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { signOut } from "firebase/auth";
 import { auth } from "../firebase"; 
@@ -17,17 +17,22 @@ const Profile = () => {
   });
   const [editInfo, setEditInfo] = useState({ ...userInfo });
 
-const handleLogout = () => {
-  signOut(auth)
-    .then(() => {
-      toast.success("Logged out successfully!");
-      navigate("/login");
-    })
-    .catch((error) => {
-      console.error("Error during logout:", error);
-      toast.error("Failed to logout. Please try again.");
-    });
-};
+  // Add this hook to set the page title
+  useEffect(() => {
+    document.title = 'My Profile | Your Trip Planner';
+  }, []);
+
+  const handleLogout = () => {
+    signOut(auth)
+      .then(() => {
+        toast.success("Logged out successfully!");
+        navigate("/login");
+      })
+      .catch((error) => {
+        console.error("Error during logout:", error);
+        toast.error("Failed to logout. Please try again.");
+      });
+  };
 
   const handleEdit = () => {
     setIsEditing(true);

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useTheme } from '../contexts/ThemeContext';
 import { FaPlus, FaMinus } from 'react-icons/fa';
@@ -69,6 +69,11 @@ const FaqItem = ({ faq, isOpen, onClick, index, isLast }) => {
 const FAQ = () => {
   const { theme } = useTheme();
   const [openFaq, setOpenFaq] = useState(null);
+
+  // Add this hook to set the page title
+  useEffect(() => {
+    document.title = 'FAQ | Your Trip Planner';
+  }, []);
 
   const handleToggle = (index) => {
     setOpenFaq(openFaq === index ? null : index);
