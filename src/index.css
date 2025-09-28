@@ -16,7 +16,6 @@ body, html, #root {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Dark mode global styles */
 html.dark {
   color: theme('colors.gray.100'); /* Dark mode text color */
   background-color: theme('colors.gray.900'); /* Dark mode background color */
