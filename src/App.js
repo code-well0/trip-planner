@@ -72,7 +72,7 @@ function App() {
           setSearchQuery={setSearchQuery}
         />
 
-        <div className="pt-20 flex-grow">
+        <div className="pt-0 flex-grow">
           <Routes>
             {/* Public Homepage */}
             <Route path="/" element={<Home />} />

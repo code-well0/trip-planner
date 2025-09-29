@@ -134,7 +134,7 @@ const Home = () => {
             </div>
             <div
               onClick={() => navigate("/plan")}
-              className="cursor-pointer bg-white dark:bg-gray-800 p-14 rounded-lg shadow-md hover:scale-105 transform transition"
+              className="cursor-pointer bg-white dark:bg-gray-800 p-8 rounded-lg shadow-lg rounded-md hover:scale-105 transform transition flex flex-col h-full"
             >
               <h3 className="mt-2 text-xl font-semibold text-gray-800 dark:text-white mb-3">
                 Plan Your Trip

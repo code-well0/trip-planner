@@ -71,7 +71,7 @@ function ChatBot() {
             />
 
             {/* Content */}
-            <div className="relative z-10 flex items-center justify-center p-4 sm:p-6">
+            <div className="relative z-10 flex items-center justify-center p-4 sm:p-6 -mt-2">
                 <div className="w-full max-w-4xl mx-auto">
                     <div className="backdrop-blur-2xl bg-white/10 dark:bg-gray-900/30 border border-white/20 rounded-3xl shadow-2xl overflow-hidden">
                         {/* Header */}
