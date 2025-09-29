@@ -9,37 +9,17 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<meta name="theme-color" content="#000000" />
 	<title>Your Trip Planner</title>
+	<style>
+        /* Basic styles for demonstration */
+        body { font-family: sans-serif; line-height: 1.6; margin: 0; padding: 20px; background-color: #f4f4f4; }
+        /* Component-specific styles have been moved to their own CSS files */
+    </style>
 	<!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-TMFQGMNN');
- // Get references to the two content sections
-        const homeContent = document.getElementById('home-content');
-        const featuresPage = document.getElementById('features-page');
-
-        // This function checks the URL hash and displays the correct content
-        function handleNavigation() {
-            const hash = window.location.hash;
-
-            if (hash === '#features') {
-                // Show the features page and hide the main content
-                homeContent.style.display = 'none';
-                featuresPage.style.display = 'block';
-            } else {
-                // Show the main content and hide the features page (default state)
-                homeContent.style.display = 'block';
-                featuresPage.style.display = 'none';
-            }
-        }
-
-        // Run the navigation logic when the page first loads
-        window.addEventListener('DOMContentLoaded', handleNavigation);
-
-        // Run the navigation logic any time the URL hash changes (i.e., a link is clicked)
-        window.addEventListener('hashchange', handleNavigation);
-</script>
+})(window,document,'script','dataLayer','GTM-TMFQGMNN');</script>
 <!-- End Google Tag Manager -->
 </head>
 
@@ -49,53 +29,14 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TMFQGMNN"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
-	<noscript>You need to enable JavaScript to run this app.</noscript>
-	<div id="root"></div>
-	<!--
-			This HTML file is a template.
-			If you open it directly in the browser, you will see an empty page.
-	  
-			You can add webfonts, meta tags, or analytics to this file.
-			The build step will place the bundled scripts into the <body> tag.
-	  
-			To begin the development, run `npm start` or `yarn start`.
-			To create a production bundle, use `npm run build` or `yarn build`.
-		  -->
-			<div class="container">
-        <!-- 2. YOUR MAIN PAGE CONTENT -->
-        <!-- This is the content that shows by default. -->
-        <main id="home-content">
-            <h1>Plan Your Next Adventure!</h1>
-            <p>Our trip planner helps you organize every detail of your journey, from flights to daily activities.</p>
-            
-            <!-- This is the button that links to your new features page. -->
-            <a href="#features" class="button">View Features</a>
-        </main>
+  <noscript>You need to enable JavaScript to run this app.</noscript>
+  <div id="root"></div>
+  <!--
+      This HTML file is a template.
+      If you open it directly in the browser, you will see an empty page.
 
-        <!-- 3. YOUR NEW FEATURES PAGE CONTENT -->
-        <!-- This section is hidden initially and will be shown on button click. -->
-        <section id="features-page" class="features-page">
-            <h2>Our Awesome Features</h2>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <h3>Interactive Itinerary Planning</h3>
-                    <p>Drag and drop activities to build your perfect day-by-day schedule.</p>
-                </div>
-                <div class="feature-card">
-                    <h3>Real-time Collaboration</h3>
-                    <p>Plan trips with friends and family, and see their changes instantly.</p>
-                </div>
-                <div class="feature-card">
-                    <h3>Budget Tracking</h3>
-                    <p>Keep your spending in check with our easy-to-use budget management tool.</p>
-                </div>
-            </div>
-            
-            <!-- This link takes the user back to the main content. -->
-            <br>
-            <a href="#home" class="button">Back to Home</a>
-        </section>
-    </div>
+      The build step will place the bundled scripts into the <body> tag.
+    -->
 </body>
 
 </html>

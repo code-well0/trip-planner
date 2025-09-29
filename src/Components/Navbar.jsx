@@ -237,8 +237,9 @@ const Navbar = ({ isLoggedIn }) => {
                     to="/plan"
                     className={`${dropdownButtonClasses} px-4 py-2 rounded-lg font-medium transition-all duration-200`}
                   >
-                    Features
+                    Plan
                   </Link>
+                  
                   <Link
                     to="/about"
                     className={`${dropdownButtonClasses} px-4 py-2 rounded-lg font-medium transition-all duration-200`}
