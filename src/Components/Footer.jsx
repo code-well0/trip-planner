@@ -87,7 +87,7 @@ const Footer = ({ isLoggedIn }) => {
 
                 {/* Footer Bottom */}
                 <div className="flex flex-col md:flex-row justify-between items-center pt-6">
-                    <p className="text-sm">&copy; 2024 YourTripPlanner. All rights reserved.</p>
+                    <p className="text-sm">&copy; {new Date().getFullYear()} YourTripPlanner. All rights reserved.</p>
                     <div className="flex space-x-4 text-sm mt-2 md:mt-0">
                         <Link to="/sitemap" className="hover:text-blue-500 transition-colors duration-200">Sitemap</Link>
                         <span>|</span>
