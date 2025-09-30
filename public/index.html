@@ -36,6 +36,39 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 			To begin the development, run `npm start` or `yarn start`.
 			To create a production bundle, use `npm run build` or `yarn build`.
 		  -->
+	<style>
+.cursor-dot {
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  background: #ff6f61; /* color change kar sakti ho */
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+}
+
+
+	</style>
+	<script>
+		// Ek hi dot create karo
+const dot = document.createElement("div");
+dot.className = "cursor-dot";
+document.body.appendChild(dot);
+// Desktop mouse support
+document.addEventListener("mousemove", function(e) {
+  dot.style.left = e.pageX + "px";
+  dot.style.top = e.pageY + "px";
+});
+
+// Mobile touch support
+document.addEventListener("touchmove", function(e) {
+  const touch = e.touches[0];
+  dot.style.left = touch.pageX + "px";
+  dot.style.top = touch.pageY + "px";
+});
+
+
+	</script>
 </body>
 
 </html>
