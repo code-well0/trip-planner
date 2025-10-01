@@ -36,6 +36,7 @@ import BackToTop from "./Components/BackToTop";
 
 // ✅ Import CurrencyConverter Component
 import CurrencyConverter from "./Components/CurrencyConverter";
+import WeatherWidget from "./Components/WeatherWidget";
 
 function App() {
   const { theme } = useTheme();
@@ -176,6 +177,14 @@ function App() {
               path="/currency-converter"
               element={
                 isLoggedIn ? <CurrencyConverter /> : <Navigate to="/login" />
+              }
+            />
+
+            {/* Weather Widget */}
+            <Route
+              path="/weather"
+              element={
+                isLoggedIn ? <WeatherWidget /> : <Navigate to="/login" />
               }
             />
 
