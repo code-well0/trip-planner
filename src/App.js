@@ -37,7 +37,9 @@ import Features from "./Components/feature";
 
 // ✅ Import CurrencyConverter Component
 import CurrencyConverter from "./Components/CurrencyConverter";
+
     // A simple Home component for demonstration
+import WeatherWidget from "./Components/WeatherWidget";
 function App() {
   const { theme } = useTheme();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -179,6 +181,14 @@ function App() {
               path="/currency-converter"
               element={
                 isLoggedIn ? <CurrencyConverter /> : <Navigate to="/login" />
+              }
+            />
+
+            {/* Weather Widget */}
+            <Route
+              path="/weather"
+              element={
+                isLoggedIn ? <WeatherWidget /> : <Navigate to="/login" />
               }
             />
 

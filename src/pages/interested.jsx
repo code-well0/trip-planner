@@ -190,33 +190,7 @@ const Interested = () => {
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
         className="p-4 md:p-8 lg:p-12"
-      >
-        {/* Theme Toggle Button */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.2, duration: 0.3 }}
-          className="fixed top-6 right-6 z-50"
-        >
-          <motion.button
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            onClick={toggleTheme}
-            className={`p-3 rounded-full ${
-              isDarkMode 
-                ? 'bg-gray-800 text-white hover:bg-gray-700' 
-                : 'bg-white text-gray-900 hover:bg-gray-100 shadow-lg border border-gray-200'
-            } transition-all duration-300`}
-          >
-            <motion.div
-              animate={{ rotate: isDarkMode ? 0 : 180 }}
-              transition={{ duration: 0.5 }}
-            >
-              {isDarkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
-            </motion.div>
-          </motion.button>
-        </motion.div>
-
+      > 
         {/* Animated Header */}
         <motion.div
           initial={{ opacity: 0, y: -30 }}
