@@ -205,15 +205,6 @@ const Navbar = ({ isLoggedIn }) => {
                     </div>
                   ))}
 
-                  {/* Theme Toggle Button */}
-                  <button
-                    onClick={toggleTheme}
-                    className={`p-2 rounded-lg transition-all duration-200 ${hamburgerClasses}`}
-                    aria-label="Toggle theme"
-                  >
-                    {theme === "dark" ? <FaSun className="text-lg" /> : <FaMoon className="text-lg" />}
-                  </button>
-
                   {/* Profile Button */}
                   <Link
                     to="/profile"
@@ -252,14 +243,6 @@ const Navbar = ({ isLoggedIn }) => {
                     Contact
                   </Link>
 
-                  {/* Theme Toggle Button */}
-                  <button
-                    onClick={toggleTheme}
-                    className={`p-2 rounded-lg transition-all duration-200 ${hamburgerClasses}`}
-                  >
-                    {theme === "dark" ? <FaSun className="text-lg" /> : <FaMoon className="text-lg" />}
-                  </button>
-
                   {/* Login Button */}
                   <Link
                     to="/login"
@@ -270,7 +253,18 @@ const Navbar = ({ isLoggedIn }) => {
                 </>
               )}
             </div>
-
+            
+            <div className="flex items-center space-x-2">
+                
+            {/* Dark Mode Button */}
+              <button
+                onClick={toggleTheme}
+                className={`p-2 rounded-lg transition-all duration-200 ${hamburgerClasses}`}
+                aria-label="Toggle theme"
+              >
+                {theme === "dark" ? <FaSun className="text-lg" /> : <FaMoon className="text-lg" />}
+              </button>
+              
             {/* Mobile Hamburger */}
             <div className="md:hidden">
               <button
@@ -291,6 +285,7 @@ const Navbar = ({ isLoggedIn }) => {
                   )}
                 </div>
               </button>
+            </div>
             </div>
           </div>
         </div>
@@ -353,21 +348,6 @@ const Navbar = ({ isLoggedIn }) => {
 
                 <div className={`border-t my-4 ${dividerClasses}`} />
 
-                <button
-                  onClick={() => {
-                    toggleTheme();
-                    setMenuOpen(false);
-                  }}
-                  className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl font-medium transition-all duration-200 ${mobileMenuItemClasses}`}
-                >
-                  {theme === "dark" ? (
-                    <FaSun className="text-lg" />
-                  ) : (
-                    <FaMoon className="text-lg" />
-                  )}
-                  <span>Toggle Theme</span>
-                </button>
-
                 <Link
                   to="/profile"
                   onClick={() => setMenuOpen(false)}
@@ -420,20 +400,6 @@ const Navbar = ({ isLoggedIn }) => {
 
                 <div className={`border-t my-4 ${dividerClasses}`} />
 
-                <button
-                  onClick={() => {
-                    toggleTheme();
-                    setMenuOpen(false);
-                  }}
-                  className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl font-medium transition-all duration-200 ${mobileMenuItemClasses}`}
-                >
-                  {theme === "dark" ? (
-                    <FaSun className="text-lg" />
-                  ) : (
-                    <FaMoon className="text-lg" />
-                  )}
-                  <span>Toggle Theme</span>
-                </button>
 
                 <Link
                   to="/login"
