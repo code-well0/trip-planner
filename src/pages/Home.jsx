@@ -167,7 +167,21 @@ const Home = () => {
               </p>
             </div>
 
-            {/* Card 6 */}
+
+            <div
+              onClick={() => navigate("/features")}
+              className="cursor-pointer bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md hover:scale-105 transform transition"
+            >
+              <h3 className="text-xl font-semibold text-gray-800 dark:text-white mb-3">
+                View Features
+              </h3>
+              <p className="text-gray-600 dark:text-gray-300">
+                Explore all the amazing features YourTrip Planner has to offer.
+              </p>
+            </div>
+
+
+            {/* Card 6*/}
             <div
               onClick={() => navigate("/api/chat")}
               className="cursor-pointer bg-white dark:bg-gray-800 p-8 rounded-lg shadow-md hover:scale-105 transform transition flex flex-col h-full"

@@ -33,11 +33,13 @@ import { InterestedProvider } from "./contexts/InterestedContext";
 import Interested from "./pages/interested";
 import Dashboard from "./pages/Dashboard";
 import BackToTop from "./Components/BackToTop";
+import Features from "./Components/feature";
 
 // ✅ Import CurrencyConverter Component
 import CurrencyConverter from "./Components/CurrencyConverter";
-import WeatherWidget from "./Components/WeatherWidget";
 
+    // A simple Home component for demonstration
+import WeatherWidget from "./Components/WeatherWidget";
 function App() {
   const { theme } = useTheme();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -131,6 +133,8 @@ function App() {
               path="/api/chat"
               element={isLoggedIn ? <ChatBot /> : <Navigate to="/login" />}
             />
+             <Route path="/" element={<Home />} />
+                <Route path="/features" element={<Features />} />
             <Route
               path="/TripRecommender"
               element={
