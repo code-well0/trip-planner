@@ -182,7 +182,8 @@ const Home = () => {
             </div>
 
 
-            {/* Card 6 */}
+
+            {/* Card 6*/}
 
             <div
               onClick={() => navigate("/api/chat")}

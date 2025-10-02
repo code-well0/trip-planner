@@ -40,7 +40,8 @@ import CurrencyConverter from "./Components/CurrencyConverter";
 
     // A simple Home component for demonstration
 
-import WeatherWidget from "./Components/WeatherWidget
+import WeatherWidget from "./Components/WeatherWidget";
+
 function App() {
   const { theme } = useTheme();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
