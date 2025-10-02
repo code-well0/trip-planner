@@ -37,7 +37,8 @@ import Features from "./Components/feature";
 
 // ✅ Import CurrencyConverter Component
 import CurrencyConverter from "./Components/CurrencyConverter";
-    // A simple Home component for demonstration
+
+
 function App() {
   const { theme } = useTheme();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
