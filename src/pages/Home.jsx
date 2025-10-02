@@ -107,7 +107,10 @@ const Home = () => {
           {/* Unified Grid for all 6 cards */}
           <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto my-16 items-stretch">
             {/* Card 1 */}
-            <div className="cursor-pointer bg-white dark:bg-gray-800 p-8 rounded-lg shadow-md hover:scale-105 transform transition flex flex-col h-full">
+            <div 
+            onClick={() => navigate("/api/chat")}
+            className="cursor-pointer bg-white dark:bg-gray-800 p-8 rounded-lg shadow-md hover:scale-105 transform transition flex flex-col h-full"
+            >
               <span className="text-4xl">🗺️</span>
               <h3 className="mt-4 text-xl font-semibold text-gray-800 dark:text-white mb-3">
                 AI-Powered Itineraries
@@ -118,7 +121,10 @@ const Home = () => {
             </div>
 
             {/* Card 2 */}
-            <div className="cursor-pointer bg-white dark:bg-gray-800 p-8 rounded-lg shadow-md hover:scale-105 transform transition flex flex-col h-full">
+            <div 
+            onClick={() => navigate("/expenses")}
+            className="cursor-pointer bg-white dark:bg-gray-800 p-8 rounded-lg shadow-md hover:scale-105 transform transition flex flex-col h-full"
+            >
               <span className="text-4xl">💰</span>
               <h3 className="mt-4 text-xl font-semibold text-gray-800 dark:text-white mb-3">
                 Track Expenses
@@ -129,22 +135,11 @@ const Home = () => {
             </div>
 
             {/* Card 3 */}
-            <div className="cursor-pointer bg-white dark:bg-gray-800 p-8 rounded-lg shadow-md hover:scale-105 transform transition flex flex-col h-full">
-              <span className="text-4xl">🌍</span>
-              <h3 className="mt-4 text-xl font-semibold text-gray-800 dark:text-white mb-3">
-                Smart Recommendations
-              </h3>
-              <p className="mt-2 text-gray-600 dark:text-gray-300">
-                Get personalized destination suggestions.
-              </p>
-            </div>
-
-            {/* Card 4 */}
-            <div
-              onClick={() => navigate("/plan")}
-              className="cursor-pointer bg-white dark:bg-gray-800 p-8 rounded-lg shadow-md hover:scale-105 transform transition flex flex-col h-full"
+            <div 
+            onClick={() => navigate("/plan")}
+            className="cursor-pointer bg-white dark:bg-gray-800 p-8 rounded-lg shadow-md hover:scale-105 transform transition flex flex-col h-full"
             >
-              <span className="text-4xl">📅</span>
+              <span className="text-4xl">🌍</span>
               <h3 className="mt-4 text-xl font-semibold text-gray-800 dark:text-white mb-3">
                 Plan Your Trip
               </h3>
@@ -152,48 +147,50 @@ const Home = () => {
                 Discover amazing destinations and create your perfect itinerary.
               </p>
             </div>
-
-            {/* Card 5 */}
-            <div
-              onClick={() => navigate("/expenses")}
-              className="cursor-pointer bg-white dark:bg-gray-800 p-8 rounded-lg shadow-md hover:scale-105 transform transition flex flex-col h-full"
+            <div 
+            onClick={() => navigate("/TripRecommender")}
+            className="cursor-pointer bg-white dark:bg-gray-800 p-8 rounded-lg shadow-md hover:scale-105 transform transition flex flex-col h-full"
             >
-              <span className="text-4xl">📊</span>
+              <span className="text-4xl">✨</span>
               <h3 className="mt-4 text-xl font-semibold text-gray-800 dark:text-white mb-3">
-                Track Expenses
-              </h3>
-              <p className="mt-2 text-gray-600 dark:text-gray-300">
-                Keep track of your travel budget and expenses in real-time.
-              </p>
-            </div>
-
-
-            <div
-              onClick={() => navigate("/features")}
-              className="cursor-pointer bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md hover:scale-105 transform transition"
-            >
-              <h3 className="text-xl font-semibold text-gray-800 dark:text-white mb-3">
-                View Features
+                Mood-based Recommendations
               </h3>
               <p className="text-gray-600 dark:text-gray-300">
-                Explore all the amazing features YourTrip Planner has to offer.
+                Get personalized recommendations based on your mood
               </p>
             </div>
-
-
-            {/* Card 6*/}
-            <div
-              onClick={() => navigate("/api/chat")}
-              className="cursor-pointer bg-white dark:bg-gray-800 p-8 rounded-lg shadow-md hover:scale-105 transform transition flex flex-col h-full"
+            <div 
+            onClick={() => navigate("/activity-planner")}
+            className="cursor-pointer bg-white dark:bg-gray-800 p-8 rounded-lg shadow-md hover:scale-105 transform transition flex flex-col h-full"
             >
-              <span className="text-4xl">🤖</span>
+              <span className="text-4xl">🗓️</span>
               <h3 className="mt-4 text-xl font-semibold text-gray-800 dark:text-white mb-3">
-                AI Assistant
+                Activity Planner
               </h3>
-              <p className="mt-2 text-gray-600 dark:text-gray-300">
-                Get personalized travel recommendations powered by AI.
+              <p className="text-gray-600 dark:text-gray-300">
+                Organize every travel activity, sight, and event into a seamless plan.
               </p>
             </div>
+            <div 
+            onClick={() => navigate("/blogs")}
+            className="cursor-pointer bg-white dark:bg-gray-800 p-8 rounded-lg shadow-md hover:scale-105 transform transition flex flex-col h-full"
+            >
+              <span className="text-4xl">✍🏻</span>
+              <h3 className="mt-4 text-xl font-semibold text-gray-800 dark:text-white mb-3">
+                Explore Travel Blogs
+              </h3>
+              <p className="text-gray-600 dark:text-gray-300">
+                Get inspired by curated travel blogs.
+              </p>
+            </div>
+          </div>
+          <div className="text-center mt-12 mb-20">
+            <button 
+            onClick={() => navigate("/login")}
+            className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full shadow-lg transition duration-300"
+            >
+              Start Planning
+            </button>
           </div>
         </FadeContent>
 
