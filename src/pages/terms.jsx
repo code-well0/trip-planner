@@ -88,9 +88,9 @@ const TermsOfService = () => {
           </section>
 
           <div className="mt-12 text-center">
-            <Link
-              to="/"
-              className={`inline-block px-6 py-2 rounded-lg ${theme === 'dark' ? 'bg-blue-600 hover:bg-blue-700' : 'bg-blue-500 hover:bg-blue-600'} text-white transition-colors duration-300`}
+            <Link 
+              to="/" 
+              className={`inline-block px-6 py-2 rounded-full ${theme === 'dark' ? 'bg-blue-600 hover:bg-blue-700' : 'bg-blue-500 hover:bg-blue-600'} text-white transform hover:-translate-y-1 transition duration-300`}
             >
               Back to Home
             </Link>

@@ -11,7 +11,7 @@ function ChatBot() {
     const [input, setInput] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const messagesEndRef = useRef(null);
-
+    const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
     useEffect(() => {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
     }, [messages]);
@@ -27,7 +27,7 @@ function ChatBot() {
 
         try {
             const response = await fetch(
-                "https://trip-planner-backend-bw79.onrender.com/api/chat",
+                `${BACKEND_URL}/api/chat`,
                 {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
