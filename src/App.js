@@ -38,6 +38,9 @@ import CurrencyConverter from "./Components/CurrencyConverter";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+
+    // A simple Home component for demonstration
+import WeatherWidget from "./Components/WeatherWidget";
 function App() {
   const { theme } = useTheme();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -73,7 +76,7 @@ function App() {
           setSearchQuery={setSearchQuery}
         />
 
-        <div className="pt-20 flex-grow">
+        <div className="pt-0 flex-grow">
           <Routes>
             {/* Public Homepage */}
             <Route path="/" element={<Home />} />
@@ -179,6 +182,14 @@ function App() {
               path="/currency-converter"
               element={
                 isLoggedIn ? <CurrencyConverter /> : <Navigate to="/login" />
+              }
+            />
+
+            {/* Weather Widget */}
+            <Route
+              path="/weather"
+              element={
+                isLoggedIn ? <WeatherWidget /> : <Navigate to="/login" />
               }
             />
 

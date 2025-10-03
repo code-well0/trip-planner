@@ -82,7 +82,7 @@ export default function CurrencyConverter() {
   }, [amount, fromCurrency, toCurrency]);
 
   return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900 p-6 transition-colors duration-300 pt-24 pb-24">
+        <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900 p-6 transition-colors duration-300 pt-24 pb-24 -mt-20">
             <div className="flex flex-col lg:flex-row gap-8 w-full max-w-6xl">
         {/* Converter Card */}
         <div className="flex-1 rounded-3xl shadow-lg p-8 flex flex-col gap-6 bg-indigo-500 dark:bg-indigo-900 text-white transition-colors duration-300">

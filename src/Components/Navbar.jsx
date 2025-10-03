@@ -57,6 +57,7 @@ const Navbar = ({ isLoggedIn }) => {
       items: [
         { to: "/activity-planner", text: "Activity Planner" },
         { to: "/currency-converter", text: "Currency Converter" },
+        { to: "/weather", text: "Weather" },
       ]
     },
     {
@@ -135,7 +136,11 @@ const Navbar = ({ isLoggedIn }) => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             {/* Brand */}
-            <div className="flex items-center space-x-2 flex-shrink-0">
+            <div className="flex items-center space-x-2 flex-shrink-0"
+            onClick={(e) => {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: "smooth" });}}
+            >
               <FaMapMarkedAlt
                 className={
                   theme === "dark"

@@ -130,7 +130,7 @@ const ExpenseTracker = () => {
         onCancel={() => setIsModalOpen(false)}
         message="Are you sure you want to clear all expenses?"
       />
-      <div className="max-w-3xl mx-auto rounded-2xl shadow-xl p-8 bg-white dark:bg-gray-800 transition-colors duration-300">
+      <div className="max-w-3xl mx-auto rounded-2xl shadow-xl p-8 bg-white dark:bg-gray-800 transition-colors duration-300 mt-16">
         <h1 className="text-3xl font-extrabold flex items-center justify-center gap-3 text-center mb-6 text-gray-900 dark:text-white">
           <FaMoneyBillWave className="text-green-600 dark:text-green-400 text-4xl" />
           Expense Tracker
