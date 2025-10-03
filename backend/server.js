@@ -5,7 +5,8 @@ const path = require("path");
 const cors = require("cors");
 const { createServer } = require("http");
 const { Server } = require("socket.io");
-const APIService = require("../src/Components/services/APIService");
+// const APIService = require("../src/Components/services/APIService");
+const mongodb=require('./Database/db')
 
 const app = express();
 const server = createServer(app);
@@ -16,12 +17,17 @@ const io = new Server(server, {
   }
 });
 
+(async () => {
+  await mongodb.default();
+})();
+
+
 const PORT = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
 // Initialize API Service
-const apiService = new APIService();
+// const apiService = new APIService();
 
 const blogsFile = path.join(__dirname, "blogs.json");
 
