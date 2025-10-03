@@ -174,7 +174,7 @@ function App() {
               element={isLoggedIn ? <Interested /> : <Navigate to="/login" />}
             />
 
-            {/* ✅ Currency Converter */}
+            {/*  Currency Converter */}
             <Route
               path="/currency-converter"
               element={
