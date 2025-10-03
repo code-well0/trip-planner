@@ -37,7 +37,8 @@ import Features from "./Components/feature";
 
 // ✅ Import CurrencyConverter Component
 import CurrencyConverter from "./Components/CurrencyConverter";
-
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   const { theme } = useTheme();
