@@ -22,7 +22,7 @@ const Footer = ({ isLoggedIn }) => {
 
                     {/* Brand Section */}
                     <div className="flex flex-col space-y-4">
-                        <h3 className="text-2xl font-bold">YourTripPlanner</h3>
+                        <h3 className="text-2xl font-bold text-blue-600">YourTripPlanner</h3>
                         <p className="text-sm">Your ultimate companion for exploring the incredible destinations of India. Plan smarter, travel better.</p>
                         <div className="flex space-x-4 text-xl">
                             <a href="mailto:shubralijain@gmail.com" className="social-link hover:text-blue-500 transition-colors duration-200" aria-label="Email"><FaEnvelope /></a>
@@ -87,7 +87,7 @@ const Footer = ({ isLoggedIn }) => {
 
                 {/* Footer Bottom */}
                 <div className="flex flex-col md:flex-row justify-between items-center pt-6">
-                    <p className="text-sm">&copy; 2024 YourTripPlanner. All rights reserved.</p>
+                    <p className="text-sm">&copy; {new Date().getFullYear()} YourTripPlanner. All rights reserved.</p>
                     <div className="flex space-x-4 text-sm mt-2 md:mt-0">
                         <Link to="/sitemap" className="hover:text-blue-500 transition-colors duration-200">Sitemap</Link>
                         <span>|</span>

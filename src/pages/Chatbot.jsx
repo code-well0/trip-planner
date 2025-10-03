@@ -11,7 +11,7 @@ function ChatBot() {
     const [input, setInput] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const messagesEndRef = useRef(null);
-
+    const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
     useEffect(() => {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
     }, [messages]);
@@ -27,7 +27,7 @@ function ChatBot() {
 
         try {
             const response = await fetch(
-                "https://trip-planner-backend-bw79.onrender.com/api/chat",
+                `${BACKEND_URL}/api/chat`,
                 {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
@@ -71,7 +71,7 @@ function ChatBot() {
             />
 
             {/* Content */}
-            <div className="relative z-10 flex items-center justify-center p-4 sm:p-6">
+            <div className="relative z-10 flex items-center justify-center p-4 sm:p-6 -mt-2">
                 <div className="w-full max-w-4xl mx-auto">
                     <div className="backdrop-blur-2xl bg-white/10 dark:bg-gray-900/30 border border-white/20 rounded-3xl shadow-2xl overflow-hidden">
                         {/* Header */}
