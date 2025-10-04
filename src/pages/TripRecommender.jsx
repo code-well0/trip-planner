@@ -3,7 +3,14 @@ import { FaGlobeAsia, FaSearch, FaCompass, FaCalendarAlt, FaMapMarkerAlt, FaSpin
 import { useTheme } from "../contexts/ThemeContext";
 import data from "../data";
 import { io } from "socket.io-client";
-const socket = io("http://localhost:5000");
+import axios from "axios"; 
+
+// ⚠️ IMPORTANT: Use a React-specific environment variable for the backend URL.
+// This will be automatically replaced during the build process.
+// You must add this variable to your Render/Vercel dashboard.
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL; 
+
+const socket = io(BACKEND_URL); 
 
 export default function TripRecommender() {
   const { theme } = useTheme();
@@ -22,7 +29,6 @@ export default function TripRecommender() {
   const [travelers, setTravelers] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
-
 
   const moods = [
     "Relaxing",
@@ -60,7 +66,6 @@ export default function TripRecommender() {
     "Architecture", "Wildlife", "Photography", "Music", "Sports", "Spiritual"
   ];
 
-  // Handle interest selection
   const toggleInterest = (interest) => {
     setInterests(prev => 
       prev.includes(interest) 
@@ -69,27 +74,27 @@ export default function TripRecommender() {
     );
   };
 
-  // AI-powered recommendation function
   const handleAIRecommendations = async () => {
-  try {
-    setIsLoading(true);
-    const recommendations = await apiService.getAIRecommendations({
-      destination,
-      interests,
-      budget,
-      travelers,
-      duration: Math.ceil((new Date(endDate) - new Date(startDate)) / (1000*60*60*24))
-    });
-    setRecommendations(recommendations);
-  } catch (err) {
-    setError(err.message);
-  } finally {
-    setIsLoading(false);
-  }
-};
-  
-
-  // FIX: Define handleFilter BEFORE useEffect, and use useCallback for memoization
+    try {
+      setIsLoading(true);
+      setError("");
+      
+      const response = await axios.post(`${BACKEND_URL}/api/recommendations`, {
+        destination,
+        interests,
+        budget,
+        travelers,
+        duration: Math.ceil((new Date(endDate) - new Date(startDate)) / (1000 * 60 * 60 * 24))
+      });
+      setRecommendations(response.data.recommendations);
+    } catch (err) {
+      console.error("Error fetching recommendations:", err);
+      setError(err.response?.data?.error || "Failed to get AI recommendations. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+    
   const handleFilter = useCallback(
     (mood = selectedMood, purpose = selectedPurpose, theme = selectedTheme) => {
       const filtered = data.filter((place) => {
@@ -101,7 +106,6 @@ export default function TripRecommender() {
         return moodMatch && purposeMatch && themeMatch;
       });
       setRecommendations(filtered.slice(0, 6));
-      // Emit trip update to other users
       socket.emit("trip:update", { mood, purpose, theme });
     },
     [selectedMood, selectedPurpose, selectedTheme]
@@ -109,7 +113,6 @@ export default function TripRecommender() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    // Listen for trip updates from other users
     socket.on("trip:update", ({ mood, purpose, theme }) => {
       setSelectedMood(mood);
       setSelectedPurpose(purpose);
