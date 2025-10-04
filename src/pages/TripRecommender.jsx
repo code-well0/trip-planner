@@ -3,7 +3,6 @@ import { FaGlobeAsia, FaSearch, FaCompass, FaCalendarAlt, FaMapMarkerAlt, FaSpin
 import { useTheme } from "../contexts/ThemeContext";
 import data from "../data";
 import { io } from "socket.io-client";
-import APIService from "../Components/services/APIService";
 const socket = io("http://localhost:5000");
 
 export default function TripRecommender() {
@@ -24,7 +23,6 @@ export default function TripRecommender() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const apiService = new APIService();
 
   const moods = [
     "Relaxing",
