@@ -40,6 +40,7 @@ import CurrencyConverter from "./Components/CurrencyConverter";
 
     // A simple Home component for demonstration
 import WeatherWidget from "./Components/WeatherWidget";
+import PackingChecklist from "./pages/PackingChecklist";
 function App() {
   const { theme } = useTheme();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -181,6 +182,12 @@ function App() {
               path="/currency-converter"
               element={
                 isLoggedIn ? <CurrencyConverter /> : <Navigate to="/login" />
+              }
+            />
+             <Route
+              path="/packing-list"
+              element={
+                isLoggedIn ? <PackingChecklist /> : <Navigate to="/login" />
               }
             />
 
