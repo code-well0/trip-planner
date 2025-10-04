@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Card from './Card.jsx';
 import { useInterested } from '../contexts/InterestedContext';
-
+import {toast} from 'react-toastify'
 const Tours = ({ tours, removeTour, lockItem, unlockItem, locks, presence }) => {
   const { interestedTours, removeFromInterested } = useInterested();
 
@@ -45,7 +45,10 @@ const Tours = ({ tours, removeTour, lockItem, unlockItem, locks, presence }) => 
                 <div className="flex items-start justify-between mb-3">
                   <h4 className="font-semibold text-gray-900 dark:text-white text-lg">{tour.name}</h4>
                   <button
-                    onClick={() => removeFromInterested(tour.id)}
+                    onClick={() =>{ removeFromInterested(tour.id);
+                        toast.error(`removed "${tour.name}" from your interested list!`);    
+                    }
+                    }
                     className="text-red-500 hover:text-red-700 dark:hover:text-red-400 text-sm font-medium hover:bg-red-50 dark:hover:bg-red-900/20 px-2 py-1 rounded transition-colors"
                   >
                     Remove

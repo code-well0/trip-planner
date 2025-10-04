@@ -8,6 +8,8 @@ import { FaUser, FaSignOutAlt, FaEdit, FaSave, FaTimes } from 'react-icons/fa';
 const Profile = () => {
   const navigate = useNavigate();
   const [isEditing, setIsEditing] = useState(false);
+  const [profilePic, setProfilePic] = useState(null);
+
   const [userInfo, setUserInfo] = useState({
     name: 'Travel Enthusiast',
     email: 'user@example.com',
@@ -35,8 +37,9 @@ const handleLogout = () => {
   };
 
   const handleSave = () => {
-    setUserInfo({ ...editInfo });
+    setUserInfo({ ...editInfo ,profilePic});
     setIsEditing(false);
+    toast.success("Profile Updated Successfully")
     // Here you would typically save to a database
   };
 
@@ -56,11 +59,39 @@ const handleLogout = () => {
         <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-8 mb-8">
           <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
             {/* Profile Picture */}
-            <div className="relative">
-              <div className="w-32 h-32 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white text-4xl">
-                <FaUser />
-              </div>
-            </div>
+        <div className="relative">
+  <img
+    src={profilePic || `https://ui-avatars.com/api/?name=${encodeURIComponent(userInfo.name)}&background=random`
+
+} 
+    alt="Profile"
+    className="w-32 h-32 rounded-full object-cover shadow-md"
+  />
+
+  {isEditing && (
+    <>
+      <label
+        htmlFor="profile-pic-upload"
+        className="absolute bottom-0 right-0 bg-blue-600 text-white p-2 rounded-full cursor-pointer shadow-lg hover:bg-blue-700 transition"
+      >
+        <FaEdit />
+      </label>
+      <input
+        id="profile-pic-upload"
+        type="file"
+        accept="image/*"
+        className="hidden"
+        onChange={(e) => {
+          const file = e.target.files[0];
+          if (file) {
+            const imageUrl = URL.createObjectURL(file);
+            setProfilePic(imageUrl);
+          }
+        }}
+      />
+    </>
+  )}
+</div>
 
             {/* Profile Info */}
             <div className="flex-1 text-center md:text-left">
