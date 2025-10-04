@@ -5,8 +5,8 @@ const path = require("path");
 const cors = require("cors");
 const { createServer } = require("http");
 const { Server } = require("socket.io");
-const APIService = require("../src/Components/services/APIService");
 const mongodb=require('./Database/db')
+const APIService = require("./services/APIService");
 
 const app = express();
 const server = createServer(app);
