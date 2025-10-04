@@ -4,54 +4,54 @@ import SplitText from "../Components/SplitText";
 import FadeContent from "../Components/FadeContent";
 
 const testimonials = [
-  {
-    name: "Ananya",
-    role: "Traveler",
-    feedback:
-      "Trip Planner made my vacation so much easier! I could plan everything in one place.",
-  },
-  {
-    name: "Rahul",
-    role: "Adventure Enthusiast",
-    feedback:
-      "I loved how smooth the planning process was. Highly recommend this app!",
-  },
-  {
-    name: "Sophia",
-    role: "Backpacker",
-    feedback:
-      "Clean UI, easy to use, and perfect for organizing trips with friends!",
-  },
-  {
-    name: "David",
-    role: "Solo Explorer",
-    feedback:
-      "Managing my budget on the go was super easy. This app is a must-have!",
-  },
-  {
-    name: "Meera",
-    role: "Family Planner",
-    feedback:
-      "Helped me organize a family trip without any stress. Kids loved the experience!",
-  },
-  {
-    name: "Alex",
-    role: "Photographer",
-    feedback:
-      "AI recommendations took me to hidden gems I’d never have found otherwise.",
-  },
-  {
-    name: "Li Wei",
-    role: "Student Traveler",
-    feedback:
-      "Affordable trip planning and amazing suggestions within my budget.",
-  },
+    {
+        name: "Ananya",
+        role: "Traveler",
+        feedback:
+            "Trip Planner made my vacation so much easier! I could plan everything in one place.",
+    },
+    {
+        name: "Rahul",
+        role: "Adventure Enthusiast",
+        feedback:
+            "I loved how smooth the planning process was. Highly recommend this app!",
+    },
+    {
+        name: "Sophia",
+        role: "Backpacker",
+        feedback:
+            "Clean UI, easy to use, and perfect for organizing trips with friends!",
+    },
+    {
+        name: "David",
+        role: "Solo Explorer",
+        feedback:
+            "Managing my budget on the go was super easy. This app is a must-have!",
+    },
+    {
+        name: "Meera",
+        role: "Family Planner",
+        feedback:
+            "Helped me organize a family trip without any stress. Kids loved the experience!",
+    },
+    {
+        name: "Alex",
+        role: "Photographer",
+        feedback:
+            "AI recommendations took me to hidden gems I’d never have found otherwise.",
+    },
+    {
+        name: "Li Wei",
+        role: "Student Traveler",
+        feedback:
+            "Affordable trip planning and amazing suggestions within my budget.",
+    },
 ];
 
 const Home = () => {
   const navigate = useNavigate();
 
-  // This is the correct place for the useEffect hook
+  // Your Feature: useEffect Hook for Dynamic Page Title
   useEffect(() => {
     document.title = "Home | Your Trip Planner";
   }, []);
@@ -61,8 +61,9 @@ const Home = () => {
       {/* ✅ Hero Section (simple built-in, no import needed) */}
       <section
         className="relative bg-gradient-to-r from-indigo-800 via-purple-800 to-black
- text-white py-24 text-center"
+	text-white py-24 text-center"
       >
+        {/* <h1 className="text-5xl font-extrabold mb-4">YourTrip Planner 🌍</h1> */}
         <SplitText
           text="YourTrip Planner 🌍"
           className="text-5xl font-extrabold text-center py-14"
@@ -107,15 +108,13 @@ const Home = () => {
           <h2 className="text-3xl flex items-center justify-center font-bold mb-12 text-gray-800 dark:text-white">
             Why Choose YourTripPlanner?
           </h2>
-          <div className="flex flex-col items-center md:grid md:grid-cols-3 gap-8 max-w-6xl mx-auto my-16">
-            <div className="cursor-pointer bg-white dark:bg-gray-800 p-8 rounded-lg shadow-md hover:scale-105 transform transition">
 
           {/* Unified Grid for all 6 cards */}
           <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto my-16 items-stretch">
-            {/* Card 1 */}
-            <div 
-            onClick={() => navigate("/api/chat")}
-            className="cursor-pointer bg-white dark:bg-gray-800 p-8 rounded-lg shadow-md hover:scale-105 transform transition flex flex-col h-full"
+            {/* Card 1: AI-Powered Itineraries */}
+            <div
+              onClick={() => navigate("/api/chat")}
+              className="cursor-pointer bg-white dark:bg-gray-800 p-8 rounded-lg shadow-md hover:scale-105 transform transition flex flex-col h-full"
             >
               <span className="text-4xl">🗺️</span>
               <h3 className="mt-4 text-xl font-semibold text-gray-800 dark:text-white mb-3">
@@ -126,10 +125,10 @@ const Home = () => {
               </p>
             </div>
 
-            {/* Card 2 */}
-            <div 
-            onClick={() => navigate("/expenses")}
-            className="cursor-pointer bg-white dark:bg-gray-800 p-8 rounded-lg shadow-md hover:scale-105 transform transition flex flex-col h-full"
+            {/* Card 2: Track Expenses */}
+            <div
+              onClick={() => navigate("/expenses")}
+              className="cursor-pointer bg-white dark:bg-gray-800 p-8 rounded-lg shadow-md hover:scale-105 transform transition flex flex-col h-full"
             >
               <span className="text-4xl">💰</span>
               <h3 className="mt-4 text-xl font-semibold text-gray-800 dark:text-white mb-3">
@@ -140,10 +139,10 @@ const Home = () => {
               </p>
             </div>
 
-            {/* Card 3 */}
-            <div 
-            onClick={() => navigate("/plan")}
-            className="cursor-pointer bg-white dark:bg-gray-800 p-8 rounded-lg shadow-md hover:scale-105 transform transition flex flex-col h-full"
+            {/* Card 3: Plan Your Trip */}
+            <div
+              onClick={() => navigate("/plan")}
+              className="cursor-pointer bg-white dark:bg-gray-800 p-8 rounded-lg shadow-md hover:scale-105 transform transition flex flex-col h-full"
             >
               <span className="text-4xl">🌍</span>
               <h3 className="mt-4 text-xl font-semibold text-gray-800 dark:text-white mb-3">
@@ -153,80 +152,96 @@ const Home = () => {
                 Discover amazing destinations and create your perfect itinerary.
               </p>
             </div>
-            <div 
-            onClick={() => navigate("/TripRecommender")}
-            className="cursor-pointer bg-white dark:bg-gray-800 p-8 rounded-lg shadow-md hover:scale-105 transform transition flex flex-col h-full"
-            >
-              <span className="text-4xl">✨</span>
-              <h3 className="mt-4 text-xl font-semibold text-gray-800 dark:text-white mb-3">
-                Mood-based Recommendations
-              </h3>
-              <p className="text-gray-600 dark:text-gray-300">
-                Get personalized recommendations based on your mood
-              </p>
-            </div>
-            <div 
-            onClick={() => navigate("/activity-planner")}
-            className="cursor-pointer bg-white dark:bg-gray-800 p-8 rounded-lg shadow-md hover:scale-105 transform transition flex flex-col h-full"
-            >
-              <span className="text-4xl">🗓️</span>
-              <h3 className="mt-4 text-xl font-semibold text-gray-800 dark:text-white mb-3">
-                Activity Planner
-              </h3>
-              <p className="text-gray-600 dark:text-gray-300">
-                Organize every travel activity, sight, and event into a seamless plan.
-              </p>
-            </div>
-            <div 
-            onClick={() => navigate("/blogs")}
-            className="cursor-pointer bg-white dark:bg-gray-800 p-8 rounded-lg shadow-md hover:scale-105 transform transition flex flex-col h-full"
-            >
-              <span className="text-4xl">✍🏻</span>
-              <h3 className="mt-4 text-xl font-semibold text-gray-800 dark:text-white mb-3">
-                Explore Travel Blogs
-              </h3>
-              <p className="text-gray-600 dark:text-gray-300">
-                Get inspired by curated travel blogs.
-              </p>
-            </div>
-          </div>
-          <div className="text-center mt-12 mb-20">
-            <button 
-            onClick={() => navigate("/login")}
-            className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full shadow-lg transition duration-300"
-            >
-              Start Planning
-            </button>
-          </div>
-        </FadeContent>
+            {/* Note: Additional cards (Mood-based, Activity, Blogs) would typically follow here */}
 
-        {/* ✅ Testimonials */}
-        <section className="bg-gray-100 dark:bg-gray-800 py-12 rounded-xl shadow-inner">
-          <h2 className="text-3xl font-bold text-center text-gray-800 dark:text-white my-10">
-            What Our Travelers Say
-          </h2>
-          <div className="flex overflow-x-auto gap-6 px-4">
-            {testimonials.map((t, index) => (
-              <div
-                key={index}
-                className="min-w-[300px] bg-white dark:bg-gray-900 p-6 rounded-lg shadow-lg my-8"
-              >
-                <p className="text-gray-600 dark:text-gray-300 italic mb-4">
-                  "{t.feedback}"
-                </p>
-                <h3 className="text-lg font-semibold text-gray-800 dark:text-white">
-                  {t.name}
-                </h3>
-                <p className="text-sm text-gray-500 dark:text-gray-400">
-                  {t.role}
-                </p>
-              </div>
-            ))}
           </div>
-        </section>
+          {/* Note: Testimonials section and closing tags would typically follow here */}
+          
+        </FadeContent>
       </div>
     </div>
   );
+};
+
+                        {/* Card 4: Mood-based Recommendations (FIXED) */}
+                        <div
+                            onClick={() => navigate("/TripRecommender")}
+                            className="cursor-pointer bg-white dark:bg-gray-800 p-8 rounded-lg shadow-md hover:scale-105 transform transition flex flex-col h-full"
+                        >
+                            <span className="text-4xl">✨</span>
+                            <h3 className="mt-4 text-xl font-semibold text-gray-800 dark:text-white mb-3">
+                                Mood-based Recommendations
+                            </h3>
+                            <p className="text-gray-600 dark:text-gray-300">
+                                Get personalized recommendations based on your mood
+                            </p>
+                        </div>
+
+                        {/* Card 5: Activity Planner (FIXED) */}
+                        <div
+                            onClick={() => navigate("/activity-planner")}
+                            className="cursor-pointer bg-white dark:bg-gray-800 p-8 rounded-lg shadow-md hover:scale-105 transform transition flex flex-col h-full"
+                        >
+                            <span className="text-4xl">🗓️</span>
+                            <h3 className="mt-4 text-xl font-semibold text-gray-800 dark:text-white mb-3">
+                                Activity Planner
+                            </h3>
+                            <p className="text-gray-600 dark:text-gray-300">
+                                Organize every travel activity, sight, and event into a seamless plan.
+                            </p>
+                        </div>
+
+                        {/* Card 6: Explore Travel Blogs (FIXED) */}
+                        <div
+                            onClick={() => navigate("/blogs")}
+                            className="cursor-pointer bg-white dark:bg-gray-800 p-8 rounded-lg shadow-md hover:scale-105 transform transition flex flex-col h-full"
+                        >
+                            <span className="text-4xl">✍🏻</span>
+                            <h3 className="mt-4 text-xl font-semibold text-gray-800 dark:text-white mb-3">
+                                Explore Travel Blogs
+                            </h3>
+                            <p className="text-gray-600 dark:text-gray-300">
+                                Get inspired by curated travel blogs.
+                            </p>
+                        </div>
+                    </div>
+                    <div className="text-center mt-12 mb-20">
+                        <button
+                            onClick={() => navigate("/login")}
+                            className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full shadow-lg transition duration-300"
+                        >
+                            Start Planning
+                        </button>
+                    </div>
+                </FadeContent>
+
+                {/* ✅ Testimonials */}
+                <section className="bg-gray-100 dark:bg-gray-800 py-12 rounded-xl shadow-inner">
+                    <h2 className="text-3xl font-bold text-center text-gray-800 dark:text-white my-10">
+                        What Our Travelers Say
+                    </h2>
+                    <div className="flex overflow-x-auto gap-6 px-4">
+                        {testimonials.map((t, index) => (
+                            <div
+                                key={index}
+                                className="min-w-[300px] bg-white dark:bg-gray-900 p-6 rounded-lg shadow-lg my-8"
+                            >
+                                <p className="text-gray-600 dark:text-gray-300 italic mb-4">
+                                    "{t.feedback}"
+                                </p>
+                                <h3 className="text-lg font-semibold text-gray-800 dark:text-white">
+                                    {t.name}
+                                </h3>
+                                <p className="text-sm text-gray-500 dark:text-gray-400">
+                                    {t.role}
+                                </p>
+                            </div>
+                        ))}
+                    </div>
+                </section>
+            </div>
+        </div>
+    );
 };
 
 export default Home;
