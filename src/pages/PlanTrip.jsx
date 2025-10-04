@@ -127,6 +127,7 @@ export default function PlanTrip({ searchQuery = "" }) {
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    document.title = 'Plan Your Trip | Your Trip Planner';
   }, []);
 
   // Create a new shared plan in Firestore

@@ -111,6 +111,7 @@ export default function TripRecommender() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    document.title = 'Trip Recommender | Your Trip Planner';
     // Listen for trip updates from other users
     socket.on("trip:update", ({ mood, purpose, theme }) => {
       setSelectedMood(mood);

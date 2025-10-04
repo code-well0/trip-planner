@@ -122,9 +122,26 @@ export default function Signup({ setIsLoggedIn }) {
   };
 
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+        window.scrollTo(0, 0);
+        document.title = 'Sign up | Your Trip Planner';
+      }, []);
 
+  const barColors = [
+    "bg-red-500",
+    "bg-orange-400",
+    "bg-yellow-400",
+    "bg-green-400",
+    "bg-green-600",
+  ];  
+  
+  const colors = [
+    "text-red-500",
+    "text-orange-400",
+    "text-yellow-400",
+    "text-green-400",
+    "text-green-600",
+  ];  
+  
   return (
     <div className={`relative flex flex-col lg:flex-row items-center justify-center min-h-screen ${theme === 'dark' ? 'bg-gray-900' : 'bg-gray-100'}`}>
       <div className="absolute inset-0 bg-black bg-opacity-50"></div>
