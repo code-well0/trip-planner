@@ -1,6 +1,6 @@
-import axios from "axios";
+const axios = require("axios");
 
-export default class APIService {
+class APIService  {
   constructor() {
     this.geminiKey = process.env.REACT_APP_GEMINI_API_KEY;
     this.unsplashKey = process.env.REACT_APP_UNSPLASH_KEY;
@@ -146,4 +146,4 @@ export default class APIService {
       throw new Error("AI service failed: " + err.message);
     }
   }
-}
+} module.exports = APIService;
