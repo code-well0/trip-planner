@@ -11,8 +11,6 @@ import ChatBot from "./pages/Chatbot";
 import Login from "./pages/login";
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import TripRecommender from "./pages/TripRecommender";
 import TermsOfService from "./pages/terms";
 import ActivityPlanner from "./pages/ActivityPlanner";
@@ -33,10 +31,17 @@ import { InterestedProvider } from "./contexts/InterestedContext";
 import Interested from "./pages/interested";
 import Dashboard from "./pages/Dashboard";
 import BackToTop from "./Components/BackToTop";
+import Features from "./Components/feature";
 
 // ✅ Import CurrencyConverter Component
 import CurrencyConverter from "./Components/CurrencyConverter";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
+
+    // A simple Home component for demonstration
+import WeatherWidget from "./Components/WeatherWidget";
+import PackingChecklist from "./pages/PackingChecklist";
 function App() {
   const { theme } = useTheme();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -72,7 +77,7 @@ function App() {
           setSearchQuery={setSearchQuery}
         />
 
-        <div className="pt-20 flex-grow">
+        <div className="pt-0 flex-grow">
           <Routes>
             {/* Public Homepage */}
             <Route path="/" element={<Home />} />
@@ -130,6 +135,8 @@ function App() {
               path="/api/chat"
               element={isLoggedIn ? <ChatBot /> : <Navigate to="/login" />}
             />
+             <Route path="/" element={<Home />} />
+                <Route path="/features" element={<Features />} />
             <Route
               path="/TripRecommender"
               element={
@@ -171,11 +178,25 @@ function App() {
               element={isLoggedIn ? <Interested /> : <Navigate to="/login" />}
             />
 
-            {/* ✅ Currency Converter */}
+            {/*  Currency Converter */}
             <Route
               path="/currency-converter"
               element={
                 isLoggedIn ? <CurrencyConverter /> : <Navigate to="/login" />
+              }
+            />
+             <Route
+              path="/packing-list"
+              element={
+                isLoggedIn ? <PackingChecklist /> : <Navigate to="/login" />
+              }
+            />
+
+            {/* Weather Widget */}
+            <Route
+              path="/weather"
+              element={
+                isLoggedIn ? <WeatherWidget /> : <Navigate to="/login" />
               }
             />
 

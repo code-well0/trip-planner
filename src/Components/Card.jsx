@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { FaRupeeSign, FaMapMarkerAlt, FaRegCalendarAlt, FaRegThumbsDown } from 'react-icons/fa';
 import { useTheme } from '../contexts/ThemeContext';
 import { useInterested } from '../contexts/InterestedContext';
+import { toast } from 'react-toastify';
 
 const Card = ({ tour, removeTour, lockItem, unlockItem, locked, presence }) => {
   const { theme } = useTheme();
@@ -71,7 +72,10 @@ const Card = ({ tour, removeTour, lockItem, unlockItem, locked, presence }) => {
         <div className="flex justify-between gap-4">
           <button
             className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg text-sm transition"
-            onClick={() => addToInterested(tour)}
+            onClick={() => {
+              addToInterested(tour);
+              toast.success(`Added "${tour.name}" to your interested list!`);
+            }}
             aria-label={`Mark ${tour.name} as Interested`}
           >
             I'm Interested
@@ -91,10 +95,10 @@ const Card = ({ tour, removeTour, lockItem, unlockItem, locked, presence }) => {
          border border-gray-200 dark:border-gray-600
          transition-all duration-200"
             onClick={() => {
-              // Remove from main plan (also propagates to Firestore when collaborating)
-              if (typeof removeTour === 'function') removeTour(tour.id);
-              // Also remove from interested list if the hook supports it
-              // ...existing code handles interested separately via context
+              if (typeof removeTour === 'function') {
+                removeTour(tour.id);
+                toast.error(`Removed "${tour.name}" from your plan.`);
+              }
             }}
             aria-label={`Remove ${tour.name} from Plan`}
           >

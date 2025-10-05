@@ -64,7 +64,7 @@ export default function Signup({ setIsLoggedIn }) {
   const signInWithApple = () => {
     console.error("Apple Sign-in is disabled in this self-contained preview.");
   };
-  
+
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = 'Sign up | Your Trip Planner';
@@ -83,23 +83,14 @@ export default function Signup({ setIsLoggedIn }) {
       <div className="relative z-10 flex flex-col lg:flex-row w-full max-w-4xl rounded-xl overflow-hidden shadow-2xl transition-colors duration-300">
         
         {/* Hero Section */}
-        <div className="hidden lg:flex w-full lg:w-1/2 p-8 text-white flex-col items-center justify-center bg-gray-900 dark:bg-gray-700 bg-opacity-70 dark:bg-opacity-70 rounded-l-xl">
-          <h1 className="text-4xl font-bold mb-4 text-center">
-            Plan Your Next Adventure
-          </h1>
-          <p className="text-lg text-center mb-8">
-            Discover amazing places and create unforgettable memories.
-          </p>
-          <button
-            onClick={() => navigate("/login")}
-            className="px-6 py-3 bg-yellow-500 text-gray-900 font-bold rounded-full shadow-lg hover:bg-yellow-600 transition-colors duration-300"
-          >
-            Start Planning →
-          </button>
+        <div className="hidden lg:flex w-1/2 p-8 text-white flex-col items-center justify-center bg-gray-900 rounded-l-xl">
+          <h1 className="text-4xl font-bold mb-4 text-center">Plan Your Next Adventure</h1>
+          <p className="text-lg text-center mb-8">Discover amazing places and create unforgettable memories.</p>
+          <button onClick={() => navigate("/login")} className="px-6 py-3 bg-yellow-500 text-gray-900 font-bold rounded-full shadow-lg hover:bg-yellow-600">Start Planning →</button>
         </div>
 
         {/* Form Section */}
-        <div className="w-full lg:w-1/2 p-8 bg-white dark:bg-gray-800 rounded-xl lg:rounded-r-xl lg:rounded-l-none shadow-lg transition-colors duration-300 backdrop-filter backdrop-blur-lg bg-opacity-40 dark:bg-opacity-40">
+        <div className="w-full lg:w-1/2 p-8 bg-white dark:bg-gray-800 rounded-xl lg:rounded-r-xl shadow-lg">
           <form className="space-y-6" onSubmit={handleSignup}>
             <h2 className="text-3xl font-bold text-center text-gray-800 dark:text-white">Sign Up</h2>
 
@@ -163,9 +154,9 @@ export default function Signup({ setIsLoggedIn }) {
             </button>
 
             <div className="flex items-center my-4">
-              <hr className="flex-grow border-gray-300 dark:border-gray-600" />
-              <span className="px-4 text-gray-500 dark:text-gray-400">OR</span>
-              <hr className="flex-grow border-gray-300 dark:border-gray-600" />
+              <hr className="flex-grow border-gray-300" />
+              <span className="px-4 text-gray-500">OR</span>
+              <hr className="flex-grow border-gray-300" />
             </div>
 
             <button
@@ -199,11 +190,8 @@ export default function Signup({ setIsLoggedIn }) {
               <span>Continue with Apple (Disabled)</span>
             </button>
 
-            <p className="text-center text-sm text-gray-700 dark:text-gray-300">
-              Already have an Account?{" "}
-              <Link to="/login" className="text-blue-600 hover:underline">
-                Login
-              </Link>
+            <p className="text-center text-sm mt-4">
+              Already have an account? <Link to="/login" className="text-blue-600">Login</Link>
             </p>
           </form>
         </div>
@@ -212,3 +200,8 @@ export default function Signup({ setIsLoggedIn }) {
     </div>
   );
 }
+
+
+
+
+

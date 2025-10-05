@@ -4,52 +4,52 @@ import { useNavigate } from "react-router-dom";
 // NOTE: Removed non-resolvable imports (SplitText, FadeContent)
 
 const testimonials = [
-  {
-    name: "Ananya",
-    role: "Traveler",
-    feedback:
-      "Trip Planner made my vacation so much easier! I could plan everything in one place.",
-  },
-  {
-    name: "Rahul",
-    role: "Adventure Enthusiast",
-    feedback:
-      "I loved how smooth the planning process was. Highly recommend this app!",
-  },
-  {
-    name: "Sophia",
-    role: "Backpacker",
-    feedback:
-      "Clean UI, easy to use, and perfect for organizing trips with friends!",
-  },
-  {
-    name: "David",
-    role: "Solo Explorer",
-    feedback:
-      "Managing my budget on the go was super easy. This app is a must-have!",
-  },
-  {
-    name: "Meera",
-    role: "Family Planner",
-    feedback:
-      "Helped me organize a family trip without any stress. Kids loved the experience!",
-  },
-  {
-    name: "Alex",
-    role: "Photographer",
-    feedback:
-      "AI recommendations took me to hidden gems I’d never have found otherwise.",
-  },
-  {
-    name: "Li Wei",
-    role: "Student Traveler",
-    feedback:
-      "Affordable trip planning and amazing suggestions within my budget.",
-  },
+    {
+        name: "Ananya",
+        role: "Traveler",
+        feedback:
+            "Trip Planner made my vacation so much easier! I could plan everything in one place.",
+    },
+    {
+        name: "Rahul",
+        role: "Adventure Enthusiast",
+        feedback:
+            "I loved how smooth the planning process was. Highly recommend this app!",
+    },
+    {
+        name: "Sophia",
+        role: "Backpacker",
+        feedback:
+            "Clean UI, easy to use, and perfect for organizing trips with friends!",
+    },
+    {
+        name: "David",
+        role: "Solo Explorer",
+        feedback:
+            "Managing my budget on the go was super easy. This app is a must-have!",
+    },
+    {
+        name: "Meera",
+        role: "Family Planner",
+        feedback:
+            "Helped me organize a family trip without any stress. Kids loved the experience!",
+    },
+    {
+        name: "Alex",
+        role: "Photographer",
+        feedback:
+            "AI recommendations took me to hidden gems I’d never have found otherwise.",
+    },
+    {
+        name: "Li Wei",
+        role: "Student Traveler",
+        feedback:
+            "Affordable trip planning and amazing suggestions within my budget.",
+    },
 ];
 
 const Home = () => {
-  const navigate = useNavigate();
+    const navigate = useNavigate();
 
   // Sets the dynamic page title on mount (This is the feature you were adding!)
   useEffect(() => {
