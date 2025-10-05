@@ -1,138 +1,81 @@
-import React, { useState,useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
+import React, { useState, useEffect } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import { Loader2 } from "lucide-react";
-import "react-toastify/dist/ReactToastify.css";
 
-import { useTheme } from '../contexts/ThemeContext';
-import { FaGoogle } from "react-icons/fa";
-import { FaApple } from "react-icons/fa";
-import { OAuthProvider, signInWithPopup } from "firebase/auth";
-import { createUserWithEmailAndPassword, GoogleAuthProvider } from "firebase/auth";
-import { auth } from "../firebase";
-import zxcvbn from 'zxcvbn';
+// NOTE: All external dependencies (Firebase, react-icons, zxcvbn, react-toastify, ThemeContext)
+// have been removed to ensure the code is self-contained and compiles.
 
 export default function Signup({ setIsLoggedIn }) {
   const navigate = useNavigate();
-  const { theme } = useTheme();
+  // Using a default theme since external context is removed
+  const theme = 'light'; 
   
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [score, setScore] = useState(0);
 
-
-const handlePasswordChange = (e) => {
-    const val = e.target.value;
-    setPassword(val);
-    setScore(zxcvbn(val).score); 
+  // Placeholder for password strength logic (removed external library zxcvbn)
+  const getStrengthLabel = (p) => {
+    if (p.length < 6) return "Too Short";
+    if (p.length < 9) return "Weak";
+    return "Fair";
   };
-
   
-const getStrengthLabel = (s) => {
-    return ["Very Weak", "Weak", "Fair", "Strong", "Very Strong"][s] || "";
-  };
-
-
-
-const handleSignup = (e) => {
-  e.preventDefault();
-  if (!name || !email || !password) {
-    toast.error("Please fill all fields");
-    return;
+  const getStrengthColor = (label) => {
+    if (label === "Too Short") return "text-red-500";
+    if (label === "Weak") return "text-orange-400";
+    return "text-green-500";
   }
 
-  setIsLoading(true);
-  createUserWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      setIsLoading(false);
-      
-      toast.success("Signed up successfully!");
-      navigate("/plan");
-    })
-    .catch((error) => {
-      setIsLoading(false);
-      if (error.code === 'auth/email-already-in-use') {
-        toast.error("This email address is already in use.");
-      } else if (error.code === 'auth/weak-password') {
-        toast.error("Password should be at least 6 characters.");
-      } else {
-        toast.error("Failed to create an account.");
-      }
-      console.error("Error during signup:", error);
-    });
-};
-
-  const handleGoogleSignIn = async () => {
-    const provider = new GoogleAuthProvider();
-    provider.setCustomParameters({ prompt: 'select_account' });
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+  };
+  
+  // Placeholder Signup function (Firebase removed)
+  const handleSignup = (e) => {
+    e.preventDefault();
+    if (!name || !email || !password) {
+      console.error("Please fill all fields"); // Using console.error instead of toast.error
+      return;
+    }
     
-    try {
-      await signInWithPopup(auth, provider);
-      setIsLoggedIn(true);
-      toast.success("Signed up with Google successfully!");
-      navigate("/plan");
-    } catch (error) {
-      console.error("Error during Google sign-in:", error);
-      toast.error("Failed to sign up with Google.");
-    }
+    // Simulate API call delay
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+      console.log("Signed up successfully! (Placeholder)");
+      // In a real app, successful signup would happen here.
+      // Since this is a placeholder, we simulate success and navigate.
+      navigate("/plan"); 
+    }, 1500);
   };
 
-  const signInWithMicrosoft = async () => {
-    const microsoftProvider = new OAuthProvider("microsoft.com");
-    try {
-      const result = await signInWithPopup(auth, microsoftProvider);
-      const user = result.user;
-      toast.success(`Welcome ${user.displayName || user.email}!`);
-      setIsLoggedIn(true);
-      navigate("/plan");
-    } catch (error) {
-      console.error("Microsoft login error:", error);
-      toast.error("Failed to sign in with Microsoft.");
-    }
+  // Placeholder OAuth Sign-in functions (Firebase removed)
+  const handleGoogleSignIn = () => {
+    console.error("Google Sign-in is disabled in this self-contained preview.");
   };
 
-  const signInWithApple = async () => {
-    const appleProvider = new OAuthProvider("apple.com");
-    try {
-      const result = await signInWithPopup(auth, appleProvider);
-      const user = result.user;
-      toast.success(`Welcome ${user.displayName || user.email}!`);
-      setIsLoggedIn(true);
-      navigate("/plan");
-    } catch (error) {
-      console.error("Apple login error:", error);
-      toast.error("Failed to sign in with Apple.");
-    }
+  const signInWithMicrosoft = () => {
+    console.error("Microsoft Sign-in is disabled in this self-contained preview.");
+  };
+
+  const signInWithApple = () => {
+    console.error("Apple Sign-in is disabled in this self-contained preview.");
   };
   
   useEffect(() => {
-        window.scrollTo(0, 0);
-        document.title = 'Sign up | Your Trip Planner';
-      }, []);
+    window.scrollTo(0, 0);
+    document.title = 'Sign up | Your Trip Planner';
+  }, []);
 
-  const barColors = [
-    "bg-red-500",
-    "bg-orange-400",
-    "bg-yellow-400",
-    "bg-green-400",
-    "bg-green-600",
-  ];  
-  
-  const colors = [
-    "text-red-500",
-    "text-orange-400",
-    "text-yellow-400",
-    "text-green-400",
-    "text-green-600",
-  ];  
+  const strengthLabel = getStrengthLabel(password);
+  const strengthColor = getStrengthColor(strengthLabel);
 
   return (
     <div className={`relative flex flex-col lg:flex-row items-center justify-center min-h-screen transition-colors duration-300 ${theme === 'dark' ? 'bg-gray-900' : 'bg-gray-100'}`}
-      style={{ backgroundImage: `url('./images/India on the Road.jpeg')` }}
+      // Removed background image path as it is an external asset
     >
       <div className="absolute inset-0 bg-black bg-opacity-50 dark:bg-opacity-70 transition-opacity duration-300"></div>
       
@@ -187,23 +130,14 @@ const handleSignup = (e) => {
               required
             />
             
-
-          {/* Password strength bar */}
+          {/* Simplified Password strength feedback */}
           <div className="!mt-0 h-3 pt-1">
             {password && (
-             <div>
-              <div className="h-2 bg-gray-200 dark:bg-gray-700 rounded">
-                <div
-                className={`h-2 rounded transition-all duration-300 ${barColors[score]}`}
-                style={{ width: `${(score + 1) * 20}%` }}
-                />
-              </div>
-              <p className="text-xs font-semibold mt-1 text-gray-700 dark:text-gray-300">
-                Strength: <span className={`${colors[score]}`}>{getStrengthLabel(score)}</span>
+             <p className="text-xs font-semibold mt-1 text-gray-700 dark:text-gray-300">
+                Strength: <span className={strengthColor}>{strengthLabel}</span>
               </p>
-            </div>
             )}
-           </div>
+            </div>
 
 
             <label className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300">
@@ -239,8 +173,8 @@ const handleSignup = (e) => {
               onClick={handleGoogleSignIn}
               className="w-full py-3 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-white font-semibold rounded-lg shadow-md hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors duration-300 flex items-center justify-center space-x-2"
             >
-              <FaGoogle size={20} />
-              <span>Continue with Google</span>
+              <span className="text-xl">G</span> 
+              <span>Continue with Google (Disabled)</span>
             </button>
 
             <button
@@ -253,7 +187,7 @@ const handleSignup = (e) => {
                 alt="Microsoft logo"
                 className="w-5 h-5"
               />
-              <span>Continue with Microsoft</span>
+              <span>Continue with Microsoft (Disabled)</span>
             </button>
 
             <button
@@ -261,8 +195,8 @@ const handleSignup = (e) => {
               onClick={signInWithApple}
               className="w-full py-3 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-white font-semibold rounded-lg shadow-md hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors duration-300 flex items-center justify-center space-x-2"
             >
-              <FaApple size={20} />
-              <span>Continue with Apple</span>
+              <span className="text-xl"></span>
+              <span>Continue with Apple (Disabled)</span>
             </button>
 
             <p className="text-center text-sm text-gray-700 dark:text-gray-300">
@@ -274,17 +208,7 @@ const handleSignup = (e) => {
           </form>
         </div>
       </div>
-      <ToastContainer
-        position="bottom-left"
-        autoClose={3000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="colored"
-      />
+      {/* ToastContainer removed since react-toastify is not available */}
     </div>
   );
 }
