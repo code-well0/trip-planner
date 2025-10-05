@@ -11,8 +11,6 @@ import ChatBot from "./pages/Chatbot";
 import Login from "./pages/login";
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import TripRecommender from "./pages/TripRecommender";
 import TermsOfService from "./pages/terms";
 import ActivityPlanner from "./pages/ActivityPlanner";
@@ -37,11 +35,15 @@ import Features from "./Components/feature";
 
 // ✅ Import CurrencyConverter Component
 import CurrencyConverter from "./Components/CurrencyConverter";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
     // A simple Home component for demonstration
 
 import WeatherWidget from "./Components/WeatherWidget";
 
+import PackingChecklist from "./pages/PackingChecklist";
 function App() {
   const { theme } = useTheme();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -178,11 +180,17 @@ function App() {
               element={isLoggedIn ? <Interested /> : <Navigate to="/login" />}
             />
 
-            {/* ✅ Currency Converter */}
+            {/*  Currency Converter */}
             <Route
               path="/currency-converter"
               element={
                 isLoggedIn ? <CurrencyConverter /> : <Navigate to="/login" />
+              }
+            />
+             <Route
+              path="/packing-list"
+              element={
+                isLoggedIn ? <PackingChecklist /> : <Navigate to="/login" />
               }
             />
 

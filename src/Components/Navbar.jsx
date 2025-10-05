@@ -1,13 +1,11 @@
-import  { useState, useRef, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useState, useRef, useEffect } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom"; 
 
 import {
   FaMapMarkedAlt,
   FaMoon,
   FaSun,
   FaUser,
-  FaBars,
-  FaTimes,
   FaChevronDown,
 } from "react-icons/fa";
 
@@ -15,6 +13,7 @@ import { useTheme } from "../contexts/ThemeContext";
 
 const Navbar = ({ isLoggedIn }) => {
   const navigate = useNavigate();
+  const location = useLocation(); 
   const { theme, toggleTheme } = useTheme();
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null);
@@ -30,8 +29,17 @@ const Navbar = ({ isLoggedIn }) => {
   // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
+      // Logic to close the desktop dropdown
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setActiveDropdown(null);
+      }
+      
+      // Logic to close the mobile menu if clicking outside the menu panel
+      const isMobileMenuClick = event.target.closest('.mobile-menu-content');
+      const isHamburgerClick = event.target.closest('.hamburger-button');
+
+      if (menuOpen && !isMobileMenuClick && !isHamburgerClick) {
+          setMenuOpen(false);
       }
     };
 
@@ -39,9 +47,9 @@ const Navbar = ({ isLoggedIn }) => {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, []);
+  }, [menuOpen]); 
 
-  // Standalone menu items (Plan Trip comes before AI Assistant now)
+  // Standalone menu items 
   const standaloneItems = [
     { to: "/plan", text: "Plan Trip" },
     { to: "/api/chat", text: "AI Assistant" },
@@ -58,6 +66,7 @@ const Navbar = ({ isLoggedIn }) => {
         { to: "/activity-planner", text: "Activity Planner" },
         { to: "/currency-converter", text: "Currency Converter" },
         { to: "/weather", text: "Weather" },
+        {to: "/packing-list", text: "Pack Master"},
       ]
     },
     {
@@ -115,16 +124,26 @@ const Navbar = ({ isLoggedIn }) => {
 
   const mobileMenuClasses =
     theme === "dark"
-      ? "bg-gray-800 shadow-xl border-t border-gray-600"
-      : "bg-white shadow-xl border-t border-gray-200";
+      ? "bg-gray-900 shadow-2xl border-l border-gray-700"
+      : "bg-white shadow-2xl border-l border-gray-200";
 
   const mobileMenuItemClasses =
     theme === "dark"
-      ? "text-gray-300 hover:bg-gray-700 hover:text-blue-400"
-      : "text-gray-700 hover:bg-blue-50 hover:text-blue-600";
+      ? "text-gray-200 hover:bg-gray-700 hover:text-blue-400"
+      : "text-gray-800 hover:bg-blue-50 hover:text-blue-600";
+    
+  const mobileActiveItemClasses = "bg-blue-600 text-white hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-700";
 
   const dividerClasses =
     theme === "dark" ? "border-gray-600" : "border-gray-200";
+    
+  // Function to determine if a link is active for mobile menu
+  const getMobileLinkClasses = (to) => {
+    const isActive = location.pathname === to;
+    return isActive 
+        ? mobileActiveItemClasses 
+        : mobileMenuItemClasses;
+  };
 
   return (
     <>
@@ -166,7 +185,8 @@ const Navbar = ({ isLoggedIn }) => {
                     <Link
                       key={item.to}
                       to={item.to}
-                      className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${dropdownButtonClasses}`}
+                      // ACTIVE STYLING FOR DESKTOP
+                      className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${dropdownButtonClasses} ${location.pathname === item.to ? 'text-blue-600 bg-blue-100 dark:bg-gray-700 dark:text-blue-400' : ''}`} 
                     >
                       {item.text}
                     </Link>
@@ -199,7 +219,8 @@ const Navbar = ({ isLoggedIn }) => {
                                 key={item.to}
                                 to={item.to}
                                 onClick={() => setActiveDropdown(null)}
-                                className={`block px-4 py-2 text-sm transition-colors duration-200 ${dropdownItemClasses}`}
+                                // ACTIVE STYLING FOR DROPDOWN ITEMS
+                                className={`block px-4 py-2 text-sm transition-colors duration-200 ${dropdownItemClasses} ${location.pathname === item.to ? 'bg-blue-50 dark:bg-gray-700 font-semibold' : ''}`} 
                               >
                                 {item.text}
                               </Link>
@@ -277,25 +298,33 @@ const Navbar = ({ isLoggedIn }) => {
               )}
             </div>
 
-            {/* Mobile Hamburger */}
+            {/* Mobile Hamburger Button - ENHANCED & FIXED FOR VISIBILITY */}
             <div className="md:hidden">
               <button
-                className={`p-2 rounded-lg transition-all duration-200 ${hamburgerClasses} focus:outline-none focus:ring-2 focus:ring-blue-500`}
+                className={`hamburger-button w-10 h-10 flex flex-col justify-center items-center rounded-full transition-all duration-200 ${hamburgerClasses} focus:outline-none focus:ring-2 focus:ring-blue-500 relative z-50`} 
                 onClick={(e) => {
                   e.preventDefault();
                   e.stopPropagation();
                   setMenuOpen(!menuOpen);
                 }}
-                aria-label="Toggle menu"
+                aria-label={menuOpen ? "Close menu" : "Open menu"}
                 type="button"
               >
-                <div className="w-6 h-6 flex items-center justify-center">
-                  {menuOpen ? (
-                    <FaTimes className="w-5 h-5" />
-                  ) : (
-                    <FaBars className="w-5 h-5" />
-                  )}
-                </div>
+                {/* 1. TOP BAR: Fixed visibility with explicit colors */}
+                <span 
+                  className={`block h-0.5 w-6 bg-gray-800 dark:bg-gray-100 transform transition duration-300 ease-in-out 
+                    ${menuOpen ? 'rotate-45 translate-y-2.5' : '-translate-y-1.5'}`} 
+                />
+                {/* 2. MIDDLE BAR: Fixed visibility with explicit colors */}
+                <span 
+                  className={`block h-0.5 w-6 bg-gray-800 dark:bg-gray-100 transform transition duration-300 ease-in-out my-0.5 
+                    ${menuOpen ? 'opacity-0' : ''}`}
+                />
+                {/* 3. BOTTOM BAR: Fixed visibility with explicit colors */}
+                <span 
+                  className={`block h-0.5 w-6 bg-gray-800 dark:bg-gray-100 transform transition duration-300 ease-in-out 
+                    ${menuOpen ? '-rotate-45 -translate-y-2.5' : 'translate-y-1.5'}`} 
+                />
               </button>
             </div>
           </div>
@@ -309,14 +338,24 @@ const Navbar = ({ isLoggedIn }) => {
           />
         )}
 
-        {/* Mobile Menu */}
+        {/* Mobile Menu Container - ENHANCED FOR SLIDE FROM RIGHT */}
         <div
-          className={`md:hidden fixed top-16 left-0 right-0 z-50 transition-all duration-300 ${mobileMenuClasses} ${
-            menuOpen
-              ? "transform translate-y-0 opacity-100 visible"
-              : "transform -translate-y-full opacity-0 invisible"
-          }`}
+          className={`mobile-menu-content md:hidden fixed top-0 right-0 h-full w-80 max-w-[80vw] z-50 transform transition-transform duration-300 ease-in-out ${mobileMenuClasses} 
+            ${menuOpen ? "translate-x-0" : "translate-x-full"}`} 
         >
+          {/* Menu Header with Close Button */}
+          <div className={`flex justify-between items-center h-16 px-4 py-6 border-b ${dividerClasses}`}>
+            <h2 className={`text-xl font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>Menu</h2>
+            <button
+              className={`p-2 rounded-full transition-all duration-200 ${hamburgerClasses} focus:outline-none focus:ring-2 focus:ring-blue-500`}
+              onClick={() => setMenuOpen(false)}
+              aria-label="Close menu"
+            >
+              {/* SVG for the X icon */}
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+          </div>
+          
           <div className="px-4 py-6 space-y-3 max-h-[calc(100vh-4rem)] overflow-y-auto">
             {isLoggedIn ? (
               <>
@@ -327,7 +366,8 @@ const Navbar = ({ isLoggedIn }) => {
                       key={item.to}
                       to={item.to}
                       onClick={() => setMenuOpen(false)}
-                      className={`block px-4 py-3 rounded-xl font-medium transition-all duration-200 ${mobileMenuItemClasses}`}
+                      // Added py-3 padding for better spacing
+                      className={`block px-4 py-3 rounded-xl font-medium transition-all duration-200 ${getMobileLinkClasses(item.to)}`} 
                     >
                       {item.text}
                     </Link>
@@ -349,7 +389,8 @@ const Navbar = ({ isLoggedIn }) => {
                         key={item.to}
                         to={item.to}
                         onClick={() => setMenuOpen(false)}
-                        className={`block px-4 py-3 rounded-xl font-medium transition-all duration-200 ${mobileMenuItemClasses}`}
+                        // Added py-3 padding for better spacing
+                        className={`block px-4 py-3 rounded-xl font-medium transition-all duration-200 ${getMobileLinkClasses(item.to)}`} 
                       >
                         {item.text}
                       </Link>
@@ -358,7 +399,8 @@ const Navbar = ({ isLoggedIn }) => {
                 ))}
 
                 <div className={`border-t my-4 ${dividerClasses}`} />
-
+                
+                {/* Theme Toggle Button (Improved with icon and text) */}
                 <button
                   onClick={() => {
                     toggleTheme();
@@ -374,6 +416,7 @@ const Navbar = ({ isLoggedIn }) => {
                   <span>Toggle Theme</span>
                 </button>
 
+                {/* Profile Button */}
                 <Link
                   to="/profile"
                   onClick={() => setMenuOpen(false)}
@@ -391,34 +434,34 @@ const Navbar = ({ isLoggedIn }) => {
                 </button>
               </>
             ) : (
+              // Not logged in mobile menu items (Updated with active logic)
               <>
-                {/* Not logged in mobile menu */}
                 <div className="space-y-2">
                   <Link
                     to="/home"
                     onClick={() => setMenuOpen(false)}
-                    className={`block px-4 py-3 rounded-xl font-medium transition-all duration-200 ${mobileMenuItemClasses}`}
+                    className={`block px-4 py-3 rounded-xl font-medium transition-all duration-200 ${getMobileLinkClasses('/home')}`}
                   >
                     Home
                   </Link>
                   <Link
                     to="#"
                     onClick={() => setMenuOpen(false)}
-                    className={`block px-4 py-3 rounded-xl font-medium transition-all duration-200 ${mobileMenuItemClasses}`}
+                    className={`block px-4 py-3 rounded-xl font-medium transition-all duration-200 ${getMobileLinkClasses('#')}`}
                   >
                     Features
                   </Link>
                   <Link
                     to="/about"
                     onClick={() => setMenuOpen(false)}
-                    className={`block px-4 py-3 rounded-xl font-medium transition-all duration-200 ${mobileMenuItemClasses}`}
+                    className={`block px-4 py-3 rounded-xl font-medium transition-all duration-200 ${getMobileLinkClasses('/about')}`}
                   >
                     About
                   </Link>
                   <Link
                     to="/contact"
                     onClick={() => setMenuOpen(false)}
-                    className={`block px-4 py-3 rounded-xl font-medium transition-all duration-200 ${mobileMenuItemClasses}`}
+                    className={`block px-4 py-3 rounded-xl font-medium transition-all duration-200 ${getMobileLinkClasses('/contact')}`}
                   >
                     Contact
                   </Link>
@@ -455,18 +498,14 @@ const Navbar = ({ isLoggedIn }) => {
       </nav>
 
       <style jsx>{`
-        @keyframes slideInRight {
-          from {
-            opacity: 0;
-            transform: translateX(-20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateX(0);
-          }
+        /* This style block ensures the animated bars are visible in both themes */
+        /* NOTE: We now use explicit Tailwind classes (bg-gray-800 dark:bg-gray-100) on the spans,
+           so this custom CSS is no longer strictly needed for visibility, but kept for context. */
+        .bg-current {
+          background-color: ${theme === 'dark' ? '#D1D5DB' : '#374151'}; 
         }
-
-        /* Custom scrollbar for mobile menu */
+        
+        /* Custom scrollbar styles (from your previous code) */
         .overflow-y-auto::-webkit-scrollbar {
           width: 4px;
         }
