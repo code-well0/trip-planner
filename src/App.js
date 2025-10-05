@@ -12,7 +12,7 @@ import Login from "./pages/login";
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
 import TripRecommender from "./pages/TripRecommender";
-import CustomItenary from "./pages/CustomItenary";
+import CustomItenary from "./pages/AIPoweredCustomItenary";
 import TermsOfService from "./pages/terms";
 import ActivityPlanner from "./pages/ActivityPlanner";
 import PlanTrip from "./pages/PlanTrip";
