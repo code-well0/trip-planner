@@ -55,6 +55,7 @@ const Navbar = ({ isLoggedIn }) => {
     { to: "/api/chat", text: "AI Assistant" },
     { to: "/expenses", text: "Expense Tracker" },
     { to: "/about", text: "About" },
+    { to: "/CustomItenary", text: "Custom Itinerary" },
   ];
 
   // Organized menu structure with dropdowns
@@ -67,6 +68,7 @@ const Navbar = ({ isLoggedIn }) => {
         { to: "/currency-converter", text: "Currency Converter" },
         { to: "/weather", text: "Weather" },
         {to: "/packing-list", text: "Pack Master"},
+        
       ]
     },
     {
