@@ -75,7 +75,9 @@ const Navbar = ({ isLoggedIn }) => {
       items: [
         { to: "/TripRecommender", text: "Trip Recommender" },
         { to: "/blogs", text: "Travel Blogs" },
+        {to: "/travel-guide",text: "Guide"},
         { to: "/interested", text: "Wishlist" },
+        
       ]
     },
     {

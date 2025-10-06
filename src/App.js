@@ -42,6 +42,7 @@ import 'react-toastify/dist/ReactToastify.css';
     // A simple Home component for demonstration
 import WeatherWidget from "./Components/WeatherWidget";
 import PackingChecklist from "./pages/PackingChecklist";
+import Travelguide from "./pages/Travelguide";
 function App() {
   const { theme } = useTheme();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -189,6 +190,12 @@ function App() {
               path="/packing-list"
               element={
                 isLoggedIn ? <PackingChecklist /> : <Navigate to="/login" />
+              }
+            />
+            <Route
+              path="/travel-guide"
+              element={
+                isLoggedIn ? <Travelguide /> : <Navigate to="/login" />
               }
             />
 
