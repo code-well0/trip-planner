@@ -1,5 +1,7 @@
 import axios from 'axios';
 import { GoogleGenerativeAI } from '@google/generative-ai';
+import dotenv from 'dotenv';
+dotenv.config();
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 const UNSPLASH_KEY = process.env.UNSPLASH_KEY;
 const genAI = new GoogleGenerativeAI(GEMINI_API_KEY || "demo-key");
