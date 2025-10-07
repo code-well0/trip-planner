@@ -5,6 +5,7 @@ const path = require("path");
 const cors = require("cors");
 const { createServer } = require("http");
 const { Server } = require("socket.io");
+const mongodb=require('./Database/db')
 const APIService = require("./services/APIService");
 
 const app = express();
@@ -15,6 +16,11 @@ const io = new Server(server, {
     methods: ["GET", "POST"]
   }
 });
+
+(async () => {
+  await mongodb.default();
+})();
+
 
 const PORT = process.env.PORT || 5000;
 app.use(cors());
