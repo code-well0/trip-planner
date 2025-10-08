@@ -76,7 +76,7 @@ const Home = () => {
                     Plan your next adventure, track expenses, and get AI-powered
                     recommendations. All in one place.
                 </p>
-                <div className="mt-8 space-x-4">
+                {/* <div className="mt-8 space-x-4">
                     <button
                         onClick={() => navigate("/login")}
                         className="px-6 py-3 bg-white text-blue-600 font-semibold rounded-lg shadow hover:bg-gray-200"
@@ -89,7 +89,7 @@ const Home = () => {
                     >
                         Signup
                     </button>
-                </div>
+                </div> */}
                 {/* Animated Plane Icon */}
             </section>
 
