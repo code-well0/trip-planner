@@ -9,7 +9,10 @@ import { createServer } from "http";
 import { Server } from "socket.io";
 import { getAIRecommendations } from './services/APIService.js';
 import mongoose from 'mongoose';
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "YOUR_API_KEY_HERE");
+const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 // ES module equivalent of __dirname
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
