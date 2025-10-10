@@ -40,6 +40,7 @@ const Footer = ({ isLoggedIn }) => {
                             <li><Link to="/api/chat" onClick={(e) => handleProtectedClick(e, '/api/chat')} className="hover:text-blue-500 transition-colors duration-200">AI Assistant</Link></li>
                             <li><Link to="/expenses" onClick={(e) => handleProtectedClick(e, '/expenses')} className="hover:text-blue-500 transition-colors duration-200">Expense Tracker</Link></li>
                             <li><Link to="/TripRecommender" onClick={(e) => handleProtectedClick(e, '/TripRecommender')} className="hover:text-blue-500 transition-colors duration-200">Trip Recommender</Link></li>
+                            <li><Link to="/CustomItenary" onClick={(e) => handleProtectedClick(e, '/TripRecommender')} className="hover:text-blue-500 transition-colors duration-200">AI Powered Custom Itinerary</Link></li>
                             <li><Link to="/about" className="hover:text-blue-500 transition-colors duration-200">About Us</Link></li>
                         </ul>
                     </div>

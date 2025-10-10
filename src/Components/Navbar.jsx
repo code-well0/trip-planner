@@ -54,7 +54,7 @@ const Navbar = ({ isLoggedIn }) => {
     { to: "/plan", text: "Plan Trip" },
     { to: "/api/chat", text: "AI Assistant" },
     { to: "/expenses", text: "Expense Tracker" },
-    { to: "/about", text: "About" },
+    { to: "/about", text: "About" }
   ];
 
   // Organized menu structure with dropdowns
@@ -67,6 +67,7 @@ const Navbar = ({ isLoggedIn }) => {
         { to: "/currency-converter", text: "Currency Converter" },
         { to: "/weather", text: "Weather" },
         {to: "/packing-list", text: "Pack Master"},
+        { to: "/CustomItenary", text: "Custom Itinerary" },
       ]
     },
     {
@@ -234,7 +235,8 @@ const Navbar = ({ isLoggedIn }) => {
                   {/* Theme Toggle Button */}
                   <button
                     onClick={toggleTheme}
-                    className={`p-2 rounded-lg transition-all duration-200 ${hamburgerClasses}`}
+                    id="hidden-toggle"
+                    className={` p-2 rounded-lg transition-all duration-200 ${hamburgerClasses}`}
                     aria-label="Toggle theme"
                   >
                     {theme === "dark" ? <FaSun className="text-lg" /> : <FaMoon className="text-lg" />}
