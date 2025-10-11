@@ -131,3 +131,50 @@ html.dark {
 .animate-fadeIn {
   animation: fadeIn 0.5s ease-in-out;
 }
+@keyframes animate-pulseBg{
+  0%{
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0px #7E2254;
+  }
+  70%{
+    transform: scale(1);
+    box-shadow: 0 0 0 15px rgba(222,84 , 72, 0);
+  }100%{
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0px rgba(222,84 , 72, 0);
+  }
+}
+.animate-pulseBg{
+  animation: animate-pulseBg 2s infinite;
+}
+.animate-bg{ 
+  position: fixed;
+  z-index: -10; 
+  top: -2rem;
+  width: 100vw;
+  min-height: 100vh;
+  opacity: 0.6;
+  background: radial-gradient(circle at 50% 80% , #f36cb6 , #f7f6f8 , transparent 80%);
+  background-size: 100% 100%; 
+} 
+.animate-bg-dark{
+  background: radial-gradient(circle at 50% 80% , #7E2254 , #08060e , transparent 80%);
+} 
+.animate-fadeInUp {
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.text-gradient {
+  @apply bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 bg-clip-text text-transparent;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}

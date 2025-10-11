@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef} from "react";
+import { useInView } from "react-intersection-observer";
 import data from "../data";
 import Tours from "../Components/Tours";
 // import Refresh from "../Components/Refresh";
@@ -43,6 +44,8 @@ export default function PlanTrip({ searchQuery = "" }) {
   const [planTitle, setPlanTitle] = useState("");
   const [locks, setLocks] = useState({});
   const [presence, setPresence] = useState({});
+  const text = "Plan Your Dream Gateway";
+  const { ref, inView } = useInView({ triggerOnce: false });
 
   const regions = [
     "All",
@@ -362,19 +365,34 @@ export default function PlanTrip({ searchQuery = "" }) {
     if (unsubscribeRef.current.locksUnsub) unsubscribeRef.current.locksUnsub();
     if (unsubscribeRef.current.presenceUnsub) unsubscribeRef.current.presenceUnsub();
     unsubscribeRef.current = {};
-  };
+  }; 
 }, []);
   return (
     <div className="px-4 py-10 md:px-16 lg:px-24">
       {/* Title Section */}
       <div className="text-center mb-10">
-        <h2 className="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 text-transparent bg-clip-text flex items-center justify-center gap-3 animate-fadeIn">
-          <FaMapMarkedAlt className="text-5xl" /> Plan Your Dream Gateway
-        </h2>
-        <p className="text-gray-600 mt-3 text-lg">
+        <h2 ref={ref} className="text-4xl md:text-5xl font-extrabold text-gray-800 dark:text-pink-500 flex items-center justify-center gap-3 animate-fadeIn">
+           <span className="inline-block">
+                {[...text].map((char, i) => (
+                  <span
+                    key={`name-${i}`}
+                    className={`inline-block opacity-0 translate-y-full ${
+                      inView ? "animate-fadeInUp" : ""
+                    }`}
+                    style={{
+                      animationDelay: `${i * 0.1}s`,
+                      animationFillMode: "forwards",
+                    }}
+                  >
+                    {char === " " ? "\u00A0" : char}
+                  </span>
+                ))}
+              </span>
+        </h2> 
+        <p className="!text-gray-800 dark:!text-gray-50 mt-3 text-lg">
           Discover the best destinations tailored to your mood and purpose.
         </p>
-        <p className="mt-2 text-sm text-gray-500 italic">
+        <p className="mt-2 text-sm !text-gray-800 dark:!text-gray-50 italic">
           Adventure, culture, or calm — what are you exploring today?
         </p>
       </div>

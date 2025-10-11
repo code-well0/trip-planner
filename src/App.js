@@ -81,10 +81,13 @@ function App() {
   return (
     <InterestedProvider>
       <div
-        className={`bg-gray-100 dark:bg-gray-900 transition-colors duration-300 min-h-screen ${theme}`}
+        className={`relative z-10 bg-gray-100 dark:bg-gray-900 transition-colors duration-300 min-h-screen ${theme}`}
       >
         <SmoothCursor />
-
+        {/* animated background */}
+        <div className={` ${theme === 'dark' ? "animate-bg animate-bg-dark" : "animate-bg"}`}></div>
+        <div className="absolute -z-10 w-60 h-60 rounded-full inset-0 opacity-70 top-10 left-1/4 bg-gradient-to-r from-pink-700 to-pink-200 dark:from-gray-800 dark:to-pink-600 animate-pulseBg "></div>
+        <div className="absolute -z-10 w-40 h-40 rounded-full inset-0 opacity-70 top-52 left-3/4 bg-gradient-to-r from-pink-700 to-pink-200 dark:from-gray-800 dark:to-pink-600 animate-pulse animate-pulseBg"></div> 
         <Navbar
           isLoggedIn={isLoggedIn}
           searchQuery={searchQuery}
