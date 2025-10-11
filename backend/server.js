@@ -1,11 +1,22 @@
-require('dotenv').config();
-const express = require("express");
-const fs = require("fs");
-const path = require("path");
-const cors = require("cors");
-const { createServer } = require("http");
-const { Server } = require("socket.io");
-const APIService = require("./services/APIService");
+import dotenv from 'dotenv';
+dotenv.config();
+import express, { json } from "express";
+import { readFile, writeFile } from "fs";
+import { join, dirname } from "path";
+import { fileURLToPath } from "url";
+import cors from "cors";
+import { createServer } from "http";
+import { Server } from "socket.io";
+import { getAIRecommendations } from './services/APIService.js';
+import mongoose from 'mongoose';
+import { GoogleGenerativeAI } from "@google/generative-ai";
+
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "YOUR_API_KEY_HERE");
+const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+// ES module equivalent of __dirname
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
 
 const app = express();
 const server = createServer(app);
@@ -17,24 +28,90 @@ const io = new Server(server, {
 });
 
 const PORT = process.env.PORT || 5000;
+
+// Middleware
 app.use(cors());
-app.use(express.json());
+app.use(json());
 
-// Initialize API Service
-const apiService = new APIService();
+// Database connection
+const mongodb = async () => {
+  try {
+    await mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/trip-planner');
+    console.log('✅ MongoDB connected successfully');
+  } catch (error) {
+    console.error('❌ MongoDB connection error:', error);
+    process.exit(1);
+  }
+};
 
-const blogsFile = path.join(__dirname, "blogs.json");
+// Initialize database
+(async () => {
+  await mongodb();
+})();
+
+const blogsFile = join(__dirname, "blogs.json");
+
+app.get('/api/health', (req, res) => {
+  res.json({
+    status: 'OK',
+    message: 'Travel Assistant API is running',
+    model: 'gemini-2.5-flash',
+    timestamp: new Date().toISOString(),
+  });
+});
+
+// API Status endpoint
+app.get("/api/status", (req, res) => {
+  res.json({
+    status: "running",
+    apiProvider: process.env.API_PROVIDER || 'simulation',
+    timestamp: new Date().toISOString(),
+    environment: process.env.NODE_ENV || 'development',
+    database: mongoose.connection.readyState === 1 ? 'connected' : 'disconnected'
+  });
+});
+
+// Chat endpoint
+app.post('/api/chat', async (req, res) => {
+  const { message } = req.body;
+  try {
+    const travelPrompt = `You are an AI Travel Assistant for a trip planning application. Provide helpful, accurate, and engaging travel advice. User question: ${message}`;
+    const result = await model.generateContent(travelPrompt);
+    const reply = await result.response.text();
+
+    if (!reply || reply.trim().length === 0) throw new Error('Empty response from Gemini');
+
+    res.json({ reply: reply.trim() });
+  } catch (error) {
+    console.error('Gemini API Error:', error.message);
+    res.status(500).json({ error: 'AI service failed: ' + error.message });
+  }
+});
+
+// AI recommendations endpoint
+app.post('/api/ai', async (req, res) => {
+  try {
+    const { destination, interests, budget, travelers, duration } = req.body;
+    if (!destination || !interests) return res.status(400).json({ error: 'Destination and interests are required.' });
+
+    const recommendations = await getAIRecommendations({ destination, interests, budget, travelers, duration });
+    res.json({ recommendations });
+  } catch (err) {
+    console.error('AIService Error:', err.message);
+    res.status(500).json({ error: err.message });
+  }
+});
 
 // Blog endpoints
 app.get("/api/blogs", (req, res) => {
-  fs.readFile(blogsFile, "utf8", (err, data) => {
+  readFile(blogsFile, "utf8", (err, data) => {
     if (err) return res.status(500).json({ error: "Error reading blogs" });
     res.json(JSON.parse(data));
   });
 });
 
 app.get("/api/blogs/:id", (req, res) => {
-  fs.readFile(blogsFile, "utf8", (err, data) => {
+  readFile(blogsFile, "utf8", (err, data) => {
     if (err) return res.status(500).json({ error: "Error reading blogs" });
     const blogs = JSON.parse(data);
     const blog = blogs.find(b => b.id === parseInt(req.params.id));
@@ -44,7 +121,7 @@ app.get("/api/blogs/:id", (req, res) => {
 });
 
 app.post("/api/blogs", (req, res) => {
-  fs.readFile(blogsFile, "utf8", (err, data) => {
+  readFile(blogsFile, "utf8", (err, data) => {
     if (err) return res.status(500).json({ error: "Error reading blogs" });
 
     const blogs = JSON.parse(data);
@@ -53,12 +130,13 @@ app.post("/api/blogs", (req, res) => {
       title: req.body.title,
       content: req.body.content,
       author: req.body.author,
-      image: req.body.image || "https://via.placeholder.com/400x200?text=No+Image"
+      image: req.body.image || "https://via.placeholder.com/400x200?text=No+Image",
+      createdAt: new Date().toISOString()
     };
 
     blogs.push(newBlog);
 
-    fs.writeFile(blogsFile, JSON.stringify(blogs, null, 2), (err) => {
+    writeFile(blogsFile, JSON.stringify(blogs, null, 2), (err) => {
       if (err) return res.status(500).json({ error: "Error saving blog" });
       res.status(201).json(newBlog);
     });
@@ -66,7 +144,7 @@ app.post("/api/blogs", (req, res) => {
 });
 
 app.delete("/api/blogs/:id", (req, res) => {
-  fs.readFile(blogsFile, "utf8", (err, data) => {
+  readFile(blogsFile, "utf8", (err, data) => {
     if (err) return res.status(500).json({ error: "Error reading blogs" });
     let blogs = JSON.parse(data);
     const blogId = parseInt(req.params.id);
@@ -76,75 +154,13 @@ app.delete("/api/blogs/:id", (req, res) => {
       return res.status(404).json({ error: "Blog not found" });
     }
 
-    fs.writeFile(blogsFile, JSON.stringify(newBlogs, null, 2), (err) => {
+    writeFile(blogsFile, JSON.stringify(newBlogs, null, 2), (err) => {
       if (err) return res.status(500).json({ error: "Error saving blogs" });
       res.json({ message: "Blog deleted successfully" });
     });
   });
 });
 
-// AI-Powered Trip Recommendations Endpoint
-app.post("/api/recommendations", async (req, res) => {
-  try {
-    const { destination, startDate, endDate, interests, budget, travelers } = req.body;
-    // Validate required fields
-    if (!destination || !startDate || !endDate || !interests || interests.length === 0) {
-      return res.status(400).json({ 
-        error: "Missing required fields: destination, startDate, endDate, and interests are required" 
-      });
-    }
-
-    // Calculate trip duration
-    const start = new Date(startDate);
-    const end = new Date(endDate);
-    const duration = Math.ceil((end - start) / (1000 * 60 * 60 * 24));
-
-    if (duration <= 0) {
-      return res.status(400).json({ error: "End date must be after start date" });
-    }
-
-    // Use AI Service for recommendations
-    const recommendations = await apiService.getAIRecommendations({
-      destination,
-      duration,
-      interests,
-      budget,
-      travelers
-    });
-
-    res.json({ 
-      success: true,
-      recommendations: recommendations,
-      metadata: {
-        destination,
-        duration,
-        travelers,
-        searchTimestamp: new Date().toISOString()
-      }
-    });
-
-  } catch (error) {
-    console.error("Error generating recommendations:", error);
-    res.status(500).json({ 
-      success: false,
-      error: "Failed to generate recommendations",
-      details: error.message 
-    });
-  }
-});
-
-
-// API Status endpoint
-app.get("/api/status", (req, res) => {
-  res.json({
-    status: "running",
-    apiProvider: process.env.API_PROVIDER || 'simulation',
-    timestamp: new Date().toISOString(),
-    environment: process.env.NODE_ENV || 'development'
-  });
-});
-
-// Socket.io connection handling
 io.on('connection', (socket) => {
   console.log('🔌 Client connected:', socket.id);
   
@@ -161,4 +177,6 @@ io.on('connection', (socket) => {
 server.listen(PORT, () => {
   console.log(`✅ Server running on http://localhost:${PORT}`);
   console.log(`🔌 Socket.io enabled`);
+  console.log(`🤖 AI Model: gemini-2.5-flash`);
+  console.log(`🗄️  Database: ${mongoose.connection.readyState === 1 ? 'Connected' : 'Connecting...'}`);
 });
