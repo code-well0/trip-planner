@@ -60,7 +60,7 @@ const Home = () => {
             >
                 {/* <h1 className="text-5xl font-extrabold mb-4">YourTrip Planner 🌍</h1> */}
                 <SplitText
-                    text="YourTrip Planner 🌍"
+                    text="YourTripPlanner 🌍"
                     className="text-5xl font-extrabold text-center py-14"
                     delay={50}
                     duration={0.5}
@@ -201,27 +201,28 @@ const Home = () => {
                 </FadeContent>
 
                 {/* ✅ Testimonials */}
-                <section className="bg-gray-100 dark:bg-gray-800 py-12 rounded-xl shadow-inner">
+                <section className="bg-gray-100 dark:bg-gray-800 py-12 rounded-xl shadow-inner overflow-hidden">
                     <h2 className="text-3xl font-bold text-center text-gray-800 dark:text-white my-10">
-                        What Our Travelers Say
+                        What Our Travellers Say
                     </h2>
-                    <div className="flex overflow-x-auto gap-6 px-4">
-                        {testimonials.map((t, index) => (
+
+                    <div className="flex animate-scroll">
+                        <div className="flex gap-6 px-4">
+                        {[...testimonials, ...testimonials].map((t, index) => (
                             <div
-                                key={index}
-                                className="min-w-[300px] bg-white dark:bg-gray-900 p-6 rounded-lg shadow-lg my-8"
+                            key={index}
+                            className="min-w-[300px] bg-white dark:bg-gray-900 p-6 rounded-lg shadow-lg my-8"
                             >
-                                <p className="text-gray-600 dark:text-gray-300 italic mb-4">
-                                    "{t.feedback}"
-                                </p>
-                                <h3 className="text-lg font-semibold text-gray-800 dark:text-white">
-                                    {t.name}
-                                </h3>
-                                <p className="text-sm text-gray-500 dark:text-gray-400">
-                                    {t.role}
-                                </p>
+                            <p className="text-gray-600 dark:text-gray-300 italic mb-4">
+                                "{t.feedback}"
+                            </p>
+                            <h3 className="text-lg font-semibold text-gray-800 dark:text-white">
+                                {t.name}
+                            </h3>
+                            <p className="text-sm text-gray-500 dark:text-gray-400">{t.role}</p>
                             </div>
                         ))}
+                        </div>
                     </div>
                 </section>
             </div>
