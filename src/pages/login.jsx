@@ -118,9 +118,9 @@ export default function Login({ setIsLoggedIn }) {
       <div className="relative z-10 flex flex-col lg:flex-row w-full max-w-4xl rounded-xl overflow-hidden shadow-2xl transition-colors duration-300">
         {/* Hero Section */}
         <div className="hidden lg:flex w-full lg:w-1/2 p-8 text-white flex-col items-center justify-center bg-gray-900 dark:bg-gray-700 bg-opacity-70 dark:bg-opacity-70 rounded-l-xl">
-          <h1 className="text-4xl font-bold mb-4 text-center">
-            Plan Your Next Adventure
-          </h1>
+          <h1 className="text-4xl font-bold mb-4 text-center bg-gradient-to-r from-yellow-400 via-orange-500 to-pink-500 bg-clip-text text-transparent">
+  Plan Your Next Adventure
+</h1>
           <p className="text-lg text-center mb-8">
             Discover amazing places and create unforgettable memories.
           </p>
