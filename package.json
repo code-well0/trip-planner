@@ -13,7 +13,7 @@
     "cors": "^2.8.5",
     "dotenv": "^17.2.1",
     "express-session": "^1.18.2",
-    "firebase": "^9.23.0",
+    "firebase": "^12.3.0",
     "framer-motion": "^12.23.12",
     "gsap": "^3.13.0",
     "lucide-react": "^0.536.0",
@@ -26,7 +26,7 @@
     "react-icons": "^5.5.0",
     "react-markdown": "^10.1.0",
     "react-router-dom": "^6.30.1",
-    "react-scripts": "^5.0.1",
+    "react-scripts": "^0.0.0",
     "react-toastify": "^11.0.5",
     "recharts": "^2.15.4",
     "socket.io": "^4.7.5",
@@ -36,6 +36,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "dev": "npm start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
