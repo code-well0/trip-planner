@@ -65,6 +65,15 @@
 * Get personalized travel suggestions, routes, local insights
 * Fast, intelligent, real-time chat with typing indicators
 
+***AI Powered Custom Itinerary***
+
+* **Powered by Google Gemini 2.0 Flash**
+* Get personalized itinerary daywise 
+* Fast, intelligent, real-time chat with typing indicators
+* Export to PDF functionality enables you to download multiday itinerary created.
+
+
+
 ***Expense Tracking***
 
 * Keep tabs on your travel budget

@@ -16,6 +16,7 @@
     "firebase": "^9.23.0",
     "framer-motion": "^12.23.12",
     "gsap": "^3.13.0",
+    "jspdf": "^3.0.3",
     "lucide-react": "^0.536.0",
     "mongoose": "^8.17.1",
     "ogl": "^1.0.11",
