@@ -100,6 +100,7 @@ export default function Login({ setIsLoggedIn }) {
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    document.title = 'Login | Your Trip Planner';
   }, []);
 
   return (

@@ -4,6 +4,11 @@ import { Link } from "react-router-dom";
 function Blog() {
   const [blogs, setBlogs] = useState([]);
 
+  // Add this hook to set the page title
+  useEffect(() => {
+    document.title = 'Blog | Your Trip Planner';
+  }, []);
+
   useEffect(() => {
     fetch("http://localhost:5000/api/blogs") // backend will serve this
       .then((res) => res.json())
@@ -42,4 +47,3 @@ function Blog() {
 }
 
 export default Blog;
-

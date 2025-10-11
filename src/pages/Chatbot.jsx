@@ -60,6 +60,7 @@ function ChatBot() {
 
     useEffect(() => {
         window.scrollTo(0, 0);
+        document.title = 'AI Assistant | Your Trip Planner';
     }, []);
 
     return (
