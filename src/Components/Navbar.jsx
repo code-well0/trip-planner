@@ -67,6 +67,7 @@ const Navbar = ({ isLoggedIn }) => {
         { to: "/currency-converter", text: "Currency Converter" },
         { to: "/weather", text: "Weather" },
         {to: "/packing-list", text: "Pack Master"},
+        { to: "/CustomItinerary", text: "Custom Itinerary" },
       ]
     },
     {
