@@ -86,8 +86,8 @@ function App() {
         <SmoothCursor />
         {/* animated background */}
         <div className={` ${theme === 'dark' ? "animate-bg animate-bg-dark" : "animate-bg"}`}></div>
-        <div className="absolute -z-10 w-60 h-60 rounded-full inset-0 opacity-70 top-10 left-1/4 bg-gradient-to-r from-pink-700 to-pink-200 dark:from-gray-800 dark:to-pink-600 animate-pulseBg "></div>
-        <div className="absolute -z-10 w-40 h-40 rounded-full inset-0 opacity-70 top-52 left-3/4 bg-gradient-to-r from-pink-700 to-pink-200 dark:from-gray-800 dark:to-pink-600 animate-pulse animate-pulseBg"></div> 
+        <div className="absolute -z-10 w-60 h-60 rounded-full inset-0 opacity-40 top-10 left-1/4 bg-gradient-to-r from-pink-600 to-pink-200 dark:from-gray-600 dark:to-pink-600 animate-pulseBg "></div>
+        <div className="absolute -z-10 w-40 h-40 rounded-full inset-0 opacity-40 top-52 left-3/4 bg-gradient-to-r from-pink-600 to-pink-200 dark:from-gray-600 dark:to-pink-600 animate-pulse animate-pulseBg"></div> 
         <Navbar
           isLoggedIn={isLoggedIn}
           searchQuery={searchQuery}
