@@ -1,55 +1,254 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { signOut } from "firebase/auth";
-import { auth } from "../firebase"; 
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { signOut, updateProfile } from "firebase/auth";
+import { auth, db } from "../firebase";
 import { toast } from "react-toastify";
-import { FaUser, FaSignOutAlt, FaEdit, FaSave, FaTimes } from 'react-icons/fa';
+import { FaUser, FaSignOutAlt, FaEdit, FaSave, FaTimes } from "react-icons/fa";
+import "react-toastify/dist/ReactToastify.css";
+import { doc, onSnapshot, setDoc } from "firebase/firestore";
+
+const formatJoinDate = (timestamp) => {
+  if (!timestamp) return "";
+  const date = new Date(timestamp);
+  return date.toLocaleString("default", { month: "long", year: "numeric" });
+};
 
 const Profile = () => {
   const navigate = useNavigate();
-  const [isEditing, setIsEditing] = useState(false);
-  const [profilePic, setProfilePic] = useState(null);
-
   const [userInfo, setUserInfo] = useState({
-    name: 'Travel Enthusiast',
-    email: 'user@example.com',
-    location: 'New York, USA',
-    bio: 'Love exploring new places and creating memories!',
-    joinDate: 'January 2024'
+    name: "",
+    email: "",
+    location: "",
+    bio: "",
+    joinDate: "",
+    profilePic: "",
   });
-  const [editInfo, setEditInfo] = useState({ ...userInfo });
 
-const handleLogout = () => {
-  signOut(auth)
-    .then(() => {
-      toast.success("Logged out successfully!");
-      navigate("/login");
-    })
-    .catch((error) => {
-      console.error("Error during logout:", error);
-      toast.error("Failed to logout. Please try again.");
+  const [editInfo, setEditInfo] = useState({ name: "", location: "", bio: "" });
+  const [profilePic, setProfilePic] = useState("");
+  const [isEditing, setIsEditing] = useState(false);
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (!user) {
+        // not logged in
+        setUserInfo({
+          name: "",
+          email: "",
+          location: "",
+          bio: "",
+          joinDate: "",
+          profilePic: "",
+        });
+        setEditInfo({ name: "", location: "", bio: "" });
+        setProfilePic("");
+        return;
+      }
+
+      const fetchUserData = async () => {
+        try {
+          if (user && user.uid) {
+            const userDocRef = doc(db, "users", user.uid);
+
+            const unsubSnap = onSnapshot(
+              userDocRef,
+              async (docSnap) => {
+                let userData;
+                if (docSnap.exists()) {
+                  userData = docSnap.data();
+
+                  let needUpdate = false;
+
+                  // If name is missing, fallback to auth displayName or "U"
+                  if (!userData.name || userData.name.trim() === "") {
+                    userData.name =
+                      user.displayName || user.email.split("@")[0] || "User";
+                    needUpdate = true;
+                  }
+
+                  // If profilePic is missing, generate avatar
+                  if (
+                    !userData.profilePic ||
+                    userData.profilePic.trim() === ""
+                  ) {
+                    const initials = userData.name
+                      .split(" ")
+                      .map((n) => n[0].toUpperCase())
+                      .join("")
+                      .slice(0, 2);
+
+                    userData.profilePic =
+                      user.photoURL ||
+                      `https://ui-avatars.com/api/?name=${encodeURIComponent(
+                        initials
+                      )}&rounded=true&background=random&size=128`;
+                    needUpdate = true;
+                  }
+
+                  // Save updates to Firestore if needed
+                  if (needUpdate) {
+                    await setDoc(userDocRef, userData, { merge: true });
+                  }
+                } else {
+                  const displayName =
+                    user.displayName || user.email.split("@")[0] || "User";
+
+                  const initials = displayName
+                    .split(" ")
+                    .map((n) => n[0].toUpperCase())
+                    .join("")
+                    .slice(0, 2);
+
+                  const generatedProfilePic =
+                    user.photoURL ||
+                    `https://ui-avatars.com/api/?name=${encodeURIComponent(
+                      initials
+                    )}&rounded=true&background=random&size=128`;
+
+                  userData = {
+                    name: displayName,
+                    location: "",
+                    bio: "",
+                    profilePic: generatedProfilePic,
+                    joinDate: user.metadata.creationTime,
+                  };
+                  await setDoc(userDocRef, userData);
+                }
+
+                setProfilePic(userData.profilePic);
+
+                setUserInfo({
+                  ...userData,
+                  email: user.email,
+                  joinDate: user.metadata.creationTime,
+                });
+
+                setEditInfo({
+                  name: userData.name,
+                  location: userData.location,
+                  bio: userData.bio,
+                });
+              },
+              (err) => {
+                console.error("Error loading Firestore user:", err);
+              }
+            );
+            return unsubSnap;
+          }
+        } catch (err) {
+          console.error("Error in fetchUserData:", err);
+        }
+      };
+      fetchUserData();
     });
-};
+
+    return () => unsubscribe();
+  }, []);
+
+  const handleLogout = () => {
+    signOut(auth)
+      .then(() => {
+        toast.success("Logged out successfully!");
+        navigate("/login");
+      })
+      .catch((error) => {
+        console.error("Error during logout:", error);
+        toast.error("Failed to logout. Please try again.");
+      });
+  };
 
   const handleEdit = () => {
     setIsEditing(true);
-    setEditInfo({ ...userInfo });
   };
 
-  const handleSave = () => {
-    setUserInfo({ ...editInfo ,profilePic});
-    setIsEditing(false);
-    toast.success("Profile Updated Successfully")
-    // Here you would typically save to a database
+  const handleSave = async () => {
+    const user = auth.currentUser;
+    if (!user) return;
+
+    try {
+      const userDocRef = doc(db, "users", user.uid);
+      await setDoc(
+        userDocRef,
+        {
+          name: editInfo.name,
+          location: editInfo.location,
+          bio: editInfo.bio,
+          profilePic: profilePic || userInfo.profilePic,
+          joinDate: user.metadata.creationTime,
+        },
+        { merge: true }
+      );
+
+      try {
+        await updateProfile(user, {
+          displayName: editInfo.name,
+          photoURL: profilePic || userInfo.profilePic,
+        });
+      } catch (err) {
+        console.warn("Firebase auth updateProfile failed:", err);
+      }
+
+      setUserInfo({
+        ...userInfo,
+        name: editInfo.name,
+        location: editInfo.location,
+        bio: editInfo.bio,
+        profilePic: profilePic || userInfo.profilePic,
+      });
+
+      setIsEditing(false);
+      toast.success("Profile Updated Successfully");
+
+      // Here you would typically save to a database
+    } catch (err) {
+      console.error("Error updating profile:", err);
+      toast.error("Failed to update profile.");
+    }
   };
 
   const handleCancel = () => {
     setIsEditing(false);
-    setEditInfo({ ...userInfo });
+    setEditInfo({
+      name: userInfo.name,
+      location: userInfo.location,
+      bio: userInfo.bio,
+    });
+    setProfilePic(userInfo.profilePic);
   };
 
   const handleInputChange = (field, value) => {
     setEditInfo({ ...editInfo, [field]: value });
+  };
+
+  const handleProfilePicChange = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = async (ev) => {
+      const dataUrl = ev.target.result;
+      const user = auth.currentUser;
+      if (!user) return;
+
+      try {
+        const userDocRef = doc(db, "users", user.uid);
+        await setDoc(userDocRef, { profilePic: dataUrl }, { merge: true });
+
+        try {
+          await updateProfile(user, { photoURL: dataUrl });
+        } catch (err) {
+          console.warn("Firebase Auth updateProfile failed:", err);
+        }
+
+        setProfilePic(dataUrl);
+        setUserInfo((prev) => ({ ...prev, profilePic: dataUrl }));
+        toast.success("Profile picture updated successfully!");
+      } catch (err) {
+        console.error("Error updating profile pic:", err);
+        toast.error("Failed to update profile picture.");
+      }
+    };
+    reader.readAsDataURL(file);
   };
 
   return (
@@ -59,39 +258,33 @@ const handleLogout = () => {
         <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-8 mb-8">
           <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
             {/* Profile Picture */}
-        <div className="relative">
-  <img
-    src={profilePic || `https://ui-avatars.com/api/?name=${encodeURIComponent(userInfo.name)}&background=random`
+            <div className="relative">
+              <img
+                src={
+                  profilePic ||
+                  `https://ui-avatars.com/api/?name=${encodeURIComponent(
+                    userInfo.name
+                  )}&background=random`
+                }
+                alt="Profile"
+                className="w-32 h-32 rounded-full object-cover shadow-md"
+              />
 
-} 
-    alt="Profile"
-    className="w-32 h-32 rounded-full object-cover shadow-md"
-  />
-
-  {isEditing && (
-    <>
-      <label
-        htmlFor="profile-pic-upload"
-        className="absolute bottom-0 right-0 bg-blue-600 text-white p-2 rounded-full cursor-pointer shadow-lg hover:bg-blue-700 transition"
-      >
-        <FaEdit />
-      </label>
-      <input
-        id="profile-pic-upload"
-        type="file"
-        accept="image/*"
-        className="hidden"
-        onChange={(e) => {
-          const file = e.target.files[0];
-          if (file) {
-            const imageUrl = URL.createObjectURL(file);
-            setProfilePic(imageUrl);
-          }
-        }}
-      />
-    </>
-  )}
-</div>
+              {/* Always show edit icon for profile pic */}
+              <label
+                htmlFor="profile-pic-upload"
+                className="absolute bottom-0 right-0 bg-blue-600 text-white p-2 rounded-full cursor-pointer shadow-lg hover:bg-blue-700 transition"
+              >
+                <FaEdit />
+              </label>
+              <input
+                id="profile-pic-upload"
+                type="file"
+                accept="image/*"
+                className="hidden"
+                onChange={handleProfilePicChange}
+              />
+            </div>
 
             {/* Profile Info */}
             <div className="flex-1 text-center md:text-left">
@@ -100,27 +293,29 @@ const handleLogout = () => {
                   <input
                     type="text"
                     value={editInfo.name}
-                    onChange={(e) => handleInputChange('name', e.target.value)}
+                    onChange={(e) => handleInputChange("name", e.target.value)}
                     className="text-2xl font-bold bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded px-3 py-2 w-full text-gray-800 dark:text-white"
                     placeholder="Your Name"
                   />
                   <input
                     type="email"
-                    value={editInfo.email}
-                    onChange={(e) => handleInputChange('email', e.target.value)}
+                    value={userInfo.email}
+                    onChange={(e) => handleInputChange("email", e.target.value)}
                     className="text-gray-600 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded px-3 py-2 w-full"
                     placeholder="Your Email"
                   />
                   <input
                     type="text"
                     value={editInfo.location}
-                    onChange={(e) => handleInputChange('location', e.target.value)}
+                    onChange={(e) =>
+                      handleInputChange("location", e.target.value)
+                    }
                     className="text-gray-600 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded px-3 py-2 w-full"
                     placeholder="Your Location"
                   />
                   <textarea
                     value={editInfo.bio}
-                    onChange={(e) => handleInputChange('bio', e.target.value)}
+                    onChange={(e) => handleInputChange("bio", e.target.value)}
                     className="text-gray-600 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded px-3 py-2 w-full h-20 resize-none"
                     placeholder="Tell us about yourself..."
                   />
@@ -128,13 +323,19 @@ const handleLogout = () => {
               ) : (
                 <div>
                   <h1 className="text-3xl font-bold text-gray-800 dark:text-white mb-2">
-                    {userInfo.name}
+                    {userInfo.name || "Username"}
                   </h1>
-                  <p className="text-gray-600 dark:text-gray-300 mb-2">{userInfo.email}</p>
-                  <p className="text-gray-600 dark:text-gray-300 mb-3">{userInfo.location}</p>
-                  <p className="text-gray-700 dark:text-gray-300 mb-4">{userInfo.bio}</p>
+                  <p className="text-gray-600 dark:text-gray-300 mb-2">
+                    {userInfo.email}
+                  </p>
+                  <p className="text-gray-600 dark:text-gray-300 mb-3">
+                    {userInfo.location || "Add your location"}
+                  </p>
+                  <p className="text-gray-700 dark:text-gray-300 mb-4">
+                    {userInfo.bio || "Tell us about yourself..."}
+                  </p>
                   <p className="text-sm text-gray-500 dark:text-gray-400">
-                    Member since {userInfo.joinDate}
+                    Member since: {formatJoinDate(userInfo.joinDate)}
                   </p>
                 </div>
               )}
@@ -172,44 +373,68 @@ const handleLogout = () => {
         {/* Stats Cards */}
         <div className="grid md:grid-cols-3 gap-6 mb-8">
           <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 text-center">
-            <h3 className="text-2xl font-bold text-blue-600 dark:text-blue-400 mb-2">12</h3>
+            <h3 className="text-2xl font-bold text-blue-600 dark:text-blue-400 mb-2">
+              12
+            </h3>
             <p className="text-gray-600 dark:text-gray-300">Trips Planned</p>
           </div>
           <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 text-center">
-            <h3 className="text-2xl font-bold text-green-600 dark:text-green-400 mb-2">$2,450</h3>
+            <h3 className="text-2xl font-bold text-green-600 dark:text-green-400 mb-2">
+              $2,450
+            </h3>
             <p className="text-gray-600 dark:text-gray-300">Total Expenses</p>
           </div>
           <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 text-center">
-            <h3 className="text-2xl font-bold text-purple-600 dark:text-purple-400 mb-2">8</h3>
-            <p className="text-gray-600 dark:text-gray-300">Countries Visited</p>
+            <h3 className="text-2xl font-bold text-purple-600 dark:text-purple-400 mb-2">
+              8
+            </h3>
+            <p className="text-gray-600 dark:text-gray-300">
+              Countries Visited
+            </p>
           </div>
         </div>
 
         {/* Recent Activity */}
         <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-8">
-          <h2 className="text-xl font-semibold text-gray-800 dark:text-white mb-4">Recent Activity</h2>
+          <h2 className="text-xl font-semibold text-gray-800 dark:text-white mb-4">
+            Recent Activity
+          </h2>
           <div className="space-y-3">
             <div className="flex items-center gap-3 p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
               <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-              <span className="text-gray-700 dark:text-gray-300">Planned a trip to Paris</span>
-              <span className="text-sm text-gray-500 dark:text-gray-400 ml-auto">2 days ago</span>
+              <span className="text-gray-700 dark:text-gray-300">
+                Planned a trip to Paris
+              </span>
+              <span className="text-sm text-gray-500 dark:text-gray-400 ml-auto">
+                2 days ago
+              </span>
             </div>
             <div className="flex items-center gap-3 p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
               <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-              <span className="text-gray-700 dark:text-gray-300">Added expense for Tokyo trip</span>
-              <span className="text-sm text-gray-500 dark:text-gray-400 ml-auto">5 days ago</span>
+              <span className="text-gray-700 dark:text-gray-300">
+                Added expense for Tokyo trip
+              </span>
+              <span className="text-sm text-gray-500 dark:text-gray-400 ml-auto">
+                5 days ago
+              </span>
             </div>
             <div className="flex items-center gap-3 p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
               <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
-              <span className="text-gray-700 dark:text-gray-300">Used AI assistant for recommendations</span>
-              <span className="text-sm text-gray-500 dark:text-gray-400 ml-auto">1 week ago</span>
+              <span className="text-gray-700 dark:text-gray-300">
+                Used AI assistant for recommendations
+              </span>
+              <span className="text-sm text-gray-500 dark:text-gray-400 ml-auto">
+                1 week ago
+              </span>
             </div>
           </div>
         </div>
 
         {/* Logout Section */}
         <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
-          <h2 className="text-xl font-semibold text-gray-800 dark:text-white mb-4">Account Actions</h2>
+          <h2 className="text-xl font-semibold text-gray-800 dark:text-white mb-4">
+            Account Actions
+          </h2>
           <button
             onClick={handleLogout}
             className="flex items-center gap-2 px-6 py-3 bg-red-500 text-white rounded-lg hover:bg-red-600 transition duration-200"
