@@ -3,11 +3,17 @@ import { useNavigate, Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import { Loader2 } from "lucide-react";
 import "react-toastify/dist/ReactToastify.css";
-import { useTheme } from '../contexts/ThemeContext';
+import { useTheme } from "../contexts/ThemeContext";
 import { FaGoogle, FaApple } from "react-icons/fa";
-import { OAuthProvider, signInWithPopup, createUserWithEmailAndPassword, GoogleAuthProvider } from "firebase/auth";
+import {
+  OAuthProvider,
+  signInWithPopup,
+  createUserWithEmailAndPassword,
+  GoogleAuthProvider,
+} from "firebase/auth";
 import { auth } from "../firebase";
 import { motion, AnimatePresence } from "framer-motion";
+import { updateProfile } from "firebase/auth";
 
 export default function Signup({ setIsLoggedIn }) {
   const navigate = useNavigate();
@@ -49,7 +55,13 @@ export default function Signup({ setIsLoggedIn }) {
     });
   };
 
-  const barColors = ["bg-red-500", "bg-orange-400", "bg-yellow-400", "bg-green-400", "bg-green-600"];
+  const barColors = [
+    "bg-red-500",
+    "bg-orange-400",
+    "bg-yellow-400",
+    "bg-green-400",
+    "bg-green-600",
+  ];
 
   const handleSignup = (e) => {
     e.preventDefault();
@@ -65,15 +77,42 @@ export default function Signup({ setIsLoggedIn }) {
 
     setIsLoading(true);
     createUserWithEmailAndPassword(auth, email, password)
-      .then(() => {
-        setIsLoading(false);
-        toast.success("Signed up successfully!");
-        navigate("/plan");
+      .then(async (userCredential) => {
+        const user = userCredential.user;
+
+        try {
+          // build default avatar URL (ui-avatars)
+          const defaultProfilePic = `https://ui-avatars.com/api/?name=${encodeURIComponent(
+            name
+          )}&background=random`;
+
+          // update firebase auth profile
+          await updateProfile(user, {
+            displayName: name,
+            photoURL: defaultProfilePic,
+          });
+
+          // persist locally (Profile.jsx will read these)
+          localStorage.setItem(`username_${user.uid}`, name);
+          localStorage.setItem(`profilePic_${user.uid}`, defaultProfilePic);
+
+          toast.success("Signed up successfully!");
+          setIsLoading(false);
+          navigate("/plan");
+        } catch (innerErr) {
+          // even if updateProfile fails, continue
+          console.error("updateProfile error:", innerErr);
+          toast.success("Signed up (profile update failed).");
+          setIsLoading(false);
+          navigate("/plan");
+        }
       })
       .catch((err) => {
         setIsLoading(false);
-        if (err.code === 'auth/email-already-in-use') toast.error("Email already in use.");
-        else if (err.code === 'auth/weak-password') toast.error("Weak password.");
+        if (err.code === "auth/email-already-in-use")
+          toast.error("Email already in use.");
+        else if (err.code === "auth/weak-password")
+          toast.error("Weak password.");
         else toast.error("Failed to create account.");
         console.error(err);
       });
@@ -81,7 +120,7 @@ export default function Signup({ setIsLoggedIn }) {
 
   const handleGoogleSignIn = async () => {
     const provider = new GoogleAuthProvider();
-    provider.setCustomParameters({ prompt: 'select_account' });
+    provider.setCustomParameters({ prompt: "select_account" });
     try {
       await signInWithPopup(auth, provider);
       setIsLoggedIn(true);
@@ -126,32 +165,69 @@ export default function Signup({ setIsLoggedIn }) {
   }, []);
 
   return (
-    <div className={`relative flex flex-col lg:flex-row items-center justify-center min-h-screen ${theme === 'dark' ? 'bg-gray-900' : 'bg-gray-100'}`}>
+    <div
+      className={`relative flex flex-col lg:flex-row items-center justify-center min-h-screen ${
+        theme === "dark" ? "bg-gray-900" : "bg-gray-100"
+      }`}
+    >
       <div className="absolute inset-0 bg-black bg-opacity-50"></div>
 
       <div className="relative z-10 flex flex-col lg:flex-row w-full max-w-4xl rounded-xl overflow-hidden shadow-2xl">
         {/* Hero Section */}
         <div className="hidden lg:flex w-1/2 p-8 text-white flex-col items-center justify-center bg-gray-900 rounded-l-xl">
-          <h1 className="text-4xl font-bold mb-4 text-center">Plan Your Next Adventure</h1>
-          <p className="text-lg text-center mb-8">Discover amazing places and create unforgettable memories.</p>
-          <button onClick={() => navigate("/login")} className="px-6 py-3 bg-yellow-500 text-gray-900 font-bold rounded-full shadow-lg hover:bg-yellow-600">Start Planning →</button>
+          <h1 className="text-4xl font-bold mb-4 text-center">
+            Plan Your Next Adventure
+          </h1>
+          <p className="text-lg text-center mb-8">
+            Discover amazing places and create unforgettable memories.
+          </p>
+          <button
+            onClick={() => navigate("/login")}
+            className="px-6 py-3 bg-yellow-500 text-gray-900 font-bold rounded-full shadow-lg hover:bg-yellow-600"
+          >
+            Start Planning →
+          </button>
         </div>
 
         {/* Form Section */}
         <div className="w-full lg:w-1/2 p-8 bg-white dark:bg-gray-800 rounded-xl lg:rounded-r-xl shadow-lg">
           <form className="space-y-6" onSubmit={handleSignup}>
-            <h2 className="text-3xl font-bold text-center text-gray-800 dark:text-white">Sign Up</h2>
+            <h2 className="text-3xl font-bold text-center text-gray-800 dark:text-white">
+              Sign Up
+            </h2>
 
-            <input type="text" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)}
-              className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required />
+            <input
+              type="text"
+              placeholder="Name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              required
+            />
 
-            <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required />
+            <input
+              type="email"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              required
+            />
 
             <div className="relative">
-              <input type={showPassword ? "text" : "password"} placeholder="Password" value={password} onChange={handlePasswordChange}
-                className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required />
-              <button type="button" className="absolute inset-y-0 right-0 px-3" onClick={() => setShowPassword(!showPassword)}>
+              <input
+                type={showPassword ? "text" : "password"}
+                placeholder="Password"
+                value={password}
+                onChange={handlePasswordChange}
+                className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                required
+              />
+              <button
+                type="button"
+                className="absolute inset-y-0 right-0 px-3"
+                onClick={() => setShowPassword(!showPassword)}
+              >
                 {showPassword ? "Hide" : "Show"}
               </button>
             </div>
@@ -159,7 +235,10 @@ export default function Signup({ setIsLoggedIn }) {
             {/* Password Strength Bar */}
             {password && (
               <div className="h-2 w-full bg-gray-200 rounded mt-2">
-                <div className={`${barColors[score]} h-2 rounded transition-all duration-500`} style={{ width: `${(score / 5) * 100}%` }} />
+                <div
+                  className={`${barColors[score]} h-2 rounded transition-all duration-500`}
+                  style={{ width: `${(score / 5) * 100}%` }}
+                />
               </div>
             )}
 
@@ -168,17 +247,35 @@ export default function Signup({ setIsLoggedIn }) {
               <div className="mt-2 space-y-1">
                 <AnimatePresence>
                   {Object.keys(passwordValidity).map((rule, idx) => (
-                    <motion.p key={rule} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-                      className={`text-sm ${passwordValidity[rule] ? 'text-green-600' : 'text-red-600'}`}>
-                      {passwordValidity[rule] ? '✓' : '✗'} {rule.charAt(0).toUpperCase() + rule.slice(1)}
+                    <motion.p
+                      key={rule}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      className={`text-sm ${
+                        passwordValidity[rule]
+                          ? "text-green-600"
+                          : "text-red-600"
+                      }`}
+                    >
+                      {passwordValidity[rule] ? "✓" : "✗"}{" "}
+                      {rule.charAt(0).toUpperCase() + rule.slice(1)}
                     </motion.p>
                   ))}
                 </AnimatePresence>
               </div>
             )}
 
-            <button type="submit" className="w-full py-3 bg-blue-600 text-white rounded-lg" disabled={isLoading}>
-              {isLoading ? <Loader2 className="animate-spin mx-auto" /> : "Create Account"}
+            <button
+              type="submit"
+              className="w-full py-3 bg-blue-600 text-white rounded-lg"
+              disabled={isLoading}
+            >
+              {isLoading ? (
+                <Loader2 className="animate-spin mx-auto" />
+              ) : (
+                "Create Account"
+              )}
             </button>
 
             <div className="flex items-center my-4">
@@ -187,20 +284,35 @@ export default function Signup({ setIsLoggedIn }) {
               <hr className="flex-grow border-gray-300" />
             </div>
 
-            <button type="button" onClick={handleGoogleSignIn} className="w-full py-3 bg-gray-100 rounded-lg flex items-center justify-center space-x-2">
+            <button
+              type="button"
+              onClick={handleGoogleSignIn}
+              className="w-full py-3 bg-gray-100 rounded-lg flex items-center justify-center space-x-2"
+            >
               <FaGoogle size={20} /> <span>Continue with Google</span>
             </button>
 
-            <button type="button" onClick={signInWithMicrosoft} className="w-full py-3 bg-gray-100 rounded-lg flex items-center justify-center space-x-2 mt-2">
+            <button
+              type="button"
+              onClick={signInWithMicrosoft}
+              className="w-full py-3 bg-gray-100 rounded-lg flex items-center justify-center space-x-2 mt-2"
+            >
               Microsoft
             </button>
 
-            <button type="button" onClick={signInWithApple} className="w-full py-3 bg-gray-100 rounded-lg flex items-center justify-center space-x-2 mt-2">
+            <button
+              type="button"
+              onClick={signInWithApple}
+              className="w-full py-3 bg-gray-100 rounded-lg flex items-center justify-center space-x-2 mt-2"
+            >
               <FaApple size={20} /> Apple
             </button>
 
             <p className="text-center text-sm mt-4">
-              Already have an account? <Link to="/login" className="text-blue-600">Login</Link>
+              Already have an account?{" "}
+              <Link to="/login" className="text-blue-600">
+                Login
+              </Link>
             </p>
           </form>
         </div>
@@ -210,8 +322,3 @@ export default function Signup({ setIsLoggedIn }) {
     </div>
   );
 }
-
-
-
-
-
