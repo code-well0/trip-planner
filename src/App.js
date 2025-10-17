@@ -40,8 +40,12 @@ import CurrencyConverter from "./Components/CurrencyConverter";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+
+    // A simple Home component for demonstration
+
 // A simple Home component for demonstration
 import WeatherWidget from "./Components/WeatherWidget";
+
 import PackingChecklist from "./pages/PackingChecklist";
 // Reusable page transition wrapper
 const PageTransition = ({ children }) => (
