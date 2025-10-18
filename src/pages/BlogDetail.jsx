@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 
@@ -45,6 +45,15 @@ const BlogDetails = () => {
   ];
 
   const blog = blogs.find((b) => b.id === parseInt(id));
+
+  // Add this dynamic hook to set the page title
+  useEffect(() => {
+    if (blog) {
+      document.title = `${blog.title} | Your Trip Planner`;
+    } else {
+      document.title = 'Blog Not Found | Your Trip Planner';
+    }
+  }, [blog]);
 
   if (!blog) {
     return (

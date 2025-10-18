@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useParams, Link } from "react-router-dom";
 import data from '../data';
 import { FaMapMarkerAlt, FaRupeeSign, FaRegCalendarAlt, FaArrowLeft, FaTag } from 'react-icons/fa';
@@ -17,6 +17,15 @@ export default function DestinationPage() {
 
   // Find the destination from the main data source
   const destination = data.find(d => d.name.toLowerCase() === id.toLowerCase());
+
+  // Add this hook to set the page title dynamically
+  useEffect(() => {
+    if (destination) {
+      document.title = `${destination.name} | Your Trip Planner`;
+    } else {
+      document.title = 'Destination Not Found | Your Trip Planner';
+    }
+  }, [destination]);
 
   const handleAddToInterested = () => {
     addToInterested(destination);

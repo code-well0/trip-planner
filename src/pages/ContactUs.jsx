@@ -1,9 +1,13 @@
-// src/Pages/Contact.jsx
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Mail, Phone, MapPin, Instagram, Linkedin, Github } from "lucide-react";
 
 export default function Contact() {
+  // Add this hook to set the page title
+  useEffect(() => {
+    document.title = 'Contact Us | Your Trip Planner';
+  }, []);
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",

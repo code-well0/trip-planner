@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useInterested } from "../contexts/InterestedContext";
 import { useTheme } from "../contexts/ThemeContext";
@@ -10,6 +10,11 @@ const Interested = () => {
   const { interestedTours, removeFromInterested } = useInterested();
   const { theme, toggleTheme } = useTheme();
   const navigate = useNavigate();
+
+  // Add this hook to set the page title
+  useEffect(() => {
+    document.title = 'Wishlist | Your Trip Planner';
+  }, []);
   
   const isDarkMode = theme === 'dark';
 

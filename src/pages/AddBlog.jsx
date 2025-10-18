@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 
@@ -9,6 +9,11 @@ function AddBlog() {
   const [image, setImage] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+
+  // This is the new hook to set the page title
+  useEffect(() => {
+    document.title = 'Add Blog | Your Trip Planner';
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
