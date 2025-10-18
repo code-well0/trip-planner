@@ -13,6 +13,7 @@ import Login from "./pages/login";
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
 import TripRecommender from "./pages/TripRecommender";
+import CustomItenary from "./pages/CustomItinerary";
 import TermsOfService from "./pages/terms";
 import ActivityPlanner from "./pages/ActivityPlanner";
 import PlanTrip from "./pages/PlanTrip";
@@ -195,6 +196,12 @@ function App() {
                   )
                 }
               />
+              <Route
+              path="/CustomItinerary"
+              element={
+                isLoggedIn ? <CustomItenary /> : <Navigate to="/login" />
+              }
+            />
               <Route
                 path="/activity-planner"
                 element={

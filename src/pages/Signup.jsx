@@ -29,11 +29,14 @@ export default function Signup({ setIsLoggedIn }) {
     return "text-green-500";
   }
 
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-  };
-  
-  // Placeholder Signup function (Firebase removed)
+  const barColors = [
+    "bg-red-500",
+    "bg-orange-400",
+    "bg-yellow-400",
+    "bg-green-400",
+    "bg-green-600",
+  ];
+
   const handleSignup = (e) => {
     e.preventDefault();
     if (!name || !email || !password) {
@@ -84,9 +87,18 @@ export default function Signup({ setIsLoggedIn }) {
         
         {/* Hero Section */}
         <div className="hidden lg:flex w-1/2 p-8 text-white flex-col items-center justify-center bg-gray-900 rounded-l-xl">
-          <h1 className="text-4xl font-bold mb-4 text-center">Plan Your Next Adventure</h1>
-          <p className="text-lg text-center mb-8">Discover amazing places and create unforgettable memories.</p>
-          <button onClick={() => navigate("/login")} className="px-6 py-3 bg-yellow-500 text-gray-900 font-bold rounded-full shadow-lg hover:bg-yellow-600">Start Planning →</button>
+          <h1 className="text-4xl font-bold mb-4 text-center">
+            Plan Your Next Adventure
+          </h1>
+          <p className="text-lg text-center mb-8">
+            Discover amazing places and create unforgettable memories.
+          </p>
+          <button
+            onClick={() => navigate("/login")}
+            className="px-6 py-3 bg-yellow-500 text-gray-900 font-bold rounded-full shadow-lg hover:bg-yellow-600"
+          >
+            Start Planning →
+          </button>
         </div>
 
         {/* Form Section */}
@@ -191,7 +203,10 @@ export default function Signup({ setIsLoggedIn }) {
             </button>
 
             <p className="text-center text-sm mt-4">
-              Already have an account? <Link to="/login" className="text-blue-600">Login</Link>
+              Already have an account?{" "}
+              <Link to="/login" className="text-blue-600">
+                Login
+              </Link>
             </p>
           </form>
         </div>
@@ -200,8 +215,3 @@ export default function Signup({ setIsLoggedIn }) {
     </div>
   );
 }
-
-
-
-
-
