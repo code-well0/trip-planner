@@ -28,11 +28,11 @@ export default function Contact() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-6xl">
         {/* Left Section */}
         <motion.div
-          className="bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 dark:from-indigo-600 dark:via-purple-600 dark:to-pink-600 p-8 rounded-2xl shadow-2xl"
+          className="bg-white dark:bg-gray-900 p-8 rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-800 transition-colors duration-300"
           initial={{ opacity: 0, x: -30 }}
           animate={{ opacity: 1, x: 0 }}
         >
-          <h2 className="text-2xl font-bold mb-4">Your Journey Starts Here</h2>
+          <h2 className="text-2xl font-bold mb-6 text-indigo-600 dark:text-indigo-400">Your Journey Starts Here</h2>
           <p className="mb-6 text-gray-800 dark:text-gray-100">
             Need help planning your next adventure? Whether it’s a family trip, solo
             backpacking, or business tour — we’ve got you covered.
