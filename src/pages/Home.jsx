@@ -2,51 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import SplitText from "../Components/SplitText";
 import FadeContent from "../Components/FadeContent";
-
-const testimonials = [
-    {
-        name: "Ananya",
-        role: "Traveler",
-        feedback:
-            "Trip Planner made my vacation so much easier! I could plan everything in one place.",
-    },
-    {
-        name: "Rahul",
-        role: "Adventure Enthusiast",
-        feedback:
-            "I loved how smooth the planning process was. Highly recommend this app!",
-    },
-    {
-        name: "Sophia",
-        role: "Backpacker",
-        feedback:
-            "Clean UI, easy to use, and perfect for organizing trips with friends!",
-    },
-    {
-        name: "David",
-        role: "Solo Explorer",
-        feedback:
-            "Managing my budget on the go was super easy. This app is a must-have!",
-    },
-    {
-        name: "Meera",
-        role: "Family Planner",
-        feedback:
-            "Helped me organize a family trip without any stress. Kids loved the experience!",
-    },
-    {
-        name: "Alex",
-        role: "Photographer",
-        feedback:
-            "AI recommendations took me to hidden gems I’d never have found otherwise.",
-    },
-    {
-        name: "Li Wei",
-        role: "Student Traveler",
-        feedback:
-            "Affordable trip planning and amazing suggestions within my budget.",
-    },
-];
+import TravelGuides from "./testimonial/Trip-Planer-Guider";
 
 const Home = () => {
     const navigate = useNavigate();
@@ -201,30 +157,7 @@ const Home = () => {
                 </FadeContent>
 
                 {/* ✅ Testimonials */}
-                <section className="bg-gray-100 dark:bg-gray-800 py-12 rounded-xl shadow-inner overflow-hidden">
-                    <h2 className="text-3xl font-bold text-center text-gray-800 dark:text-white my-10">
-                        What Our Travellers Say
-                    </h2>
-
-                    <div className="flex animate-scroll">
-                        <div className="flex gap-6 px-4">
-                        {[...testimonials, ...testimonials].map((t, index) => (
-                            <div
-                            key={index}
-                            className="min-w-[300px] bg-white dark:bg-gray-900 p-6 rounded-lg shadow-lg my-8"
-                            >
-                            <p className="text-gray-600 dark:text-gray-300 italic mb-4">
-                                "{t.feedback}"
-                            </p>
-                            <h3 className="text-lg font-semibold text-gray-800 dark:text-white">
-                                {t.name}
-                            </h3>
-                            <p className="text-sm text-gray-500 dark:text-gray-400">{t.role}</p>
-                            </div>
-                        ))}
-                        </div>
-                    </div>
-                </section>
+                <TravelGuides />
             </div>
         </div>
     );
