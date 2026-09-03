@@ -5,6 +5,7 @@ import { FaMapMarkerAlt, FaRupeeSign, FaRegCalendarAlt, FaArrowLeft, FaTag, FaCh
 import { useInterested } from '../contexts/InterestedContext';
 import { toast } from 'react-toastify';
 import ReviewModal from '../Components/ReviewModal';
+import PriceEstimate from '../Components/PriceEstimate';
 
 const Tag = ({ text, colorClass }) => (
   <span className={`text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full last:mr-0 mr-1 ${colorClass}`}>
@@ -104,6 +105,8 @@ export default function DestinationPage() {
               <span className="flex items-center gap-2 text-green-600 dark:text-green-400 font-bold text-xl"><FaRupeeSign /> {destination.price.toLocaleString('en-IN')}</span>
               <span className="flex items-center gap-2 text-gray-500 dark:text-gray-400 text-md"><FaRegCalendarAlt /> {destination.duration}</span>
             </div>
+
+            <PriceEstimate destinationName={destination.name} />
 
             <div className="mb-6">
               <h3 className="text-lg font-semibold mb-3 flex items-center gap-2 text-gray-800 dark:text-white"><FaTag /> Tags</h3>

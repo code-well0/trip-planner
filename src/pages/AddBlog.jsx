@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
+import { logActivity } from "../lib/activityLogger";
 
 function AddBlog() {
   const [title, setTitle] = useState("");
@@ -22,6 +23,10 @@ function AddBlog() {
     });
 
     setLoading(false);
+
+    // Log blog activity
+    logActivity("blog_posted", `Published blog: "${title}"`);
+
     setTitle("");
     setContent("");
     setAuthor("");

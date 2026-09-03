@@ -169,7 +169,7 @@ const Navbar = ({ isLoggedIn }) => {
                 }
               />
               <Link
-                to="/plan-trip"
+                to="/login"
                 className={`text-xl font-bold transition-colors duration-200 ${brandTextClasses}`}
                 aria-label="Home"
               >

@@ -5,13 +5,48 @@ import { auth, db } from "../firebase";
 import { toast } from "react-toastify";
 import { FaSignOutAlt, FaEdit, FaSave, FaTimes } from "react-icons/fa";
 import "react-toastify/dist/ReactToastify.css";
-import { doc, onSnapshot, setDoc } from "firebase/firestore";
+import {
+  doc,
+  onSnapshot,
+  setDoc,
+  collection,
+  query,
+  orderBy,
+  limit,
+  getDocs,
+} from "firebase/firestore";
 import { useInterested } from "../contexts/InterestedContext";
 
 const formatJoinDate = (timestamp) => {
   if (!timestamp) return "";
   const date = new Date(timestamp);
   return date.toLocaleString("default", { month: "long", year: "numeric" });
+};
+
+const formatRelativeTime = (timestamp) => {
+  if (!timestamp) return "";
+  const now = new Date();
+  const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
+  const diffMs = now - date;
+  const diffMins = Math.floor(diffMs / 60000);
+  const diffHours = Math.floor(diffMs / 3600000);
+  const diffDays = Math.floor(diffMs / 86400000);
+  const diffWeeks = Math.floor(diffDays / 7);
+
+  if (diffMins < 1) return "Just now";
+  if (diffMins < 60) return `${diffMins} min${diffMins > 1 ? "s" : ""} ago`;
+  if (diffHours < 24) return `${diffHours} hour${diffHours > 1 ? "s" : ""} ago`;
+  if (diffDays < 7) return `${diffDays} day${diffDays > 1 ? "s" : ""} ago`;
+  return `${diffWeeks} week${diffWeeks > 1 ? "s" : ""} ago`;
+};
+
+const activityTypeColors = {
+  trip_planned: "bg-blue-500",
+  expense_added: "bg-green-500",
+  ai_chat: "bg-yellow-500",
+  itinerary_created: "bg-indigo-500",
+  blog_posted: "bg-pink-500",
+  place_visited: "bg-purple-500",
 };
 
 const Profile = () => {
@@ -30,6 +65,12 @@ const Profile = () => {
   const [isEditing, setIsEditing] = useState(false);
   const { visitedPlaces } = useInterested();
 
+  // Real-time stats from Firestore
+  const [tripsPlanned, setTripsPlanned] = useState(0);
+  const [totalExpenses, setTotalExpenses] = useState(0);
+  const [recentActivities, setRecentActivities] = useState([]);
+  const [loadingActivities, setLoadingActivities] = useState(true);
+
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (!user) {
@@ -44,6 +85,9 @@ const Profile = () => {
         });
         setEditInfo({ name: "", location: "", bio: "" });
         setProfilePic("");
+        setTripsPlanned(0);
+        setTotalExpenses(0);
+        setRecentActivities([]);
         return;
       }
 
@@ -91,6 +135,10 @@ const Profile = () => {
                   if (needUpdate) {
                     await setDoc(userDocRef, userData, { merge: true });
                   }
+
+                  // Read real-time stats from user doc
+                  setTripsPlanned(userData.tripsPlanned || 0);
+                  setTotalExpenses(userData.totalExpenses || 0);
                 } else {
                   const displayName =
                     user.displayName || user.email.split("@")[0] || "User";
@@ -113,8 +161,12 @@ const Profile = () => {
                     bio: "",
                     profilePic: generatedProfilePic,
                     joinDate: user.metadata.creationTime,
+                    tripsPlanned: 0,
+                    totalExpenses: 0,
                   };
                   await setDoc(userDocRef, userData);
+                  setTripsPlanned(0);
+                  setTotalExpenses(0);
                 }
 
                 setProfilePic(userData.profilePic);
@@ -135,7 +187,70 @@ const Profile = () => {
                 console.error("Error loading Firestore user:", err);
               }
             );
-            return unsubSnap;
+
+            // Fetch real expenses total from the expenses sub-doc
+            const expDocRef = doc(db, "users", user.uid, "data", "expenses");
+            const unsubExp = onSnapshot(expDocRef, (snap) => {
+              if (snap.exists()) {
+                const data = snap.data();
+                setTotalExpenses(data.totalSpent || 0);
+              }
+            });
+
+            // Fetch recent activities
+            const fetchActivities = async () => {
+              setLoadingActivities(true);
+              try {
+                const activitiesCol = collection(
+                  db,
+                  "users",
+                  user.uid,
+                  "activities"
+                );
+                const q = query(
+                  activitiesCol,
+                  orderBy("createdAt", "desc"),
+                  limit(10)
+                );
+                const snap = await getDocs(q);
+                const activities = snap.docs.map((d) => ({
+                  id: d.id,
+                  ...d.data(),
+                }));
+                setRecentActivities(activities);
+              } catch (err) {
+                console.error("Error fetching activities:", err);
+              }
+              setLoadingActivities(false);
+            };
+            fetchActivities();
+
+            // Also listen for real-time activity updates
+            const activitiesCol = collection(
+              db,
+              "users",
+              user.uid,
+              "activities"
+            );
+            const q = query(
+              activitiesCol,
+              orderBy("createdAt", "desc"),
+              limit(10)
+            );
+            const unsubActivities = onSnapshot(q, (snap) => {
+              const activities = snap.docs.map((d) => ({
+                id: d.id,
+                ...d.data(),
+              }));
+              setRecentActivities(activities);
+              setLoadingActivities(false);
+            });
+
+            return () => {
+              unsubSnap();
+              unsubExp();
+              unsubActivities();
+            };
           }
         } catch (err) {
           console.error("Error in fetchUserData:", err);
@@ -372,17 +487,17 @@ const Profile = () => {
           </div>
         </div>
 
-        {/* Stats Cards */}
+        {/* Stats Cards — real-time data from Firestore */}
         <div className="grid md:grid-cols-3 gap-6 mb-8">
           <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 text-center">
             <h3 className="text-2xl font-bold text-blue-600 dark:text-blue-400 mb-2">
-              12
+              {tripsPlanned}
             </h3>
             <p className="text-gray-600 dark:text-gray-300">Trips Planned</p>
           </div>
           <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 text-center">
             <h3 className="text-2xl font-bold text-green-600 dark:text-green-400 mb-2">
-              $2,450
+              ₹{totalExpenses.toLocaleString("en-IN", { minimumFractionDigits: 0, maximumFractionDigits: 2 })}
             </h3>
             <p className="text-gray-600 dark:text-gray-300">Total Expenses</p>
           </div>
@@ -425,39 +540,42 @@ const Profile = () => {
           </div>
         )}
 
-        {/* Recent Activity */}
+        {/* Recent Activity — real-time from Firestore */}
         <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-8">
           <h2 className="text-xl font-semibold text-gray-800 dark:text-white mb-4">
             Recent Activity
           </h2>
           <div className="space-y-3">
-            <div className="flex items-center gap-3 p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
-              <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-              <span className="text-gray-700 dark:text-gray-300">
-                Planned a trip to Paris
-              </span>
-              <span className="text-sm text-gray-500 dark:text-gray-400 ml-auto">
-                2 days ago
-              </span>
-            </div>
-            <div className="flex items-center gap-3 p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
-              <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-              <span className="text-gray-700 dark:text-gray-300">
-                Added expense for Tokyo trip
-              </span>
-              <span className="text-sm text-gray-500 dark:text-gray-400 ml-auto">
-                5 days ago
-              </span>
-            </div>
-            <div className="flex items-center gap-3 p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
-              <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
-              <span className="text-gray-700 dark:text-gray-300">
-                Used AI assistant for recommendations
-              </span>
-              <span className="text-sm text-gray-500 dark:text-gray-400 ml-auto">
-                1 week ago
-              </span>
-            </div>
+            {loadingActivities ? (
+              <div className="flex items-center justify-center py-8">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
+                <span className="ml-3 text-gray-500 dark:text-gray-400">Loading activities...</span>
+              </div>
+            ) : recentActivities.length === 0 ? (
+              <div className="text-center py-8 text-gray-500 dark:text-gray-400">
+                <p className="text-lg mb-1">No recent activity yet</p>
+                <p className="text-sm">Start planning trips, adding expenses, or using the AI assistant to see your activity here!</p>
+              </div>
+            ) : (
+              recentActivities.map((activity) => (
+                <div
+                  key={activity.id}
+                  className="flex items-center gap-3 p-3 bg-gray-50 dark:bg-gray-700 rounded-lg"
+                >
+                  <div
+                    className={`w-2 h-2 rounded-full ${
+                      activityTypeColors[activity.type] || "bg-gray-500"
+                    }`}
+                  ></div>
+                  <span className="text-gray-700 dark:text-gray-300 flex-1">
+                    {activity.description}
+                  </span>
+                  <span className="text-sm text-gray-500 dark:text-gray-400 ml-auto whitespace-nowrap">
+                    {formatRelativeTime(activity.createdAt)}
+                  </span>
+                </div>
+              ))
+            )}
           </div>
         </div>
 

@@ -22,7 +22,7 @@ const Footer = ({ isLoggedIn }) => {
                         <h3 className="text-2xl font-bold text-blue-600">YourTripPlanner</h3>
                         <p className="text-sm">Your ultimate companion for exploring the incredible destinations of India. Plan smarter, travel better.</p>
                         <div className="flex space-x-4 text-xl">
-                            <a href="mailto:shubralijain@gmail.com" className="social-link hover:text-blue-500 transition-colors duration-200" aria-label="Email"><FaEnvelope /></a>
+                            <a href="mailto:yourtripplannerr@gmail.com" className="social-link hover:text-blue-500 transition-colors duration-200" aria-label="Email"><FaEnvelope /></a>
                             <a href="https://github.com/code-well0" className="social-link hover:text-blue-500 transition-colors duration-200" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><FaGithub /></a>
                             <a href="https://www.instagram.com/_shubrali/" className="social-link hover:text-blue-500 transition-colors duration-200" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><FaInstagram /></a>
                             <a href="https://www.linkedin.com/in/shubrali-jain/" className="social-link hover:text-blue-500 transition-colors duration-200" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><FaLinkedinIn /></a>

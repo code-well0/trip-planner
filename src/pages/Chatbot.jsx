@@ -3,6 +3,7 @@ import { FaPaperPlane, FaRobot, FaUser } from "react-icons/fa";
 import { useTheme } from "../contexts/ThemeContext";
 import { Loader2 } from "lucide-react";
 import ReactMarkdown from "react-markdown";
+import { logActivity } from "../lib/activityLogger";
 
 function ChatBot() {
     const { theme } = useTheme();
@@ -41,6 +42,9 @@ function ChatBot() {
 
             const result = await response.json();
             const botResponse = result.reply;
+
+            // Log AI chat activity
+            logActivity("ai_chat", `Used AI assistant: "${input.slice(0, 50)}${input.length > 50 ? '...' : ''}"`);
 
             setTimeout(() => {
                 const botMessage = { text: botResponse, sender: "bot" };

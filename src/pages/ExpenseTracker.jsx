@@ -1,4 +1,4 @@
-import { useState,useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import {
   Tooltip,
   ResponsiveContainer,
@@ -12,6 +12,9 @@ import {
 } from 'recharts';
 import { FaTrash, FaBroom, FaMoneyBillWave } from 'react-icons/fa';
 import { useTheme } from '../contexts/ThemeContext';
+import { auth, db } from '../firebase';
+import { doc, onSnapshot, setDoc } from 'firebase/firestore';
+import { logActivity, incrementStat } from '../lib/activityLogger';
 
 
 
@@ -50,21 +53,54 @@ const ExpenseTracker = () => {
   const [date, setDate] = useState('');
   const [category, setCategory] = useState('Travel');
   const [label, setLabel] = useState('');
-
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const isLocalUpdate = useRef(false); // prevents save loop from remote updates
+
+  // Load expenses from Firestore on mount (real-time listener)
+  useEffect(() => {
+    const unsubAuth = auth.onAuthStateChanged((user) => {
+      if (!user) return;
+      const expDocRef = doc(db, "users", user.uid, "data", "expenses");
+      const unsubSnap = onSnapshot(expDocRef, (snap) => {
+        if (snap.exists() && !isLocalUpdate.current) {
+          const data = snap.data();
+          if (data.items) setExpenses(data.items);
+        }
+        isLocalUpdate.current = false;
+      });
+      return () => unsubSnap();
+    });
+    return () => unsubAuth();
+  }, []);
+
+  // Save expenses to Firestore whenever they change (debounced)
+  useEffect(() => {
+    const user = auth.currentUser;
+    if (!user) return;
+    const timeout = setTimeout(() => {
+      isLocalUpdate.current = true;
+      const expDocRef = doc(db, "users", user.uid, "data", "expenses");
+      setDoc(expDocRef, { items: expenses, totalSpent: expenses.reduce((a, c) => a + c.amount, 0) }, { merge: true })
+        .catch((err) => console.warn("Failed to save expenses:", err));
+    }, 500);
+    return () => clearTimeout(timeout);
+  }, [expenses]);
 
   const handleAddExpense = () => {
     if (item && amount && date && category) {
-      setExpenses([
-        ...expenses,
-        {
-          item,
-          amount: parseFloat(amount),
-          date,
-          category,
-          label: label || category,
-        },
-      ]);
+      const newExpense = {
+        item,
+        amount: parseFloat(amount),
+        date,
+        category,
+        label: label || category,
+      };
+      setExpenses([...expenses, newExpense]);
+
+      // Log activity & update stats in Firestore
+      logActivity("expense_added", `Added expense: ${item} — ₹${parseFloat(amount).toFixed(2)}`);
+      incrementStat("totalExpenses", parseFloat(amount));
+
       setItem('');
       setAmount('');
       setDate('');
@@ -74,10 +110,16 @@ const ExpenseTracker = () => {
   };
 
   const handleDelete = (index) => {
+    const removed = expenses[index];
     setExpenses(expenses.filter((_, i) => i !== index));
+    // Decrement total expenses stat
+    if (removed) incrementStat("totalExpenses", -removed.amount);
   };
 
   const handleClearAll = () => {
+    // Decrement total expenses stat by current total
+    const total = expenses.reduce((a, c) => a + c.amount, 0);
+    if (total > 0) incrementStat("totalExpenses", -total);
     setExpenses([]);
     setIsModalOpen(false);
   };

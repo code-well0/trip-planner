@@ -6,6 +6,7 @@ import { Search, Clock, MapPin, Download, Trash2, Plus, Loader2 } from 'lucide-r
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { useTheme } from '../contexts/ThemeContext'; 
 import { jsPDF } from 'jspdf';
+import { logActivity, incrementStat } from '../lib/activityLogger';
 // import { Navbar } from '../Components/Navbar';
 // import { Footer } from '../Components/Footer';
 
@@ -478,6 +479,10 @@ const App = () => {
       doc.save(fileName);
 
       setMessage('PDF exported successfully! Check your downloads.');
+
+      // Log activity & increment trip counter
+      logActivity("itinerary_created", `Created itinerary for ${firstCity}`);
+      incrementStat("tripsPlanned", 1);
 
       // Clear message after a short delay
       setTimeout(() => setMessage(''), 3000);

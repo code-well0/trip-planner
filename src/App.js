@@ -5,7 +5,6 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase";
 import Navbar from "./Components/Navbar";
 import { useTheme } from "./contexts/ThemeContext";
-import SmoothCursor from "./Components/SmoothCursor";
 import DestinationPage from "./pages/DestinationPage";
 import ExpenseTracker from "./pages/ExpenseTracker";
 import ChatBot from "./pages/Chatbot";
@@ -95,7 +94,6 @@ function App() {
       <div
         className={`relative z-10 bg-gray-100 dark:bg-gray-900 transition-colors duration-300 min-h-screen ${theme}`}
       >
-        <SmoothCursor />
         {/* animated background */}
         <div className={` ${theme === 'dark' ? "animate-bg animate-bg-dark" : "animate-bg"}`}></div>
         <div className="absolute -z-10 w-60 h-60 rounded-full inset-0 opacity-40 top-10 left-1/4 bg-gradient-to-r from-pink-600 to-pink-200 dark:from-gray-600 dark:to-pink-600 animate-pulseBg "></div>
