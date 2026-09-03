@@ -6,8 +6,8 @@ import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import cors from "cors";
 import { createServer } from "http";
-// import { Server } from "socket.io";
 import { getAIRecommendations } from './services/APIService.js';
+import { getLivePriceEstimate } from './services/priceService.js';
 import mongoose from 'mongoose';
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
@@ -20,12 +20,6 @@ const __dirname = dirname(__filename);
 
 const app = express();
 const server = createServer(app);
-const io = new Server(server, {
-  cors: {
-    origin: "http://localhost:3000",
-    methods: ["GET", "POST"]
-  }
-});
 
 const PORT = process.env.PORT || 5000;
 
@@ -99,6 +93,24 @@ app.post('/api/ai', async (req, res) => {
   } catch (err) {
     console.error('AIService Error:', err.message);
     res.status(500).json({ error: err.message });
+  }
+});
+
+// Live price estimate endpoint (real-time flight pricing for 2 travelers)
+app.post('/api/price-estimate', async (req, res) => {
+  try {
+    const { destination, origin } = req.body;
+    if (!destination) return res.status(400).json({ error: 'Destination is required.' });
+
+    const estimate = await getLivePriceEstimate({
+      destinationCity: destination,
+      originCity: origin || 'Delhi',
+      travelers: 2,
+    });
+    res.json(estimate);
+  } catch (err) {
+    console.error('Price estimate error:', err.message);
+    res.status(502).json({ error: err.message, source: 'unavailable' });
   }
 });
 
